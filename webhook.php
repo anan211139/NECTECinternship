@@ -17,9 +17,9 @@ if (!is_null($events['events'])) {
 		if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
 			// Get text sent
 			//$text = $event['source']['userId'];
-			$text = $event['message']['type']['text'];
+			$text = $event['message']['text'];
 			//$text = $event['message']['text'];
-			
+
 			// Get replyToken
 			$replyToken = $event['replyToken'];
 
@@ -46,14 +46,14 @@ if (!is_null($events['events'])) {
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 			$result = curl_exec($ch);
 			curl_close($ch);
-			
-			
+
+
 			echo $result. "\r\n";
-			
-			
-			
+
+
+
 		}
-		
+
 	}
 }
 echo "OK";
