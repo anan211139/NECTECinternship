@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+Route::resource('Line','LineController');  //call path ที่กำหนด
