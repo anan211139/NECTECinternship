@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2 public/
+\0xEF\0xBB\0xBFweb: vendor/bin/heroku-php-apache2 public/
