@@ -20,6 +20,13 @@ if (!is_null($events['events'])) {
 			$text = $event['message']['text'];
 			//$text = $event['message']['text'];
 
+
+			if($text=='สวัสดี'){
+				$text = 'สวัสดีค่า';
+			}else{
+				$text = '555555';
+			}
+
 			// Get replyToken
 			$replyToken = $event['replyToken'];
 
