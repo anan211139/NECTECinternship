@@ -23,17 +23,13 @@ if (!is_null($events['events'])) {
 			// Build message to reply back
 			
 			if($text == 'เปลี่ยนวิชา'){
-				$messages = [
-					'type' => 'text',
-					'text' => "กรุณาระบุวิชา"
-				];
+				$text = 'กรุณาระบุวิชา'
 			}
-			else{
-				$messages = [
+			
+			$messages = [
 					'type' => 'text',
 					'text' => $text
 				];
-			}
 // 			if(strrpos($text,"เปลี่ยนวิชา")){
 				
 // 				$messages = [
