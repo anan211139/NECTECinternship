@@ -34,8 +34,8 @@ if (!is_null($events['events'])) {
 				
 				$messages = [
 					'type' => 'imagemap',
-					'baseUrl' => 'img/sybject.jpg',
-					'altText' => 'This is an imagemap',
+					'baseUrl' => 'https://github.com/anan211139/NECTECinternship/blob/master/img/sybject.jpg?raw=true',
+					'altText' => 'เปลี่ยนวิชา',
 					'baseSize' => 
 					array (
 						'width' => 1040,
