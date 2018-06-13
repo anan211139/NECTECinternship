@@ -23,7 +23,7 @@ if (!is_null($events['events'])) {
 			// Build message to reply back
 			
 			if($text == 'เปลี่ยนวิชา'){
-				$text = 'กรุณาระบุวิชา'
+				$text = 'กรุณาระบุวิชา';
 			}
 			
 			$messages = [
