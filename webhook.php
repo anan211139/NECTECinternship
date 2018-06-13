@@ -84,11 +84,11 @@ if(!is_null($events)){
                 //     $longitude = 100.61141967773438;
                 //     $replyData = new LocationMessageBuilder($placeName, $placeAddress, $latitude ,$longitude);              
                 //     break;
-                // case "s":
-                //     $stickerID = 22;
-                //     $packageID = 2;
-                //     $replyData = new StickerMessageBuilder($packageID,$stickerID);
-                //     break;      
+                case "s":
+                    $stickerID = 22;
+                    $packageID = 2;
+                    $replyData = new StickerMessageBuilder($packageID,$stickerID);
+                    break;      
                 case "เปลี่ยนวิชา":
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_subject_1.jpg?raw=true';
                     $replyData = new ImagemapMessageBuilder(
