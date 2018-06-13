@@ -36,7 +36,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
-use Request;
+use Request as iitimRequest;
 
 require "/app/vendor/autoload.php";
 require_once('/app/vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
@@ -63,7 +63,7 @@ class BotController extends Controller
             $replyToken = $events['events'][0]['replyToken'];
         }
         // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-        $events = Request::all();
+        $events = iitimRequest::all();
         $replyToken = $events['result'][0]['replyToken'];
         $textMessageBuilder = new TextMessageBuilder(json_encode($events));
         
