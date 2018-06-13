@@ -65,7 +65,7 @@ if(!is_null($events)){
                     $replyData = new TextMessageBuilder($textReplyMessage);
                     break;
                 
-                case 'เปลี่ยนวิชา':
+                case "เปลี่ยนวิชา":
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
                     $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
@@ -82,7 +82,7 @@ if(!is_null($events)){
                                 )
                         )); 
                     break;
-                case 'วิชาคณิตศาสตร์' || 'เปลี่ยนหัวข้อ':
+                case "วิชาคณิตศาสตร์" || "เปลี่ยนหัวข้อ":
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_lesson_1.jpg?raw=true';
                     $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
@@ -100,7 +100,7 @@ if(!is_null($events)){
                         )); 
                     break;                                                                                                                                 
                 default:
-                    $textReplyMessage = "ลองใหม่อีกครั้งค่ะ" ;
+                    $textReplyMessage = "ลองใหม่";
                     $replyData = new TextMessageBuilder($textReplyMessage);
                     break;                                     
             }
