@@ -21,10 +21,19 @@ if (!is_null($events['events'])) {
 			// Get replyToken
 			$replyToken = $event['replyToken'];
 			// Build message to reply back
-			$messages = [
+			
+			if(strrpos($text,"เปลี่ยนวิชา")){
+				$messages = [
+					'type' => 'text',
+					'text' => "กรุณาระบุวิชา"
+				];
+			}
+			else{
+				$messages = [
 					'type' => 'text',
 					'text' => $text
 				];
+			}
 // 			if(strrpos($text,"เปลี่ยนวิชา")){
 				
 // 				$messages = [
