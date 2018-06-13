@@ -39,7 +39,7 @@ if (!is_null($events['events'])) {
 					'baseSize' => 
 					array (
 						'width' => 1040,
-						'height' => 513,
+						'height' => 1040,
 					),
 					'actions' => 
 					array (
@@ -48,10 +48,10 @@ if (!is_null($events['events'])) {
       						'type' => 'message',
       						'area' => 
       							array (
-        							'x' => 43,
-        							'y' => 190,
-        							'width' => 954,
-        							'height' => 107,
+        							'x' => 41,
+        							'y' => 173,
+        							'width' => 956,
+        							'height' => 137,
       							),
       						'text' => 'วิชาคณิตศาตร์',
     						),
@@ -60,10 +60,10 @@ if (!is_null($events['events'])) {
       							'type' => 'message',
       							'area' => 
       							array (
-        							'x' => 39,
-        							'y' => 311,
-        							'width' => 960,
-        							'height' => 105,
+        							'x' => 43,
+        							'y' => 314,
+        							'width' => 954,
+        							'height' => 137,
       							),
       						'text' => 'วิชาภาษาอังกฤษ',
     						),
