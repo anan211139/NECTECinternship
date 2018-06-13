@@ -22,7 +22,7 @@ if (!is_null($events['events'])) {
 			$replyToken = $event['replyToken'];
 			// Build message to reply back
 			
-			if(strrpos($text,"เปลี่ยนวิชา")!=0){
+			if($text == 'เปลี่ยนวิชา'){
 				$messages = [
 					'type' => 'text',
 					'text' => "กรุณาระบุวิชา"
