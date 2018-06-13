@@ -101,8 +101,8 @@ if(!is_null($events)){
                     break;                                                                                                                                 
                 default:
                     $textReplyMessage = "ลองใหม่อีกครั้งค่ะ" ;
-                    $replyData = new TextMessageBuilder($textReplyMessage);         
-                    break;                                      
+                    $replyData = new TextMessageBuilder($textReplyMessage);
+                    break;                                     
             }
             break;
         default:
