@@ -49,7 +49,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"
         ]
-          ]
+          
 
     },
     "config": {
