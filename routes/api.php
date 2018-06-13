@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-Route::get('bot', function(Request $request){
-    logger("message request : ", $request->all());
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
 
-Route::post('bot',['as' => 'line.bot.message','uses' => 'BotController@getmessage']);
+// Route::get('bot', function(Request $request){
+//     logger("message request : ", $request->all());
+// });
+//
+// Route::post('bot',['as' => 'line.bot.message','uses' => 'BotController@getmessage']);
