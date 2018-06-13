@@ -58,21 +58,21 @@ if(!is_null($events)){
     //$userMessage = strtolower($userMessage);
     // ------ RICH MENU -------
     if($userMessage=="เปลี่ยนวิชา"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
-                    $replyData = new ImagemapMessageBuilder(
-                        $imageMapUrl,
-                        'รายการวิชา',
-                        new BaseSizeBuilder(513,1040),
-                        array(
-                            new ImagemapMessageActionBuilder(
-                                'วิชาคณิตศาสตร์',
-                                new AreaBuilder(957,320,92,192)
-                                ),
-                            new ImagemapUriActionBuilder(
-                                'วิชาภาษาอังกฤษ',
-                                new AreaBuilder(953,453,88,325)
-                                )
-                        )); 
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_subject_1.jpg?raw=true';
+        $replyData = new ImagemapMessageBuilder(
+            $imageMapUrl,
+            "รายการวิชา",
+            new BaseSizeBuilder(513,1040),
+            array(
+               new ImagemapMessageActionBuilder(
+                   "วิชาคณิตศาสตร์",
+                   new AreaBuilder(957,320,92,192)
+               ),
+               new ImagemapUriActionBuilder(
+                   "วิชาภาษาอังกฤษ",
+                   new AreaBuilder(953,453,88,325)
+               )
+           )); 
     }
  else{
      //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
