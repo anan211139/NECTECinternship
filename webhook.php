@@ -34,7 +34,7 @@ if (!is_null($events['events'])) {
 				
 				$messages = [
 					'type' => 'imagemap',
-					'baseUrl' => 'https://github.com/anan211139/NECTECinternship/blob/master/img/nutri_2.jpg?raw=true',
+					'baseUrl' => 'https://www.img.in.th/images/95f7fde7798d8a99d5f55d874267bccd.jpg',
 					'altText' => 'เปลี่ยนวิชา',
 					'baseSize' => 
 					array (
