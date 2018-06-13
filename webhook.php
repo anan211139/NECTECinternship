@@ -70,7 +70,70 @@ if (!is_null($events['events'])) {
   					),'text' => $text
 				];
 			}
-
+			else if($text == 'เปลี่ยนหัวข้อ'||$text == 'วิชาคณิตศาสตร์'){
+				$messages = [
+					'type' => 'imagemap',
+					'baseUrl' => 'https://github.com/anan211139/NECTECinternship/blob/master/img/lesson.jpg?raw=true',
+					'altText' => 'This is an imagemap',
+					'baseSize' => 
+  						array (
+    							'width' => 1040,
+    							'height' => 750,
+  						),
+  					'actions' => 
+  					array (
+    					0 => 
+    						array (
+							'type' => 'message',
+							'area' => 
+								array (
+									'x' => 41,
+									'y' => 204,
+									'width' => 956,
+									'height' => 110,
+								),
+							'text' => 'สมการ',
+    						),
+    					1 => 
+    						array (
+      							'type' => 'message',
+      							'area' => 
+      								array (
+        								'x' => 41,
+        								'y' => 322,
+        								'width' => 956,
+        								'height' => 109,
+      								),
+      							'text' => 'หรม./ครน.',
+    						),
+    					2 => 
+    						array (
+      							'type' => 'message',
+      							'area' => 
+								array (
+									'x' => 39,
+									'y' => 442,
+									'width' => 958,
+									'height' => 109,
+								),
+      							'text' => 'โจทย์ปัญหา',
+    						),
+    					3 => 
+    						array (
+      							'type' => 'message',
+      							'area' => 
+      								array (
+        								'x' => 41,
+        								'y' => 572,
+        								'width' => 958,
+        								'height' => 105,
+      								),
+      							'text' => 'ตัวประกอบ',
+    							),
+  						),
+					)
+				];
+			}
 			else{
 				$messages = [
 					'type' => 'text',
