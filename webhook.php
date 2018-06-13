@@ -36,11 +36,11 @@ if (!is_null($events['events'])) {
 					'type' => 'imagemap',
 					'baseUrl' => 'https://github.com/anan211139/NECTECinternship/blob/master/img/new_c_subject.jpg?raw=true',
 					'altText' => 'เปลี่ยนวิชา',
-					'baseSize' => 
-					array (
-						'width' => 1040,
-						'height' => 1040,
-					),
+// 					'baseSize' => 
+// 					array (
+// 						'width' => 1040,
+// 						'height' => 1040,
+// 					),
 					'actions' => 
 					array (
     						0 => 
