@@ -36,10 +36,6 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
-use Request as iitimRequest;
-
-require "/app/vendor/autoload.php";
-require_once('/app/vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
 
 class BotController extends Controller
 {
@@ -55,6 +51,7 @@ class BotController extends Controller
         
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
+        echo $content;
         
         // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
         $events = json_decode($content, true);
@@ -63,8 +60,6 @@ class BotController extends Controller
             $replyToken = $events['events'][0]['replyToken'];
         }
         // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-        $events = iitimRequest::all();
-        $replyToken = $events['result'][0]['replyToken'];
         $textMessageBuilder = new TextMessageBuilder(json_encode($events));
         
         //l ส่วนของคำสั่งตอบกลับข้อความ
