@@ -141,7 +141,7 @@ if(!is_null($events)){
                 //     );
                 //     break;                                                                                                                          
                 default:
-                    $textReplyMessage = $userMessage ;
+                    $textReplyMessage = "ลองใหม่อีกครั้งค่ะ" ;
                     $replyData = new TextMessageBuilder($textReplyMessage);         
                     break;                                      
             }
