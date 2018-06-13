@@ -67,7 +67,7 @@ if (!is_null($events['events'])) {
       							),
       						'text' => 'วิชาภาษาอังกฤษ',
     						),
-  					),text' => $text
+  					),'text' => $text
 				];
 			}
 
