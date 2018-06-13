@@ -38,8 +38,8 @@ if (!is_null($events['events'])) {
 					'altText' => 'เปลี่ยนวิชา',
 					'baseSize' => 
 					array (
-						'width' => 1040,
-						'height' => 1040,
+						'width' => 500,
+						'height' => 500,
 					),
 					'actions' => 
 					array (
