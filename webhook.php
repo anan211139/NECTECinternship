@@ -114,11 +114,11 @@ if(!is_null($events)){
                         new BaseSizeBuilder(513,1040),
                         array(
                             new ImagemapMessageActionBuilder(
-                                'test image map',
+                                'สมการ',
                                 new AreaBuilder(957,320,92,192)
                                 ),
                             new ImagemapUriActionBuilder(
-                                'http://www.ninenik.com',
+                                'หรม./ครน.',
                                 new AreaBuilder(953,453,88,325)
                                 )
                         )); 
