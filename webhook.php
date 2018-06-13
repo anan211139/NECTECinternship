@@ -65,40 +65,40 @@ if(!is_null($events)){
                     $replyData = new TextMessageBuilder($textReplyMessage);
                     break;
                 
-                // case 'เปลี่ยนวิชา':
-                //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
-                //     $replyData = new ImagemapMessageBuilder(
-                //         $imageMapUrl,
-                //         'รายการวิชา',
-                //         new BaseSizeBuilder(513,1040),
-                //         array(
-                //             new ImagemapMessageActionBuilder(
-                //                 'วิชาคณิตศาสตร์',
-                //                 new AreaBuilder(957,320,92,192)
-                //                 ),
-                //             new ImagemapUriActionBuilder(
-                //                 'วิชาภาษาอังกฤษ',
-                //                 new AreaBuilder(953,453,88,325)
-                //                 )
-                //         )); 
-                //     break;
-                // case 'วิชาคณิตศาสตร์' || 'เปลี่ยนหัวข้อ':
-                //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_lesson_1.jpg?raw=true';
-                //     $replyData = new ImagemapMessageBuilder(
-                //         $imageMapUrl,
-                //         'หัวข้อที่ต้องการเรียน',
-                //         new BaseSizeBuilder(513,1040),
-                //         array(
-                //             new ImagemapMessageActionBuilder(
-                //                 'สมการ',
-                //                 new AreaBuilder(957,320,92,192)
-                //                 ),
-                //             new ImagemapUriActionBuilder(
-                //                 'หรม./ครน.',
-                //                 new AreaBuilder(953,453,88,325)
-                //                 )
-                //         )); 
-                //     break;                                                                                                                                 
+                case 'เปลี่ยนวิชา':
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
+                    $replyData = new ImagemapMessageBuilder(
+                        $imageMapUrl,
+                        'รายการวิชา',
+                        new BaseSizeBuilder(513,1040),
+                        array(
+                            new ImagemapMessageActionBuilder(
+                                'วิชาคณิตศาสตร์',
+                                new AreaBuilder(957,320,92,192)
+                                ),
+                            new ImagemapUriActionBuilder(
+                                'วิชาภาษาอังกฤษ',
+                                new AreaBuilder(953,453,88,325)
+                                )
+                        )); 
+                    break;
+                case 'วิชาคณิตศาสตร์' || 'เปลี่ยนหัวข้อ':
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_lesson_1.jpg?raw=true';
+                    $replyData = new ImagemapMessageBuilder(
+                        $imageMapUrl,
+                        'หัวข้อที่ต้องการเรียน',
+                        new BaseSizeBuilder(513,1040),
+                        array(
+                            new ImagemapMessageActionBuilder(
+                                'สมการ',
+                                new AreaBuilder(957,320,92,192)
+                                ),
+                            new ImagemapUriActionBuilder(
+                                'หรม./ครน.',
+                                new AreaBuilder(953,453,88,325)
+                                )
+                        )); 
+                    break;                                                                                                                                 
                 default:
                     $textReplyMessage = "ลองใหม่อีกครั้งค่ะ" ;
                     $replyData = new TextMessageBuilder($textReplyMessage);         
