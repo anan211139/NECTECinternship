@@ -56,12 +56,13 @@ if(!is_null($events)){
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     $userMessage = strtolower($userMessage);
+    // ------ RICH MENU -------
     switch ($typeMessage){
         case 'text':
             switch ($userMessage) {
                 
                 case 'เปลี่ยนวิชา':
-                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_subject_1.jpg?raw=true';
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
                     $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'รายการวิชา',
