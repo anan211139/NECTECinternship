@@ -56,92 +56,51 @@ if(!is_null($events)){
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     $userMessage = strtolower($userMessage);
+    // ------ RICH MENU -------
     switch ($typeMessage){
         case 'text':
             switch ($userMessage) {
-                // case "t":
-                //     $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
-                //     $replyData = new TextMessageBuilder($textReplyMessage);
-                //     break;
-                // case "i":
-                //     $picFullSize = 'https://www.mywebsite.com/imgsrc/photos/f/simpleflower';
-                //     $picThumbnail = 'https://www.mywebsite.com/imgsrc/photos/f/simpleflower/240';
-                //     $replyData = new ImageMessageBuilder($picFullSize,$picThumbnail);
-                //     break;
-                // case "v":
-                //     $picThumbnail = 'https://www.mywebsite.com/imgsrc/photos/f/sampleimage/240';
-                //     $videoUrl = "https://www.mywebsite.com/simplevideo.mp4";                
-                //     $replyData = new VideoMessageBuilder($videoUrl,$picThumbnail);
-                //     break;
-                // case "a":
-                //     $audioUrl = "https://www.mywebsite.com/simpleaudio.mp3";
-                //     $replyData = new AudioMessageBuilder($audioUrl,27000);
-                //     break;
-                // case "l":
-                //     $placeName = "ที่ตั้งร้าน";
-                //     $placeAddress = "แขวง พลับพลา เขต วังทองหลาง กรุงเทพมหานคร ประเทศไทย";
-                //     $latitude = 13.780401863217657;
-                //     $longitude = 100.61141967773438;
-                //     $replyData = new LocationMessageBuilder($placeName, $placeAddress, $latitude ,$longitude);              
-                //     break;
-                // case "s":
-                //     $stickerID = 22;
-                //     $packageID = 2;
-                //     $replyData = new StickerMessageBuilder($packageID,$stickerID);
-                //     break;      
-                case "เลือกวิชา":
-                    $imageMapUrl = 'https://www.mywebsite.com/imgsrc/photos/w/sampleimagemap';
+                case "t":
+                    $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+                    $replyData = new TextMessageBuilder($textReplyMessage);
+                    break;
+                
+                case 'เปลี่ยนวิชา':
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
                     $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'รายการวิชา',
-                        new BaseSizeBuilder(699,1040),
+                        new BaseSizeBuilder(513,1040),
                         array(
                             new ImagemapMessageActionBuilder(
-                                'test image map',
-                                new AreaBuilder(0,0,520,699)
+                                'วิชาคณิตศาสตร์',
+                                new AreaBuilder(957,320,92,192)
                                 ),
                             new ImagemapUriActionBuilder(
-                                'http://www.ninenik.com',
-                                new AreaBuilder(520,0,520,699)
+                                'วิชาภาษาอังกฤษ',
+                                new AreaBuilder(953,453,88,325)
                                 )
                         )); 
                     break;
-                case "วิชาคณิตศาสตร์" || "เปลี่ยนหัวข้อ":
-                    $imageMapUrl = 'https://www.mywebsite.com/imgsrc/photos/w/sampleimagemap';
+                case 'วิชาคณิตศาสตร์' || 'เปลี่ยนหัวข้อ':
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_lesson_1.jpg?raw=true';
                     $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'หัวข้อที่ต้องการเรียน',
-                        new BaseSizeBuilder(699,1040),
+                        new BaseSizeBuilder(513,1040),
                         array(
                             new ImagemapMessageActionBuilder(
-                                'test image map',
-                                new AreaBuilder(0,0,520,699)
+                                'สมการ',
+                                new AreaBuilder(957,320,92,192)
                                 ),
                             new ImagemapUriActionBuilder(
-                                'http://www.ninenik.com',
-                                new AreaBuilder(520,0,520,699)
+                                'หรม./ครน.',
+                                new AreaBuilder(953,453,88,325)
                                 )
                         )); 
-                    break;            
-                // case "tm":
-                //     $replyData = new TemplateMessageBuilder('Confirm Template',
-                //         new ConfirmTemplateBuilder(
-                //                 'Confirm template builder',
-                //                 array(
-                //                     new MessageTemplateActionBuilder(
-                //                         'Yes',
-                //                         'Text Yes'
-                //                     ),
-                //                     new MessageTemplateActionBuilder(
-                //                         'No',
-                //                         'Text NO'
-                //                     )
-                //                 )
-                //         )
-                //     );
-                //     break;                                                                                                                          
+                    break;                                                                                                                                 
                 default:
-                    $textReplyMessage = $userMessage ;
+                    $textReplyMessage = "ลองใหม่อีกครั้งค่ะ" ;
                     $replyData = new TextMessageBuilder($textReplyMessage);         
                     break;                                      
             }
