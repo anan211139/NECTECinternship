@@ -74,6 +74,10 @@ if(!is_null($events)){
                                 )
                         )); 
     }
+ else{
+     //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+     $replyData = new TextMessageBuilder($userMessage);
+ }
 //     switch ($typeMessage){
 //         case 'text':
 //             switch ($userMessage) {
