@@ -22,61 +22,61 @@ if (!is_null($events['events'])) {
 			$replyToken = $event['replyToken'];
 			// Build message to reply back
 			
-			if($text == 'เปลี่ยนวิชา'){
-				$text = 'กรุณาระบุวิชา';
-			}
-			
-			$messages = [
-					'type' => 'text',
-					'text' => $text
-				];
-// 			if(strrpos($text,"เปลี่ยนวิชา")){
-				
-// 				$messages = [
-// 					'type' => 'imagemap',
-// 					'baseUrl' => 'https://drive.google.com/file/d/18LabOBv2VpTrXFyUEeRMKO_LElq-vv1A/view?usp=sharing',
-// 					'altText' => 'This is an imagemap',
-// 					'baseSize' => 
-// 					array (
-// 						'width' => 1040,
-// 						'height' => 513,
-// 					),
-// 					'actions' => 
-// 					array (
-//     						0 => 
-//     						array (
-//       						'type' => 'message',
-//       						'area' => 
-//       							array (
-//         							'x' => 43,
-//         							'y' => 190,
-//         							'width' => 954,
-//         							'height' => 107,
-//       							),
-//       						'text' => 'วิชาคณิตศาตร์',
-//     						),
-//     						1 => 
-//     						array (
-//       							'type' => 'message',
-//       							'area' => 
-//       							array (
-//         							'x' => 39,
-//         							'y' => 311,
-//         							'width' => 960,
-//         							'height' => 105,
-//       							),
-//       						'text' => 'วิชาภาษาอังกฤษ',
-//     						),
-//   					),text' => $text
-// 				];
+// 			if($text == 'เปลี่ยนวิชา'){
+// 				$text = 'กรุณาระบุวิชา';
 // 			}
-
-// 			else{
-// 				$messages = [
+			
+// 			$messages = [
 // 					'type' => 'text',
 // 					'text' => $text
 // 				];
-// 			}
+			if($text == 'เปลี่ยนวิชา'){
+				
+				$messages = [
+					'type' => 'imagemap',
+					'baseUrl' => 'https://drive.google.com/file/d/18LabOBv2VpTrXFyUEeRMKO_LElq-vv1A/view?usp=sharing',
+					'altText' => 'This is an imagemap',
+					'baseSize' => 
+					array (
+						'width' => 1040,
+						'height' => 513,
+					),
+					'actions' => 
+					array (
+    						0 => 
+    						array (
+      						'type' => 'message',
+      						'area' => 
+      							array (
+        							'x' => 43,
+        							'y' => 190,
+        							'width' => 954,
+        							'height' => 107,
+      							),
+      						'text' => 'วิชาคณิตศาตร์',
+    						),
+    						1 => 
+    						array (
+      							'type' => 'message',
+      							'area' => 
+      							array (
+        							'x' => 39,
+        							'y' => 311,
+        							'width' => 960,
+        							'height' => 105,
+      							),
+      						'text' => 'วิชาภาษาอังกฤษ',
+    						),
+  					),text' => $text
+				];
+			}
+
+			else{
+				$messages = [
+					'type' => 'text',
+					'text' => $text
+				];
+			}
 			
 
 			// Make a POST Request to Messaging API to reply to sender
