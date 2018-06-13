@@ -60,6 +60,10 @@ if(!is_null($events)){
     switch ($typeMessage){
         case 'text':
             switch ($userMessage) {
+                case "t":
+                    $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+                    $replyData = new TextMessageBuilder($textReplyMessage);
+                    break;
                 
                 // case 'เปลี่ยนวิชา':
                 //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
