@@ -48,6 +48,8 @@ $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SE
  
 // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
 $content = file_get_contents('php://input');
+echo "A";
+echo $content;
  
 $events = json_decode($content, true);
 if(!is_null($events)){
