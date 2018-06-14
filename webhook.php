@@ -55,16 +55,17 @@ $events = json_decode($content, true);
 if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     $replyToken = $events['events'][0]['replyToken'];
+    $userId = $events['events'][0]['userId'];
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     //$userMessage = strtolower($userMessage);
     // ------ RICH MENU -------
     if($userMessage=="เปลี่ยนวิชา"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
         $replyData = new ImagemapMessageBuilder(
             $imageMapUrl,
             "รายการวิชา",
-            new BaseSizeBuilder(513,1040),
+            new BaseSizeBuilder(546,1024),
             array(
                new ImagemapMessageActionBuilder(
                    "วิชาคณิตศาสตร์",
@@ -77,39 +78,51 @@ if(!is_null($events)){
            )); 
     }
     else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_lesson.png?_ignored=';
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
         $replyData = new ImagemapMessageBuilder(
             $imageMapUrl,
             'หัวข้อที่ต้องการเรียน',
-            new BaseSizeBuilder(513,1040),
+            new BaseSizeBuilder(546,1024),
                 array(
                     new ImagemapMessageActionBuilder(
                         'สมการ',
                         new AreaBuilder(957,320,92,192)
                     ),
-                    new ImagemapUriActionBuilder(
+                    new ImagemapMessageActionBuilder(
                         'หรม./ครน.',
                         new AreaBuilder(953,453,88,325)
                     ),
         )); 
     }
-    else if($userMessage=="a"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
-        $replyData = new ImagemapMessageBuilder(
-            $imageMapUrl,
-            'แนะนำอาหาร',
-            new BaseSizeBuilder(513,1040),
-            array(
-                new ImagemapMessageActionBuilder(
-                    'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?',
-                    new AreaBuilder(0,40,346,333)
-                ),
-                new ImagemapMessageActionBuilder(
-                    'ผลไม้ 1 ส่วนคือเท่าไร?',
-                    new AreaBuilder(346,40,346,333)
-                ),
-            ));
+    else if($userMessage=="ดูคะแนน"){
+        $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
+        $replyData = new TextMessageBuilder($userMessage);
     }
+    else if($userMessage=="สะสมแต้ม"){
+        $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
+        $replyData = new TextMessageBuilder($userMessage);
+    }
+    else if($userMessage=="ดู Code"){
+        $textReplyMessage = $userId;
+        $replyData = new TextMessageBuilder($userMessage);
+    }
+    // else if($userMessage=="a"){
+    //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
+    //     $replyData = new ImagemapMessageBuilder(
+    //         $imageMapUrl,
+    //         'แนะนำอาหาร',
+    //         new BaseSizeBuilder(546,1024),
+    //         array(
+    //             new ImagemapMessageActionBuilder(
+    //                 'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?',
+    //                 new AreaBuilder(0,40,346,333)
+    //             ),
+    //             new ImagemapMessageActionBuilder(
+    //                 'ผลไม้ 1 ส่วนคือเท่าไร?',
+    //                 new AreaBuilder(346,40,346,333)
+    //             ),
+    //         ));
+    // }
     else{
         //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
         $replyData = new TextMessageBuilder($userMessage);
