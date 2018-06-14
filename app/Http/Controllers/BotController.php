@@ -107,11 +107,11 @@ class BotController extends Controller
             // $replyData = new TextMessageBuilder($replyInfo);
 
             //------ GREETING --------
-            if($count==0){
-                $replyData = new TextMessageBuilder($count);
-                $count = 1;
-            }
-
+            // if($count==0){
+            //     $replyData = new TextMessageBuilder($count);
+            //     $count = 1;
+            // }
+            $count++;
             //------ RICH MENU -------
             if($userMessage=="เปลี่ยนวิชา"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
