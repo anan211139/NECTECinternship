@@ -50,27 +50,21 @@ class BotController extends Controller
         
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
-        echo "a";
         
         // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
         $events = json_decode($content, true);
-        echo "pp";
         if(!is_null($events)){
             // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
             $replyToken = $events['events'][0]['replyToken'];
         }
-        echo "s";
         // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
         $textMessageBuilder = new TextMessageBuilder(json_encode($events));
-        echo "mix";
         //l ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$textMessageBuilder);
-        echo "mix1";
         if ($response->isSucceeded()) {
             echo 'Succeeded!';
             return;
         }
-        echo "mix2";
         
         // Failed
         echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
