@@ -73,7 +73,7 @@ if(!is_null($events)){
                new ImagemapUriActionBuilder(
                    "วิชาภาษาอังกฤษ",
                    new AreaBuilder(953,453,88,325)
-               )
+               ),
            )); 
     }
     else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
@@ -90,7 +90,7 @@ if(!is_null($events)){
                             new ImagemapUriActionBuilder(
                                 'หรม./ครน.',
                                 new AreaBuilder(953,453,88,325)
-                                )
+                            ),
                         )); 
     }
     else if($userMessage=="a"){
