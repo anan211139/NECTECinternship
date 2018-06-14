@@ -53,8 +53,9 @@ echo $content;
  
 $events = json_decode($content, true);
 
-echo $events;
+
 if(!is_null($events)){
+    echo $events;
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     $replyToken = $events['events'][0]['replyToken'];
     $userId = $events['events'][0]['userId'];
