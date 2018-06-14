@@ -100,7 +100,7 @@ class BotController extends Controller
             }
         }
 		
-        parent::init($this->httpClient, [ 'channelSecret' => $this->channelSecret ]);
+        parent::init($this->httpClient, [ 'channelSecret' => $channelSecret ]);
 		
     }
 	
