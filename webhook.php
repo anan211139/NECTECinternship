@@ -95,7 +95,7 @@ if(!is_null($events)){
     }
     else if($userMessage=="a"){
         $imageMapUrl = 'https://peat.none.codes/food/new_nutri2.jpg?_ignored=';
-                    $textMessage2 = new ImagemapMessageBuilder(
+        $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'แนะนำอาหาร',
                         new BaseSizeBuilder(1040,1040),
