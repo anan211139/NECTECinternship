@@ -63,76 +63,76 @@ if ($response->isSucceeded()) {
 
 $events = json_decode($content, true);
 
-
-
-
 if(!is_null($events)){
-    echo $events;
+    //echo $events;
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     $replyToken = $events['events'][0]['replyToken'];
     $userId = $events['events'][0]['source']['userId'];
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     //$userMessage = strtolower($userMessage);
-    // ------ RICH MENU -------
-    if($userMessage=="เปลี่ยนวิชา"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
-        $replyData = new ImagemapMessageBuilder(
-            $imageMapUrl,
-            "รายการวิชา",
-            new BaseSizeBuilder(546,1040),
-            array(
-               new ImagemapMessageActionBuilder(
-                   "วิชาคณิตศาสตร์",
-                   new AreaBuilder(91,199,873,155)
-               ),
-               new ImagemapMessageActionBuilder(
-                   "วิชาภาษาอังกฤษ",
-                   new AreaBuilder(87,350,873,155)
-               ),
-           )); 
-    }
-    else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
-        $replyData = new ImagemapMessageBuilder(
-            $imageMapUrl,
-            'หัวข้อที่ต้องการเรียน',
-            new BaseSizeBuilder(546,1040),
-                array(
-                    new ImagemapMessageActionBuilder(
-                        'สมการ',
-                        new AreaBuilder(91,199,873,155)
-                    ),
-                    new ImagemapMessageActionBuilder(
-                        'หรม./ครน.',
-                        new AreaBuilder(87,350,873,155)
-                    ),
-        )); 
-    }
-    else if($userMessage =="ดูคะแนน"){
-        $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
-        $replyData = new TextMessageBuilder($textReplyMessage);
-    }
-    else if($userMessage =="สะสมแต้ม"){
-        $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
-        $replyData = new TextMessageBuilder($textReplyMessage);
-    }
-    else if($userMessage =="ดู Code"){
-        //$textReplyMessage = $userId;
-        $replyData = new TextMessageBuilder($userId);
-    }
-    else if($userMessage =="เกี่ยวกับพี่หมี"){
-        $textReplyMessage = "        ท่ามกลางป่าอันเงียบสงบแห่งหนึ่ง มีหมีอยู่สองตัว ซึ่งกำลังจะต่อสู้กันเพื่อแย่งชิงความเป็นใหญ่ โดยพวกมันตกลงกันไว้ว่าหากใครเป็นผู้ชนะจะได้เป็นพี่หมีติวเตอร์ แต่ผู้แพ้นั้นจะต้องถูกขับไล่ออกไปเรียนใหม่
+    
+    $replyData = new TextMessageBuilder($typeMessage);
 
-        เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
+    // ------ RICH MENU -------
+    // if($userMessage=="เปลี่ยนวิชา"){
+    //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
+    //     $replyData = new ImagemapMessageBuilder(
+    //         $imageMapUrl,
+    //         "รายการวิชา",
+    //         new BaseSizeBuilder(546,1040),
+    //         array(
+    //            new ImagemapMessageActionBuilder(
+    //                "วิชาคณิตศาสตร์",
+    //                new AreaBuilder(91,199,873,155)
+    //            ),
+    //            new ImagemapMessageActionBuilder(
+    //                "วิชาภาษาอังกฤษ",
+    //                new AreaBuilder(87,350,873,155)
+    //            ),
+    //        )); 
+    // }
+    // else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
+    //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
+    //     $replyData = new ImagemapMessageBuilder(
+    //         $imageMapUrl,
+    //         'หัวข้อที่ต้องการเรียน',
+    //         new BaseSizeBuilder(546,1040),
+    //             array(
+    //                 new ImagemapMessageActionBuilder(
+    //                     'สมการ',
+    //                     new AreaBuilder(91,199,873,155)
+    //                 ),
+    //                 new ImagemapMessageActionBuilder(
+    //                     'หรม./ครน.',
+    //                     new AreaBuilder(87,350,873,155)
+    //                 ),
+    //     )); 
+    // }
+    // else if($userMessage =="ดูคะแนน"){
+    //     $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
+    //     $replyData = new TextMessageBuilder($textReplyMessage);
+    // }
+    // else if($userMessage =="สะสมแต้ม"){
+    //     $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
+    //     $replyData = new TextMessageBuilder($textReplyMessage);
+    // }
+    // else if($userMessage =="ดู Code"){
+    //     //$textReplyMessage = $userId;
+    //     $replyData = new TextMessageBuilder($userId);
+    // }
+    // else if($userMessage =="เกี่ยวกับพี่หมี"){
+    //     $textReplyMessage = "        ท่ามกลางป่าอันเงียบสงบแห่งหนึ่ง มีหมีอยู่สองตัว ซึ่งกำลังจะต่อสู้กันเพื่อแย่งชิงความเป็นใหญ่ โดยพวกมันตกลงกันไว้ว่าหากใครเป็นผู้ชนะจะได้เป็นพี่หมีติวเตอร์ แต่ผู้แพ้นั้นจะต้องถูกขับไล่ออกไปเรียนใหม่
+
+    //     เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
         
-        เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
-        $replyData = new TextMessageBuilder($textReplyMessage);
-    }
-    else{
-        //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
-        $replyData = new TextMessageBuilder($userMessage);
-    }
+    //     เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
+    //     $replyData = new TextMessageBuilder($textReplyMessage);
+    // }
+    // else{
+    //     //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+    //     $replyData = new TextMessageBuilder($userMessage);
+    // }
 }
 //l ส่วนของคำสั่งตอบกลับข้อความ
 $response = $bot->replyMessage($replyToken,$replyData);
