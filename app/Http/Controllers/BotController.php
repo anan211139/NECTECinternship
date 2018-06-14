@@ -65,10 +65,12 @@ class BotController extends Controller
         echo "mix";
         //l ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$textMessageBuilder);
+        echo "mix1";
         if ($response->isSucceeded()) {
             echo 'Succeeded!';
             return;
         }
+        echo "mix2";
         
         // Failed
         echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
