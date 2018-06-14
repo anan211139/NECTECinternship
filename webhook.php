@@ -65,15 +65,15 @@ if(!is_null($events)){
         $replyData = new ImagemapMessageBuilder(
             $imageMapUrl,
             "รายการวิชา",
-            new BaseSizeBuilder(546,1024),
+            new BaseSizeBuilder(546,1040),
             array(
                new ImagemapMessageActionBuilder(
                    "วิชาคณิตศาสตร์",
-                   new AreaBuilder(957,320,92,192)
+                   new AreaBuilder(91,199,873,155)
                ),
                new ImagemapMessageActionBuilder(
                    "วิชาภาษาอังกฤษ",
-                   new AreaBuilder(953,453,88,325)
+                   new AreaBuilder(87,350,873,155)
                ),
            )); 
     }
@@ -82,15 +82,15 @@ if(!is_null($events)){
         $replyData = new ImagemapMessageBuilder(
             $imageMapUrl,
             'หัวข้อที่ต้องการเรียน',
-            new BaseSizeBuilder(546,1024),
+            new BaseSizeBuilder(546,1040),
                 array(
                     new ImagemapMessageActionBuilder(
                         'สมการ',
-                        new AreaBuilder(957,320,92,192)
+                        new AreaBuilder(91,199,873,155)
                     ),
                     new ImagemapMessageActionBuilder(
                         'หรม./ครน.',
-                        new AreaBuilder(953,453,88,325)
+                        new AreaBuilder(87,350,873,155)
                     ),
         )); 
     }
