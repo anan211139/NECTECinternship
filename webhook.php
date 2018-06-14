@@ -58,7 +58,7 @@ if(!is_null($events)){
     echo $events;
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     $replyToken = $events['events'][0]['replyToken'];
-    $userId = $events['events'][1]['userId'];
+    $userId = $events['events'][1]['source']['userId'];
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     //$userMessage = strtolower($userMessage);
