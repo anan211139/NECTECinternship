@@ -142,6 +142,7 @@ class BotController extends Controller
     public function index() {
         echo "iitim";
         $this->init();
+        echo $this->channelSecret;
         if (!empty($this->isEvents)) {
 		
             $this->replyMessageNew($this->replyToken, json_encode($this->message));
