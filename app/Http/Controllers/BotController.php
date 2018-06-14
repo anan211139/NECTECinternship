@@ -42,6 +42,9 @@ define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5
 
 class BotController extends Controller
 {
+
+    //public count = 0;
+
     public function index() {
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
@@ -80,7 +83,7 @@ class BotController extends Controller
         echo "A";
         echo $content;
 
-        $count = 0;
+        //$count = 0;
         
         // $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
         // $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
@@ -111,7 +114,7 @@ class BotController extends Controller
             //     $replyData = new TextMessageBuilder($count);
             //     $count = 1;
             // }
-            $count++;
+            //$count++;
             //------ RICH MENU -------
             if($userMessage=="เปลี่ยนวิชา"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
@@ -168,8 +171,8 @@ class BotController extends Controller
             }
             else{
                 //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
-                //$replyData = new TextMessageBuilder($userMessage);
-                $replyData = new TextMessageBuilder($count);
+                $replyData = new TextMessageBuilder($userMessage);
+                //$replyData = new TextMessageBuilder($count);
             }
         }
         //l ส่วนของคำสั่งตอบกลับข้อความ
