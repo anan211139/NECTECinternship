@@ -63,6 +63,27 @@ class BotController extends Controller
     public $timestamp       = null;
 	
     public $response        = null;
+
+    public function index() {
+        echo "iitim";
+        $this->start(LINE_MESSAGE_CHANNEL_SECRET, LINE_MESSAGE_ACCESS_TOKEN);
+        echo $this->channelSecret;
+        if (!empty($this->isEvents)) {
+		
+            $this->replyMessageNew($this->replyToken, json_encode($this->message));
+        
+            if ($this->isSuccess()) {
+                echo 'Succeeded!';
+                exit();
+            }
+        
+            // Failed
+            echo $this->response->getHTTPStatus . ' ' . $this->response->getRawBody(); 
+            exit();
+        
+        }
+        return "This is my app";
+    }
     
     public function start($channelSecret, $access_token) {
         $this->httpClient     = new CurlHTTPClient($access_token);
@@ -136,27 +157,5 @@ class BotController extends Controller
         curl_close($ch);
         return json_decode($result);
 		
-    }
-
-
-    public function index() {
-        echo "iitim";
-        $this->start(LINE_MESSAGE_CHANNEL_SECRET, LINE_MESSAGE_ACCESS_TOKEN);
-        echo $this->channelSecret;
-        if (!empty($this->isEvents)) {
-		
-            $this->replyMessageNew($this->replyToken, json_encode($this->message));
-        
-            if ($this->isSuccess()) {
-                echo 'Succeeded!';
-                exit();
-            }
-        
-            // Failed
-            echo $this->response->getHTTPStatus . ' ' . $this->response->getRawBody(); 
-            exit();
-        
-        }
-        return "This is my app";
     }
 }
