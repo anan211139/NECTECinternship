@@ -108,7 +108,7 @@ class BotController extends Controller
 
             //------ GREETING --------
             if($count==0){
-                $replyData = new TextMessageBuilder("สวัสดีจ้า");
+                $replyData = new TextMessageBuilder($count);
                 $count = 1;
             }
 
