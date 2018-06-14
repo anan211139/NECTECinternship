@@ -63,19 +63,17 @@ if ($response->isSucceeded()) {
 
 $events = json_decode($content, true);
 
-$typeMessage = $events['events'][0]['message']['type'];
-
-$replyData = new TextMessageBuilder($typeMessage);
-//if(!is_null($events)){
+if(!is_null($events)){
     //echo $events;
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-    // $replyToken = $events['events'][0]['replyToken'];
-    // $userId = $events['events'][0]['source']['userId'];
-    // $typeMessage = $events['events'][0]['message']['type'];
-    // $userMessage = $events['events'][0]['message']['text'];
+    $replyToken = $events['events'][0]['replyToken'];
+    $replyInfo = $events['events'][0]['type'];
+    $userId = $events['events'][0]['source']['userId'];
+    $typeMessage = $events['events'][0]['message']['type'];
+    $userMessage = $events['events'][0]['message']['text'];
     //$userMessage = strtolower($userMessage);
     
-    
+    $replyData = new TextMessageBuilder($replyInfo);
 
     // ------ RICH MENU -------
     // if($userMessage=="เปลี่ยนวิชา"){
@@ -136,6 +134,6 @@ $replyData = new TextMessageBuilder($typeMessage);
     //     //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
     //     $replyData = new TextMessageBuilder($userMessage);
     // }
-//}
+}
 //l ส่วนของคำสั่งตอบกลับข้อความ
 $response = $bot->replyMessage($replyToken,$replyData);
