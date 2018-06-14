@@ -108,38 +108,38 @@ if(!is_null($events)){
                                 'ผลไม้ 1 ส่วนคือเท่าไร?',
                                 new AreaBuilder(346,40,346,333)
                                 ),
-                            new ImagemapMessageActionBuilder(
-                                'ซื้ออาหารกินข้างนอก จะกะปริมาณอย่างไร?',
-                                new AreaBuilder(692,40,346,333)
-                                ),
+                            // new ImagemapMessageActionBuilder(
+                            //     'ซื้ออาหารกินข้างนอก จะกะปริมาณอย่างไร?',
+                            //     new AreaBuilder(692,40,346,333)
+                            //     ),
 
 
-                            new ImagemapMessageActionBuilder(
-                                'กินไม่ถึง หรือกินเกิน ทำอย่างไร?',
-                                new AreaBuilder(0,373,346,333)
-                                ),
-                            new ImagemapMessageActionBuilder(
-                                'ท้องผูก ท้องอืด ทำอย่างไร?',
-                                new AreaBuilder(346,373,346,333)
-                                ),
-                            new ImagemapMessageActionBuilder(
-                                'แพ้ท้อง กินอย่างไร?',
-                                new AreaBuilder(692,373,346,333)
-                                ),
+                            // new ImagemapMessageActionBuilder(
+                            //     'กินไม่ถึง หรือกินเกิน ทำอย่างไร?',
+                            //     new AreaBuilder(0,373,346,333)
+                            //     ),
+                            // new ImagemapMessageActionBuilder(
+                            //     'ท้องผูก ท้องอืด ทำอย่างไร?',
+                            //     new AreaBuilder(346,373,346,333)
+                            //     ),
+                            // new ImagemapMessageActionBuilder(
+                            //     'แพ้ท้อง กินอย่างไร?',
+                            //     new AreaBuilder(692,373,346,333)
+                            //     ),
 
 
-                            new ImagemapMessageActionBuilder(
-                                'ไม่อิ่ม ทำอย่างไร?',
-                                new AreaBuilder(0,706,346,333)
-                                ),
-                            new ImagemapMessageActionBuilder(
-                                'อาหารอะไรที่ควรหลีกเลี่ยง?',
-                                new AreaBuilder(346,706,346,333)
-                                ),
-                             new ImagemapMessageActionBuilder(
-                                'อื่น ๆ (ฝากคำถามไว้ได้)',
-                                new AreaBuilder(692,706,346,333)
-                                ),
+                            // new ImagemapMessageActionBuilder(
+                            //     'ไม่อิ่ม ทำอย่างไร?',
+                            //     new AreaBuilder(0,706,346,333)
+                            //     ),
+                            // new ImagemapMessageActionBuilder(
+                            //     'อาหารอะไรที่ควรหลีกเลี่ยง?',
+                            //     new AreaBuilder(346,706,346,333)
+                            //     ),
+                            //  new ImagemapMessageActionBuilder(
+                            //     'อื่น ๆ (ฝากคำถามไว้ได้)',
+                            //     new AreaBuilder(692,706,346,333)
+                            //     ),
 
                         ));
     }
