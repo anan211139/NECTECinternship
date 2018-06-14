@@ -94,7 +94,7 @@ if(!is_null($events)){
                         )); 
     }
     else if($userMessage=="a"){
-        $imageMapUrl = 'https://peat.none.codes/food/new_nutri2.jpg?_ignored=';
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
         $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'แนะนำอาหาร',
