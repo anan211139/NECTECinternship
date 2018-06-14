@@ -96,17 +96,17 @@ if(!is_null($events)){
                     ),
         )); 
     }
-    else if($userMessage=="ดูคะแนน"){
+    else if($userMessage =="ดูคะแนน"){
         $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
-        $replyData = new TextMessageBuilder($userMessage);
+        $replyData = new TextMessageBuilder($textReplyMessage);
     }
-    else if($userMessage=="สะสมแต้ม"){
+    else if($userMessage =="สะสมแต้ม"){
         $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
-        $replyData = new TextMessageBuilder($userMessage);
+        $replyData = new TextMessageBuilder($textReplyMessage);
     }
-    else if($userMessage=="ดู Code"){
+    else if($userMessage =="ดู Code"){
         $textReplyMessage = $userId;
-        $replyData = new TextMessageBuilder($userMessage);
+        $replyData = new TextMessageBuilder($textReplyMessage);
     }
     // else if($userMessage=="a"){
     //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
