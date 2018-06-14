@@ -79,16 +79,20 @@ class BotController extends Controller
         $content = file_get_contents('php://input');
         echo "A";
         echo $content;
+
+        $count = 0;
         
         // $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
         // $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
-        $response = $bot->getProfile('U038940166356c6b9fb0dcf051aded27f');
-        if ($response->isSucceeded()) {
-            $profile = $response->getJSONDecodedBody();
-            echo $profile['displayName'];
-            echo $profile['pictureUrl'];
-            echo $profile['statusMessage'];
-        }
+
+        
+        // $response = $bot->getProfile('U038940166356c6b9fb0dcf051aded27f');
+        // if ($response->isSucceeded()) {
+        //     $profile = $response->getJSONDecodedBody();
+        //     echo $profile['displayName'];
+        //     echo $profile['pictureUrl'];
+        //     echo $profile['statusMessage'];
+        // }
         $events = json_decode($content, true);
         if(!is_null($events)){
             //echo $events;
@@ -101,6 +105,13 @@ class BotController extends Controller
             //$userMessage = strtolower($userMessage);
             
             // $replyData = new TextMessageBuilder($replyInfo);
+
+            //------ GREETING --------
+            if($count==0){
+                $replyData = new TextMessageBuilder("สวัสดีจ้า");
+                $count = 1;
+            }
+
             //------ RICH MENU -------
             if($userMessage=="เปลี่ยนวิชา"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';

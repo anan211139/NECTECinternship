@@ -66,9 +66,9 @@ $count =0;
 $events = json_decode($content, true);
 
 if(!is_null($events)){
-    if($count==0){
+    if($count==1){
         $replyData = new TextMessageBuilder("สวัสดีจ้า");
-        $count = 1;
+        $count = 2;
     }
     //echo $events;
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
