@@ -64,7 +64,7 @@ class BotController extends Controller
 	
     public $response        = null;
     
-    public function init($channelSecret, $access_token) {
+    public function start($channelSecret, $access_token) {
         $this->httpClient     = new CurlHTTPClient($access_token);
         $this->channelSecret  = $channelSecret;
         $this->endpointBase   = LINEBot::DEFAULT_ENDPOINT_BASE;
@@ -100,7 +100,7 @@ class BotController extends Controller
             }
         }
 		
-        parent::init($this->httpClient, [ 'channelSecret' => $channelSecret ]);
+        parent::start($this->httpClient, [ 'channelSecret' => $channelSecret ]);
 		
     }
 	
@@ -141,7 +141,7 @@ class BotController extends Controller
 
     public function index() {
         echo "iitim";
-        $this->init(LINE_MESSAGE_CHANNEL_SECRET, LINE_MESSAGE_ACCESS_TOKEN);
+        $this->start(LINE_MESSAGE_CHANNEL_SECRET, LINE_MESSAGE_ACCESS_TOKEN);
         echo $this->channelSecret;
         if (!empty($this->isEvents)) {
 		
