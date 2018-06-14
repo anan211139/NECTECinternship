@@ -61,7 +61,9 @@ class BotController extends Controller
             $replyToken = $events['events'][0]['replyToken'];
         }
         // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-        $textMessageBuilder = new TextMessageBuilder(json_encode($events));
+        $textMessageBuilder = 'Hello';
+        //$textMessageBuilder = $events['events'][0]['message']['text'];
+        //$textMessageBuilder = new TextMessageBuilder(json_encode($events));
         
         //l ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken, $textMessageBuilder);
