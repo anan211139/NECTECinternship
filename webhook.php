@@ -60,7 +60,7 @@ if(!is_null($events)){
     //$userMessage = strtolower($userMessage);
     // ------ RICH MENU -------
     if($userMessage=="เปลี่ยนวิชา"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_subject_1.jpg?raw=true';
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
         $replyData = new ImagemapMessageBuilder(
             $imageMapUrl,
             "รายการวิชา",
@@ -77,7 +77,7 @@ if(!is_null($events)){
            )); 
     }
     else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_lesson_1.jpg?raw=true';
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_lesson.png?raw=true';
                     $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'หัวข้อที่ต้องการเรียน',
