@@ -98,7 +98,7 @@ if(!is_null($events)){
         $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'แนะนำอาหาร',
-                        new BaseSizeBuilder(1040,1040),
+                        new BaseSizeBuilder(513,1040),
                         array(
                             new ImagemapMessageActionBuilder(
                                 'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?',
