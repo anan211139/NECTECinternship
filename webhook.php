@@ -58,7 +58,7 @@ if(!is_null($events)){
     echo $events;
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     $replyToken = $events['events'][0]['replyToken'];
-    $userId = $events['source']['userId'];
+    $userId = $events['events'][1]['userId'];
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     //$userMessage = strtolower($userMessage);
@@ -109,23 +109,6 @@ if(!is_null($events)){
         //$textReplyMessage = $userId;
         $replyData = new TextMessageBuilder($userId);
     }
-    // else if($userMessage=="a"){
-    //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
-    //     $replyData = new ImagemapMessageBuilder(
-    //         $imageMapUrl,
-    //         'แนะนำอาหาร',
-    //         new BaseSizeBuilder(546,1024),
-    //         array(
-    //             new ImagemapMessageActionBuilder(
-    //                 'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?',
-    //                 new AreaBuilder(0,40,346,333)
-    //             ),
-    //             new ImagemapMessageActionBuilder(
-    //                 'ผลไม้ 1 ส่วนคือเท่าไร?',
-    //                 new AreaBuilder(346,40,346,333)
-    //             ),
-    //         ));
-    // }
     else{
         //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
         $replyData = new TextMessageBuilder($userMessage);
