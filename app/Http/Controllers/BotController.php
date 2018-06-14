@@ -85,45 +85,45 @@ class BotController extends Controller
         return "This is my app";
     }
     
-    public function start($channelSecret, $access_token) {
-        $this->httpClient     = new CurlHTTPClient($access_token);
-        $this->channelSecret  = $channelSecret;
-        $this->endpointBase   = LINEBot::DEFAULT_ENDPOINT_BASE;
+    // public function start($channelSecret, $access_token) {
+    //     $this->httpClient     = new CurlHTTPClient($access_token);
+    //     $this->channelSecret  = $channelSecret;
+    //     $this->endpointBase   = LINEBot::DEFAULT_ENDPOINT_BASE;
 		
-        $this->content        = file_get_contents('php://input');
-        $events               = json_decode($this->content, true);
+    //     $this->content        = file_get_contents('php://input');
+    //     $events               = json_decode($this->content, true);
 		
-        if (!empty($events['events'])) {
+    //     if (!empty($events['events'])) {
 			
-            $this->isEvents = true;
-            $this->events   = $events['events'];
+    //         $this->isEvents = true;
+    //         $this->events   = $events['events'];
 			
-            foreach ($events['events'] as $event) {
+    //         foreach ($events['events'] as $event) {
 				
-                $this->replyToken = $event['replyToken'];
-                $this->source     = (object) $event['source'];
-                $this->message    = (object) $event['message'];
-                $this->timestamp  = $event['timestamp'];
+    //             $this->replyToken = $event['replyToken'];
+    //             $this->source     = (object) $event['source'];
+    //             $this->message    = (object) $event['message'];
+    //             $this->timestamp  = $event['timestamp'];
 				
-                if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
-                    $this->isText = true;
-                    $this->text   = $event['message']['text'];
-                }
+    //             if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+    //                 $this->isText = true;
+    //                 $this->text   = $event['message']['text'];
+    //             }
 				
-                if ($event['type'] == 'message' && $event['message']['type'] == 'image') {
-                    $this->isImage = true;
-                }
+    //             if ($event['type'] == 'message' && $event['message']['type'] == 'image') {
+    //                 $this->isImage = true;
+    //             }
 				
-                if ($event['type'] == 'message' && $event['message']['type'] == 'sticker') {
-                    $this->isSticker = true;
-                }
+    //             if ($event['type'] == 'message' && $event['message']['type'] == 'sticker') {
+    //                 $this->isSticker = true;
+    //             }
 				
-            }
-        }
+    //         }
+    //     }
 		
-        parent::start($this->httpClient, [ 'channelSecret' => $channelSecret ]);
+    //     parent::start($this->httpClient, [ 'channelSecret' => $channelSecret ]);
 		
-    }
+    // }
 	
     public function sendMessageNew ($to = null, $message = null) {
         $messageBuilder = new TextMessageBuilder($message);
