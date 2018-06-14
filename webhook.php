@@ -48,6 +48,8 @@ $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SE
  
 // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
 $content = file_get_contents('php://input');
+echo "A";
+echo $content;
  
 $events = json_decode($content, true);
 if(!is_null($events)){
@@ -55,65 +57,82 @@ if(!is_null($events)){
     $replyToken = $events['events'][0]['replyToken'];
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
-    $userMessage = strtolower($userMessage);
+    //$userMessage = strtolower($userMessage);
     // ------ RICH MENU -------
-    switch ($typeMessage){
-        case 'text':
-            switch ($userMessage) {
-                case "t":
-                    $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
-                    $replyData = new TextMessageBuilder($textReplyMessage);
-                    break;
-                case "i":
-                    $picFullSize = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
-                    $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
-                    $replyData = new ImageMessageBuilder($picFullSize,$picThumbnail);
-                    break;
-                case 'เปลี่ยนวิชา':
-                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
-                    $replyData = new ImagemapMessageBuilder(
-                        $imageMapUrl,
-                        'รายการวิชา',
-                        new BaseSizeBuilder(513,1040),
-                        array(
-                            new ImagemapMessageActionBuilder(
-                                'วิชาคณิตศาสตร์',
-                                new AreaBuilder(957,320,92,192)
-                                ),
-                            new ImagemapUriActionBuilder(
-                                'วิชาภาษาอังกฤษ',
-                                new AreaBuilder(953,453,88,325)
-                                )
-                        )); 
-                    break;
-                case 'วิชาคณิตศาสตร์' || 'เปลี่ยนหัวข้อ':
-                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_lesson_1.jpg?raw=true';
-                    $replyData = new ImagemapMessageBuilder(
-                        $imageMapUrl,
-                        'หัวข้อที่ต้องการเรียน',
-                        new BaseSizeBuilder(513,1040),
-                        array(
-                            new ImagemapMessageActionBuilder(
-                                'สมการ',
-                                new AreaBuilder(957,320,92,192)
-                                ),
-                            new ImagemapUriActionBuilder(
-                                'หรม./ครน.',
-                                new AreaBuilder(953,453,88,325)
-                                )
-                        )); 
-                    break;                                                                                                                                 
-                default:
-                    $textReplyMessage = "ลองใหม่อีกครั้งค่ะ" ;
-                    $replyData = new TextMessageBuilder($textReplyMessage);         
-                    break;                                      
-            }
-            break;
-        default:
-            $textReplyMessage = json_encode($events);
-            $replyData = new TextMessageBuilder($textReplyMessage);         
-            break;  
+    if($userMessage=="เปลี่ยนวิชา"){
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_subject_1.jpg?raw=true';
+        $replyData = new ImagemapMessageBuilder(
+            $imageMapUrl,
+            "รายการวิชา",
+            new BaseSizeBuilder(513,1040),
+            array(
+               new ImagemapMessageActionBuilder(
+                   "วิชาคณิตศาสตร์",
+                   new AreaBuilder(957,320,92,192)
+               ),
+               new ImagemapUriActionBuilder(
+                   "วิชาภาษาอังกฤษ",
+                   new AreaBuilder(953,453,88,325)
+               )
+           )); 
     }
+ else{
+     //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+     $replyData = new TextMessageBuilder($userMessage);
+ }
+//     switch ($typeMessage){
+//         case 'text':
+//             switch ($userMessage) {
+//                 case "t":
+//                     $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+//                     $replyData = new TextMessageBuilder($textReplyMessage);
+//                     break;
+                
+//                 case "เปลี่ยนวิชา":
+//                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
+//                     $replyData = new ImagemapMessageBuilder(
+//                         $imageMapUrl,
+//                         'รายการวิชา',
+//                         new BaseSizeBuilder(513,1040),
+//                         array(
+//                             new ImagemapMessageActionBuilder(
+//                                 'วิชาคณิตศาสตร์',
+//                                 new AreaBuilder(957,320,92,192)
+//                                 ),
+//                             new ImagemapUriActionBuilder(
+//                                 'วิชาภาษาอังกฤษ',
+//                                 new AreaBuilder(953,453,88,325)
+//                                 )
+//                         )); 
+//                     break;
+//                 case "วิชาคณิตศาสตร์" || "เปลี่ยนหัวข้อ":
+//                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/c_lesson_1.jpg?raw=true';
+//                     $replyData = new ImagemapMessageBuilder(
+//                         $imageMapUrl,
+//                         'หัวข้อที่ต้องการเรียน',
+//                         new BaseSizeBuilder(513,1040),
+//                         array(
+//                             new ImagemapMessageActionBuilder(
+//                                 'สมการ',
+//                                 new AreaBuilder(957,320,92,192)
+//                                 ),
+//                             new ImagemapUriActionBuilder(
+//                                 'หรม./ครน.',
+//                                 new AreaBuilder(953,453,88,325)
+//                                 )
+//                         )); 
+//                     break;                                                                                                                                 
+//                 default:
+//                     $textReplyMessage = "ลองใหม่";
+//                     $replyData = new TextMessageBuilder($textReplyMessage);
+//                     break;                                     
+//             }
+//             break;
+//         default:
+//             $textReplyMessage = json_encode($events);
+//             $replyData = new TextMessageBuilder($textReplyMessage);         
+//             break;  
+//     }
 }
 //l ส่วนของคำสั่งตอบกลับข้อความ
 $response = $bot->replyMessage($replyToken,$replyData);
