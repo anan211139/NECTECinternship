@@ -70,7 +70,7 @@ if(!is_null($events)){
                    "วิชาคณิตศาสตร์",
                    new AreaBuilder(957,320,92,192)
                ),
-               new ImagemapUriActionBuilder(
+               new ImagemapMessageActionBuilder(
                    "วิชาภาษาอังกฤษ",
                    new AreaBuilder(953,453,88,325)
                ),
@@ -78,70 +78,37 @@ if(!is_null($events)){
     }
     else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_lesson.png?_ignored=';
-                    $replyData = new ImagemapMessageBuilder(
-                        $imageMapUrl,
-                        'หัวข้อที่ต้องการเรียน',
-                        new BaseSizeBuilder(513,1040),
-                        array(
-                            new ImagemapMessageActionBuilder(
-                                'สมการ',
-                                new AreaBuilder(957,320,92,192)
-                                ),
-                            new ImagemapUriActionBuilder(
-                                'หรม./ครน.',
-                                new AreaBuilder(953,453,88,325)
-                            ),
-                        )); 
+        $replyData = new ImagemapMessageBuilder(
+            $imageMapUrl,
+            'หัวข้อที่ต้องการเรียน',
+            new BaseSizeBuilder(513,1040),
+                array(
+                    new ImagemapMessageActionBuilder(
+                        'สมการ',
+                        new AreaBuilder(957,320,92,192)
+                    ),
+                    new ImagemapUriActionBuilder(
+                        'หรม./ครน.',
+                        new AreaBuilder(953,453,88,325)
+                    ),
+        )); 
     }
     else if($userMessage=="a"){
         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
         $replyData = new ImagemapMessageBuilder(
-                        $imageMapUrl,
-                        'แนะนำอาหาร',
-                        new BaseSizeBuilder(513,1040),
-                        array(
-                            new ImagemapMessageActionBuilder(
-                                'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?',
-                                new AreaBuilder(0,40,346,333)
-                                ),
-                            new ImagemapMessageActionBuilder(
-                                'ผลไม้ 1 ส่วนคือเท่าไร?',
-                                new AreaBuilder(346,40,346,333)
-                                ),
-                            // new ImagemapMessageActionBuilder(
-                            //     'ซื้ออาหารกินข้างนอก จะกะปริมาณอย่างไร?',
-                            //     new AreaBuilder(692,40,346,333)
-                            //     ),
-
-
-                            // new ImagemapMessageActionBuilder(
-                            //     'กินไม่ถึง หรือกินเกิน ทำอย่างไร?',
-                            //     new AreaBuilder(0,373,346,333)
-                            //     ),
-                            // new ImagemapMessageActionBuilder(
-                            //     'ท้องผูก ท้องอืด ทำอย่างไร?',
-                            //     new AreaBuilder(346,373,346,333)
-                            //     ),
-                            // new ImagemapMessageActionBuilder(
-                            //     'แพ้ท้อง กินอย่างไร?',
-                            //     new AreaBuilder(692,373,346,333)
-                            //     ),
-
-
-                            // new ImagemapMessageActionBuilder(
-                            //     'ไม่อิ่ม ทำอย่างไร?',
-                            //     new AreaBuilder(0,706,346,333)
-                            //     ),
-                            // new ImagemapMessageActionBuilder(
-                            //     'อาหารอะไรที่ควรหลีกเลี่ยง?',
-                            //     new AreaBuilder(346,706,346,333)
-                            //     ),
-                            //  new ImagemapMessageActionBuilder(
-                            //     'อื่น ๆ (ฝากคำถามไว้ได้)',
-                            //     new AreaBuilder(692,706,346,333)
-                            //     ),
-
-                        ));
+            $imageMapUrl,
+            'แนะนำอาหาร',
+            new BaseSizeBuilder(513,1040),
+            array(
+                new ImagemapMessageActionBuilder(
+                    'ไม่กิน [อาหารบางชนิด] กินอะไรแทนดี?',
+                    new AreaBuilder(0,40,346,333)
+                ),
+                new ImagemapMessageActionBuilder(
+                    'ผลไม้ 1 ส่วนคือเท่าไร?',
+                    new AreaBuilder(346,40,346,333)
+                ),
+            ));
     }
     else{
         //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
