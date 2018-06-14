@@ -17,8 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('bot', 'BotController@index');
 Route::get('bot', function (Request $request) {
     logger("message request : ", $request->all());
 });
-Route::post('bot', ['as' => 'line.bot.message', 'uses' => 'BotController@index']);
+Route::post('bot', ['as' => 'line.bot.message', 'uses' => 'BotController@anan']);
