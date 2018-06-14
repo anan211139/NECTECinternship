@@ -77,7 +77,7 @@ if(!is_null($events)){
            )); 
     }
     else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
-        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_lesson.png?raw=true';
+        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_lesson.png?raw=true&_ignored=';
                     $replyData = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         'หัวข้อที่ต้องการเรียน',
