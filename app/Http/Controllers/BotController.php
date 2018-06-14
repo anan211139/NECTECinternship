@@ -98,10 +98,7 @@ class BotController extends Controller
                 }
 				
             }
-        }
-		
-        parent::init($this->httpClient, [ 'channelSecret' => $this->channelSecret ]);
-		
+        }		
     }
 	
     public function sendMessageNew ($to = null, $message = null) {
@@ -137,7 +134,6 @@ class BotController extends Controller
         return json_decode($result);
 		
     }
-
 
     public function index() {
         echo "iitim";
