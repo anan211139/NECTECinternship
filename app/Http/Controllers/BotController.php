@@ -43,7 +43,6 @@ define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5
 class BotController extends Controller
 {
     public function index() {
-        echo "iitim";
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient('VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5uObrERh7O5m/tO3bbgEPeF2D//vC4kHTLQuQGbgpZSqU3C+WUJ86nQNptlraZZtek2tdLYoqREXuN8xy3swo9RVO3EL0VrmnhSQfuOl89AQdB04t89/1O/w1cDnyilFU=');
         $bot = new LINEBot($httpClient, array('channelSecret' => '40f2053df45b479807d8f2bba1b0dbe2'));
@@ -68,6 +67,5 @@ class BotController extends Controller
         
         // Failed
         echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
-        return "This is my app";
     }
 }
