@@ -106,8 +106,8 @@ if(!is_null($events)){
         $replyData = new TextMessageBuilder($textReplyMessage);
     }
     else if($userMessage =="ดู Code"){
-        $textReplyMessage = $userId;
-        $replyData = new TextMessageBuilder($textReplyMessage);
+        //$textReplyMessage = $userId;
+        $replyData = new TextMessageBuilder($userId);
     }
     // else if($userMessage=="a"){
     //     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/edit_subject.png?raw=true';
