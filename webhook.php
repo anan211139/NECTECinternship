@@ -64,7 +64,11 @@ if(!is_null($events)){
                     $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
                     $replyData = new TextMessageBuilder($textReplyMessage);
                     break;
-                
+                case "i":
+                    $picFullSize = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
+                    $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
+                    $replyData = new ImageMessageBuilder($picFullSize,$picThumbnail);
+                    break;
                 case 'เปลี่ยนวิชา':
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Sub.jpg?raw=true';
                     $replyData = new ImagemapMessageBuilder(
