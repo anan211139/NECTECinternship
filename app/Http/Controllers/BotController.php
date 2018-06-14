@@ -48,29 +48,21 @@ class BotController extends Controller
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
-        echo "A";
         
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
-        echo "B";
         
         // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
         $events = json_decode($content, true);
-        echo "C";
         if(!is_null($events)){
             // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
             $replyToken = $events['events'][0]['replyToken'];
-            echo "D";
-            echo $replyToken;
         }
         // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-        echo "E";
         $textMessageBuilder = new TextMessageBuilder(json_encode($events));
-        echo "F";
         
         //l ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken, $textMessageBuilder);
-        echo "G";
         if ($response->isSucceeded()) {
             echo 'Succeeded!';
             return;
@@ -78,5 +70,6 @@ class BotController extends Controller
         
         // Failed
         echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
+        return "This is my app";
     }
 }
