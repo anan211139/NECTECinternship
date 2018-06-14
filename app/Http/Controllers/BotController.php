@@ -51,6 +51,8 @@ class BotController extends Controller
         
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
+
+        $replyToken = 'aaa';
         
         // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
         $events = json_decode($content, true);
