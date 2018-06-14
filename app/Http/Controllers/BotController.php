@@ -168,7 +168,8 @@ class BotController extends Controller
             }
             else{
                 //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
-                $replyData = new TextMessageBuilder($userMessage);
+                //$replyData = new TextMessageBuilder($userMessage);
+                $replyData = new TextMessageBuilder($count);
             }
         }
         //l ส่วนของคำสั่งตอบกลับข้อความ
