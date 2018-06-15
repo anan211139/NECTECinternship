@@ -6,19 +6,19 @@ use Illuminate\Http\Request;
 
 class Pagecontroller extends Controller
 {
-    public function getlaravelpage(){
+    public function getLaravelpage(){
         return view('welcome');
     }
-    public function gethome(){
+    public function getHome(){
         return view('home');
     }
-    public function getlogin(){
+    public function getLogin(){
         return view('login');
     }
-    public function getregis(){
+    public function getRegis(){
         return view('regis');
     }
-    public function getcontent(){
+    public function getContent(){
         return view('content');
     }
 }
