@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class Pagecontroller extends Controller
 {
+    public function getblankblade(){
+        return view('welcome');
+    }
     public function gethome(){
         return view('home');
     }
