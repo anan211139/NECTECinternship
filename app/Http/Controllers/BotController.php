@@ -176,7 +176,7 @@ class BotController extends Controller
                                 
                 
                 $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
-                $videoUrl = "https://www.youtube.com/embed/RBumgq5yVrA";    
+                $videoUrl = "https://youtu.be/RBumgq5yVrA";    
                 $arr_replyData[] = new VideoMessageBuilder($videoUrl,$picThumbnail); 
             
                 $multiMessage =     new MultiMessageBuilder;
