@@ -178,16 +178,19 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
 
+            //------ หรม./ครน. -------
+            else if(strrpos($userMessage, 'หรม') === true||strrpos($userMessage, 'ครน')=== true){
+                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
 
 
 
             else{
-                // $textReplyMessage = "พี่หมีไม่ค่อยเข้าใจที่น้องพูดเลย พี่หมีขอโทษนะ";
                 $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
-                //$replyData = new TextMessageBuilder($count);
             }
         }
-        //l ส่วนของคำสั่งตอบกลับข้อความ
+        // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
     }
 }
