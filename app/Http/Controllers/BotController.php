@@ -175,7 +175,7 @@ class BotController extends Controller
                 $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                                 
                 
-                $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/img/Screen%20Shot%202018-06-15%20at%202.18.09%20PM.png?raw=true';
+                $picThumbnail = 'https://www.mywebsite.com/imgsrc/photos/f/sampleimage/240';
                 $videoUrl = "https://www.youtube.com/embed/RBumgq5yVrA";    
                 $arr_replyData[] = new VideoMessageBuilder($videoUrl,$picThumbnail); 
             
@@ -185,7 +185,7 @@ class BotController extends Controller
                 }
                 $replyData = $multiMessage; 
 
-
+                //'https://github.com/anan211139/NECTECinternship/blob/master/img/Screen%20Shot%202018-06-15%20at%202.18.09%20PM.png?raw=true'
                 // $textReplyMessage = "        ท่ามกลางป่าอันเงียบสงบแห่งหนึ่ง มีหมีอยู่สองตัว ซึ่งกำลังจะต่อสู้กันเพื่อแย่งชิงความเป็นใหญ่ โดยพวกมันตกลงกันไว้ว่าหากใครเป็นผู้ชนะจะได้เป็นพี่หมีติวเตอร์ แต่ผู้แพ้นั้นจะต้องถูกขับไล่ออกไปเรียนใหม่
                 // เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
                 
