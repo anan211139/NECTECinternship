@@ -179,7 +179,7 @@ class BotController extends Controller
             }
 
             //------ หรม./ครน. -------
-            else if(strrpos($userMessage, 'หรม') == true||strrpos($userMessage, 'ครน') == true){
+            else if(strrpos($userMessage, 'หรม') == true||strrpos($userMessage, 'ครน') == true||$userMessage =="หรม./ครน."){
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
