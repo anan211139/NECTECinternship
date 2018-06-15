@@ -14,10 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', 'Pagecontroller@gethome');
-// Route::get('/home', function () {
-//     return view('home');
-// });
+// Route::get('/home', 'Pagecontroller@gethome');
+Route::get('/home', function () {
+    return view('home');
+});
 Route::get('/content', 'Pagecontroller@getcontent');
 // Route::get('/content', function () {
 //     return view('content');
