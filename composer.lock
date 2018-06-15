@@ -3433,7 +3433,6 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "ed5fd2281113729f1ebcc64d101ad66028aeb3d5"
                 "reference": "591a30922f54656695e59b1f39501aec513403da"
             },
             "dist": {
