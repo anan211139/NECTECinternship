@@ -174,7 +174,7 @@ class BotController extends Controller
 
             //------ สมการ -------
             else if($userMessage =="สมการ"){
-                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียนเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
 
