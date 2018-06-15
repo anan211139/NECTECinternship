@@ -182,7 +182,7 @@ class BotController extends Controller
 
 
             else{
-                //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+                $textReplyMessage = "พี่หมีไม่ค่อยเข้าใจที่น้องพูดเลย พี่หมีขอโทษนะ";
                 $replyData = new TextMessageBuilder($userMessage);
                 //$replyData = new TextMessageBuilder($count);
             }
