@@ -10,11 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'Pagecontroller@getblankblade');
+Route::get('/', 'Pagecontroller@gethome');
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/home', 'Pagecontroller@gethome');
+// Route::get('/home', 'Pagecontroller@gethome');
 // Route::get('/home', function () {
 //     return view('home');
 // });

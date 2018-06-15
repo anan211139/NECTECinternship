@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class Pagecontroller extends Controller
 {
-    public function getblankblade(){
+    public function getlaravelpage(){
         return view('welcome');
     }
     public function gethome(){
@@ -17,5 +17,8 @@ class Pagecontroller extends Controller
     }
     public function getregis(){
         return view('regis');
+    }
+    public function getcontent(){
+        return view('content');
     }
 }
