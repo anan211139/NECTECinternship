@@ -170,11 +170,31 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($userId);
             }
             else if($userMessage =="เกี่ยวกับพี่หมี"){
-                $textReplyMessage = "        ท่ามกลางป่าอันเงียบสงบแห่งหนึ่ง มีหมีอยู่สองตัว ซึ่งกำลังจะต่อสู้กันเพื่อแย่งชิงความเป็นใหญ่ โดยพวกมันตกลงกันไว้ว่าหากใครเป็นผู้ชนะจะได้เป็นพี่หมีติวเตอร์ แต่ผู้แพ้นั้นจะต้องถูกขับไล่ออกไปเรียนใหม่
-                เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
+                $arr_replyData = array();
+                $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                                
+                $picFullSize = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
+                $picThumbnail = 'https://youtu.be/laT_EGrW_zc';
+                $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);      
+            
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage; 
+
+
+                // $textReplyMessage = "        ท่ามกลางป่าอันเงียบสงบแห่งหนึ่ง มีหมีอยู่สองตัว ซึ่งกำลังจะต่อสู้กันเพื่อแย่งชิงความเป็นใหญ่ โดยพวกมันตกลงกันไว้ว่าหากใครเป็นผู้ชนะจะได้เป็นพี่หมีติวเตอร์ แต่ผู้แพ้นั้นจะต้องถูกขับไล่ออกไปเรียนใหม่
+                // เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
                 
-                เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                // เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
+                // $replyData = new TextMessageBuilder($textReplyMessage);
+
+
+                // $picThumbnail = 'https://www.mywebsite.com/imgsrc/photos/f/sampleimage/240';
+                // $videoUrl = "https://www.mywebsite.com/simplevideo.mp4";                
+                // $replyData = new VideoMessageBuilder($videoUrl,$picThumbnail);
             }
 
             //------ สมการ -------
@@ -184,7 +204,7 @@ class BotController extends Controller
             }
 
             //------ หรม./ครน. -------
-            else if($pos1!== false||$pos2!== false){
+            else if($pos1 !== false||$pos2!== false){
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
