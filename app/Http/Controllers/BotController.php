@@ -171,12 +171,17 @@ class BotController extends Controller
             }
             else if($userMessage =="เกี่ยวกับพี่หมี"){
                 $arr_replyData = array();
-                $textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
+                $textReplyMessage = "สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน
+                โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง 
+                จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง
+                พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย 
+                เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
                 $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                                 
-                $picFullSize = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
-                $picThumbnail = 'https://youtu.be/laT_EGrW_zc';
-                $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);      
+                
+                $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
+                $videoUrl = "https://www.youtube.com/embed/KmAgDlFd2Os";    
+                $arr_replyData[] = new VideoMessageBuilder($videoUrl,$picThumbnail); 
             
                 $multiMessage =     new MultiMessageBuilder;
                 foreach($arr_replyData as $arr_Reply){
@@ -193,7 +198,7 @@ class BotController extends Controller
 
 
                 // $picThumbnail = 'https://www.mywebsite.com/imgsrc/photos/f/sampleimage/240';
-                // $videoUrl = "https://www.mywebsite.com/simplevideo.mp4";                
+                // $videoUrl = "https://www.youtube.com/embed/KmAgDlFd2Os";                
                 // $replyData = new VideoMessageBuilder($videoUrl,$picThumbnail);
             }
 
