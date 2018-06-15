@@ -174,10 +174,13 @@ class BotController extends Controller
                 $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
                 $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                                 
-                
-                $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true/240';
-                $videoUrl = "https://youtu.be/RBumgq5yVrA";    
-                $arr_replyData[] = new VideoMessageBuilder($videoUrl,$picThumbnail); 
+                $textReplyMessage = "https://www.youtube.com/embed/m1-rpd3S-48";
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+
+
+                // $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true/240';
+                // $videoUrl = "https://youtu.be/RBumgq5yVrA";    
+                // $arr_replyData[] = new VideoMessageBuilder($videoUrl,$picThumbnail); 
             
                 $multiMessage =     new MultiMessageBuilder;
                 foreach($arr_replyData as $arr_Reply){
