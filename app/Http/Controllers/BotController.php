@@ -171,6 +171,16 @@ class BotController extends Controller
                 เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
+
+            //------ สมการ -------
+            else if($userMessage =="สมการ"){
+                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียนเรื่องสมการ<br>เรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
+
+
+
+
             else{
                 //$textReplyMessage = "Bot ตอบกลับคุณเป็นข้อความ";
                 $replyData = new TextMessageBuilder($userMessage);
