@@ -18,18 +18,18 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 });
-Route::get('/content', 'Pagecontroller@getcontent');
-// Route::get('/content', function () {
-//     return view('content');
-// });
-Route::get('/login', 'Pagecontroller@getlogin');
-// Route::get('/login', function () {
-//     return view('login');
-// });
-Route::get('/regis', 'Pagecontroller@getregis');
-// Route::get('/regis', function () {
-//     return view('regis');
-// });
-
+// Route::get('/content', 'Pagecontroller@getcontent');
+Route::get('/content', function () {
+    return view('content');
+});
+// Route::get('/login', 'Pagecontroller@getlogin');
+Route::get('/login', function () {
+    return view('login');
+});
+// Route::get('/regis', 'Pagecontroller@getregis');
+Route::get('/regis', function () {
+    return view('regis');
+});
+Route::post('/home/submit', 'MessageController@submit');
 
 Route::resource('Line','LineController');  //call path ที่กำหนด
