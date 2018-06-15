@@ -142,8 +142,7 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
-                $q1 = Quizzes::findOrFail(1);
-                $textReplyMessage = $q1->question;
+                $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="ดู Code"){
@@ -155,6 +154,11 @@ class BotController extends Controller
                 เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
                 
                 เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
+            else if($userMessage =="โจทย์"){
+                $q1 = Quizzes::findOrFail(1);
+                $textReplyMessage = $q1->question;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else{
