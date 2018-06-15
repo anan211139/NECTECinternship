@@ -108,6 +108,11 @@ class BotController extends Controller
             $userId = $events['events'][0]['source']['userId'];
             $typeMessage = $events['events'][0]['message']['type'];
             $userMessage = $events['events'][0]['message']['text'];
+
+
+            //------ SET VAR ---------
+            $pos1= strrpos($userMessage, 'หรม');
+            $pos2= strrpos($userMessage, 'ครน');
             //$userMessage = strtolower($userMessage);
             
             // $replyData = new TextMessageBuilder($replyInfo);
@@ -166,11 +171,19 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($userId);
             }
             else if($userMessage =="เกี่ยวกับพี่หมี"){
-                $textReplyMessage = "        ท่ามกลางป่าอันเงียบสงบแห่งหนึ่ง มีหมีอยู่สองตัว ซึ่งกำลังจะต่อสู้กันเพื่อแย่งชิงความเป็นใหญ่ โดยพวกมันตกลงกันไว้ว่าหากใครเป็นผู้ชนะจะได้เป็นพี่หมีติวเตอร์ แต่ผู้แพ้นั้นจะต้องถูกขับไล่ออกไปเรียนใหม่
-                เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
-                
-                เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                $arr_replyData = array();
+                $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                                
+                $textReplyMessage = "https://www.youtube.com/embed/Yad6t_EgwVw";
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+            
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage; 
+
             }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
@@ -182,13 +195,16 @@ class BotController extends Controller
                 $textReplyMessage = $q1->question;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
+            //------ หรม./ครน. -------
+            else if($pos1 !== false||$pos2!== false){
+                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else{
-                $textReplyMessage = "พี่หมีไม่ค่อยเข้าใจที่น้องพูดเลย พี่หมีขอโทษนะ";
-                $replyData = new TextMessageBuilder($userMessage);
-                //$replyData = new TextMessageBuilder($count);
+                $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
             }
         }
-        //l ส่วนของคำสั่งตอบกลับข้อความ
+        // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
     }
 }
