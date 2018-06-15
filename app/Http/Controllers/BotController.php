@@ -96,6 +96,23 @@ class BotController extends Controller
         //     echo $profile['pictureUrl'];
         //     echo $profile['statusMessage'];
         // }
+
+
+        $userId = 'U038940166356c6b9fb0dcf051aded27f';
+        // ทดสอบส่ง push ข้อความอย่างง่าย
+        $textPushMessage = 'สวัสดีครับ';                
+        $messageData = new TextMessageBuilder($textPushMessage);        
+                    
+        $response = $bot->pushMessage($userId,$messageData);
+        if ($response->isSucceeded()) {
+            echo 'Succeeded!';
+            return;
+        }
+        
+        // Failed
+        echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
+
+
         $events = json_decode($content, true);
         if(!is_null($events)){
             //echo $events;
