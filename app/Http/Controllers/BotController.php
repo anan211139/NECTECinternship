@@ -107,6 +107,11 @@ class BotController extends Controller
             $userId = $events['events'][0]['source']['userId'];
             $typeMessage = $events['events'][0]['message']['type'];
             $userMessage = $events['events'][0]['message']['text'];
+
+
+            //------ SET VAR ---------
+            $pos1= strrpos($userMessage, 'หรม');
+            $pos2= strrpos($userMessage, 'ครน');
             //$userMessage = strtolower($userMessage);
             
             // $replyData = new TextMessageBuilder($replyInfo);
@@ -179,7 +184,7 @@ class BotController extends Controller
             }
 
             //------ หรม./ครน. -------
-            else if(strrpos($userMessage, 'หรม')||strrpos($userMessage, 'ครน')||$userMessage =="หรม./ครน."){
+            else if($pos1!== false||$pos2!== false){
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
