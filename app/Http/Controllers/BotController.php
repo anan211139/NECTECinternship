@@ -36,6 +36,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
+use App\Quizzes;
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5uObrERh7O5m/tO3bbgEPeF2D//vC4kHTLQuQGbgpZSqU3C+WUJ86nQNptlraZZtek2tdLYoqREXuN8xy3swo9RVO3EL0VrmnhSQfuOl89AQdB04t89/1O/w1cDnyilFU=');
@@ -171,16 +172,16 @@ class BotController extends Controller
                 เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
-
             //------ สมการ -------
             else if($userMessage =="สมการ"){
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
-
-
-
-
+            else if($userMessage =="โจทย์"){
+                $q1 = Quizzes::findOrFail(1);
+                $textReplyMessage = $q1->question;
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else{
                 $textReplyMessage = "พี่หมีไม่ค่อยเข้าใจที่น้องพูดเลย พี่หมีขอโทษนะ";
                 $replyData = new TextMessageBuilder($userMessage);
