@@ -18,6 +18,7 @@ class CreateQuizzesTable extends Migration
             $table->text('question');
             $table->text('level');
             $table->text('subject');
+            $table->text('topic');
             $table->text('answer');
         });
     }
