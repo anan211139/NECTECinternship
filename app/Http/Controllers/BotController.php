@@ -141,7 +141,7 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
-                $q1 = Quizzes::find(1);
+                $q1 = Quizzes::findOrFail(1);
                 $textReplyMessage = $q1->question;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
