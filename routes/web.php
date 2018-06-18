@@ -10,27 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'Pagecontroller@getHome');
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// Route::get('/home', 'Pagecontroller@gethome');
-// Route::get('/home', function () {
-//     return view('home');
-// });
-Route::get('/content', 'Pagecontroller@getContent');
-// Route::get('/content', function () {
-//     return view('content');
-// });
+Route::get('/', 'Pagecontroller@getLogin');
 Route::get('/login', 'Pagecontroller@getLogin');
-// Route::get('/login', function () {
-//     return view('login');
-// });
 Route::get('/regis', 'Pagecontroller@getRegis');
-// Route::get('/regis', function () {
-//     return view('regis');
-// });
 Route::get('/getLaravelpage', 'Pagecontroller@getLaravelpage');
+
 Route::post('/home/submit', 'MessageController@submit');
 
 
