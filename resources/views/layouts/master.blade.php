@@ -13,7 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>AdminLTE 3 | Starter</title>
 
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="~/admin-lte/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="$HOME/admin-lte/plugins/font-awesome/css/font-awesome.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <!-- Google Font: Source Sans Pro -->
@@ -321,9 +321,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="~/admin-lte/plugins/jquery/jquery.min.js"></script>
+<script src="$HOME/admin-lte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="~/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="$HOME/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('js/app.js')}}"></script>
 </body>
