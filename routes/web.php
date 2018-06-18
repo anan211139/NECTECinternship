@@ -30,6 +30,8 @@ Route::get('/regis', 'Pagecontroller@getRegis');
 // Route::get('/regis', function () {
 //     return view('regis');
 // });
+Route::get('/getLaravelpage', 'Pagecontroller@getLaravelpage');
 Route::post('/home/submit', 'MessageController@submit');
+
 
 Route::resource('Line','LineController');  //call path ที่กำหนด
