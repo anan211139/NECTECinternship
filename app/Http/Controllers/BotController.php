@@ -36,13 +36,13 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
+use App\Quizzes;
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5uObrERh7O5m/tO3bbgEPeF2D//vC4kHTLQuQGbgpZSqU3C+WUJ86nQNptlraZZtek2tdLYoqREXuN8xy3swo9RVO3EL0VrmnhSQfuOl89AQdB04t89/1O/w1cDnyilFU=');
 
 class BotController extends Controller
 {
-
     //public count = 0;
 
     public function index() {
@@ -71,7 +71,6 @@ class BotController extends Controller
         // Failed
         echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
     }
-
     public function anan()
     {
         // เชื่อมต่อกับ LINE Messaging API
@@ -82,12 +81,10 @@ class BotController extends Controller
         $content = file_get_contents('php://input');
         echo "A";
         echo $content;
-
         //$count = 0;
         
         // $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
         // $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
-
         
         // $response = $bot->getProfile('U038940166356c6b9fb0dcf051aded27f');
         // if ($response->isSucceeded()) {
@@ -96,8 +93,6 @@ class BotController extends Controller
         //     echo $profile['pictureUrl'];
         //     echo $profile['statusMessage'];
         // }
-
-
         $events = json_decode($content, true);
         if(!is_null($events)){
             //echo $events;
@@ -107,10 +102,13 @@ class BotController extends Controller
             $userId = $events['events'][0]['source']['userId'];
             $typeMessage = $events['events'][0]['message']['type'];
             $userMessage = $events['events'][0]['message']['text'];
+            //------ SET VAR ---------
+            $pos1= strrpos($userMessage, 'หรม');
+            $pos2= strrpos($userMessage, 'ครน');
+            
             //$userMessage = strtolower($userMessage);
             
             // $replyData = new TextMessageBuilder($replyInfo);
-
             //------ GREETING --------
             // if($count==0){
             //     $replyData = new TextMessageBuilder($count);
@@ -118,6 +116,7 @@ class BotController extends Controller
             // }
             //$count++;
             //------ RICH MENU -------
+            
             if($userMessage=="เปลี่ยนวิชา"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
                 $replyData = new ImagemapMessageBuilder(
@@ -165,29 +164,41 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($userId);
             }
             else if($userMessage =="เกี่ยวกับพี่หมี"){
-                $textReplyMessage = "        ท่ามกลางป่าอันเงียบสงบแห่งหนึ่ง มีหมีอยู่สองตัว ซึ่งกำลังจะต่อสู้กันเพื่อแย่งชิงความเป็นใหญ่ โดยพวกมันตกลงกันไว้ว่าหากใครเป็นผู้ชนะจะได้เป็นพี่หมีติวเตอร์ แต่ผู้แพ้นั้นจะต้องถูกขับไล่ออกไปเรียนใหม่
-                เมื่อวันต่อสู้มาถึงหมีทั้งสองต่างก็ใช้ความรู้ตัวเองกันอย่างเอาเป็นเอาตายแบบไม่คิดชีวิตกันเลยทีเดียว และผลของการต่อสู้ก็จบลงโดยมีฝ่ายหนึ่งชนะและอีกฝ่ายหนึ่งแพ้ ซึ่งหมีตัวที่ชนะก็ดีใจและฮึกเหิมเป็นอย่างยิ่งที่ตัวมันแข็งแรงและเก่งกล้าจนสามารถเอาชนะอีกฝ่ายหนึ่งได้
-                
-                เมื่อได้รับชัยชนะแล้วมันก็พยายามที่จะปีนขึ้นไปบนเนินเขาเล็กๆ พร้อมกับสงเสียงดังง เพื่อเป็นการประกาศว่าบัดนี้มันได้กลายเป็นผู้นำของฝูงหมีแล้ว และทันใดนั้นเองก็มีนกอินทรีตัวหนึ่งบินผ่านมาเห็นเข้า มันจึงบินโฉบลงมาด้วยความรวดเร็วและคว้าหมีผู้ชนะไปกินเป็นอาหารในทันที";
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                $arr_replyData = array();
+                $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                                
+                $textReplyMessage = "https://www.youtube.com/embed/Yad6t_EgwVw";
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+            
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage; 
             }
-
+        
             //------ สมการ -------
             else if($userMessage =="สมการ"){
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
-
-
-
-
+            else if($userMessage =="โจทย์"){
+                $q1 = Quizzes::findOrFail(1);
+                $textReplyMessage = $q1->question;
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
+            //------ หรม./ครน. -------
+            else if($pos1 !== false||$pos2!== false){
+                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else{
-                $textReplyMessage = "พี่หมีไม่ค่อยเข้าใจที่น้องพูดเลย พี่หมีขอโทษนะ";
-                $replyData = new TextMessageBuilder($userMessage);
-                //$replyData = new TextMessageBuilder($count);
+                $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
             }
         }
-        //l ส่วนของคำสั่งตอบกลับข้อความ
+        
+        // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
     }
 }
