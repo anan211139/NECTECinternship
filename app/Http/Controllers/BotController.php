@@ -173,6 +173,12 @@ class BotController extends Controller
 
                 //------QR CODE-----------
 
+
+                Route::get('qr-code', function () 
+                {
+                    return QRCode::text('QR Code Generator for Laravel!')->png();    
+                });
+
                 // $_REQUEST['data'] = $userId;
                 // //set it to writable location, a place for temp generated PNG files
                 // $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'phpqrcode/temp'.DIRECTORY_SEPARATOR; 
