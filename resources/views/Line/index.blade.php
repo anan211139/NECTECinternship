@@ -30,4 +30,5 @@
     //display generated file
     echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />';  
     $img_qr = basename($filename);
+    
 ?>
