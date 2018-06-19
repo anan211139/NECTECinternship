@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
+use phpqrcode\bindings\tcpdf\QRcode;
 
 class LineController extends Controller
 {
