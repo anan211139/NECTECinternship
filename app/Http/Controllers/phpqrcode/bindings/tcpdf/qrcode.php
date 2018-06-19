@@ -180,22 +180,22 @@ if (!defined('QRCODEDEFS')) {
 	/**
 	 * Matrix index to get width from $capacity array.
 	 */
-    define('QRCAP_WIDTH',    0);
+    if (!defined('QRCAP_WIDTH'))define('QRCAP_WIDTH',    0);
 
     /**
 	 * Matrix index to get number of words from $capacity array.
 	 */
-    define('QRCAP_WORDS',    1);
+    if (!defined('QRCAP_WORDS'))define('QRCAP_WORDS',    1);
 
     /**
 	 * Matrix index to get remainder from $capacity array.
 	 */
-    define('QRCAP_REMINDER', 2);
+    if (!defined('QRCAP_REMINDER'))define('QRCAP_REMINDER', 2);
 
     /**
 	 * Matrix index to get error correction level from $capacity array.
 	 */
-    define('QRCAP_EC',       3);
+    if (!defined('QRCAP_EC'))define('QRCAP_EC',       3);
 
 	// -----------------------------------------------------
 
@@ -204,12 +204,12 @@ if (!defined('QRCODEDEFS')) {
 	/**
 	 * Number of header bits for structured mode
 	 */
-    define('STRUCTURE_HEADER_BITS',  20);
+    if (!defined('STRUCTURE_HEADER_BITS'))define('STRUCTURE_HEADER_BITS',  20);
 
     /**
 	 * Max number of symbols for structured mode
 	 */
-    define('MAX_STRUCTURED_SYMBOLS', 16);
+	if (!defined('MAX_STRUCTURED_SYMBOLS'))define('MAX_STRUCTURED_SYMBOLS', 16);
 
 	// -----------------------------------------------------
 
@@ -218,22 +218,22 @@ if (!defined('QRCODEDEFS')) {
     /**
 	 * Down point base value for case 1 mask pattern (concatenation of same color in a line or a column)
 	 */
-    define('N1',  3);
+    if (!defined('N1'))define('N1',  3);
 
     /**
 	 * Down point base value for case 2 mask pattern (module block of same color)
 	 */
-	define('N2',  3);
+	if (!defined('N2'))define('N2',  3);
 
     /**
 	 * Down point base value for case 3 mask pattern (1:1:3:1:1(dark:bright:dark:bright:dark)pattern in a line or a column)
 	 */
-	define('N3', 40);
+	if (!defined('N3'))define('N3', 40);
 
     /**
 	 * Down point base value for case 4 mask pattern (ration of dark modules in whole)
 	 */
-	define('N4', 10);
+	if (!defined('N4'))define('N4', 10);
 
 	// -----------------------------------------------------
 
@@ -242,17 +242,17 @@ if (!defined('QRCODEDEFS')) {
 	/**
 	 * if true, estimates best mask (spec. default, but extremally slow; set to false to significant performance boost but (propably) worst quality code
 	 */
-	define('QR_FIND_BEST_MASK', true);
+	if (!defined('QR_FIND_BEST_MASK'))define('QR_FIND_BEST_MASK', true);
 
 	/**
 	 * if false, checks all masks available, otherwise value tells count of masks need to be checked, mask id are got randomly
 	 */
-	define('QR_FIND_FROM_RANDOM', 2);
+	if (!defined('QR_FIND_FROM_RANDOM'))define('QR_FIND_FROM_RANDOM', 2);
 
 	/**
 	 * when QR_FIND_BEST_MASK === false
 	 */
-	define('QR_DEFAULT_MASK', 2);
+	if (!defined('QR_DEFAULT_MASK'))define('QR_DEFAULT_MASK', 2);
 
 	// -----------------------------------------------------
 
