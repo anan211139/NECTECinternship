@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
-use phpqrcode\bindings\tcpdf\QRcode;
-include 'phpqrcode\qrlib.php';
+use App\Http\Controllers\phpqrcode\bindings\tcpdf\QRcode;
+
+include 'phpqrcode/qrlib.php';
 
 class LineController extends Controller
 {
