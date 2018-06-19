@@ -89,7 +89,7 @@
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
  * @version 1.0.002
  */
-
+// if (!defined('')) 
 // definitions
 if (!defined('QRCODEDEFS')) {
 
@@ -115,7 +115,7 @@ if (!defined('QRCODEDEFS')) {
 	/**
 	 * Encoding mode alphanumeric (0-9A-Z $%*+-./:) 45characters. 2 characters are encoded to 11bit length. In theory, 4296 characters or less can be stored in a QRcode.
 	 */
-	define('QR_MODE_AN', 1);
+	if (!defined('QR_MODE_AN')) define('QR_MODE_AN', 1);
 
 	/**
 	 * Encoding mode 8bit byte data. In theory, 2953 characters or less can be stored in a QRcode.
@@ -141,7 +141,7 @@ if (!defined('QRCODEDEFS')) {
 	/**
 	 * Error correction level L : About 7% or less errors can be corrected.
 	 */
-	define('QR_ECLEVEL_L', 0);
+	if (!defined('QR_MODE_AN')) define('QR_ECLEVEL_L', 0);
 
 	/**
 	 * Error correction level M : About 15% or less errors can be corrected.
