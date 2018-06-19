@@ -175,16 +175,16 @@ class BotController extends Controller
 
                 $_REQUEST['data'] = $userId;
                 //set it to writable location, a place for temp generated PNG files
-                $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'temp'.DIRECTORY_SEPARATOR; 
+                $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'phpqrcode/temp'.DIRECTORY_SEPARATOR; 
                 //html PNG location prefix
                 $PNG_WEB_DIR = 'phpqrcode/temp/';
                 include "phpqrcode/qrlib.php";    
                 //ofcourse we need rights to create temp dir
                 if (!file_exists($PNG_TEMP_DIR))
                     mkdir($PNG_TEMP_DIR);
-                $filename = $PNG_TEMP_DIR.'test.png';
-                $errorCorrectionLevel = 'L';
-                $matrixPointSize = 4;
+                    $filename = $PNG_TEMP_DIR.'test.png';
+                    $errorCorrectionLevel = 'L';
+                    $matrixPointSize = 4;
                 if (isset($_REQUEST['data'])) { 
                     //it's very important!
                     if (trim($_REQUEST['data']) == '')
