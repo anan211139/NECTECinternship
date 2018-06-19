@@ -273,7 +273,7 @@ class BotController extends Controller
 //                                ->where('subject', 'english')->first();
                 
 //                 $textReplyMessage = $quizzesforsubj->question;
-                $textReplyMessage = '65555';
+                $textReplyMessage = $content;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             //------ หรม./ครน. -------
