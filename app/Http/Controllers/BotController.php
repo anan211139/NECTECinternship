@@ -243,13 +243,13 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-                $quizzesforsubj = DB::table('quizzes')
-                    ->where('subject', 'english')->first();
-                // $modelQuizzes = Quizzes::find()
-                //                 ->where(['subject' => 'english'])
-                //                 ->orderBy('sort')
-                //                 ->all();
-                // $q1 = Quizzes::findOrFail(1);
+//                 $quizzesforsubj = DB::table('quizzes')
+//                     ->where('subject', 'english')->first();
+                $modelQuizzes = Quizzes::find()
+                                ->where(['subject' => 'english'])
+                                ->orderBy('sort')
+                                ->all();
+//                 $q1 = Quizzes::findOrFail(1);
                 $textReplyMessage = $quizzesforsubj->question;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
