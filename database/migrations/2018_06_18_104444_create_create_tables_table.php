@@ -14,15 +14,16 @@ class CreateCreateTablesTable extends Migration
     public function up()
     {
         Schema::create('teacher', function (Blueprint $table) {
-            $table->autoIncrement('teacherID');
+            $table->increments('teacherID');
             $table->string('TCname');
             $table->string('UNTC');
             $table->string('PWTC');
             $table->string('TCEmail');
+            $table->Integer('schoolID');
             $table->timestampsTz();
         });
         Schema::create('parent', function (Blueprint $table) {
-            $table->autoIncrement('parentID');
+            $table->increments('parentID');
             $table->string('PRname');
             $table->string('UNPR');
             $table->string('PWPR');
@@ -34,10 +35,15 @@ class CreateCreateTablesTable extends Migration
             $table->string('STName');
             $table->string('STLocalPic');
             $table->Integer('point');
+            $table->date('birthofdate');
+            $table->string('STEmail');
+            $table->string('phone');
+            $table->string('address');
+            $table->Integer('schoolID');
             $table->timestampsTz();
         });
         Schema::create('Exam', function (Blueprint $table) {
-            $table->autoIncrement('ExamID');
+            $table->increments('ExamID');
             $table->Integer('levelID');
             $table->string('subjectID');
             $table->Integer('chapterID');
@@ -46,20 +52,33 @@ class CreateCreateTablesTable extends Migration
             $table->Integer('PrincipleID');
             $table->timestampsTz();
         });
+        Schema::create('results', function (Blueprint $table) {
+            $table->Integer('groupnoID');
+            $table->Integer('STcodeID');
+            $table->smallInteger('levelID');
+            $table->Integer('max');
+            $table->Integer('ture');
+        });
+        Schema::create('school', function (Blueprint $table) {
+            $table->increments('schoolID');
+            $table->string('schoolname');
+            $table->string('address');
+            $table->string('phone');
+        });
         Schema::create('subject', function (Blueprint $table) {
-            $table->autoIncrement('subjectID');
+            $table->increments('subjectID');
             $table->string('Namesubject');
         });
         Schema::create('chapter', function (Blueprint $table) {
-            $table->autoIncrement('chapterID');
+            $table->increments('chapterID');
             $table->string('Namechapter');
         });
         Schema::create('level', function (Blueprint $table) {
-            $table->autoIncrement('levelID');
+            $table->increments('levelID');
             $table->string('Namelevel');
         });
         Schema::create('printciple', function (Blueprint $table) {
-            $table->autoIncrement('printcipleID');
+            $table->increments('printcipleID');
             $table->string('PLocalPic');
         });
         Schema::create('studentparent', function (Blueprint $table) {
@@ -73,14 +92,14 @@ class CreateCreateTablesTable extends Migration
             $table->timestampsTz();
         });
         Schema::create('groupRandom', function (Blueprint $table) {
-            $table->autoIncrement('groupRanID');
+            $table->increments('groupRanID');
             $table->Integer('groupnoID');
             $table->string('listExamID');
             $table->string('listLevelID');
             $table->timestampsTz();
         });
         Schema::create('group', function (Blueprint $table) {
-            $table->autoIncrement('groupnoID');
+            $table->increments('groupnoID');
             $table->Integer('STcodeID');
             $table->Integer('subjectID');
             $table->Integer('chepterID');
@@ -89,7 +108,7 @@ class CreateCreateTablesTable extends Migration
             $table->dateTimeTz('7day');
             $table->timestampsTz();
         });Schema::create('log_children_quiz', function (Blueprint $table) {
-            $table->autoIncrement('id');
+            $table->increments('id');
             $table->Integer('groupnoID');
             $table->Integer('numbertest');
             $table->Integer('ExamID');
