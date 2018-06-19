@@ -16,7 +16,6 @@ class LineController extends Controller
      */
     public function index()
     {
-        echo QR_MODE_AN;
         $userId = "U038940166356c6b9fb0dcf051aded27f";
         $_REQUEST['data'] = $userId;
         //set it to writable location, a place for temp generated PNG files
