@@ -16,35 +16,17 @@ class LineController extends Controller
      */
     public function index()
     {
-        $userId = "U038940166356c6b9fb0dcf051aded27f";
-        $_REQUEST['data'] = $userId;
-        //set it to writable location, a place for temp generated PNG files
-        $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'phpqrcode/temp'.DIRECTORY_SEPARATOR; 
-        //html PNG location prefix
-        $PNG_WEB_DIR = 'phpqrcode/temp/';
-         
-        //ofcourse we need rights to create temp dir
-        if (!file_exists($PNG_TEMP_DIR))
-            mkdir($PNG_TEMP_DIR);
-        $filename = $PNG_TEMP_DIR.'test.png';
-        $errorCorrectionLevel = 'L';
-        $matrixPointSize = 4;
-        if (isset($_REQUEST['data'])) { 
-            //it's very important!
-            if (trim($_REQUEST['data']) == '')
-                die('data cannot be empty! <a href="?">back</a>');
-            // user data
-            $filename = $PNG_TEMP_DIR.$_REQUEST['data'].'.png';
-            QRcode::png($_REQUEST['data'], $filename, $errorCorrectionLevel, $matrixPointSize, 2);    
-        } else {    
-            //default data
-            echo 'You can provide data in GET parameter: <a href="?data=like_that">like that</a><hr/>';    
-            QRcode::png('PHP QR Code :)', $filename, $errorCorrectionLevel, $matrixPointSize, 2);    
-        }         
-        //display generated file
-        echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />';  
-        $img_qr = basename($filename);
-        echo $img_qr;
+        
+    // include composer autoload
+    require_once '../../../vendor/autoload.php';
+    
+    // เรียกใช้งานสร้าง qrcode โดยสร้าง qrcode 
+    // ข้อควม http://www.ninenik.com
+    // บันทึกเป็นไฟล์ ชื่อ myqrcode.png ไว้ในโฟลเดอร์ images / picqrcode / myqrcode.png 
+    // กำหนด Error Correction ของ QRcode เท่ากับ L  (มีค่า L,M,Q และ H)
+    // กำหนด ขนาด pixel เท่ากับ 4
+    // กำหนดความหนาของกรอบ เท่ากับ 2
+    \PHPQRCode\QRcode::png("http://www.ninenik.com", "images/picqrcode/myqrcode.png", 'L', 4, 2);
 
         return view('Line.index');
     }
