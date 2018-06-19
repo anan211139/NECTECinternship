@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
