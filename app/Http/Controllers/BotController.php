@@ -173,34 +173,46 @@ class BotController extends Controller
 
                 //------QR CODE-----------
 
-                $_REQUEST['data'] = $userId;
-                //set it to writable location, a place for temp generated PNG files
-                $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'phpqrcode/temp'.DIRECTORY_SEPARATOR; 
-                //html PNG location prefix
-                $PNG_WEB_DIR = 'phpqrcode/temp/';
-                include "phpqrcode/qrlib.php";    
-                //ofcourse we need rights to create temp dir
-                if (!file_exists($PNG_TEMP_DIR))
-                    mkdir($PNG_TEMP_DIR);
-                    $filename = $PNG_TEMP_DIR.'test.png';
-                    $errorCorrectionLevel = 'L';
-                    $matrixPointSize = 4;
-                if (isset($_REQUEST['data'])) { 
-                    //it's very important!
-                    if (trim($_REQUEST['data']) == '')
-                        die('data cannot be empty! <a href="?">back</a>');
-                    // user data
-                    $filename = $PNG_TEMP_DIR.$_REQUEST['data'].'.png';
-                    QRcode::png($_REQUEST['data'], $filename, $errorCorrectionLevel, $matrixPointSize, 2); 
+                // $_REQUEST['data'] = $userId;
+                // //set it to writable location, a place for temp generated PNG files
+                // $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'phpqrcode/temp'.DIRECTORY_SEPARATOR; 
+                // //html PNG location prefix
+                // $PNG_WEB_DIR = 'phpqrcode/temp/';
+                // include "phpqrcode/qrlib.php";    
+                // //ofcourse we need rights to create temp dir
+                // if (!file_exists($PNG_TEMP_DIR))
+                //     mkdir($PNG_TEMP_DIR);
+                //     $filename = $PNG_TEMP_DIR.'test.png';
+                //     $errorCorrectionLevel = 'L';
+                //     $matrixPointSize = 4;
+                // if (isset($_REQUEST['data'])) { 
+                //     //it's very important!
+                //     if (trim($_REQUEST['data']) == '')
+                //         die('data cannot be empty! <a href="?">back</a>');
+                //     // user data
+                //     $filename = $PNG_TEMP_DIR.$_REQUEST['data'].'.png';
+                //     QRcode::png($_REQUEST['data'], $filename, $errorCorrectionLevel, $matrixPointSize, 2); 
 
-                } else {    
-                    //default data
-                    echo 'You can provide data in GET parameter: <a href="?data=like_that">like that</a><hr/>';    
-                    QRcode::png('PHP QR Code :)', $filename, $errorCorrectionLevel, $matrixPointSize, 2);    
-                }         
-                //display generated file
-                echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />';  
-                $img_qr = basename($filename);
+                // } else {    
+                //     //default data
+                //     echo 'You can provide data in GET parameter: <a href="?data=like_that">like that</a><hr/>';    
+                //     QRcode::png('PHP QR Code :)', $filename, $errorCorrectionLevel, $matrixPointSize, 2);    
+                // }         
+                // //display generated file
+                // echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />';  
+                // $img_qr = basename($filename);
+
+
+                // include composer autoload
+                require_once '../../../vendor/autoload.php';
+                echo "test";
+                // เรียกใช้งานสร้าง qrcode โดยสร้าง qrcode 
+                // ข้อควม http://www.ninenik.com
+                // บันทึกเป็นไฟล์ ชื่อ myqrcode.png ไว้ในโฟลเดอร์ images / picqrcode / myqrcode.png 
+                // กำหนด Error Correction ของ QRcode เท่ากับ L  (มีค่า L,M,Q และ H)
+                // กำหนด ขนาด pixel เท่ากับ 4
+                // กำหนดความหนาของกรอบ เท่ากับ 2
+                \PHPQRCode\QRcode::png("http://www.ninenik.com", "myqrcode.png", 'L', 4, 2);
  
                 
     
@@ -208,8 +220,12 @@ class BotController extends Controller
                 // $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
             
 
-                $picFullSize = 'https://github.com/anan211139/NECTECinternship/blob/master/app/Http/Controllers/phpqrcode/temp/'.$img_qr.'.?raw=true';
-                $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/app/Http/Controllers/phpqrcode/temp/'.$img_qr.'?raw=true/240';
+                // $picFullSize = 'https://github.com/anan211139/NECTECinternship/blob/master/app/Http/Controllers/phpqrcode/temp/'.$img_qr.'.?raw=true';
+                // $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/app/Http/Controllers/phpqrcode/temp/'.$img_qr.'?raw=true/240';
+
+                $picFullSize = 'https://github.com/anan211139/NECTECinternship/blob/master/app/Http/Controllers/phpqrcode/temp/eiei.png?raw=true';
+                $picThumbnail = 'https://github.com/anan211139/NECTECinternship/blob/master/app/Http/Controllers/phpqrcode/temp/eiei.png?raw=true/240';
+
                 $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
 
 
