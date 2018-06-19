@@ -227,7 +227,14 @@ class BotController extends Controller
                 
                $textReplyMessage = $quizzesforsubj->question;
                // $textReplyMessage = $modelQuizzes->question;
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                
+
+                // $picFullSize = $dataQR;
+                // $picThumbnail = $dataQR;
+
+                // $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
+                $pathtoq = assert($textReplyMessage);
+                $replyData = new TextMessageBuilder($pathtoq);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
