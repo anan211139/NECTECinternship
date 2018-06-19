@@ -1,5 +1,5 @@
-<h1>hello world </h1>
 <?php
+    echo "anan";
     //------QR CODE-----------
     $userId="U038940166356c6b9fb0dcf051aded27f";
     $_REQUEST['data'] = $userId;
@@ -30,5 +30,5 @@
     //display generated file
     echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />';  
     $img_qr = basename($filename);
-    
+
 ?>
