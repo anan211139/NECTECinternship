@@ -146,7 +146,7 @@ if (!defined('QRCODEDEFS')) {
 	/**
 	 * Error correction level M : About 15% or less errors can be corrected.
 	 */
-	define('QR_ECLEVEL_M', 1);
+	if (!defined('QR_ECLEVEL_M')) define('QR_ECLEVEL_M', 1);
 
 	/**
 	 * Error correction level Q : About 25% or less errors can be corrected.
