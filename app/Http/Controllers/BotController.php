@@ -172,15 +172,20 @@ class BotController extends Controller
             else if($userMessage =="ดู Code"){
                 //$textReplyMessage = $userId;
                 $arr_replyData = array();
-                $arr_replyData[] = new TextMessageBuilder($userId);
+
+                $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='.$userId.'&choe=UTF-8';
+
+                $arr_replyData[] = new TextMessageBuilder($dataQR);
 
                 //------QR CODE-----------
 
+                // echo '<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2Fwww.google.com%2F&choe=UTF-8" title="Link to Google.com" />';
+                // Route::get('qr-code', function () 
+                // {
+                //     return QRCode::text('QR Code Generator for Laravel!')->png();    
+                // });
 
-                Route::get('qr-code', function () 
-                {
-                    return QRCode::text('QR Code Generator for Laravel!')->png();    
-                });
+
 
                 // $_REQUEST['data'] = $userId;
                 // //set it to writable location, a place for temp generated PNG files
