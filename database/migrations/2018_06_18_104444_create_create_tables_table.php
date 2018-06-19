@@ -13,87 +13,90 @@ class CreateCreateTablesTable extends Migration
      */
     public function up()
     {
+        Schema::create('teacher', function (Blueprint $table) {
+            $table->autoIncrement('teacherID');
+            $table->string('TCname');
+            $table->string('UNTC');
+            $table->string('PWTC');
+            $table->string('TCEmail');
+            $table->timestampsTz();
+        });
         Schema::create('parent', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('username');
-            $table->string('password');
-            $table->string('email');
-            $table->timestamps();
+            $table->autoIncrement('parentID');
+            $table->string('PRname');
+            $table->string('UNPR');
+            $table->string('PWPR');
+            $table->string('PREmail');
+            $table->timestampsTz();
         });
-        Schema::create('child', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('line_id');
-            $table->string('name');
+        Schema::create('student', function (Blueprint $table) {
+            $table->string('STcodeID');
+            $table->string('STName');
+            $table->string('STLocalPic');
             $table->Integer('point');
-            $table->timestamps();
+            $table->timestampsTz();
         });
-        Schema::create('quiz', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('detail');
-            $table->Integer('level');
-            $table->string('subject');
-            $table->Integer('lesson');
-            $table->string('local_pic');
-            $table->smallInteger('answer');
-            $table->timestamps();
-        });
-        // Schema::create('Choice', function (Blueprint $table) {
-        //     $table->increments('id');
-        //     $table->string('detail');
-        //     $table->string('order');
-        //     $table->timestamps();
-        // });
-        Schema::create('tescher', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('username');
-            $table->string('password');
-            $table->string('email');
-            $table->timestamps();
+        Schema::create('Exam', function (Blueprint $table) {
+            $table->autoIncrement('ExamID');
+            $table->Integer('levelID');
+            $table->string('subjectID');
+            $table->Integer('chapterID');
+            $table->string('ELocalPic');
+            $table->smallInteger('answerStatus');
+            $table->Integer('PrincipleID');
+            $table->timestampsTz();
         });
         Schema::create('subject', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('subject');
-            $table->timestamps();
+            $table->autoIncrement('subjectID');
+            $table->string('Namesubject');
         });
-        Schema::create('lesson', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('lesson');
-            $table->timestamps();
+        Schema::create('chapter', function (Blueprint $table) {
+            $table->autoIncrement('chapterID');
+            $table->string('Namechapter');
         });
-        Schema::create('ParentAndChild', function (Blueprint $table) {
-            $table->Integer('ID_Parent');
-            $table->Integer('line_id');
-            $table->timestamps();
+        Schema::create('level', function (Blueprint $table) {
+            $table->autoIncrement('levelID');
+            $table->string('Namelevel');
         });
-        Schema::create('TeacherAndChild', function (Blueprint $table) {
-            $table->Integer('ID_teacher');
-            $table->Integer('line_id');
-            $table->timestamps();
+        Schema::create('printciple', function (Blueprint $table) {
+            $table->autoIncrement('printcipleID');
+            $table->string('PLocalPic');
         });
-        Schema::create('TempForRandom', function (Blueprint $table) {
-            $table->increments('id');
-            $table->Integer('id_part');
-            $table->string('list_id_q');
-            $table->string('list_level');
-            $table->timestamps();
+        Schema::create('studentparent', function (Blueprint $table) {
+            $table->Integer('STcodeID');
+            $table->Integer('parentID');
+            $table->timestampsTz();
         });
-        Schema::create('part', function (Blueprint $table) {
-            $table->increments('id');
-            $table->Integer('id_child');
-            $table->Integer('id_subject');
-            $table->Integer('id_lesson');
-            $table->timestamps();
+        Schema::create('STandTC', function (Blueprint $table) {
+            $table->Integer('STcodeID');
+            $table->Integer('teacherID');
+            $table->timestampsTz();
+        });
+        Schema::create('groupRandom', function (Blueprint $table) {
+            $table->autoIncrement('groupRanID');
+            $table->Integer('groupnoID');
+            $table->string('listExamID');
+            $table->string('listLevelID');
+            $table->timestampsTz();
+        });
+        Schema::create('group', function (Blueprint $table) {
+            $table->autoIncrement('groupnoID');
+            $table->Integer('STcodeID');
+            $table->Integer('subjectID');
+            $table->Integer('chepterID');
+            $table->Integer('momentStatus');
+            $table->dateTimeTz('3day');
+            $table->dateTimeTz('7day');
+            $table->timestampsTz();
         });Schema::create('log_children_quiz', function (Blueprint $table) {
-            $table->increments('id');
-            $table->Integer('id_part');
-            $table->Integer('number');
-            $table->Integer('id_quiz');
-            $table->Integer('id_level');
-            $table->Integer('tf');
-            $table->datetime('reply');
-            $table->timestamps();
+            $table->autoIncrement('id');
+            $table->Integer('groupnoID');
+            $table->Integer('numbertest');
+            $table->Integer('ExamID');
+            $table->Integer('STAnswer');
+            $table->Integer('answerStatus');
+            $table->dateTimeTz('time');
+            $table->timestampsTz();
         });
     }
 
