@@ -269,8 +269,8 @@ class BotController extends Controller
 //                                 ->orderBy('sort')
 //                                 ->all();
 //                 $q1 = Quizzes::findOrFail(1);
-                 $quizzesforsubj = DB::table('Quizzes')
-                               ->where('subject', 'english')->first();
+//                  $quizzesforsubj = DB::table('Quizzes')
+//                                ->where('subject', 'english')->first();
                 
 //                 $textReplyMessage = $quizzesforsubj->question;
                 $textReplyMessage =  $events;
