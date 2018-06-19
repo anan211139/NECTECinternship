@@ -180,7 +180,7 @@ class BotController extends Controller
                 //------QR CODE-----------
 
                 $picFullSize = $dataQR;
-                $picThumbnail = $dataQR;
+                $picThumbnail = $dataQR.'/240';
 
                 $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
 
