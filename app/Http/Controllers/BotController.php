@@ -200,7 +200,7 @@ class BotController extends Controller
                 }         
                 //display generated file
                 echo '<img src=""phpqrcode/"'.$PNG_WEB_DIR.basename($filename).'" />';  
-                $img_qr = $PNG_WEB_DIR.basename($filename);
+                $img_qr = basename($filename);
  
                 
     
