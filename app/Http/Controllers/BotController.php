@@ -195,7 +195,7 @@ class BotController extends Controller
                     QRcode::png('PHP QR Code :)', $filename, $errorCorrectionLevel, $matrixPointSize, 2);    
                 }         
                 //display generated file
-                echo '<img src=""phpqrcode/"'.$PNG_WEB_DIR.basename($filename).'" />';  
+                echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />';  
                 $img_qr = basename($filename);
  
                 
