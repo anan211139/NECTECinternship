@@ -204,15 +204,15 @@ class BotController extends Controller
 
 
                 // include composer autoload
-                require_once '../../../vendor/autoload.php';
-                echo "test";
-                // เรียกใช้งานสร้าง qrcode โดยสร้าง qrcode 
-                // ข้อควม http://www.ninenik.com
-                // บันทึกเป็นไฟล์ ชื่อ myqrcode.png ไว้ในโฟลเดอร์ images / picqrcode / myqrcode.png 
-                // กำหนด Error Correction ของ QRcode เท่ากับ L  (มีค่า L,M,Q และ H)
-                // กำหนด ขนาด pixel เท่ากับ 4
-                // กำหนดความหนาของกรอบ เท่ากับ 2
-                \PHPQRCode\QRcode::png("http://www.ninenik.com", "myqrcode.png", 'L', 4, 2);
+                // require_once '../../../vendor/autoload.php';
+                // echo "test";
+                // // เรียกใช้งานสร้าง qrcode โดยสร้าง qrcode 
+                // // ข้อควม http://www.ninenik.com
+                // // บันทึกเป็นไฟล์ ชื่อ myqrcode.png ไว้ในโฟลเดอร์ images / picqrcode / myqrcode.png 
+                // // กำหนด Error Correction ของ QRcode เท่ากับ L  (มีค่า L,M,Q และ H)
+                // // กำหนด ขนาด pixel เท่ากับ 4
+                // // กำหนดความหนาของกรอบ เท่ากับ 2
+                // \PHPQRCode\QRcode::png("http://www.ninenik.com", "myqrcode.png", 'L', 4, 2);
  
                 
     
