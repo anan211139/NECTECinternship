@@ -1,0 +1,35 @@
+body{
+    margin: 0;
+    width: 100%;
+}
+.body{
+    display: flex;
+    flex-flow: row;
+}
+.sectionleft{
+    /* width: 30%; */
+    flex-grow: 1;
+}
+.sectionright{
+    /* width: 70%; */
+    flex-grow: 2;
+}
+.BTMlogin{
+    background-color: bisque;
+    text-align: center;
+}
+.BTMRegis{
+    background-color: bisque;
+    text-align: center;
+}
+.BTMlogin,.BTMRegis{
+    width: 100%;
+}
+.sectionleft a{
+    text-decoration: none;
+}
+.sectionBTM{
+    width: 30%;
+    margin-left:auto;
+    margin-right: auto; 
+}
