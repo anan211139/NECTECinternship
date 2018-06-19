@@ -233,7 +233,7 @@ class BotController extends Controller
                 // $picThumbnail = $dataQR;
 
                 // $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
-                $pathtoq = assert($textReplyMessage);
+                $pathtoq = asset($textReplyMessage);
                 $replyData = new TextMessageBuilder($pathtoq);
             }
             //------ หรม./ครน. -------
