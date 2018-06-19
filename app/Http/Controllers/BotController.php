@@ -243,8 +243,14 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-                $q1 = Quizzes::findOrFail(1);
-                $textReplyMessage = $q1->question;
+                $quizzesforsubj = DB::table('quizzes')
+                    ->where('subject', 'english')->first();
+                // $modelQuizzes = Quizzes::find()
+                //                 ->where(['subject' => 'english'])
+                //                 ->orderBy('sort')
+                //                 ->all();
+                // $q1 = Quizzes::findOrFail(1);
+                $textReplyMessage = $quizzesforsubj->question;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             //------ หรม./ครน. -------
