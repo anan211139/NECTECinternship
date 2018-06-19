@@ -26,7 +26,7 @@ class LineController extends Controller
     // กำหนด Error Correction ของ QRcode เท่ากับ L  (มีค่า L,M,Q และ H)
     // กำหนด ขนาด pixel เท่ากับ 4
     // กำหนดความหนาของกรอบ เท่ากับ 2
-    \PHPQRCode\QRcode::png("http://www.ninenik.com", "images/picqrcode/myqrcode.png", 'L', 4, 2);
+    \PHPQRCode\QRcode::png("http://www.ninenik.com", "myqrcode.png", 'L', 4, 2);
 
         return view('Line.index');
     }
