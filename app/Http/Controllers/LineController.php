@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
 use phpqrcode\bindings\tcpdf\QRcode;
+include 'phpqrcode\qrlib.php';
 
 class LineController extends Controller
 {
@@ -20,7 +21,7 @@ class LineController extends Controller
         $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'phpqrcode/temp'.DIRECTORY_SEPARATOR; 
         //html PNG location prefix
         $PNG_WEB_DIR = 'phpqrcode/temp/';
-        include "phpqrcode/qrlib.php"; 
+         
         //ofcourse we need rights to create temp dir
         if (!file_exists($PNG_TEMP_DIR))
             mkdir($PNG_TEMP_DIR);
