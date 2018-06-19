@@ -264,16 +264,16 @@ class BotController extends Controller
             else if($userMessage =="โจทย์"){
 //                 $quizzesforsubj = DB::table('quizzes')
 //                     ->where('subject', 'english')->first();
-                $modelQuizzes = Quizzes::find()
-                                ->where(['subject' => 'english'])
-                                ->orderBy('sort')
-                                ->first();
+//                 $modelQuizzes = Quizzes::find()
+//                                 ->where(['subject' => 'english'])
+//                                 ->orderBy('sort')
+//                                 ->first();
 //                 $q1 = Quizzes::findOrFail(1);
-//                  $quizzesforsubj = DB::table('Quizzes')
-//                                ->where('subject', 'english')->first();
+                 $quizzesforsubj = DB::table('Quizzes')
+                               ->where('subject', 'english')->first();
                 
-//                 $textReplyMessage = $quizzesforsubj->question;
-                $textReplyMessage = $modelQuizzes->question;
+               $textReplyMessage = $quizzesforsubj->question;
+               // $textReplyMessage = $modelQuizzes->question;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             //------ หรม./ครน. -------
