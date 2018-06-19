@@ -168,12 +168,12 @@ if (!defined('QRCODEDEFS')) {
 	/**
 	 * Maximum QR Code version.
 	 */
-	define('QRSPEC_VERSION_MAX', 40);
+	if (!defined('QRSPEC_VERSION_MAX'))define('QRSPEC_VERSION_MAX', 40);
 
 	/**
 	 * Maximum matrix size for maximum version (version 40 is 177*177 matrix).
 	 */
-    define('QRSPEC_WIDTH_MAX', 177);
+    if (!defined('QRSPEC_WIDTH_MAX'))define('QRSPEC_WIDTH_MAX', 177);
 
 	// -----------------------------------------------------
 
