@@ -19,7 +19,7 @@ class LineController extends Controller
         
     // include composer autoload
     require_once '../../../vendor/autoload.php';
-    
+    echo "test";
     // เรียกใช้งานสร้าง qrcode โดยสร้าง qrcode 
     // ข้อควม http://www.ninenik.com
     // บันทึกเป็นไฟล์ ชื่อ myqrcode.png ไว้ในโฟลเดอร์ images / picqrcode / myqrcode.png 
