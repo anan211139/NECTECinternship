@@ -210,10 +210,14 @@ class BotController extends Controller
             else if($userMessage =="โจทย์"){
                 // $quizzesforsubj = DB::table('quizzes')
                 //                ->where('subject', 'english')->first();
-                $quizzesforsubj = DB::table('exams')
-                               ->where('chapterID', 1)->inRandomOrder()
-                               ->first();
-                $pathtoexam = $quizzesforsubj->ELocalPic;
+
+
+                // $quizzesforsubj = DB::table('exams')
+                //                ->where('chapterID', 1)->inRandomOrder()
+                //                ->first();
+                // $pathtoexam = $quizzesforsubj->ELocalPic;
+
+                
                 // $pathtoexam = '\''.$pathtoexam.'\'';
                 //$pathtoexam2 = '\''.asset($pathtoexam).'\'';
                 //$pathtoexam1 = asset($pathtoexam);
