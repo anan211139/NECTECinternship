@@ -213,8 +213,8 @@ class BotController extends Controller
                                ->first();
                 $pathtoexam = $quizzesforsubj->ELocalPic;
                 $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
- 
-                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/240';
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexamTn);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
