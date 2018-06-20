@@ -12,7 +12,7 @@ class Pagecontroller extends Controller
     public function gethome(){
         return view('home');
     }
-    public function pslogin(){
-        return view('welcome');
+    public function pslogin(Request $request){
+        return $request->input('uname');
     }
 }
