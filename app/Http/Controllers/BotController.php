@@ -170,13 +170,13 @@ class BotController extends Controller
                 $arr_replyData = array();
 
                 $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='.$userId.'&choe=UTF-8';
-                $connectChild ='https://pkwang.herokuapp.com/connectchild.php?userId='.$userId;
+                $connectChild ='https://pkwang.herokuapp.com/connectchild/'.$userId;
                 $arr_replyData[] = new TextMessageBuilder($connectChild);
 
                 //------QR CODE-----------
 
                 $picFullSize = $dataQR;
-                $picThumbnail = $dataQR;
+                $picThumbnail = $dataQR.'/240';
 
                 $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
 
