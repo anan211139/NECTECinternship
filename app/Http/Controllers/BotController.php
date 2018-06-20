@@ -208,24 +208,13 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-            //     $quizzesforsubj = DB::table('quizzes')
-            //                    ->where('subject', 'english')->first();
-
-
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapterID', 1)->inRandomOrder()
                                ->first();
                 $pathtoexam = $quizzesforsubj->ELocalPic;
-
-
-                // $pathtoexam = '\''.$pathtoexam.'\'';
-                $pathtoexam2 = '\''.asset($pathtoexam).'\'';
-                //$pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
-                //$pathtoexam ='https://pkwang.herokuapp.com/img/exam/Math/Equation/eq01_med_3.png';
-                $replyData = new ImageMessageBuilder($pathtoexam2,$pathtoexam2);
-                // $textReplyMessage = $quizzesforsubj->ELocalPic;
-                // $pathtoq = asset($textReplyMessage);
-                // $replyData = new TextMessageBuilder($pathtoexam);
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
+ 
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
