@@ -208,8 +208,8 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-                $quizzesforsubj = DB::table('quizzes')
-                               ->where('subject', 'english')->first();
+            //     $quizzesforsubj = DB::table('quizzes')
+            //                    ->where('subject', 'english')->first();
 
 
                 $quizzesforsubj = DB::table('exams')
