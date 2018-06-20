@@ -5,13 +5,17 @@ body{
     /* background-image: url("picture/background.png"); */
     
 }
-.top{
+.bg{
     background-image: url("/picture/bgfinal-01.png");
     background-size: 100% auto;
     background-repeat: no-repeat;
     /* background-attachment: fixed; */
     background-position: bottom right; 
     height: 100%;
+}
+.bgimg{
+    background-image: url("/picture/bgfinal-01.png");
+
 }
 .detail{
     background-color: #5bbcd2;

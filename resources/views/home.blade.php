@@ -3,18 +3,21 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>พี่หมีติวเตอร์</title>
-        <!-- <link rel="stylesheet" type="text/css" href="css/home.css" /> -->
-        {{Html::style(('css/home.css'))}}
+        <link rel="stylesheet" type="text/css" href="css\home.css" />
+        <!-- {{ Html::style(('css/home.css')) }} -->
         <link href="https://fonts.googleapis.com/css?family=Kanit|Roboto" rel="stylesheet">
         <link rel="shortcut icon" href="picture/bear_N.png">
         <script type="text/javascript" src="js/script.js"></script> 
+
     </head>
     <body>
         <div id="navbar">
             <a href="#home">Home</a>
         </div>
         <a href="#detail" class="plus"><img src="picture/arrow.png"></a>
-        <div class="top">
+        <div style='background-image: url("picture/bgfinal-01.png"); background-size: 100% auto; background-repeat: no-repeat; 
+        background-position: bottom right; 
+        height: 100%; '>
             <div class="layout">
                 <div class="pMhee">
                     <p class="fonts">ยินดีต้อนรับ เข้าสู่</p>
