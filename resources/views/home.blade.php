@@ -3,8 +3,9 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>พี่หมีติวเตอร์</title>
-        <link rel="stylesheet" href="css/home.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="css/home.css" /> -->
         <link href="https://fonts.googleapis.com/css?family=Kanit|Roboto" rel="stylesheet">
+        {{ HTML::style(('css/home.css')) }}
         <link rel="shortcut icon" href="picture/bear_N.png">
         <script type="text/javascript" src="js/script.js"></script> 
     </head>
@@ -19,15 +20,15 @@
                     <p class="fonts">ยินดีต้อนรับ เข้าสู่</p>
                     <p class="name"><strong>พี่หมีติวเตอร์</strong></p>
                 </div>
-                {!! Form::(['url' => 'loginsubmit']) !!}
-                <!-- <form action="/login"> -->
+                <!-- {!! Form::(['url' => 'loginsubmit']) !!} -->
+                <form action="/login">
                     <p class="fonts2">Username</p>
                     <input type="text" name="uname" required>
                     <p class="fonts2">Password</p>
                     <input type="text" name="pass" required>
                     <button class="loginBtn">LOG IN</button>
-                <!-- </form> -->
-                {!! Form::close() !!}
+                </form>
+                <!-- {!! Form::close() !!} -->
                 <a class="forgot" href="">Forgot Password?</a><br>
                 <span>Don't have an account?</span>
                 <a class="forgot" onclick="document.getElementById('id01').style.display='block'">Sign up</a>
