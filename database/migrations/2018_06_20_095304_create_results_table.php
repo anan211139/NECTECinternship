@@ -14,12 +14,13 @@ class CreateResultsTable extends Migration
     public function up()
     {
         Schema::create('results', function (Blueprint $table) {
-            $table->increments('resultID');
+            $table->increments('id');
             $table->Integer('groupnoID');
             $table->Integer('STcodeID');
             $table->smallInteger('levelID'); //1 easy, 2 med, 3 hard
             $table->Integer('max');
             $table->Integer('true');
+            $table->timestampsTz();
         });
     }
 

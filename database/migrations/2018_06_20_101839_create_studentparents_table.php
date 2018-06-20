@@ -14,6 +14,7 @@ class CreateStudentparentsTable extends Migration
     public function up()
     {
         Schema::create('studentparents', function (Blueprint $table) {
+            $table->increments('id');
             $table->Integer('STcodeID');
             $table->Integer('parentID');
             $table->timestampsTz();

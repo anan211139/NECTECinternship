@@ -14,6 +14,7 @@ class CreateSTandTCsTable extends Migration
     public function up()
     {
         Schema::create('STandTCs', function (Blueprint $table) {
+            $table->increments('id');
             $table->Integer('STcodeID');
             $table->Integer('teacherID');
             $table->timestampsTz();

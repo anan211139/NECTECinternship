@@ -14,7 +14,7 @@ class CreateExamsTable extends Migration
     public function up()
     {
         Schema::create('exams', function (Blueprint $table) {
-            $table->increments('ExamID');
+            $table->increments('id');
             $table->Integer('levelID');
             $table->string('subjectID');
             $table->Integer('chapterID');

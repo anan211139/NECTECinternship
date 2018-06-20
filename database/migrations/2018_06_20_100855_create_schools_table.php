@@ -14,10 +14,11 @@ class CreateSchoolsTable extends Migration
     public function up()
     {
         Schema::create('schools', function (Blueprint $table) {
-            $table->increments('schoolID');
+            $table->increments('id');
             $table->string('schoolname');
             $table->string('address');
             $table->string('phone');
+            $table->timestampsTz();
         });
     }
 

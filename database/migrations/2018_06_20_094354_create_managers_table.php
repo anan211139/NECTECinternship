@@ -14,7 +14,7 @@ class CreateManagersTable extends Migration
     public function up()
     {
         Schema::create('managers', function (Blueprint $table) {
-            $table->increments('parentID');
+            $table->increments('id');
             $table->string('PRname');
             $table->string('UNPR');
             $table->string('PWPR');

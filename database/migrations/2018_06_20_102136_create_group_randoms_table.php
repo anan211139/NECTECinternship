@@ -14,7 +14,7 @@ class CreateGroupRandomsTable extends Migration
     public function up()
     {
         Schema::create('groupRandoms', function (Blueprint $table) {
-            $table->increments('groupRanID');
+            $table->increments('id');
             $table->Integer('groupnoID');
             $table->string('listExamID');
             $table->string('listLevelID');
