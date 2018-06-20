@@ -221,8 +221,9 @@ class BotController extends Controller
                                ->where('chapterID', 1)->inRandomOrder()
                                ->first();
                 $pathtoexam = $quizzesforsubj->ELocalPic;
-                $pathtoexam = '\''.$pathtoexam.'\'';
-                // $replyData = new ImageMessageBuilder($pathtoexam, $pathtoexam);
+                // $pathtoexam = '\''.$pathtoexam.'\'';
+                $pathtoexam = asset($pathtoexam);
+                $replyData = new ImageMessageBuilder($pathtoexam, $pathtoexam);
                 // $textReplyMessage = $quizzesforsubj->ELocalPic;
                 // $pathtoq = asset($textReplyMessage);
                 $replyData = new TextMessageBuilder($pathtoexam);
