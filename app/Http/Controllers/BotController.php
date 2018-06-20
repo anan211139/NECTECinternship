@@ -220,9 +220,11 @@ class BotController extends Controller
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapterID', 1)->inRandomOrder()
                                ->first();
-                $textReplyMessage = $quizzesforsubj->ELocalPic;
-                $pathtoq = asset($textReplyMessage);
-                $replyData = new TextMessageBuilder($pathtoq);
+                $pathtoexam = $quizzesforsubj->ELocalPic;
+                $arr_replyData[] = new TextMessageBuilder($pathtoexam);
+                // $textReplyMessage = $quizzesforsubj->ELocalPic;
+                // $pathtoq = asset($textReplyMessage);
+                // $replyData = new TextMessageBuilder($pathtoq);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
