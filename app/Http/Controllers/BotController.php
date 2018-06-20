@@ -181,18 +181,14 @@ class BotController extends Controller
                         ),
                     );
 
-                    $replyData = new TemplateMessageBuilder('Carousel',
-                        new CarouselTemplateBuilder(
-                            array(
-                                new CarouselColumnTemplateBuilder(
-                                    'ดูแต้มสะสมกันดีกว่า',
-                                    'Description Carousel',
-                                    NULL,
-                                    //'https://www.mywebsite.com/imgsrc/photos/f/sampleimage/700',
-                                    $actionBuilder
+                $replyData = new TemplateMessageBuilder('Button Template',
+                      new ButtonTemplateBuilder(
+                'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
+                'แต้ม', // กำหนดรายละเอียด
+                NULL, // กำหนด url รุปภาพ
+                $actionBuilder  // กำหนด action object
                                 ),                                
-                            )
-                        )
+
                     );
 
             }
