@@ -39,7 +39,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
-use App\Quizzes;
+
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5uObrERh7O5m/tO3bbgEPeF2D//vC4kHTLQuQGbgpZSqU3C+WUJ86nQNptlraZZtek2tdLYoqREXuN8xy3swo9RVO3EL0VrmnhSQfuOl89AQdB04t89/1O/w1cDnyilFU=');
@@ -117,15 +117,8 @@ class BotController extends Controller
             $pos1= strrpos($userMessage, 'หรม');
             $pos2= strrpos($userMessage, 'ครน');
             //$userMessage = strtolower($userMessage);
-            
-            // $replyData = new TextMessageBuilder($replyInfo);
 
-            //------ GREETING --------
-            // if($count==0){
-            //     $replyData = new TextMessageBuilder($count);
-            //     $count = 1;
-            // }
-            //$count++;
+            
             //------ RICH MENU -------
             if($userMessage=="เปลี่ยนวิชา"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
@@ -215,26 +208,13 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-//                 $quizzesforsubj = DB::table('quizzes')
-//                     ->where('subject', 'english')->first();
-//                 $modelQuizzes = Quizzes::find()
-//                                 ->where(['subject' => 'english'])
-//                                 ->orderBy('sort')
-//                                 ->first();
-//                 $q1 = Quizzes::findOrFail(1);
-                 $quizzesforsubj = DB::table('quizzes')
-                               ->where('subject', 'english')->first();
-                
-               $textReplyMessage = $quizzesforsubj->question;
-               // $textReplyMessage = $modelQuizzes->question;
-                
-
-                // $picFullSize = $dataQR;
-                // $picThumbnail = $dataQR;
-
-                // $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
-                $pathtoq = asset($textReplyMessage);
-                $replyData = new TextMessageBuilder($pathtoq);
+                $quizzesforsubj = DB::table('exams')
+                               ->where('chapterID', 1)->inRandomOrder()
+                               ->first();
+                $pathtoexam = $quizzesforsubj->ELocalPic;
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
+ 
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){

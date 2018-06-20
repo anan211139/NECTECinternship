@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class create_table extends Model
+class Level extends Model
 {
-    //
+    protected $fillable = ['Namelevel'];
 }
