@@ -13,14 +13,14 @@ class CreateLogChildrenQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::create('logChildrenQuizzes', function (Blueprint $table) {
+        Schema::create('logChildrenQuizzes', function (Blueprint $table) { //create when random exam
             $table->increments('id');
             $table->Integer('groupnoID');
             $table->Integer('numbertest');
-            $table->Integer('ExamID');
-            $table->Integer('STAnswer');
-            $table->Integer('answerStatus');
-            $table->dateTimeTz('time');
+            $table->Integer('ExamID'); // present exam
+            $table->Integer('STAnswer'); //real ans
+            $table->Integer('answerStatus'); //true-false
+            $table->dateTimeTz('time'); //update
             $table->timestampsTz();
         });
     }
