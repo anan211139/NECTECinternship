@@ -13,6 +13,7 @@
 Route::get('/', 'Pagecontroller@gethome');
 Route::get('/getLaravelpage', 'Pagecontroller@getLaravelpage');
 Route::post('/loginsubmit', 'Pagecontroller@pslogin');
+Route::post('/regissubmit', 'Pagecontroller@psregis');
 // Route::post('/home/submit', 'MessageController@submit');
 
 

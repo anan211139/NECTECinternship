@@ -16,4 +16,8 @@ class Pagecontroller extends Controller
         $username = $request->input('uname');
         return $username;
     }
+    public function psregis(Request $request){
+        $username = $request->input('uname');
+        return $username;
+    }
 }
