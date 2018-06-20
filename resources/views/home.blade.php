@@ -23,15 +23,15 @@
                     <p class="fonts">ยินดีต้อนรับ เข้าสู่</p>
                     <p class="name"><strong>พี่หมีติวเตอร์</strong></p>
                 </div>
-                
-                <form action="/login">
+                {!! Form::(['url' => 'loginsubmit']) !!}
+                <!-- <form action="/login"> -->
                     <p class="fonts2">Username</p>
                     <input type="text" name="uname" required>
                     <p class="fonts2">Password</p>
                     <input type="text" name="pass" required>
                     <button class="loginBtn">LOG IN</button>
-                </form>
-                
+                <!-- </form> -->
+                {!! Form::close() !!}
                 <a class="forgot" href="">Forgot Password?</a><br>
                 <span>Don't have an account?</span>
                 <a class="forgot" onclick="document.getElementById('id01').style.display='block'">Sign up</a>
