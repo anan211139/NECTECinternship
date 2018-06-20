@@ -13,6 +13,6 @@ class Pagecontroller extends Controller
         return view('home');
     }
     public function pslogin(){
-        return 123;
+        return view('welcome');
     }
 }
