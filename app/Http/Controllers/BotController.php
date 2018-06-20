@@ -218,8 +218,8 @@ class BotController extends Controller
                 // $quizzesforsubj = DB::table('quizzes')
                 //                ->where('subject', 'english')->first();
                 $quizzesforsubj = DB::table('quizzes')
-                               ->where('subject', 'Mathematics')->inRandomOrder()
-                               ->limit(10)->get();
+                               ->where('chapterID', 1)->inRandomOrder()
+                               ->first();
                 $textReplyMessage = $quizzesforsubj->ELocalPic;
                 $pathtoq = asset($textReplyMessage);
                 $replyData = new TextMessageBuilder($pathtoq);
