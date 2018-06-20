@@ -39,7 +39,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
-use App\Quizzes;
+
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5uObrERh7O5m/tO3bbgEPeF2D//vC4kHTLQuQGbgpZSqU3C+WUJ86nQNptlraZZtek2tdLYoqREXuN8xy3swo9RVO3EL0VrmnhSQfuOl89AQdB04t89/1O/w1cDnyilFU=');
@@ -208,26 +208,19 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-//                 $quizzesforsubj = DB::table('quizzes')
-//                     ->where('subject', 'english')->first();
-//                 $modelQuizzes = Quizzes::find()
-//                                 ->where(['subject' => 'english'])
-//                                 ->orderBy('sort')
-//                                 ->first();
-                // $q1 = Quizzes::findOrFail(1);
-                 $quizzesforsubj = DB::table('quizzes')
-                               ->where('subject', 'english')->first();
-                
-               $textReplyMessage = $quizzesforsubj->question;
-               // $textReplyMessage = $modelQuizzes->question;
-                
-
-                // $picFullSize = $dataQR;
-                // $picThumbnail = $dataQR;
-
-                // $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
-                $pathtoq = asset($textReplyMessage);
-                $replyData = new TextMessageBuilder($pathtoq);
+                // $quizzesforsubj = DB::table('quizzes')
+                //                ->where('subject', 'english')->first();
+                $quizzesforsubj = DB::table('exams')
+                               ->where('chapterID', 1)->inRandomOrder()
+                               ->first();
+                $pathtoexam = $quizzesforsubj->ELocalPic;
+                // $pathtoexam = '\''.$pathtoexam.'\'';
+                $pathtoexam = '\''.asset($pathtoexam).'\'';
+                $pathtoexam1 = asset($pathtoexam);
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam1);
+                // $textReplyMessage = $quizzesforsubj->ELocalPic;
+                // $pathtoq = asset($textReplyMessage);
+                // $replyData = new TextMessageBuilder($pathtoexam);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
