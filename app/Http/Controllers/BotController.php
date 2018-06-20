@@ -117,15 +117,8 @@ class BotController extends Controller
             $pos1= strrpos($userMessage, 'หรม');
             $pos2= strrpos($userMessage, 'ครน');
             //$userMessage = strtolower($userMessage);
-            
-            // $replyData = new TextMessageBuilder($replyInfo);
 
-            //------ GREETING --------
-            // if($count==0){
-            //     $replyData = new TextMessageBuilder($count);
-            //     $count = 1;
-            // }
-            //$count++;
+            
             //------ RICH MENU -------
             if($userMessage=="เปลี่ยนวิชา"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
@@ -221,7 +214,7 @@ class BotController extends Controller
 //                                 ->where(['subject' => 'english'])
 //                                 ->orderBy('sort')
 //                                 ->first();
-//                 $q1 = Quizzes::findOrFail(1);
+                // $q1 = Quizzes::findOrFail(1);
                  $quizzesforsubj = DB::table('quizzes')
                                ->where('subject', 'english')->first();
                 
