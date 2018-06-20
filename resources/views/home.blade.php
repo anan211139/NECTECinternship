@@ -23,7 +23,7 @@
                     <p class="fonts">ยินดีต้อนรับ เข้าสู่</p>
                     <p class="name"><strong>พี่หมีติวเตอร์</strong></p>
                 </div>
-                {!! Form::(['url' => 'loginsubmit']) !!}
+                {!! Form::open(['url' => 'loginsubmit']) !!}
                 <!-- <form action="/login"> -->
                     <p class="fonts2">Username</p>
                     <input type="text" name="uname" required>
