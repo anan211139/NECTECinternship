@@ -13,17 +13,19 @@
             <a href="#home">Home</a>
         </div>
         <a href="#detail" class="plus"><img src="picture/arrow.png"></a>
-        <div class="top" style ="background-image: url("/picture/bgfinal-01.png");">
+        <div class="top">
             <div class="layout">
                 <div class="pMhee">
                     <p class="fonts">ยินดีต้อนรับ เข้าสู่</p>
                     <p class="name"><strong>พี่หมีติวเตอร์</strong></p>
                 </div>
-                <p class="fonts2">Username</p>
-                <input type="text" name="uname" required>
-                <p class="fonts2">Password</p>
-                <input type="text" name="pass" required>
-                <button class="loginBtn">LOG IN</button>
+                <form action="/login">
+                    <p class="fonts2">Username</p>
+                    <input type="text" name="uname" required>
+                    <p class="fonts2">Password</p>
+                    <input type="text" name="pass" required>
+                    <button class="loginBtn">LOG IN</button>
+                </form>
                 <a class="forgot" href="">Forgot Password?</a><br>
                 <span>Don't have an account?</span>
                 <a class="forgot" onclick="document.getElementById('id01').style.display='block'">Sign up</a>
