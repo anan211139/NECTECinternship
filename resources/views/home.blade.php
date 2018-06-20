@@ -54,8 +54,7 @@
 
         <div id="id01" class="modal">
         
-        <form class="modal-content animate" action="/action_page.php">
-
+        <div class="modal-content animate">
             <div class="container">
                 <p class="headRegis"><b>REGISTER</b></p>
             {!! Form::open(['url' => 'regissubmit']) !!}
@@ -74,7 +73,7 @@
             </div>  
             {!! Form::close() !!}
             </div>
-        </form>
+        </div>
         </div>
         
     </body>
