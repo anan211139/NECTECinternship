@@ -226,7 +226,7 @@ class BotController extends Controller
                 $replyData = new ImageMessageBuilder($pathtoexam, $pathtoexam);
                 // $textReplyMessage = $quizzesforsubj->ELocalPic;
                 // $pathtoq = asset($textReplyMessage);
-                $replyData = new TextMessageBuilder($pathtoexam);
+                // $replyData = new TextMessageBuilder($pathtoexam);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
