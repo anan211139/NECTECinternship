@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ 
 use Illuminate\Http\Request;
+use App\Http\Controllers\phpqrcode\bindings\tcpdf\qrcode;
+
+include 'phpqrcode/qrlib.php';
 
 class LineController extends Controller
 {
@@ -13,7 +16,7 @@ class LineController extends Controller
      */
     public function index()
     {
-        //
+
         return view('Line.index');
     }
 

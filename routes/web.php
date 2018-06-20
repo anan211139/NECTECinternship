@@ -18,3 +18,7 @@ Route::post('/regissubmit', 'Pagecontroller@psregis');
 
 
 Route::resource('Line','LineController');  //call path ที่กำหนด
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
