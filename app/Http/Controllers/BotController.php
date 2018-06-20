@@ -172,12 +172,12 @@ class BotController extends Controller
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
                     $actionBuilder = array(
                         new MessageTemplateActionBuilder(
-                            ‘แต้มสะสมของฉัน’,// ข้อความแสดงในปุ่ม
-                            ‘แต้มสะสมของฉัน’// ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            'แต้มสะสมของฉัน',// ข้อความแสดงในปุ่ม
+                            'แต้มสะสมของฉัน'// ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                         ),
                         new MessageTemplateActionBuilder(
-                            ‘แลกของรางวัล’, // ข้อความแสดงในปุ่ม
-                            ‘แลกของรางวัล’
+                            'แลกของรางวัล', // ข้อความแสดงในปุ่ม
+                            'แลกของรางวัล'
                         )
                     );
 
@@ -185,7 +185,7 @@ class BotController extends Controller
                         new CarouselTemplateBuilder(
                             array(
                                 new CarouselColumnTemplateBuilder(
-                                    ‘ดูแต้มสะสมกันดีกว่า’,
+                                    'ดูแต้มสะสมกันดีกว่า',
                                     'Description Carousel',
                                     NULL,
                                     //'https://www.mywebsite.com/imgsrc/photos/f/sampleimage/700',
