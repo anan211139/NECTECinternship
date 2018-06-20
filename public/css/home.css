@@ -6,7 +6,7 @@ body{
     
 }
 .top{
-    background-image: url("picture/bgfinal-01.png");
+    /* background-image: url("picture/bgfinal-01.png"); */
     background-size: 100% auto;
     background-repeat: no-repeat;
     /* background-attachment: fixed; */

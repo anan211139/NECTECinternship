@@ -13,7 +13,7 @@
             <a href="#home">Home</a>
         </div>
         <a href="#detail" class="plus"><img src="picture/arrow.png"></a>
-        <div class="top">
+        <div class="top" style ="background-image: url("picture/bgfinal-01.png");">
             <div class="layout">
                 <div class="pMhee">
                     <p class="fonts">ยินดีต้อนรับ เข้าสู่</p>
