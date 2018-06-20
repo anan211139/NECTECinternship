@@ -217,7 +217,7 @@ class BotController extends Controller
                 //                ->first();
                 // $pathtoexam = $quizzesforsubj->ELocalPic;
 
-                
+
                 // $pathtoexam = '\''.$pathtoexam.'\'';
                 //$pathtoexam2 = '\''.asset($pathtoexam).'\'';
                 //$pathtoexam1 = asset($pathtoexam);
