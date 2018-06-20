@@ -187,7 +187,7 @@ class BotController extends Controller
                 'แต้ม', // กำหนดรายละเอียด
                 NULL, // กำหนด url รุปภาพ
                 $actionBuilder  // กำหนด action object
-                                ),                                
+                                )                           
 
                     );
 
