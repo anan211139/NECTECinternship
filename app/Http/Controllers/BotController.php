@@ -221,7 +221,7 @@ class BotController extends Controller
                 // $pathtoexam = '\''.$pathtoexam.'\'';
                 //$pathtoexam2 = '\''.asset($pathtoexam).'\'';
                 //$pathtoexam1 = asset($pathtoexam);
-                $pathtoexam ='http://pkwang.herokuapp.com/img/exam/Math/Equation/eq01_med_3.png';
+                $pathtoexam ='https://pkwang.herokuapp.com/img/exam/Math/Equation/eq01_med_3.png';
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
                 // $textReplyMessage = $quizzesforsubj->ELocalPic;
                 // $pathtoq = asset($textReplyMessage);
