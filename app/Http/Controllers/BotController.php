@@ -215,9 +215,10 @@ class BotController extends Controller
                                ->first();
                 $pathtoexam = $quizzesforsubj->ELocalPic;
                 // $pathtoexam = '\''.$pathtoexam.'\'';
-                $pathtoexam2 = '\''.asset($pathtoexam).'\'';
-                $pathtoexam1 = asset($pathtoexam);
-                $replyData = new ImageMessageBuilder($pathtoexam2,$pathtoexam1);
+                //$pathtoexam2 = '\''.asset($pathtoexam).'\'';
+                //$pathtoexam1 = asset($pathtoexam);
+                $pathtoexam ='http://pkwang.herokuapp.com/img/exam/Math/Equation/eq01_med_3.png';
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
                 // $textReplyMessage = $quizzesforsubj->ELocalPic;
                 // $pathtoq = asset($textReplyMessage);
                 // $replyData = new TextMessageBuilder($pathtoexam);
