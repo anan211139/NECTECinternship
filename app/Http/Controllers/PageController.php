@@ -13,6 +13,7 @@ class Pagecontroller extends Controller
         return view('home');
     }
     public function pslogin(Request $request){
-        return $request->input('uname');
+        $username = $request->input('uname');
+        return $username;
     }
 }
