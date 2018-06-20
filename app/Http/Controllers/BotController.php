@@ -222,7 +222,7 @@ class BotController extends Controller
                                ->first();
                 $pathtoexam = $quizzesforsubj->ELocalPic;
                 // $pathtoexam = '\''.$pathtoexam.'\'';
-                $pathtoexam = asset($pathtoexam);
+                $pathtoexam = '\''.asset($pathtoexam).'\'';
                 $replyData = new ImageMessageBuilder($pathtoexam, $pathtoexam);
                 // $textReplyMessage = $quizzesforsubj->ELocalPic;
                 // $pathtoq = asset($textReplyMessage);
