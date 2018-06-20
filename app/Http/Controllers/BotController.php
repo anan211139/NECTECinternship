@@ -217,11 +217,16 @@ class BotController extends Controller
             else if($userMessage =="โจทย์"){
                 // $quizzesforsubj = DB::table('quizzes')
                 //                ->where('subject', 'english')->first();
-                $quizzesforsubj = DB::table('quizzes')
-                               ->where('subject', 'Mathematics')->inRandomOrder()
-                               ->first();
-                $textReplyMessage = $quizzesforsubj->ELocalPic;
-                $pathtoq = asset($textReplyMessage);
+
+
+                // $quizzesforsubj = DB::table('quizzes')
+                //                ->where('subject', 'Mathematics')->inRandomOrder()
+                //                ->first();
+                // $textReplyMessage = $quizzesforsubj->ELocalPic;
+                // $pathtoq = asset($textReplyMessage);
+
+                $array = [1,3,5,8,0,12];
+                $pathtoq = array_random($array,2);
                 $replyData = new TextMessageBuilder($pathtoq);
             }
             //------ หรม./ครน. -------
