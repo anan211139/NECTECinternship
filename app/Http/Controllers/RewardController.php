@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+use App\Models\pregnants as pregnants;
+use App\Models\RecordOfPregnancy as RecordOfPregnancy;
+use App\Models\sequents as sequents;
+use App\Models\sequentsteps as sequentsteps;
+use App\Models\users_register as users_register;
+use App\Models\tracker as tracker;
+
+
 class RewardController extends Controller
 {
     /**
