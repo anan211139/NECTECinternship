@@ -217,7 +217,7 @@ class BotController extends Controller
             else if($userMessage =="โจทย์"){
                 // $quizzesforsubj = DB::table('quizzes')
                 //                ->where('subject', 'english')->first();
-                $quizzesforsubj = DB::table('quizzes')
+                $quizzesforsubj = DB::table('exam')
                                ->where('chapterID', 1)->inRandomOrder()
                                ->first();
                 $textReplyMessage = $quizzesforsubj->ELocalPic;
