@@ -160,11 +160,43 @@ class BotController extends Controller
             else if($userMessage =="ดูคะแนน"){
                 $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
+
             }
+
+            // else if($userMessage =="สะสมแต้ม"){
+            //     $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
+            //     $replyData = new TextMessageBuilder($textReplyMessage);
+
+// --------------------------------------------------------------------------------
             else if($userMessage =="สะสมแต้ม"){
-                $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
+                    $actionBuilder = array(
+                        new MessageTemplateActionBuilder(
+                            ‘แต้มสะสมของฉัน’,// ข้อความแสดงในปุ่ม
+                            ‘แต้มสะสมของฉัน’// ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                        ),
+                        new MessageTemplateActionBuilder(
+                            ‘แลกของรางวัล’, // ข้อความแสดงในปุ่ม
+                            ‘แลกของรางวัล’
+                        )
+                    );
+
+                    $replyData = new TemplateMessageBuilder('Carousel',
+                        new CarouselTemplateBuilder(
+                            array(
+                                new CarouselColumnTemplateBuilder(
+                                    ‘ดูแต้มสะสมกันดีกว่า’,
+                                    'Description Carousel',
+                                    NULL,
+                                    //'https://www.mywebsite.com/imgsrc/photos/f/sampleimage/700',
+                                    $actionBuilder
+                                ),                                
+                            )
+                        )
+                    );
+
             }
+
             else if($userMessage =="ดู Code"){
                 //$textReplyMessage = $userId;
                 $arr_replyData = array();
@@ -243,5 +275,6 @@ class BotController extends Controller
         }
         // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
+
     }
 }
