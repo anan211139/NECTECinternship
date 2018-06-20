@@ -9,10 +9,7 @@ class Pagecontroller extends Controller
     public function getLaravelpage(){
         return view('welcome');
     }
-    public function getLogin(){
-        return view('login');
-    }
-    public function getRegis(){
-        return view('regis');
+    public function gethome(){
+        return view('home');
     }
 }
