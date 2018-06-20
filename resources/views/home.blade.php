@@ -67,12 +67,12 @@
                 <input class="inputPop" type="password" name="repsw" required>  
                 <label for="psw">E-mail</label>
                 <input class="inputPop" type="email" name="repsw" required>
-            {!! Form::close() !!}
             <div class="popBtnLayout">
                 <button class="registerBtn" type="submit">SUBMIT</button>
                 <a class="cancelBtn" type="button" onclick="document.getElementById('id01').style.display='none'" 
                 class="cancelbtn">Cancel</a>
             </div>  
+            {!! Form::close() !!}
             </div>
         </form>
         </div>

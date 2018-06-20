@@ -45,7 +45,7 @@ class CreateCreateTablesTable extends Migration
         Schema::create('Exam', function (Blueprint $table) {
             $table->increments('ExamID');
             $table->Integer('levelID');
-            $table->string('subjectID');
+            $table->Integer('subjectID');
             $table->Integer('chapterID');
             $table->string('ELocalPic');
             $table->smallInteger('answerStatus');
