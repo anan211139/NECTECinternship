@@ -3,9 +3,9 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>พี่หมีติวเตอร์</title>
-        <!-- <link rel="stylesheet" type="text/css" href="css/home.css" /> -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" />
         <link href="https://fonts.googleapis.com/css?family=Kanit|Roboto" rel="stylesheet">
-        {{ HTML::style(('css/home.css')) }}
+        
         <link rel="shortcut icon" href="picture/bear_N.png">
         <script type="text/javascript" src="js/script.js"></script> 
     </head>
