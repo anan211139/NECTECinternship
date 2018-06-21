@@ -211,7 +211,7 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($content);
             }
             else if($userMessage =="สร้างข้อสอบ"){
-                    DB::table('groups')->insertGetId([
+                    DB::table('groups')->insert([
                         'STcodeID' => $userId, 
                         'subjectID' => 1,
                         'chapterID' => 1,
@@ -236,7 +236,6 @@ class BotController extends Controller
                     'numbertest' => 1,
                     'ExamID' => $quizzesforsubj->id,
                     'STAnswer' => 0,
-                    'answerStatus' => 2,
                     'time' => Carbon::now()
                 ]);
             }
@@ -247,8 +246,7 @@ class BotController extends Controller
                                ->first();
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('groupnoID', $urgroup->id)
-                                ->where('answerStatus', 2)
-                                // ->whereNull('answerStatus')
+                                ->whereNull('answerStatus')
                                 ->first();
                 $ans = DB::table('exams')
                         ->where('id', $currentlog->ExamID)
