@@ -291,6 +291,7 @@ class BotController extends Controller
                 //     'time' => Carbon::now()
                 // ]);
                 DB::table('logChildrenQuizzes')->insert([
+                    'id' => 1,
                     'group_id' => 1,
                     'exam_id' => 1,
                     'time' => Carbon::now()
