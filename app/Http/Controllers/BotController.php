@@ -53,10 +53,10 @@ class BotController extends Controller
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
-        
+
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
-        
+
         // แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
         $events = json_decode($content, true);
         if(!is_null($events)){
@@ -71,7 +71,7 @@ class BotController extends Controller
             echo 'Succeeded!';
             return;
         }
-        
+
         // Failed
         echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
     }
@@ -81,18 +81,18 @@ class BotController extends Controller
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
-        
+
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
         echo "A";
         echo $content;
 
         //$count = 0;
-        
+
         // $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
         // $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
 
-        
+
         // $response = $bot->getProfile('U038940166356c6b9fb0dcf051aded27f');
         // if ($response->isSucceeded()) {
         //     $profile = $response->getJSONDecodedBody();
@@ -117,15 +117,8 @@ class BotController extends Controller
             $pos1= strrpos($userMessage, 'หรม');
             $pos2= strrpos($userMessage, 'ครน');
             //$userMessage = strtolower($userMessage);
-            
-            // $replyData = new TextMessageBuilder($replyInfo);
 
-            //------ GREETING --------
-            // if($count==0){
-            //     $replyData = new TextMessageBuilder($count);
-            //     $count = 1;
-            // }
-            //$count++;
+
             //------ RICH MENU -------
             if($userMessage=="เปลี่ยนวิชา"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
@@ -142,7 +135,7 @@ class BotController extends Controller
                         "วิชาภาษาอังกฤษ",
                         new AreaBuilder(87,350,873,155)
                     ),
-                )); 
+                ));
             }
             else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
@@ -159,7 +152,7 @@ class BotController extends Controller
                                 'หรม./ครน.',
                                 new AreaBuilder(87,350,873,155)
                             ),
-                )); 
+                ));
             }
             else if($userMessage =="ดูคะแนน"){
                 $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
@@ -190,7 +183,7 @@ class BotController extends Controller
                 foreach($arr_replyData as $arr_Reply){
                         $multiMessage->add($arr_Reply);
                 }
-                $replyData = $multiMessage; 
+                $replyData = $multiMessage;
 
 
             }
@@ -198,15 +191,15 @@ class BotController extends Controller
                 $arr_replyData = array();
                 $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
                 $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                                
+
                 $textReplyMessage = "https://www.youtube.com/embed/Yad6t_EgwVw";
                 $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-            
+
                 $multiMessage =     new MultiMessageBuilder;
                 foreach($arr_replyData as $arr_Reply){
                         $multiMessage->add($arr_Reply);
                 }
-                $replyData = $multiMessage; 
+                $replyData = $multiMessage;
 
             }
             //------ สมการ -------
@@ -215,21 +208,13 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-                // $quizzesforsubj = DB::table('quizzes')
-                //                ->where('subject', 'english')->first();
-
-
-                $quizzesforsubj = DB::table('quizzes')
-                               ->where('chapterID', '1')->inRandomOrder()
+                $quizzesforsubj = DB::table('exams')
+                               ->where('chapterID', 1)->inRandomOrder()
                                ->first();
-                $textReplyMessage = $quizzesforsubj->ELocalPic;
-                $pathtoq = asset($textReplyMessage);
+                $pathtoexam = $quizzesforsubj->ELocalPic;
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
 
-
-                // $array = [1,3,5,8,0,12];
-                // $pathtoq = array_random($array,2);
-                //$pathtoq="อิอิ";
-                $replyData = new TextMessageBuilder($pathtoq);
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
