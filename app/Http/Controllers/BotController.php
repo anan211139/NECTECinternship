@@ -207,6 +207,9 @@ class BotController extends Controller
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
+            else if($userMessage =="events"){
+                $replyData = new TextMessageBuilder($events);
+            }
             else if($userMessage =="สร้างข้อสอบ"){
                 $urgroup = DB::table('groups')
                                ->where('STcodeID', $userId)
