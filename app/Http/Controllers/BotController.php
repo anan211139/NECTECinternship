@@ -207,6 +207,25 @@ class BotController extends Controller
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
+            else if($userMessage =="สร้างข้อสอบ"){
+                $urgroup = DB::table('groups')
+                               ->where('STcodeID', $userId)
+                               ->first();
+                if ($urgroup === null) {
+                    DB::table('groups')->insertGetId([
+                        'STcodeID' => $userId, 
+                        'subjectID' => 1,
+                        'chapterID' => 1,
+                        'momentStatus' => 0,
+                        '3day' => Carbon\Carbon::now(),
+                        '7day' => Carbon\Carbon::now()
+                    ]);
+                    $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
+                } else {
+                    $textReplyMessage = "มีชุดข้อสอบของตัวเองอยู่แล้วนี่";
+                }
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapterID', 1)->inRandomOrder()
@@ -215,6 +234,39 @@ class BotController extends Controller
                 $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
  
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                DB::table('logChildrenQuizzes')->insertGetId([
+                    'groupnoID' => DB::table('groups')->where('STcodeID', $userId)->first()->id, 
+                    'numbertest' => 1,
+                    'ExamID' => $quizzesforsubj->id,
+                    'STAnswer' => 0,
+                    'answerStatus' => 2,
+                    'time' => Carbon\Carbon::now()
+                ]);
+            }
+            else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
+                //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
+                $urgroup = DB::table('groups')
+                               ->where('STcodeID', $userId)
+                               ->first();
+                $currentlog = DB::table('logChildrenQuizzes')
+                                ->where('groupnoID', $urgroup->id)
+                                ->where('answerStatus', 2)
+                                // ->whereNull('answerStatus')
+                                ->first();
+                $ans = DB::table('exams')
+                        ->where('id', $currentlog->ExamID)
+                        ->first();
+                if ((int)$userMessage == $ans->answerStatus) {
+                    $textReplyMessage = "Correct!";
+                    $ansst = 1;
+                } else {
+                    $textReplyMessage = "Wrong!";
+                    $ansst = 0;
+                }
+                DB::table('logChildrenQuizzes')
+                    ->where('id', $currentlog->id)
+                    ->update(['STAnswer' => $userMessage, 'answerStatus' => $ansst]);
+                $replyData = new TextMessageBuilder($textReplyMessage);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
