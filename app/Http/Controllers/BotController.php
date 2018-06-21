@@ -288,11 +288,9 @@ class BotController extends Controller
                 DB::table('logChildrenQuizzes')->insertGetId([
                     'group_id' => $urgroup->id,
                     'exam_id' => $quizzesforsubj->id,
-                    'answer' => 0,
                     'time' => Carbon::now()
                 ]);
-                // $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-                $replyData = new TextMessageBuilder($urgroup->id);
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
