@@ -18,7 +18,7 @@ class CreateManagersTable extends Migration
             $table->string('PRname');
             $table->string('UNPR');
             $table->string('PWPR');
-            $table->string('PREmail');
+            $table->string('PREmail')->nullable();
             $table->timestampsTz();
         });
     }

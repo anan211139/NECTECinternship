@@ -17,8 +17,8 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->Integer('STcodeID');
             $table->Integer('subjectID');
-            $table->Integer('chepterID');
-            $table->Integer('momentStatus');
+            $table->Integer('chapterID');
+            $table->Integer('momentStatus'); // true if the student has done all 20 tests
             $table->dateTimeTz('3day');
             $table->dateTimeTz('7day');
             $table->timestampsTz();

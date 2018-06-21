@@ -17,13 +17,13 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->string('STcodeID');
             $table->string('STName');
-            $table->string('STLocalPic');
+            $table->string('STLocalPic')->nullable(); //path to profile picture parents uploaded.
             $table->Integer('point');
-            $table->date('birthofdate');
-            $table->string('STEmail');
-            $table->string('phone');
-            $table->string('address');
-            $table->Integer('schoolID');
+            $table->date('birthofdate')->nullable();
+            $table->string('STEmail')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->Integer('schoolID')->nullable();
             $table->timestampsTz();
         });
     }

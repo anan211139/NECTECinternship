@@ -16,7 +16,7 @@ class CreateGroupRandomsTable extends Migration
         Schema::create('groupRandoms', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('groupnoID');
-            $table->string('listExamID'); // json of old exam
+            $table->string('listExamID')->nullable(); // list of all random exam
             $table->string('listLevelID');
             $table->timestampsTz();
         });

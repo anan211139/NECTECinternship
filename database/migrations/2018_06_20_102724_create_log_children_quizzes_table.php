@@ -16,11 +16,11 @@ class CreateLogChildrenQuizzesTable extends Migration
         Schema::create('logChildrenQuizzes', function (Blueprint $table) { //create when random exam
             $table->increments('id');
             $table->Integer('groupnoID');
-            $table->Integer('numbertest');
+            $table->Integer('numbertest'); // order of the present exam (1 to 20)
             $table->Integer('ExamID'); // present exam
-            $table->Integer('STAnswer'); //real ans
-            $table->Integer('answerStatus'); //true-false
-            $table->dateTimeTz('time'); //update
+            $table->Integer('STAnswer'); //student's ans
+            $table->Integer('answerStatus')->nullable(); //0:wrong answer, 1:correct answer
+            $table->dateTimeTz('time'); //update time
             $table->timestampsTz();
         });
     }

@@ -18,8 +18,8 @@ class CreateResultsTable extends Migration
             $table->Integer('groupnoID');
             $table->Integer('STcodeID');
             $table->smallInteger('levelID'); //1 easy, 2 med, 3 hard
-            $table->Integer('max');
-            $table->Integer('true');
+            $table->Integer('max'); // the number of tests for this lvl
+            $table->Integer('true'); //the number of corrected tests
             $table->timestampsTz();
         });
     }
