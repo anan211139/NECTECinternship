@@ -291,7 +291,8 @@ class BotController extends Controller
                     'answer' => 0,
                     'time' => Carbon::now()
                 ]);
-                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                // $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                $replyData = new TextMessageBuilder($urgroup->id);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
