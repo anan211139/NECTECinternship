@@ -285,16 +285,16 @@ class BotController extends Controller
                 $pathtoexam = $quizzesforsubj->local_pic;
                 $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
                 $urgroup = DB::table('groups')->where('line_code', $userId)->first();
-                // DB::table('logChildrenQuizzes')->insertGetId([
-                //     'group_id' => $urgroup->id,
-                //     'exam_id' => $quizzesforsubj->id,
-                //     'time' => Carbon::now()
-                // ]);
-                DB::table('logChildrenQuizzes')->insert([
-                    'group_id' => 1,
-                    'exam_id' => 1,
+                DB::table('logChildrenQuizzes')->insertGetId([
+                    'group_id' => $urgroup->id,
+                    'exam_id' => $quizzesforsubj->id,
                     'time' => Carbon::now()
                 ]);
+                // DB::table('logChildrenQuizzes')->insert([
+                //     'group_id' => 1,
+                //     'exam_id' => 1,
+                //     'time' => Carbon::now()
+                // ]);
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
