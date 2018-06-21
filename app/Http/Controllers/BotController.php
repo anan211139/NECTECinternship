@@ -211,10 +211,6 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($content);
             }
             else if($userMessage =="สร้างข้อสอบ"){
-                $urgroup = DB::table('groups')
-                               ->where('STcodeID', $userId)
-                               ->first();
-                if ($urgroup === null) {
                     DB::table('groups')->insertGetId([
                         'STcodeID' => $userId, 
                         'subjectID' => 1,
@@ -224,16 +220,8 @@ class BotController extends Controller
                         '7day' => Carbon\Carbon::now()
                     ]);
                     $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
-                } else {
-                    $textReplyMessage = "มีชุดข้อสอบของตัวเองอยู่แล้วนี่";
-                }
-                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                $arr_replyData[] = new TextMessageBuilder($content);
-                $multiMessage =     new MultiMessageBuilder;
-                foreach($arr_replyData as $arr_Reply){
-                        $multiMessage->add($arr_Reply);
-                }
-                $replyData = $multiMessage;
+
+                $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
@@ -275,13 +263,7 @@ class BotController extends Controller
                 DB::table('logChildrenQuizzes')
                     ->where('id', $currentlog->id)
                     ->update(['STAnswer' => $userMessage, 'answerStatus' => $ansst]);
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                $arr_replyData[] = new TextMessageBuilder($content);
-                $multiMessage =     new MultiMessageBuilder;
-                foreach($arr_replyData as $arr_Reply){
-                        $multiMessage->add($arr_Reply);
-                }
-                $replyData = $multiMessage;
+                $replyData = new TextMessageBuilder($textReplyMessage);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
