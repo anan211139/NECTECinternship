@@ -290,7 +290,7 @@ class BotController extends Controller
                 //     'exam_id' => $quizzesforsubj->id,
                 //     'time' => Carbon::now()
                 // ]);
-                DB::table('logChildrenQuizzes')->insertGetId([
+                DB::table('logChildrenQuizzes')->insert([
                     'group_id' => 1,
                     'exam_id' => 1,
                     'time' => Carbon::now()
