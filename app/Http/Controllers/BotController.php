@@ -279,9 +279,9 @@ class BotController extends Controller
         }
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
-                               ->where('chapterID', 1)->inRandomOrder()
+                               ->where('chapter_id', 1)->inRandomOrder()
                                ->first();
-                $pathtoexam = $quizzesforsubj->ELocalPic;
+                $pathtoexam = $quizzesforsubj->local_pic;
                 $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
