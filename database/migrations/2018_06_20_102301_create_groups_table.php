@@ -15,7 +15,7 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('STcodeID');
+            $table->string('STcodeID');
             $table->Integer('subjectID');
             $table->Integer('chapterID');
             $table->Integer('momentStatus'); // true if the student has done all 20 tests

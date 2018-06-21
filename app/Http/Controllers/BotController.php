@@ -214,7 +214,7 @@ class BotController extends Controller
                     DB::table('groups')->insertGetId([
                         'STcodeID' => $userId, 
                         'subjectID' => 1,
-                        'chepterID' => 1,
+                        'chapterID' => 1,
                         'momentStatus' => 0,
                         '3day' => Carbon::now(),
                         '7day' => Carbon::now()
