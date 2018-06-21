@@ -296,13 +296,16 @@ class BotController extends Controller
                 //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
                 $urgroup = DB::table('groups')
                                ->where('line_code', $userId)
+                               ->orderBy('id','DESC')
                                ->first();
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('group_id', $urgroup->id)
                                 ->whereNull('is_correct')
+                                ->orderBy('id','DESC')
                                 ->first();
                 $ans = DB::table('exams')
                         ->where('id', $currentlog->exam_id)
+                        ->orderBy('id','DESC')
                         ->first();
                 if ((int)$userMessage == $ans->answer) {
                     $textReplyMessage = "Correct!";
