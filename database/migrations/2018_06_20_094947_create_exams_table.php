@@ -15,12 +15,12 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('levelID');
-            $table->Integer('subjectID');
-            $table->Integer('chapterID');
-            $table->string('ELocalPic');
-            $table->smallInteger('answerStatus');
-            $table->Integer('PrincipleID');
+            $table->Integer('subject_id');
+            $table->Integer('chapter_id');
+            $table->Integer('level_id');
+            $table->string('local_pic');
+            $table->smallInteger('answer'); //1,2,3,4
+            $table->Integer('principle_id');
             $table->timestampsTz();
         });
     }
