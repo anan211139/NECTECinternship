@@ -208,7 +208,7 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="events"){
-                $replyData = new TextMessageBuilder($events);
+                $replyData = new TextMessageBuilder(json_encode($events));
             }
             else if($userMessage =="สร้างข้อสอบ"){
                 $urgroup = DB::table('groups')
