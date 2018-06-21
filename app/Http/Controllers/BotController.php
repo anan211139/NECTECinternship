@@ -227,7 +227,13 @@ class BotController extends Controller
                 } else {
                     $textReplyMessage = "มีชุดข้อสอบของตัวเองอยู่แล้วนี่";
                 }
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                $arr_replyData[] = new TextMessageBuilder($content);
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage;
             }
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
@@ -269,7 +275,13 @@ class BotController extends Controller
                 DB::table('logChildrenQuizzes')
                     ->where('id', $currentlog->id)
                     ->update(['STAnswer' => $userMessage, 'answerStatus' => $ansst]);
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                $arr_replyData[] = new TextMessageBuilder($content);
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage;
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
