@@ -11,10 +11,10 @@ class regisController extends Controller
         $password = $request->input('psw');
         $repassword = $request->input('repsw');
         $email = $request->input('email');
-        if($password != $repassword){
-            return $email;
+        if($password == $repassword){
+            return 'inIF';
         }else{
-            return $password;
+            return redirect('/')->with('failregis','Password and Re-Password not match');
         } 
     }
 }

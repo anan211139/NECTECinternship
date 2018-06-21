@@ -224,14 +224,6 @@ span.psw {
        width: 100%;
     }
 }
-/* @media screen and (max-width: 800px) {
-   body{
-    background-size: auto 45%;
-   }
-} */
-
-/* nav */
-
 #navbar {
     background-color: #f7f7f7;
     box-shadow: 0px 5px 20px 2px rgba(0,0,0,0.2);
@@ -255,4 +247,10 @@ span.psw {
   #navbar a:hover {
     background-color: #ddd;
     color: black;
+  }
+  .alert-message{
+      width: 100%;
+      background-color: rgba(245, 43, 43, 0.479);
+      color: red;
+      padding: 20px;
   }
