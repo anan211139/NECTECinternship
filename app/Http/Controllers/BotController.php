@@ -161,10 +161,6 @@ class BotController extends Controller
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
                 $actionBuilder = array(
                     new MessageTemplateActionBuilder(
-                        'แต้มสะสมของฉัน',// ข้อความแสดงในปุ่ม
-                        'แต้มสะสมของฉัน'// ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                    ),
-                    new MessageTemplateActionBuilder(
                         'แลกของรางวัล', // ข้อความแสดงในปุ่ม
                         'แลกของรางวัล'
                     )
@@ -173,13 +169,57 @@ class BotController extends Controller
                 $replyData = new TemplateMessageBuilder('Button Template',
                     new ButtonTemplateBuilder(
                         'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
-                        'แต้ม', // กำหนดรายละเอียด
+                        'ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า', // กำหนดรายละเอียด
                         NULL, // กำหนด url รุปภาพ
                         $actionBuilder  // กำหนด action object
                     )                           
 
                 );
-
+            }
+            else if($userMessage =="แลกของรางวัล"){
+                $actionBuilder = array(
+                    new MessageTemplateActionBuilder(
+                        'แลก',// ข้อความแสดงในปุ่ม
+                        'แลก' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    ),
+                    // new UriTemplateActionBuilder(
+                    //     'Uri Template', // ข้อความแสดงในปุ่ม
+                    //     'https://www.ninenik.com'
+                    // ),
+                    // new PostbackTemplateActionBuilder(
+                    //     'Postback', // ข้อความแสดงในปุ่ม
+                    //     http_build_query(array(
+                    //         'action'=>'buy',
+             
+                    //         'item'=>100
+                    //     )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
+                    //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    // ),      
+                );
+                $replyData = new TemplateMessageBuilder('Carousel',
+                    new CarouselTemplateBuilder(
+                        array(
+                            new CarouselColumnTemplateBuilder(
+                                'Sponsor',
+                                'ใช้ 100 แต้ม เพื่อแลกของรางวัล',
+                                'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
+                                $actionBuilder
+                            ),
+                            new CarouselColumnTemplateBuilder(
+                                'Sponsor',
+                                'ใช้ 400 แต้ม เพื่อแลกของรางวัล',
+                                'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
+                                $actionBuilder
+                            ),
+                            new CarouselColumnTemplateBuilder(
+                                'Sponsor',
+                                'ใช้ 1000 แต้ม เพื่อแลกของรางวัล',
+                                'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
+                                $actionBuilder
+                            ),                                          
+                        )
+                    )
+                );
             }
             else if($userMessage =="ดู Code"){
                 //$textReplyMessage = $userId;
