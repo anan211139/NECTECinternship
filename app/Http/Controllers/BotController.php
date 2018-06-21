@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
@@ -159,8 +158,28 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
-                $textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
+                $actionBuilder = array(
+                    new MessageTemplateActionBuilder(
+                        'แต้มสะสมของฉัน',// ข้อความแสดงในปุ่ม
+                        'แต้มสะสมของฉัน'// ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    ),
+                    new MessageTemplateActionBuilder(
+                        'แลกของรางวัล', // ข้อความแสดงในปุ่ม
+                        'แลกของรางวัล'
+                    )
+                );
+
+                $replyData = new TemplateMessageBuilder('Button Template',
+                    new ButtonTemplateBuilder(
+                        'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
+                        'แต้ม', // กำหนดรายละเอียด
+                        NULL, // กำหนด url รุปภาพ
+                        $actionBuilder  // กำหนด action object
+                    )                           
+
+                );
+
             }
             else if($userMessage =="ดู Code"){
                 //$textReplyMessage = $userId;
