@@ -290,11 +290,6 @@ class BotController extends Controller
                     'exam_id' => $quizzesforsubj->id,
                     'time' => Carbon::now()
                 ]);
-                // DB::table('logChildrenQuizzes')->insert([
-                //     'group_id' => 1,
-                //     'exam_id' => 1,
-                //     'time' => Carbon::now()
-                // ]);
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
@@ -307,9 +302,9 @@ class BotController extends Controller
                                 ->whereNull('is_correct')
                                 ->first();
                 $ans = DB::table('exams')
-                        ->where('id', $currentlog->ExamID)
+                        ->where('id', $currentlog->exam_id)
                         ->first();
-                if ((int)$userMessage == $ans->answerStatus) {
+                if ((int)$userMessage == $ans->answer) {
                     $textReplyMessage = "Correct!";
                     $ansst = true;
                 } else {
