@@ -178,7 +178,7 @@ class BotController extends Controller
                         new MessageTemplateActionBuilder(
                             'แลกของรางวัล', // ข้อความแสดงในปุ่ม
                             'แลกของรางวัล'
-                        ),
+                        )
                     );
 
                 $replyData = new TemplateMessageBuilder('Button Template',
