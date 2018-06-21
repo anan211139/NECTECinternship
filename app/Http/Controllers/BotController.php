@@ -284,7 +284,7 @@ class BotController extends Controller
                                ->first();
                 $pathtoexam = $quizzesforsubj->local_pic;
                 $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
-                DB::table('logChildrenQuizzes')->insertGetId([
+                DB::table('logChildrenQuizzes')->insert([
                     'group_id' => DB::table('groups')->where('line_code', $userId)->first()->id,
                     'exam_id' => $quizzesforsubj->id,
                     'answer' => 0,
