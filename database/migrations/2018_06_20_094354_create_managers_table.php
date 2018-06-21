@@ -18,6 +18,7 @@ class CreateManagersTable extends Migration
             $table->string('name');
             $table->string('username');
             $table->string('password');
+            $table->rememberToken();
             $table->string('email')->nullable();
             $table->timestampsTz();
         });

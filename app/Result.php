@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {
-    protected $fillable = ['groupnoID', 'STcodeID', 'levelID', 'max', 'true'];
+    protected $fillable = ['line_code', 'group_id', 'level_id', 'total_level', 'total_level_true'];
 }
