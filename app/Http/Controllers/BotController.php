@@ -216,8 +216,8 @@ class BotController extends Controller
                         'subjectID' => 1,
                         'chapterID' => 1,
                         'momentStatus' => 0,
-                        '3day' => Carbon\Carbon::now(),
-                        '7day' => Carbon\Carbon::now()
+                        '3day' => Carbon::now(),
+                        '7day' => Carbon::now()
                     ]);
                     $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
 
@@ -237,7 +237,7 @@ class BotController extends Controller
                     'ExamID' => $quizzesforsubj->id,
                     'STAnswer' => 0,
                     'answerStatus' => 2,
-                    'time' => Carbon\Carbon::now()
+                    'time' => Carbon::now()
                 ]);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
