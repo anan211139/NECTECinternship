@@ -170,7 +170,7 @@ class BotController extends Controller
                     new ButtonTemplateBuilder(
                         'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
                         'ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า', // กำหนดรายละเอียด
-                        NULL, // กำหนด url รุปภาพ
+                        'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700', // กำหนด url รุปภาพ
                         $actionBuilder  // กำหนด action object
                     )                           
 
