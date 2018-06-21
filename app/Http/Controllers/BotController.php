@@ -38,6 +38,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
+use Carbon\Carbon;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -283,7 +284,37 @@ class BotController extends Controller
                                ->first();
                 $pathtoexam = $quizzesforsubj->local_pic;
                 $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
+                DB::table('logChildrenQuizzes')->insertGetId([
+                    'group_id' => DB::table('groups')->where('line_code', $userId)->first()->id,
+                    'exam_id' => $quizzesforsubj->id,
+                    'answer' => 0,
+                    'time' => Carbon::now()
+                ]);
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+            }
+            else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
+                //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
+                $urgroup = DB::table('groups')
+                               ->where('line_code', $userId)
+                               ->first();
+                $currentlog = DB::table('logChildrenQuizzes')
+                                ->where('group_id', $urgroup->id)
+                                ->whereNull('is_correct')
+                                ->first();
+                $ans = DB::table('exams')
+                        ->where('id', $currentlog->ExamID)
+                        ->first();
+                if ((int)$userMessage == $ans->answerStatus) {
+                    $textReplyMessage = "Correct!";
+                    $ansst = true;
+                } else {
+                    $textReplyMessage = "Wrong!";
+                    $ansst = false;
+                }
+                DB::table('logChildrenQuizzes')
+                    ->where('id', $currentlog->id)
+                    ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                $replyData = new TextMessageBuilder($textReplyMessage);
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
