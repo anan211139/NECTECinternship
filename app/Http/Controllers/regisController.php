@@ -8,7 +8,7 @@ use App\Manager;
 class regisController extends Controller
 {
     public function process(Request $request){
-        $PRname = "temp";
+        $PRname = $request->input('nameRegis');
         $username = $request->input('uname');
         $password = $request->input('psw');
         $repassword = $request->input('repsw');

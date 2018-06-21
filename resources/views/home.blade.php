@@ -1,10 +1,17 @@
 @extends('layout.app')
     @section('content')
         <div id="navbar">
-            <a href="#home">Home</a>
+            <div class="navLeft">
+                <div><img class="logo" src="picture/bear_N.png"></div>
+                <div class="logoBtn">พี่หมีติวเตอร์</div>
+            </div>
+            <div class="navRight">
+                <a class="navLogin" href="#login">LOG IN</a>
+                <a onclick="document.getElementById('id01').style.display='block'">Register</a>
+            </div>
         </div>
         <a href="#detail" class="plus"><img src="picture/arrow.png"></a>
-        <div style='background-image: url("picture/bgfinal-01.png"); background-size: 100% auto; background-repeat: no-repeat; 
+        <div style='background-image: url("picture/topbg.png"); background-size: 100% auto; background-repeat: no-repeat; 
         background-position: bottom right; 
         height: 100%; '>
             <div class="layout">
@@ -25,20 +32,66 @@
                 <span>Don't have an account?</span>
                 <a class="forgot" onclick="document.getElementById('id01').style.display='block'">Sign up</a>
                 @include('inc.message')
+                @include('inc.loginmessage')
             </div>
         </div>
         <div id="detail" class="detail">
+            <div class="iconContainer">
+                <div style="text-align: center;">
+                    <img class="icon" src="picture/1024px-LINE_logo.svg.png">
+                </div>
+                <div style="text-align: center;">
+                    <img class="icon" src="picture/noti.png">
+                </div>
+                <div style="text-align: center;">
+                    <img class="icon" src="picture/chart.png">
+                </div>
+            </div>
             <div class="box">
-                <iframe width="auto" height="auto" src="https://www.youtube.com/embed/Yad6t_EgwVw">
-                </iframe>
-                <p>dsagkljsdafgl;sdjaglkj</p>
-                <p>dsagkljsdafgl;sdjaglkj</p>
-                <p>dsagkljsdafgl;sdjaglkj</p>
-                <p>dsagkljsdafgl;sdjaglkj</p>
-                <p>dsagkljsdafgl;sdjaglkj</p>
+                <div class="topic">
+                    <p><b>ABOUT</b></p>
+                </div>
+                <p> พี่หมีติวเตอร์  โปรเเกรมจำลองบทสนทนา หรือเรียกสั้นๆว่าเเชทบอท ซึ่งอยู่บน Line 
+                    ที่จะมาเป็นติวเตอร์ส่วนตัว ให้กับน้องๆ  โดยพี่หมีติวเตอร์สามารถส่งข้อความเเจ้งเตือน
+                    ให้น้องๆมาทบทวนบทเรียน  ซึ่งน้องๆสามารถเลือกบทเรียนที่จะทบทวนได้  โดยจะมีการเก็บคะแนน
+                    เพื่อนำมาแลกของรางวัล เพื่อเป็นเเรงจูงใจให้เด็กมีเป้าหมายในการทบทวน อีกทั้งมีการวัดระดับ
+                    ความเข้าใจในบทเรียนนั้นๆ พร้อมทั้งนำเสนอผลคะเเนนออกมาเป็นกราฟเพื่อให้ ผู้ปกครองเเละ
+                    คุณครูสามารถเห็นการพัฒนาของเด็ก</p>
             </div>
         </div>
-        <!-- <img class="backgroundImg" src="background.png"> -->
+        <div class="detail2">
+            <img style="width: 100%;height: auto;" src="picture/lowbg.png">
+        </div>
+        <div class="detail3">
+            <div class="layoutVideo">
+                <div class="intrinsic-container intrinsic-container-16x9">
+                    <iframe width="auto" height="auto" src="https://www.youtube.com/embed/Yad6t_EgwVw" allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footerLeft">
+                <img class="nectecLogo" src="picture/Nectec_logo.png">
+            </div>
+            <div class="footerCenter">
+                <div class="tooltip">
+                    <img class="imgContact" src="picture/facebook-logo-button.png">
+                    <span class="tooltiptext">พี่หมีติวเตอร์</span>
+                </div>
+                <div class="tooltip">
+                    <img class="imgContact" src="picture/linefooter.png">
+                    <span class="tooltiptext">@พี่หมีติวเตอร์</span>
+                </div>
+                <div class="tooltip">
+                    <img class="imgContact" src="picture/web.png">
+                    <span class="tooltiptext">www.พี่หมีติวเตอร์.com</span>
+                </div>
+                <!-- <div class="contact">
+                    <img class="imgContact" src="picture/facebook-logo-button.png">
+                </div> -->
+            </div>
+        </div>
 
         <!-- pop-up -->
 
@@ -48,6 +101,8 @@
             <div class="container">
                 <p class="headRegis"><b>REGISTER</b></p>
             {!! Form::open(['url' => 'regissubmit']) !!}
+                <label for="uname">Name</label>
+                <input class="inputPop" type="text" name="nameRegis" required>
                 <label for="uname">Username</label>
                 <input class="inputPop" type="text" name="uname" required>
                 <label for="psw">Password</label>
