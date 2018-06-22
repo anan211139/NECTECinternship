@@ -391,6 +391,23 @@ class BotController extends Controller
         $response = $bot->replyMessage($replyToken,$replyData);
     }
 
+    public function generate_exam(){
+        $urgroup = DB::table('groups')
+            ->where('line_code', $userId)
+            ->orderBy('id','DESC')
+            ->first();
+        $group_id = $urgroup->id;
+
+        $quiz_easy = DB::table('exams')
+            ->where('level_id', '1')
+            ->count();
+        $quiz_med = DB::table('exams')
+            ->where('level_id', '2')
+            ->count();
+        $quiz_hard = DB::table('exams')
+            ->where('level_id', '3')
+            ->count();
+    }
         
     
 }
