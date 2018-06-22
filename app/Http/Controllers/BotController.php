@@ -300,7 +300,7 @@ class BotController extends Controller
                                ->first();
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('group_id', $urgroup->id)
-                                ->whereNull('is_correct')
+                                // ->whereNull('is_correct')
                                 ->orderBy('id','DESC')
                                 ->first();
                 $ans = DB::table('exams')
