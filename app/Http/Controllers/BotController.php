@@ -161,7 +161,7 @@ class BotController extends Controller
                 $textReplyMessage = $score->point;
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $score=DB::table('students')
-                               ->where('line_code', $userId);
+                               ->where('line_code', $userId)
                                ->first();
             }
 
