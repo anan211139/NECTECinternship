@@ -158,9 +158,11 @@ class BotController extends Controller
                 ));
             }
             else if($userMessage =="ดูคะแนน"){
-                $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
+                $textReplyMessage = $score->point;
                 $replyData = new TextMessageBuilder($textReplyMessage);
-
+                $score=DB::table('students')
+                               ->where('line_code', $userId);
+                               ->first();
             }
 
             // else if($userMessage =="สะสมแต้ม"){
@@ -236,7 +238,7 @@ class BotController extends Controller
             else if($userMessage =="ดู Code"){
                 //$textReplyMessage = $userId;
                 $arr_replyData = array();
-                
+
                 $connectChild ='https://pkwang.herokuapp.com/connectchild/'.$userId;
                 $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='.$connectChild.'&choe=UTF-8';
 
@@ -281,7 +283,7 @@ class BotController extends Controller
             }
             else if($userMessage =="สร้างข้อสอบ"){
                 DB::table('groups')->insert([
-                    'line_code' => $userId, 
+                    'line_code' => $userId,
                     'subject_id' => 1,
                     'chapter_id' => 1,
                     'status' => false
@@ -324,36 +326,36 @@ class BotController extends Controller
                 $princ_pic = $princ ->local_pic;
                 $ans_status = $currentlog->is_correct;
                 $sec_chance = $currentlog->second_chance;
-                
+
                 $arr_replyData = array();
 
                 if($ans_status===null){
                     if ((int)$userMessage == $ans->answer) {
                         $textReplyMessage = "Correct!";
                         $ansst = true;
-    
+
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                        
+
                         DB::table('logChildrenQuizzes')
                             ->where('id', $currentlog->id)
                             ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                            
+
                     } else {
                         $textReplyMessage = "Wrong!";
                         $ansst = false;
-    
+
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                        
+
                         DB::table('logChildrenQuizzes')
                             ->where('id', $currentlog->id)
                             ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                    
-    
+
+
                         $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
                         $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
-    
+
                         $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
-    
+
                     }
                 }
                 else if($ans_status ==false && $sec_chance ==false){
@@ -361,19 +363,19 @@ class BotController extends Controller
                     DB::table('logChildrenQuizzes')
                         ->where('id', $currentlog->id)
                         ->update(['second_chance' => true]);
-                            
+
 
                     if ((int)$userMessage == $ans->answer) {
                         $textReplyMessage = "Correct!";
                         $ansst = true;
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                        
-                        
+
+
                     } else {
                         $textReplyMessage = "Wrong!";
                         $ansst = false;
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-                        
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+
                     }
                 }
 
@@ -383,7 +385,7 @@ class BotController extends Controller
                 }
                 $replyData = $multiMessage;
 
-                
+
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
@@ -391,7 +393,7 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage=="events"){
-                
+
                 $replyData = new TextMessageBuilder($content);
             }
              else{
@@ -403,6 +405,6 @@ class BotController extends Controller
 
     }
 
-        
-    
+
+
 }
