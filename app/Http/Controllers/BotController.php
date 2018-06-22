@@ -155,11 +155,13 @@ class BotController extends Controller
                 ));
             }
             else if($userMessage =="ดูคะแนน"){
-                $textReplyMessage = $score->point;
-                $replyData = new TextMessageBuilder($textReplyMessage);
+
                 $score=DB::table('students')
-                               ->where('line_code', $userId);
+                               ->where('line_code', $userId)
                                ->first();
+                $point = $score->point;
+                $textReplyMessage = 'คะแนน '.$point;
+                $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
