@@ -345,7 +345,7 @@ class BotController extends Controller
     
                     }
                 }
-                else if($ans_status ==false &  $sec_chance ==false){
+                else if($ans_status ==false && $sec_chance ==false){
 
                     DB::table('logChildrenQuizzes')
                         ->where('id', $currentlog->id)
