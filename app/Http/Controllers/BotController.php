@@ -282,8 +282,7 @@ class BotController extends Controller
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
                                ->first();
-                $pathtoexam = $quizzesforsubj->local_pic;
-                $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$quizzesforsubj->local_pic;
                 $urgroup = DB::table('groups')->where('line_code', $userId)->first();
                 DB::table('logChildrenQuizzes')->insertGetId([
                     'group_id' => $urgroup->id,
@@ -293,7 +292,6 @@ class BotController extends Controller
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
-                //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
                 $urgroup = DB::table('groups')
                                ->where('line_code', $userId)
                                ->orderBy('id','DESC')
@@ -310,7 +308,7 @@ class BotController extends Controller
                 $princ = DB::table('printciples')
                         ->where('id', $ans->principle_id)
                         ->first();
-                $princ_pic = $princ ->local_pic;
+                $princ_pic = $princ->local_pic;
                 $ans_status = $currentlog->is_correct;
                 $sec_chance = $currentlog->second_chance;
                 
