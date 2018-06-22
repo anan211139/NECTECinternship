@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class LogChildrenQuiz extends Model
 {
-    protected $fillable = ['groupnoID', 'numbertest', 'ExamID', 'STAnswer', 'answerStatus', 'time'];
+    protected $fillable = ['group_id', 'exam_id', 'answer', 'is_correct', 'second_chance', 'time'];
 }

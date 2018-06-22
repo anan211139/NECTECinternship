@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLevelsTable extends Migration
+class CreateExchangesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('exchanges', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->timestampsTz();
+            $table->string('line_code');
+            $table->smallInteger('send')->default(1); //1 not deliver, 2 delivered, 3 delivery is not success
+            $table->dateTimeTz('time');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('exchanges');
     }
 }

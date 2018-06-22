@@ -15,8 +15,8 @@ class CreateSTandTCsTable extends Migration
     {
         Schema::create('STandTCs', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('STcodeID');
-            $table->Integer('teacherID');
+            $table->string('line_code');
+            $table->Integer('teacher_id');
             $table->timestampsTz();
         });
     }

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class GroupRandom extends Model
 {
-    protected $fillable = ['groupnoID', 'listExamID', 'listLevelID'];
+    protected $fillable = ['group_id', 'listexamid', 'listlevelid'];
 }

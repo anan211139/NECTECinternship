@@ -15,10 +15,11 @@ class CreateManagersTable extends Migration
     {
         Schema::create('managers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('PRname');
-            $table->string('UNPR');
-            $table->string('PWPR');
-            $table->string('PREmail');
+            $table->string('name');
+            $table->string('username');
+            $table->string('password');
+            $table->rememberToken();
+            $table->string('email')->nullable();
             $table->timestampsTz();
         });
     }

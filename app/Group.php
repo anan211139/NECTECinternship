@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-    protected $fillable = ['STcodeID', 'subjectID', 'chepterID', 'momentStatus'];
+    protected $fillable = ['line_code', 'subject_id', 'chapter_id', 'status'];
 }

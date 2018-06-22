@@ -15,7 +15,7 @@ class CreatePrintciplesTable extends Migration
     {
         Schema::create('printciples', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('PLocalPic');
+            $table->string('local_pic');
             $table->timestampsTz();
         });
     }
