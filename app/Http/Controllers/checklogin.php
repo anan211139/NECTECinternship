@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Manager;
-
+use Session;
 class checklogin extends Controller
 {
     public function pslogin(Request $request){
@@ -15,8 +15,10 @@ class checklogin extends Controller
         ->select(DB::raw('*'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
+
         if(count($userresult) > 0){
-            return redirect('/')->with('login','login pass');
+            $_SESSION["username"] = $username;
+            return redirect('/')->with('login',$_SESSION["username"]);
         }else{
             return redirect('/')->with('login','login fail');
         }
