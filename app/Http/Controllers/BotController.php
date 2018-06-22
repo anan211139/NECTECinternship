@@ -155,7 +155,13 @@ class BotController extends Controller
                 ));
             }
             else if($userMessage =="ดูคะแนน"){
-                $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
+
+                $score=DB::table('students')
+                               ->select('point')
+                               ->where('line_code', $userId)
+                               ->first();
+                //$point = $score->point;
+                $textReplyMessage = 'คะแนน '.$score;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
@@ -282,8 +288,7 @@ class BotController extends Controller
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
                                ->first();
-                $pathtoexam = $quizzesforsubj->local_pic;
-                $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$quizzesforsubj->local_pic;
                 $urgroup = DB::table('groups')->where('line_code', $userId)->first();
                 DB::table('logChildrenQuizzes')->insertGetId([
                     'group_id' => $urgroup->id,
@@ -291,9 +296,39 @@ class BotController extends Controller
                     'time' => Carbon::now()
                 ]);
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                DB::table('logChildrenQuizzes')->insertGetId([
+                    'groupnoID' => DB::table('groups')->where('STcodeID', $userId)->first()->id, 
+                    'numbertest' => 1,
+                    'ExamID' => $quizzesforsubj->id,
+                    'STAnswer' => 0,
+                    'time' => Carbon::now()
+                ]);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
+                $urgroup = DB::table('groups')
+                               ->where('STcodeID', $userId)
+                               ->first();
+                $currentlog = DB::table('logChildrenQuizzes')
+                                ->where('groupnoID', $urgroup->id)
+                                ->whereNull('answerStatus')
+                                ->first();
+                $ans = DB::table('exams')
+                        ->where('id', $currentlog->ExamID)
+                        ->first();
+                if ((int)$userMessage == $ans->answerStatus) {
+                    $textReplyMessage = "Correct!";
+                    $ansst = 1;
+                } else {
+                    $textReplyMessage = "Wrong!";
+                    $ansst = 0;
+                }
+                DB::table('logChildrenQuizzes')
+                    ->where('id', $currentlog->id)
+                    ->update(['STAnswer' => $userMessage, 'answerStatus' => $ansst]);
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
+            else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 $urgroup = DB::table('groups')
                                ->where('line_code', $userId)
                                ->orderBy('id','DESC')
@@ -310,7 +345,7 @@ class BotController extends Controller
                 $princ = DB::table('printciples')
                         ->where('id', $ans->principle_id)
                         ->first();
-                $princ_pic = $princ ->local_pic;
+                $princ_pic = $princ->local_pic;
                 $ans_status = $currentlog->is_correct;
                 $sec_chance = $currentlog->second_chance;
                 
@@ -410,4 +445,42 @@ class BotController extends Controller
     }
         
     
+    //use this function after the student pick their own lesson
+    public function start_exam($userId, $subject_id, $chapter_id) {
+        $old_group = DB::table('groups')
+                        ->where('line_code', $userId)
+                        ->orderBy('id','DESC')
+                        ->first();
+        //if student has non-finish old group
+        if ($old_group->status === false) { //in the future, don't forget to check the expire date
+            $old_log = DB::table('logChildrenQuizzes')
+                            ->where('group_id', $old_group->id)
+                            ->orderBy('id','DESC')
+                            ->first();
+            //if student still not answer the old exam
+            if ($old_log->answer !== null) {
+                $old_exam = DB::table('exams')
+                                ->where('id', $old_log->exam_id)
+                                ->first();
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$old_exam->local_pic;
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+            }
+            //if student has already answered the old exam then generate new exam in old group
+            else {
+                //$this->generate_exam();
+            }
+        }
+        //if student has finished the old group or fist time create group
+        else {
+            DB::table('groups')->insert([
+                'line_code' => $userId, 
+                'subject_id' => $subject_id,
+                'chapter_id' => $chapter_id,
+                'status' => false
+            ]);
+            $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$chapter_id->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+        }
+        $replyData = new TextMessageBuilder($textReplyMessage);
+     }
+
 }
