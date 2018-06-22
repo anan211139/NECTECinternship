@@ -320,14 +320,20 @@ class BotController extends Controller
 
                     $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                     
-                    update_first_chance();
+                    DB::table('logChildrenQuizzes')
+                        ->where('id', $currentlog->id)
+                        ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                        $replyData = new TextMessageBuilder($textReplyMessage);
                 } else {
                     $textReplyMessage = "Wrong!";
                     $ansst = false;
 
                     $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                     
-                    update_first_chance();
+                    DB::table('logChildrenQuizzes')
+                        ->where('id', $currentlog->id)
+                        ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                        $replyData = new TextMessageBuilder($textReplyMessage);
 
                     $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
                     $replyData = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
@@ -358,10 +364,7 @@ class BotController extends Controller
         // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
     }
-    function update_first_chance(){
-        DB::table('logChildrenQuizzes')
-        ->where('id', $currentlog->id)
-        ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-        $replyData = new TextMessageBuilder($textReplyMessage);
-    }
+
+        
+    
 }
