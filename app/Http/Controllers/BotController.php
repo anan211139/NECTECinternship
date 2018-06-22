@@ -349,7 +349,7 @@ class BotController extends Controller
             }
             else if($userMessage=="events"){
                 
-                $replyData = new TextMessageBuilder(content($events));
+                $replyData = new TextMessageBuilder($content);
             }
              else{
                 $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
