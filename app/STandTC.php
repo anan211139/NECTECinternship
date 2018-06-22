@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class STandTC extends Model
 {
-    protected $fillable = ['STcodeID', 'teacherID'];
+    protected $fillable = ['line_code', 'teacher_id'];
 }
