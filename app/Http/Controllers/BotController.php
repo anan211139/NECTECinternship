@@ -311,33 +311,64 @@ class BotController extends Controller
                         ->where('id', $ans->principle_id)
                         ->first();
                 $princ_pic = $princ ->local_pic;
-
+                $ans_status = $currentlog->is_correct;
+                $sec_chance = $currentlog->second_chance;
+                
                 $arr_replyData = array();
 
-                if ((int)$userMessage == $ans->answer) {
-                    $textReplyMessage = "Correct!";
-                    $ansst = true;
-
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                    
-                    DB::table('logChildrenQuizzes')
-                        ->where('id', $currentlog->id)
-                        ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                if($ans_status==null){
+                    if ((int)$userMessage == $ans->answer) {
+                        $textReplyMessage = "Correct!";
+                        $ansst = true;
+    
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                         
-                } else {
-                    $textReplyMessage = "Wrong!";
-                    $ansst = false;
-
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                            
+                    } else {
+                        $textReplyMessage = "Wrong!";
+                        $ansst = false;
+    
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
                     
+    
+                        $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
+                        $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
+    
+                        $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
+    
+                    }
+                }
+                else if($ans_status==false && $sec_chance==false){
                     DB::table('logChildrenQuizzes')
                         ->where('id', $currentlog->id)
-                        ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                
+                        ->update(['second_chance' => true]);
+                            
 
-                    $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
-                    $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
-
+                    if ((int)$userMessage == $ans->answer) {
+                        $textReplyMessage = "Correct!";
+                        $ansst = true;
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        
+                    } else {
+                        $textReplyMessage = "Wrong!";
+                        $ansst = false;
+    
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+    
+                        $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
+                        $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
+    
+                        $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
+    
+                    }
                 }
 
                 $multiMessage =     new MultiMessageBuilder;
