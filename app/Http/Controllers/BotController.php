@@ -309,7 +309,7 @@ class BotController extends Controller
                         ->first();
                 $princ = $ans->principle_id;
                 
-
+                
                 $arr_replyData = array();
 
                 if ((int)$userMessage == $ans->answer) {
