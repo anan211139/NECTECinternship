@@ -11,7 +11,7 @@ class checklogin extends Controller
     public function pslogin(Request $request){
         $username = $request->input('uname');
         $password = $request->input('pass');
-        $userresult = DB::table('Managers')
+        $userresult = DB::table('managers')
         ->select(DB::raw('*'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
