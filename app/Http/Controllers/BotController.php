@@ -268,16 +268,16 @@ class BotController extends Controller
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
-            // else if($userMessage =="สร้างข้อสอบ"){
-            //     DB::table('groups')->insert([
-            //         'line_code' => $userId, 
-            //         'subject_id' => 1,
-            //         'chapter_id' => 1,
-            //         'status' => false
-            //     ]);
-            //     $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
-            //     $replyData = new TextMessageBuilder($textReplyMessage);
-            // }
+            else if($userMessage =="สร้างข้อสอบ"){
+                DB::table('groups')->insert([
+                    'line_code' => $userId, 
+                    'subject_id' => 1,
+                    'chapter_id' => 1,
+                    'status' => false
+                ]);
+                $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
@@ -300,29 +300,88 @@ class BotController extends Controller
                                ->first();
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('group_id', $urgroup->id)
-                                ->whereNull('is_correct')
+                                // ->whereNull('is_correct')
                                 ->orderBy('id','DESC')
                                 ->first();
                 $ans = DB::table('exams')
                         ->where('id', $currentlog->exam_id)
                         ->orderBy('id','DESC')
                         ->first();
-                if ((int)$userMessage == $ans->answer) {
-                    $textReplyMessage = "Correct!";
-                    $ansst = true;
-                } else {
-                    $textReplyMessage = "Wrong!";
-                    $ansst = false;
+                $princ = DB::table('printciples')
+                        ->where('id', $ans->principle_id)
+                        ->first();
+                $princ_pic = $princ ->local_pic;
+                $ans_status = $currentlog->is_correct;
+                $sec_chance = $currentlog->second_chance;
+                
+                $arr_replyData = array();
+
+                if($ans_status==null){
+                    if ((int)$userMessage == $ans->answer) {
+                        $textReplyMessage = "Correct!";
+                        $ansst = true;
+    
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                            
+                    } else {
+                        $textReplyMessage = "Wrong!";
+                        $ansst = false;
+    
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                    
+    
+                        $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
+                        $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
+    
+                        $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
+    
+                    }
                 }
-                DB::table('logChildrenQuizzes')
-                    ->where('id', $currentlog->id)
-                    ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                else if($ans_status ==false &  $sec_chance ==false){
+
+                    DB::table('logChildrenQuizzes')
+                        ->where('id', $currentlog->id)
+                        ->update(['second_chance' => true]);
+                            
+
+                    if ((int)$userMessage == $ans->answer) {
+                        $textReplyMessage = "Correct!";
+                        $ansst = true;
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        
+                    } else {
+                        $textReplyMessage = "Wrong!";
+                        $ansst = false;
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                        
+                    }
+                }
+
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage;
+
+                
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
+            }
+            else if($userMessage=="events"){
+                
+                $replyData = new TextMessageBuilder($content);
             }
              else{
                 $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
@@ -331,4 +390,7 @@ class BotController extends Controller
         // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
     }
+
+        
+    
 }
