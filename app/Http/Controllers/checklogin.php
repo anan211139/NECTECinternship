@@ -13,7 +13,7 @@ class checklogin extends Controller
         $password = $request->input('pass');
         $userresult = DB::table('Managers')
         ->select(DB::raw('*'))
-        ->whereRaw("UNPR = '$username' and PWPR = '$password'")
+        ->whereRaw("username = '$username' and password = '$password'")
         ->get();
         if(count($userresult) > 0){
             return redirect('/')->with('login','login pass');

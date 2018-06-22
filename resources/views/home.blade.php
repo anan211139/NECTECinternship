@@ -24,7 +24,7 @@
                     <p class="fonts2">Username</p>
                     <input type="text" name="uname" required>
                     <p class="fonts2">Password</p>
-                    <input type="text" name="pass" required>
+                    <input type="password" name="pass" required>
                     <button class="loginBtn">LOG IN</button>
                 <!-- </form> -->
                 {!! Form::close() !!}
@@ -70,29 +70,6 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div class="footerLeft">
-                <img class="nectecLogo" src="picture/Nectec_logo.png">
-            </div>
-            <div class="footerCenter">
-                <div class="tooltip">
-                    <img class="imgContact" src="picture/facebook-logo-button.png">
-                    <span class="tooltiptext">พี่หมีติวเตอร์</span>
-                </div>
-                <div class="tooltip">
-                    <img class="imgContact" src="picture/linefooter.png">
-                    <span class="tooltiptext">@พี่หมีติวเตอร์</span>
-                </div>
-                <div class="tooltip">
-                    <img class="imgContact" src="picture/web.png">
-                    <span class="tooltiptext">www.พี่หมีติวเตอร์.com</span>
-                </div>
-                <!-- <div class="contact">
-                    <img class="imgContact" src="picture/facebook-logo-button.png">
-                </div> -->
-            </div>
-        </div>
-
-        <!-- pop-up -->
+        @include('inc.footer')
         @include('inc.pop-up-regis')
 @endsection
