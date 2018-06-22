@@ -307,17 +307,43 @@ class BotController extends Controller
                         ->where('id', $currentlog->exam_id)
                         ->orderBy('id','DESC')
                         ->first();
+                $princ = $ans->principle_id;
+                
+
+                $arr_replyData = array();
+
                 if ((int)$userMessage == $ans->answer) {
                     $textReplyMessage = "Correct!";
                     $ansst = true;
+
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                    
+                    update_first_chance();
                 } else {
                     $textReplyMessage = "Wrong!";
                     $ansst = false;
+
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                    
+                    update_first_chance();
+
+                    $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ.'/';
+                    $replyData = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
+
                 }
-                DB::table('logChildrenQuizzes')
+
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage;
+
+                function update_first_chance(){
+                    DB::table('logChildrenQuizzes')
                     ->where('id', $currentlog->id)
                     ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                    $replyData = new TextMessageBuilder($textReplyMessage);
+                }
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
