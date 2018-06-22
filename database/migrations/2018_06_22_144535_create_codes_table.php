@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLevelsTable extends Migration
+class CreateCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('codes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->timestampsTz();
+            $table->Integer('prize_id');
+            $table->string('code'); //code to exchange
+            $table->smallInteger('send')->default(0); //0 still not send code to the student, 1 when the code id sent
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('codes');
     }
 }

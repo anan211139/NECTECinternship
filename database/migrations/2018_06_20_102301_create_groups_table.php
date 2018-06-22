@@ -15,12 +15,12 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('STcodeID');
-            $table->Integer('subjectID');
-            $table->Integer('chapterID');
-            $table->Integer('momentStatus'); // true if the student has done all 20 tests
-            $table->dateTimeTz('3day');
-            $table->dateTimeTz('7day');
+            $table->string('line_code');
+            $table->Integer('subject_id');
+            $table->Integer('chapter_id');
+            $table->boolean('status'); //boolean true if the student finish all their exam
+            $table->dateTimeTz('3day')->nullable();
+            $table->dateTimeTz('7day')->nullable();
             $table->timestampsTz();
         });
     }

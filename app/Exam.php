@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model
 {
-    protected $fillable = ['levelID', 'subjectID', 'chapterID', 'ELocalPic', 'answerStatus', 'PrincipleID'];
+    protected $fillable = ['subject_id', 'chapter_id', 'level_id', 'local_pic', 'answer', 'principle_id'];
 }

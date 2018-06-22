@@ -15,11 +15,11 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('groupnoID');
-            $table->Integer('STcodeID');
-            $table->smallInteger('levelID'); //1 easy, 2 med, 3 hard
-            $table->Integer('max'); // the number of tests for this lvl
-            $table->Integer('true'); //the number of corrected tests
+            $table->string('line_code');
+            $table->Integer('group_id');
+            $table->smallInteger('level_id'); //1 easy, 2 med, 3 hard
+            $table->Integer('total_level'); 
+            $table->Integer('total_level_true');
             $table->timestampsTz();
         });
     }
