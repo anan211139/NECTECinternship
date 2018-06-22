@@ -268,16 +268,16 @@ class BotController extends Controller
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
-            // else if($userMessage =="สร้างข้อสอบ"){
-            //     DB::table('groups')->insert([
-            //         'line_code' => $userId, 
-            //         'subject_id' => 1,
-            //         'chapter_id' => 1,
-            //         'status' => false
-            //     ]);
-            //     $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
-            //     $replyData = new TextMessageBuilder($textReplyMessage);
-            // }
+            else if($userMessage =="สร้างข้อสอบ"){
+                DB::table('groups')->insert([
+                    'line_code' => $userId, 
+                    'subject_id' => 1,
+                    'chapter_id' => 1,
+                    'status' => false
+                ]);
+                $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
