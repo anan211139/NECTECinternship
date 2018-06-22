@@ -345,7 +345,8 @@ class BotController extends Controller
     
                     }
                 }
-                else if($ans_status==false && $sec_chance==false){
+                else if($ans_status ==false &  $sec_chance ==false){
+
                     DB::table('logChildrenQuizzes')
                         ->where('id', $currentlog->id)
                         ->update(['second_chance' => true]);
@@ -360,14 +361,8 @@ class BotController extends Controller
                     } else {
                         $textReplyMessage = "Wrong!";
                         $ansst = false;
-    
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-    
-                        $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
-                        $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
-    
-                        $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
-    
+                        
                     }
                 }
 
