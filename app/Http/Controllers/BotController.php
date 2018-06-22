@@ -340,12 +340,7 @@ class BotController extends Controller
                 }
                 $replyData = $multiMessage;
 
-                function update_first_chance(){
-                    DB::table('logChildrenQuizzes')
-                    ->where('id', $currentlog->id)
-                    ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                    $replyData = new TextMessageBuilder($textReplyMessage);
-                }
+                
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
@@ -358,5 +353,11 @@ class BotController extends Controller
         }
         // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
+    }
+    function update_first_chance(){
+        DB::table('logChildrenQuizzes')
+        ->where('id', $currentlog->id)
+        ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+        $replyData = new TextMessageBuilder($textReplyMessage);
     }
 }
