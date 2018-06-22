@@ -307,9 +307,11 @@ class BotController extends Controller
                         ->where('id', $currentlog->exam_id)
                         ->orderBy('id','DESC')
                         ->first();
-                $princ = $ans->principle_id;
-                
-                
+                $princ = DB::table('printciples')
+                        ->where('id', $ans->principle_id)
+                        ->first();
+                $princ_pic = $princ ->local_pic;
+
                 $arr_replyData = array();
 
                 if ((int)$userMessage == $ans->answer) {
@@ -327,7 +329,7 @@ class BotController extends Controller
                     
                     update_first_chance();
 
-                    $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ.'/';
+                    $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
                     $replyData = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
 
                 }
