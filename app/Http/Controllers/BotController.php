@@ -323,7 +323,7 @@ class BotController extends Controller
                     DB::table('logChildrenQuizzes')
                         ->where('id', $currentlog->id)
                         ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                        $replyData = new TextMessageBuilder($textReplyMessage);
+                        
                 } else {
                     $textReplyMessage = "Wrong!";
                     $ansst = false;
@@ -333,10 +333,10 @@ class BotController extends Controller
                     DB::table('logChildrenQuizzes')
                         ->where('id', $currentlog->id)
                         ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                        $replyData = new TextMessageBuilder($textReplyMessage);
+                
 
                     $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
-                    $replyData = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
+                    $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
 
                 }
 
