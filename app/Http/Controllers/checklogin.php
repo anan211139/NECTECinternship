@@ -17,8 +17,9 @@ class checklogin extends Controller
         ->get();
 
         if(count($userresult) > 0){
-            $_SESSION["username"] = $username;
-            return redirect('/')->with('login',$_SESSION["username"]);
+            Session::put('username',$username);
+            $sessiondata = Session::get('username','default');
+            return redirect('/')->with('login',$sessiondata);
         }else{
             return redirect('/')->with('login','login fail');
         }
