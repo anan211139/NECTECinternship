@@ -171,7 +171,7 @@ class BotController extends Controller
                                //->select('point')
                                ->where('line_code', $userId)
                                ->first();
-                $point_st = $score->point;
+                //$point_st = $score->point;
                 dd($score);
                 //echo $point;
                 $textReplyMessage = $point_st;
