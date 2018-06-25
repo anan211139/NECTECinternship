@@ -156,10 +156,11 @@ class BotController extends Controller
             }
             else if($userMessage =="ดูคะแนน"){
                 
-                $princ = DB::table('printciples')
-                        ->where('id', $ans->principle_id)
-                        ->first();
-                $princ_pic = $princ->local_pic;
+            $urgroup = DB::table('groups')
+            ->where('line_code', $userId)
+            ->orderBy('id','DESC')
+            ->first();
+            $group_id = $urgroup->id;
 
 //                 $score=DB::table('students')
 //                                //->select('point')
@@ -167,7 +168,7 @@ class BotController extends Controller
 //                                ->first();
 //                 $point = $score->name;
 //                 echo $point;
-                $textReplyMessage = $princ_pic;
+                $textReplyMessage = $group_id;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
