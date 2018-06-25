@@ -169,7 +169,7 @@ class BotController extends Controller
 
                 $score = DB::table('students')
                                //->select('point')
-                               ->where('line_code', $userId)
+                                //->where('line_code', $userId)
                                ->first();
                 //$point_st = $score->point;
                 dd($score);
