@@ -170,13 +170,13 @@ class BotController extends Controller
                 $score = DB::table('students')
                                 //->select('point')
                                 //->where('line_code', $userId)
-                                //->first();
-                                ->get();
-               // $point_st = $score->point;
+                                ->first();
+                                //->get();
+                $point_st = $score->point;
                 dd($score);
                 //echo $point;
-                // $textReplyMessage = $point_st;
-                // $replyData = new TextMessageBuilder($textReplyMessage);
+                $textReplyMessage = $point_st;
+                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
