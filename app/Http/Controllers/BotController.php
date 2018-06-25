@@ -303,38 +303,7 @@ class BotController extends Controller
                     'time' => Carbon::now()
                 ]);
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-//                 DB::table('logChildrenQuizzes')->insertGetId([
-//                     'groupnoID' => DB::table('groups')->where('line_code', $userId)->first()->id, 
-//                     'numbertest' => 1,
-//                     'ExamID' => $quizzesforsubj->id,
-//                     'STAnswer' => 0,
-//                     'time' => Carbon::now()
-//                 ]);
             }
-//             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
-//                 //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
-//                 $urgroup = DB::table('groups')
-//                                ->where('STcodeID', $userId)
-//                                ->first();
-//                 $currentlog = DB::table('logChildrenQuizzes')
-//                                 ->where('groupnoID', $urgroup->id)
-//                                 ->whereNull('answerStatus')
-//                                 ->first();
-//                 $ans = DB::table('exams')
-//                         ->where('id', $currentlog->ExamID)
-//                         ->first();
-//                 if ((int)$userMessage == $ans->answerStatus) {
-//                     $textReplyMessage = "Correct!";
-//                     $ansst = 1;
-//                 } else {
-//                     $textReplyMessage = "Wrong!";
-//                     $ansst = 0;
-//                 }
-//                 DB::table('logChildrenQuizzes')
-//                     ->where('id', $currentlog->id)
-//                     ->update(['STAnswer' => $userMessage, 'answerStatus' => $ansst]);
-//                 $replyData = new TextMessageBuilder($textReplyMessage);
-//             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 $urgroup = DB::table('groups')
                                ->where('line_code', $userId)
