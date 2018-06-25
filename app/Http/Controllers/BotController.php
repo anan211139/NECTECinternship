@@ -167,7 +167,7 @@ class BotController extends Controller
                 //                ->orderBy('id','DESC')
                 //                ->first();
 
-                $score=DB::table('students')
+                $score = DB::table('students')
                                //->select('point')
                                ->where('line_code', $userId)
                                ->first();
