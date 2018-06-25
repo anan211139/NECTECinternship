@@ -156,6 +156,12 @@ class BotController extends Controller
             }
             else if($userMessage =="ดูคะแนน"){
 
+                DB::table('students')->insert([
+                    'line_code' => $userId, 
+                    'name' => 'anan',
+                    'point' => 14
+                ]);
+
                 // $urgroup = DB::table('groups')
                 //     ->where('line_code', $userId)
                 //     ->orderBy('id','DESC')
