@@ -162,7 +162,7 @@ class BotController extends Controller
                                ->first();
                 $point = $score->line_code;
                 //echo $point;
-                $textReplyMessage = "คะแนน ".$point;
+                $textReplyMessage = "คะแนน ";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
