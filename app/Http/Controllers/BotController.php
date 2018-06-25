@@ -392,9 +392,9 @@ class BotController extends Controller
                 }
                 else if($ans_status ==false && $sec_chance ==false){
 
-                    DB::table('logChildrenQuizzes')
-                        ->where('id', $currentlog->id)
-                        ->update(['second_chance' => true]);
+                    // DB::table('logChildrenQuizzes')
+                    //     ->where('id', $currentlog->id)
+                    //     ->update(['second_chance' => true]);
                             
 
                     if ((int)$userMessage == $ans->answer) {
@@ -409,6 +409,9 @@ class BotController extends Controller
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                         
                     }
+                    DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
                 }
 
                 $multiMessage =     new MultiMessageBuilder;
