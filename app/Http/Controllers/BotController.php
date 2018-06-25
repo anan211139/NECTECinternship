@@ -160,7 +160,7 @@ class BotController extends Controller
                                //->select('point')
                                ->where('line_code', $userId)
                                ->first();
-                $point = $score->point;
+                $point = $score->line_code;
                 //echo $point;
                 $textReplyMessage = "คะแนน ".$point;
                 $replyData = new TextMessageBuilder($textReplyMessage);
