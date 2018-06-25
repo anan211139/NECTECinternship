@@ -303,13 +303,13 @@ class BotController extends Controller
                     'time' => Carbon::now()
                 ]);
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-                DB::table('logChildrenQuizzes')->insertGetId([
-                    'groupnoID' => DB::table('groups')->where('line_code', $userId)->first()->id, 
-                    'numbertest' => 1,
-                    'ExamID' => $quizzesforsubj->id,
-                    'STAnswer' => 0,
-                    'time' => Carbon::now()
-                ]);
+//                 DB::table('logChildrenQuizzes')->insertGetId([
+//                     'groupnoID' => DB::table('groups')->where('line_code', $userId)->first()->id, 
+//                     'numbertest' => 1,
+//                     'ExamID' => $quizzesforsubj->id,
+//                     'STAnswer' => 0,
+//                     'time' => Carbon::now()
+//                 ]);
             }
 //             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
 //                 //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
