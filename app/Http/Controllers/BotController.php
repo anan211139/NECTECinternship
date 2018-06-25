@@ -340,18 +340,18 @@ class BotController extends Controller
                                ->where('line_code', $userId)
                                ->orderBy('id','DESC')
                                ->first();
-                echo $urgroup;
+                print( $urgroup);
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('group_id', $urgroup->id)
                                 // ->whereNull('is_correct')
                                 ->orderBy('id','DESC')
                                 ->first();
-                echo $currentlog;
+                print($currentlog);
                 $ans = DB::table('exams')
                         ->where('id', $currentlog->exam_id)
                         ->orderBy('id','DESC')
                         ->first();
-                echo $ans;
+                //echo $ans;
                 $princ = DB::table('printciples')
                         ->where('id', $ans->principle_id)
                         ->first();
