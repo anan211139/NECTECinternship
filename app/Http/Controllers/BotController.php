@@ -162,11 +162,17 @@ class BotController extends Controller
                 //     ->first();
                 // $group_id = $urgroup->id;
 
+                // $urgroup = DB::table('groups')
+                //                ->where('line_code', $userId)
+                //                ->orderBy('id','DESC')
+                //                ->first();
+
                 $score=DB::table('students')
                                //->select('point')
                                ->where('line_code', $userId)
                                ->first();
                 $point_st = $score->point;
+                dd($score);
                 //echo $point;
                 $textReplyMessage = $point_st;
                 $replyData = new TextMessageBuilder($textReplyMessage);
