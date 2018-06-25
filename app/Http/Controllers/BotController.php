@@ -154,23 +154,23 @@ class BotController extends Controller
                             ),
                 ));
             }
-//             else if($userMessage =="ดูคะแนน"){
-                
-//             $urgroup = DB::table('groups')
-//             ->where('line_code', $userId)
-//             ->orderBy('id','DESC')
-//             ->first();
-//             $group_id = $urgroup->id;
+            else if($userMessage =="ดูคะแนน"){
 
-//                 $score=DB::table('students')
-//                                //->select('point')
-//                                ->where('line_code', $userId)
-//                                ->first();
-//                 $point = $score->name;
-//                 echo $point;
-//                 $textReplyMessage = $group_id;
-//                 $replyData = new TextMessageBuilder($textReplyMessage);
-//             }
+                // $urgroup = DB::table('groups')
+                //     ->where('line_code', $userId)
+                //     ->orderBy('id','DESC')
+                //     ->first();
+                // $group_id = $urgroup->id;
+
+                $score=DB::table('students')
+                               //->select('point')
+                               ->where('line_code', $userId)
+                               ->first();
+                $point_st = $score->point;
+                //echo $point;
+                $textReplyMessage = $point_st;
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else if($userMessage =="สะสมแต้ม"){
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
                 $actionBuilder = array(
