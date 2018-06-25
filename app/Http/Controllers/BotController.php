@@ -340,7 +340,7 @@ class BotController extends Controller
                                ->where('line_code', $userId)
                                ->orderBy('id','DESC')
                                ->first();
-                dd( $urgroup);
+                //dd( $urgroup);
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('group_id', $urgroup->id)
                                 // ->whereNull('is_correct')
