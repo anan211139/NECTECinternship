@@ -346,7 +346,7 @@ class BotController extends Controller
                                 // ->whereNull('is_correct')
                                 ->orderBy('id','DESC')
                                 ->first();
-                dd($currentlog);
+                //dd($currentlog);
                 $ans = DB::table('exams')
                         ->where('id', $currentlog->exam_id)
                         ->orderBy('id','DESC')
