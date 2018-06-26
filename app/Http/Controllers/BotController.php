@@ -327,7 +327,7 @@ class BotController extends Controller
                     //->first();
                     ->get();
 
-                dd($checkGroup_chap);
+                //dd($checkGroup_chap);
                 if($checkGroup_chap===null){
                     echo 'yeah';
                     DB::table('groups')->insert([
