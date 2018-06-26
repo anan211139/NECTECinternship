@@ -296,41 +296,9 @@ class BotController extends Controller
                     ->where('chapter_id',2)
                     ->where('status','false')
                     ->orderBy('id','DESC')
-                    ->first();
-
-
-                if($checkGroup_chap===null){
-                    DB::table('groups')->insert([
-                        'line_code' => $userId, 
-                        'subject_id' => 1,
-                        'chapter_id' => 2,
-                        'status' => false
-                    ]);
-
-                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\n เรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                }                
-                else{
-                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องหรม/ครน.\n กันต่อเลยจ้า";
-                }
-
-                $replyData = new TextMessageBuilder($textReplyMessage);
-            }
-            //------ สมการ -------
-            else if($userMessage =="สมการ"){
-                //echo '55555';
-                $checkGroup_chap = DB::table('groups')
-                    ->where('line_code', $userId)
-                    ->where('subject_id',1)
-                    ->where('chapter_id',2)
-                    ->where('status','false')
-                    ->orderBy('id','DESC')
                     ->count();
-                    //->first();
-                    //->get();
 
-                //dd($checkGroup_chap);
                 if($checkGroup_chap==0){
-                    echo 'yeah';
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
                         'subject_id' => 1,
@@ -338,13 +306,37 @@ class BotController extends Controller
                         'status' => false
                     ]);
                     
+                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง หรม.ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                }                
+                else{
+                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง หรม.ครน.\n กันต่อเลยจ้า";
+                }
+                
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
+            //------ สมการ -------
+            else if($userMessage =="สมการ"){
+                $checkGroup_chap = DB::table('groups')
+                    ->where('line_code', $userId)
+                    ->where('subject_id',1)
+                    ->where('chapter_id',1)
+                    ->where('status','false')
+                    ->orderBy('id','DESC')
+                    ->count();
+
+                if($checkGroup_chap==0){
+                    DB::table('groups')->insert([
+                        'line_code' => $userId, 
+                        'subject_id' => 1,
+                        'chapter_id' => 1,
+                        'status' => false
+                    ]);
+                    
                     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 }                
                 else{
-                    echo 'eiei';
                     $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
                 }
-                echo'yuyu';
                 
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
