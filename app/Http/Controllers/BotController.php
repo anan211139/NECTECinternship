@@ -161,7 +161,7 @@ class BotController extends Controller
                                 ->first();
                 $point_st = $score->point;
                 dd($point);
-                if($point_st=='14'){
+                if($point_st==14){
                     $point_st="สวัสดีจ้าาา";
                 }
                 $textReplyMessage = $point_st;
