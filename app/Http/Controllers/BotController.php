@@ -317,17 +317,17 @@ class BotController extends Controller
             }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
-                echo '55555';
+                //echo '55555';
                 $checkGroup_chap = DB::table('groups')
                     ->where('line_code', $userId)
                     ->where('subject_id',1)
                     ->where('chapter_id',1)
-                    // ->where('status','false')
+                    ->where('status','false')
                     ->orderBy('id','DESC')
                     //->first();
                     ->get();
 
-              // print_r($checkGroup_chap);
+                dd($checkGroup_chap);
                 if($checkGroup_chap===null){
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
