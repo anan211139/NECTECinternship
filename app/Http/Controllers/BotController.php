@@ -317,6 +317,7 @@ class BotController extends Controller
             }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
+                echo '55555';
                 $checkGroup_chap = DB::table('groups')
                     ->where('line_code', $userId)
                     ->where('subject_id',1)
@@ -326,7 +327,7 @@ class BotController extends Controller
                     //->first();
                     ->get();
 
-                dd($checkGroup_chap);
+              // print_r($checkGroup_chap);
                 if($checkGroup_chap===null){
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
