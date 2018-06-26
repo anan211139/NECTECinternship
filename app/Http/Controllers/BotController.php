@@ -325,7 +325,7 @@ class BotController extends Controller
                     ->orderBy('id','DESC')
                     ->first();
 
-
+                dd($checkGroup_chap);
                 if($checkGroup_chap===null){
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
