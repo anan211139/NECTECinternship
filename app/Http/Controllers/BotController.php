@@ -327,7 +327,7 @@ class BotController extends Controller
                     //->first();
                     ->get();
 
-                //dd($checkGroup_chap);
+                dd($checkGroup_chap);
                 if($checkGroup_chap==null){
                     echo 'yeah';
                     DB::table('groups')->insert([
@@ -358,8 +358,6 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
-                $arr_replyData = array();
-
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
                                ->first();
@@ -370,15 +368,7 @@ class BotController extends Controller
                     'exam_id' => $quizzesforsubj->id,
                     'time' => Carbon::now()
                 ]);
-                //$replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-                $arr_replyData[] =new ImageMessageBuilder($pathtoexam,$pathtoexam);
-                $arr_replyData[] = new TextMessageBuilder($pathtoexam);
-
-                $multiMessage =     new MultiMessageBuilder;
-                foreach($arr_replyData as $arr_Reply){
-                        $multiMessage->add($arr_Reply);
-                }
-                $replyData = $multiMessage;
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 $urgroup = DB::table('groups')
