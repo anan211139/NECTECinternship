@@ -175,7 +175,7 @@ class BotController extends Controller
                                 ->where('line_code', $userId)
                                 ->first();
                 $point_st = $score->point;
-                dd($point);
+                dd($point_st);
                 if($point_st==14){
                     $point_st="สวัสดีจ้าาา";
                 }
@@ -290,55 +290,55 @@ class BotController extends Controller
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
-                // $checkGroup_chap = DB::table('groups')
-                //     ->where('line_code', $userId)
-                //     ->where('subject_id',1)
-                //     ->where('chapter_id',2)
-                //     ->where('status','false')
-                //     ->orderBy('id','DESC')
-                //     ->first();
+                $checkGroup_chap = DB::table('groups')
+                    ->where('line_code', $userId)
+                    ->where('subject_id',1)
+                    ->where('chapter_id',2)
+                    ->where('status','false')
+                    ->orderBy('id','DESC')
+                    ->first();
 
 
-                // if($checkGroup_chap===null){
-                //     DB::table('groups')->insert([
-                //         'line_code' => $userId, 
-                //         'subject_id' => 1,
-                //         'chapter_id' => 2,
-                //         'status' => false
-                //     ]);
+                if($checkGroup_chap===null){
+                    DB::table('groups')->insert([
+                        'line_code' => $userId, 
+                        'subject_id' => 1,
+                        'chapter_id' => 2,
+                        'status' => false
+                    ]);
 
-                //     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\n เรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                // }                
-                // else{
-                //     $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องหรม/ครน.\n กันต่อเลยจ้า";
-                // }
+                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\n เรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                }                
+                else{
+                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องหรม/ครน.\n กันต่อเลยจ้า";
+                }
 
-                // $replyData = new TextMessageBuilder($textReplyMessage);
+                $replyData = new TextMessageBuilder($textReplyMessage);
             }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
-                // $checkGroup_chap = DB::table('groups')
-                //     ->where('line_code', $userId)
-                //     ->where('subject_id',1)
-                //     ->where('chapter_id',1)
-                //     ->where('status','false')
-                //     ->orderBy('id','DESC')
-                //     ->first();
+                $checkGroup_chap = DB::table('groups')
+                    ->where('line_code', $userId)
+                    ->where('subject_id',1)
+                    ->where('chapter_id',1)
+                    ->where('status','false')
+                    ->orderBy('id','DESC')
+                    ->first();
 
 
-                // if($checkGroup_chap===null){
-                //     DB::table('groups')->insert([
-                //         'line_code' => $userId, 
-                //         'subject_id' => 1,
-                //         'chapter_id' => 1,
-                //         'status' => false
-                //     ]);
+                if($checkGroup_chap===null){
+                    DB::table('groups')->insert([
+                        'line_code' => $userId, 
+                        'subject_id' => 1,
+                        'chapter_id' => 1,
+                        'status' => false
+                    ]);
 
-                //     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                // }                
-                // else{
-                //     $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
-                // }
+                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                }                
+                else{
+                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
+                }
                 
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
