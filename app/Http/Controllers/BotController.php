@@ -328,8 +328,8 @@ class BotController extends Controller
                     //->first();
                     //->get();
 
-                dd($checkGroup_chap);
-                if($checkGroup_chap!=0){
+                //dd($checkGroup_chap);
+                if($checkGroup_chap==0){
                     echo 'yeah';
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
