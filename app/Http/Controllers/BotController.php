@@ -329,7 +329,7 @@ class BotController extends Controller
 
                 dd($checkGroup_chap);
                 if($checkGroup_chap===null){
-                    echo 'เข้าแล้วนะ';
+                    echo 'yeah';
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
                         'subject_id' => 1,
@@ -340,8 +340,10 @@ class BotController extends Controller
                     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 }                
                 else{
+                    echo 'B5';
                     $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
                 }
+                echo'test';
                 
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
