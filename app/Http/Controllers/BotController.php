@@ -174,7 +174,7 @@ class BotController extends Controller
                                 //->get();
                 $point_st = $score->point;
                 dd($point_st);
-                //echo $point;
+                echo $point_st;
                 $textReplyMessage = $point_st;
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
