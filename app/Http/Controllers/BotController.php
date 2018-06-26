@@ -329,13 +329,14 @@ class BotController extends Controller
 
                 dd($checkGroup_chap);
                 if($checkGroup_chap===null){
+                    echo 'เข้าแล้วนะ';
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
                         'subject_id' => 1,
                         'chapter_id' => 1,
                         'status' => false
                     ]);
-                    echo 'เข้าแล้วนะ';
+                    
                     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 }                
                 else{
