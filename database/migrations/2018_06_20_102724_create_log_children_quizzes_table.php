@@ -19,6 +19,7 @@ class CreateLogChildrenQuizzesTable extends Migration
             $table->Integer('exam_id'); // present exam
             $table->smallInteger('answer')->nullable(); //real ans
             $table->boolean('is_correct')->nullable(); //true-false
+            $table->boolean('second_chance')->default(false);
             $table->dateTimeTz('time')->nullable(); //update
             $table->timestampsTz();
         });

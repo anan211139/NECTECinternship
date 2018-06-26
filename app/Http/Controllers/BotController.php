@@ -155,8 +155,18 @@ class BotController extends Controller
                 ));
             }
             else if($userMessage =="ดูคะแนน"){
-                $textReplyMessage = "คะแนนของน้องๆคือ >> 1 คะแนนจ้า";
+
+                $score = DB::table('students')
+                                ->where('line_code', $userId)
+                                ->first();
+                $point_st = $score->point;
+                dd($point);
+                if($point_st==14){
+                    $point_st="สวัสดีจ้าาา";
+                }
+                $textReplyMessage = $point_st;
                 $replyData = new TextMessageBuilder($textReplyMessage);
+
             }
             else if($userMessage =="สะสมแต้ม"){
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
@@ -268,22 +278,21 @@ class BotController extends Controller
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
-            // else if($userMessage =="สร้างข้อสอบ"){
-            //     DB::table('groups')->insert([
-            //         'line_code' => $userId, 
-            //         'subject_id' => 1,
-            //         'chapter_id' => 1,
-            //         'status' => false
-            //     ]);
-            //     $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
-            //     $replyData = new TextMessageBuilder($textReplyMessage);
-            // }
+            else if($userMessage =="สร้างข้อสอบ"){
+                DB::table('groups')->insert([
+                    'line_code' => $userId, 
+                    'subject_id' => 1,
+                    'chapter_id' => 1,
+                    'status' => false
+                ]);
+                $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
                                ->first();
-                $pathtoexam = $quizzesforsubj->local_pic;
-                $pathtoexam = 'https://pkwang.herokuapp.com/'.$pathtoexam.'/';
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$quizzesforsubj->local_pic;
                 $urgroup = DB::table('groups')->where('line_code', $userId)->first();
                 DB::table('logChildrenQuizzes')->insertGetId([
                     'group_id' => $urgroup->id,
@@ -293,36 +302,100 @@ class BotController extends Controller
                 $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
-                //gropu id -> log หาอันที่ 'STAnswer' => 0 หรือ 'answerStatus' => 2,
                 $urgroup = DB::table('groups')
                                ->where('line_code', $userId)
                                ->orderBy('id','DESC')
                                ->first();
+                //dd( $urgroup);
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('group_id', $urgroup->id)
-                                ->whereNull('is_correct')
+                                // ->whereNull('is_correct')
                                 ->orderBy('id','DESC')
                                 ->first();
+                //dd($currentlog);
                 $ans = DB::table('exams')
                         ->where('id', $currentlog->exam_id)
                         ->orderBy('id','DESC')
                         ->first();
-                if ((int)$userMessage == $ans->answer) {
-                    $textReplyMessage = "Correct!";
-                    $ansst = true;
-                } else {
-                    $textReplyMessage = "Wrong!";
-                    $ansst = false;
+                //echo $ans;
+                $princ = DB::table('printciples')
+                        ->where('id', $ans->principle_id)
+                        ->first();
+                $princ_pic = $princ->local_pic;
+                $ans_status = $currentlog->is_correct;
+                $sec_chance = $currentlog->second_chance;
+                
+                $arr_replyData = array();
+
+                if($ans_status===null){
+                    if ((int)$userMessage == $ans->answer) {
+                        $textReplyMessage = "Correct!";
+                        $ansst = true;
+    
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                            
+                    } else {
+                        $textReplyMessage = "Wrong!";
+                        $ansst = false;
+    
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                    
+    
+                        $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
+                        $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
+    
+                        $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
+    
+                    }
                 }
-                DB::table('logChildrenQuizzes')
-                    ->where('id', $currentlog->id)
-                    ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                else if($ans_status ==false && $sec_chance ==false){
+
+                    // DB::table('logChildrenQuizzes')
+                    //     ->where('id', $currentlog->id)
+                    //     ->update(['second_chance' => true]);
+                            
+
+                    if ((int)$userMessage == $ans->answer) {
+                        $textReplyMessage = "Correct!";
+                        $ansst = true;
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        
+                        
+                    } else {
+                        $textReplyMessage = "Wrong!";
+                        $ansst = false;
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                        
+                    }
+                    DB::table('logChildrenQuizzes')
+                            ->where('id', $currentlog->id)
+                            ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
+                }
+
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage;
+
+                
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
                 $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 $replyData = new TextMessageBuilder($textReplyMessage);
+            }
+            else if($userMessage=="events"){
+                
+                $replyData = new TextMessageBuilder($content);
             }
              else{
                 $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
@@ -331,4 +404,62 @@ class BotController extends Controller
         // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
     }
+
+    public function generate_exam(){
+        $urgroup = DB::table('groups')
+            ->where('line_code', $userId)
+            ->orderBy('id','DESC')
+            ->first();
+        $group_id = $urgroup->id;
+
+        $quiz_easy = DB::table('exams')
+            ->where('level_id', '1')
+            ->count();
+        $quiz_med = DB::table('exams')
+            ->where('level_id', '2')
+            ->count();
+        $quiz_hard = DB::table('exams')
+            ->where('level_id', '3')
+            ->count();
+    }
+        
+    
+    //use this function after the student pick their own lesson
+    public function start_exam($userId, $subject_id, $chapter_id) {
+        $old_group = DB::table('groups')
+                        ->where('line_code', $userId)
+                        ->orderBy('id','DESC')
+                        ->first();
+        //if student has non-finish old group
+        if ($old_group->status === false) { //in the future, don't forget to check the expire date
+            $old_log = DB::table('logChildrenQuizzes')
+                            ->where('group_id', $old_group->id)
+                            ->orderBy('id','DESC')
+                            ->first();
+            //if student still not answer the old exam
+            if ($old_log->answer !== null) {
+                $old_exam = DB::table('exams')
+                                ->where('id', $old_log->exam_id)
+                                ->first();
+                $pathtoexam = 'https://pkwang.herokuapp.com/'.$old_exam->local_pic;
+                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+            }
+            //if student has already answered the old exam then generate new exam in old group
+            else {
+                //$this->generate_exam();
+            }
+        }
+        //if student has finished the old group or fist time create group
+        else {
+            DB::table('groups')->insert([
+                'line_code' => $userId, 
+                'subject_id' => $subject_id,
+                'chapter_id' => $chapter_id,
+                'status' => false
+            ]);
+            $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$chapter_id->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+        }
+        $replyData = new TextMessageBuilder($textReplyMessage);
+     }
+
 }
