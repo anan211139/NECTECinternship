@@ -328,7 +328,7 @@ class BotController extends Controller
                     ->get();
 
                 //dd($checkGroup_chap);
-                if($checkGroup_chap===null){
+                if($checkGroup_chap==null){
                     echo 'yeah';
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
@@ -340,10 +340,10 @@ class BotController extends Controller
                     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 }                
                 else{
-                    echo 'B5';
+                    echo 'eiei';
                     $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
                 }
-                echo'test';
+                echo'yuyu';
                 
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
@@ -358,6 +358,8 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="โจทย์"){
+                $arr_replyData = array();
+
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
                                ->first();
@@ -368,7 +370,15 @@ class BotController extends Controller
                     'exam_id' => $quizzesforsubj->id,
                     'time' => Carbon::now()
                 ]);
-                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                //$replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                $arr_replyData[] =new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                $arr_replyData[] = new TextMessageBuilder($pathtoexam);
+
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage;
             }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 $urgroup = DB::table('groups')
