@@ -321,7 +321,7 @@ class BotController extends Controller
                 $checkGroup_chap = DB::table('groups')
                     ->where('line_code', $userId)
                     ->where('subject_id',1)
-                    ->where('chapter_id',1)
+                    ->where('chapter_id',2)
                     ->where('status','false')
                     ->orderBy('id','DESC')
                     //->first();
@@ -333,7 +333,7 @@ class BotController extends Controller
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
                         'subject_id' => 1,
-                        'chapter_id' => 1,
+                        'chapter_id' => 2,
                         'status' => false
                     ]);
                     
