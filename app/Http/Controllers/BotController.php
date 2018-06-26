@@ -138,6 +138,21 @@ class BotController extends Controller
                 ));
             }
             else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
+                
+                $checkGroup = DB::table('groups')
+                    ->where('line_code', $userId)
+                    ->where('subject_id',1)
+                    // ->whereNull('is_correct')
+                    ->orderBy('id','DESC')
+                    ->first();
+                if($checkGroup->status===true){
+                    DB::table('groups')->insert([
+                        'line_code' => $userId, 
+                        'subject_id' => 1,
+                        'status' => false
+                    ]);
+                }
+
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
                 $replyData = new ImagemapMessageBuilder(
                     $imageMapUrl,
@@ -160,7 +175,7 @@ class BotController extends Controller
                                 ->where('line_code', $userId)
                                 ->first();
                 $point_st = $score->point;
-                dd($point);
+                dd($point_st);
                 if($point_st==14){
                     $point_st="สวัสดีจ้าาา";
                 }
@@ -273,9 +288,58 @@ class BotController extends Controller
                 $replyData = $multiMessage;
 
             }
+            //------ หรม./ครน. -------
+            else if($pos1 !== false||$pos2!== false){
+                $checkGroup_chap = DB::table('groups')
+                    ->where('line_code', $userId)
+                    ->where('subject_id',1)
+                    ->where('chapter_id',2)
+                    ->where('status','false')
+                    ->orderBy('id','DESC')
+                    ->first();
+
+
+                if($checkGroup_chap===null){
+                    DB::table('groups')->insert([
+                        'line_code' => $userId, 
+                        'subject_id' => 1,
+                        'chapter_id' => 2,
+                        'status' => false
+                    ]);
+
+                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\n เรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                }                
+                else{
+                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องหรม/ครน.\n กันต่อเลยจ้า";
+                }
+
+                $replyData = new TextMessageBuilder($textReplyMessage);
+            }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
-                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                $checkGroup_chap = DB::table('groups')
+                    ->where('line_code', $userId)
+                    ->where('subject_id',1)
+                    ->where('chapter_id',1)
+                    ->where('status','false')
+                    ->orderBy('id','DESC')
+                    ->first();
+
+
+                if($checkGroup_chap===null){
+                    DB::table('groups')->insert([
+                        'line_code' => $userId, 
+                        'subject_id' => 1,
+                        'chapter_id' => 1,
+                        'status' => false
+                    ]);
+
+                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                }                
+                else{
+                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
+                }
+                
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สร้างข้อสอบ"){
@@ -388,11 +452,7 @@ class BotController extends Controller
 
                 
             }
-            //------ หรม./ครน. -------
-            else if($pos1 !== false||$pos2!== false){
-                $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องหรม/ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                $replyData = new TextMessageBuilder($textReplyMessage);
-            }
+            
             else if($userMessage=="events"){
                 
                 $replyData = new TextMessageBuilder($content);
