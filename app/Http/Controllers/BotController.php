@@ -173,10 +173,10 @@ class BotController extends Controller
                                 ->first();
                                 //->get();
                 $point_st = $score->point;
-                dd($score);
+                dd($point_st);
                 //echo $point;
                 $textReplyMessage = $point_st;
-                 $replyData = new TextMessageBuilder($textReplyMessage);
+                $replyData = new TextMessageBuilder($textReplyMessage);
             }
             else if($userMessage =="สะสมแต้ม"){
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
