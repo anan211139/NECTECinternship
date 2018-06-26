@@ -324,11 +324,12 @@ class BotController extends Controller
                     ->where('chapter_id',2)
                     ->where('status','false')
                     ->orderBy('id','DESC')
+                    ->count();
                     //->first();
-                    ->get();
+                    //->get();
 
                 dd($checkGroup_chap);
-                if($checkGroup_chap==null){
+                if($checkGroup_chap!=0){
                     echo 'yeah';
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
