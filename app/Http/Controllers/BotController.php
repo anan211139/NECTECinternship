@@ -175,7 +175,7 @@ class BotController extends Controller
                                 ->where('line_code', $userId)
                                 ->first();
                 $point_st = $score->point;
-                dd($point_st);
+                // dd($point_st);
                 if($point_st==14){
                     $point_st="สวัสดีจ้าาา";
                 }
