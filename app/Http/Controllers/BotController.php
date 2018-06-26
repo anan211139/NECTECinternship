@@ -322,8 +322,9 @@ class BotController extends Controller
                     ->where('subject_id',1)
                     ->where('chapter_id',1)
                     // ->where('status','false')
-                    ->orderBy('id','DESC');
+                    ->orderBy('id','DESC')
                     //->first();
+                    ->get();
 
                 dd($checkGroup_chap);
                 if($checkGroup_chap===null){
