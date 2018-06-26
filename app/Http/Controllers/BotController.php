@@ -335,7 +335,7 @@ class BotController extends Controller
                         'chapter_id' => 1,
                         'status' => false
                     ]);
-
+                    echo 'เข้าแล้วนะ';
                     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                 }                
                 else{
