@@ -10,6 +10,10 @@ class Pagecontroller extends Controller
     public function getLaravelpage(){
         return view('welcome');
     }
+    public function addchildpage(){
+        return view('addchild');
+    }
+
     public function gethome(){
         $sessiondata = Session::get('username','default');
         if(session()->has('username')){
@@ -19,4 +23,9 @@ class Pagecontroller extends Controller
         }
         
     }
+    public function addchild($id){
+        Session::put('line_code',$id);
+        return redirect('/addchild')->with('code',$id);
+    }
+    
 }

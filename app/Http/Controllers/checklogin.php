@@ -15,8 +15,9 @@ class checklogin extends Controller
         ->select(DB::raw('*'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
-
+        $id = $userresult[0]['id'];
         if(count($userresult) > 0){
+            Session::put('id',$id);
             Session::put('username',$username);
             $sessiondata = Session::get('username','default');
             return redirect('/')->with('login',$sessiondata);
