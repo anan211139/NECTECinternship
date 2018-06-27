@@ -246,11 +246,9 @@ class BotController extends Controller
                 //--------INSERT AND CHECK DB--------
                 $checkIMG = DB::table('students')
                     ->where('line_code', $userId)
-                    ->first();
+                    ->count();
 
-                //dd($checkIMG);
-                $pf_img = $checkIMG->local_pic;
-                if($pf_img===null){
+                if($checkIMG==0){
                     $response = $bot->getProfile($userId);
                     if ($response->isSucceeded()) {
                         $profile = $response->getJSONDecodedBody();
@@ -258,9 +256,15 @@ class BotController extends Controller
                         //echo $profile['pictureUrl'];
                         //echo $profile['statusMessage'];
 
-                        DB::table('students')
-                        ->where('line_code', $userId)
-                        ->update(['local_pic'=>$profile['pictureUrl']]);
+                        DB::table('students')->insertGetId([
+                            'line_code' => $userId, 
+                            'local_pic' => $profile['pictureUrl'],
+                            'create_at' => Carbon::now()
+                        ]);
+
+                        // DB::table('students')
+                        // ->where('line_code', $userId)
+                        // ->update(['local_pic'=>$profile['pictureUrl']]);
                     }
 
                     
