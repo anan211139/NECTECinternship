@@ -140,11 +140,10 @@ class BotController extends Controller
             else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
                 
                 $checkGroup = DB::table('groups')
-                    ->where('line_code', $userId)
+                    ->where('line_code',$userId)
                     ->where('subject_id',1)
-                    // ->whereNull('is_correct')
-                    ->orderBy('id','DESC')
                     ->count();
+                dd($checkGroup);
                 if($checkGroup==0){
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
