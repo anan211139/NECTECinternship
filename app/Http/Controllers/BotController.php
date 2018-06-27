@@ -248,7 +248,7 @@ class BotController extends Controller
                     ->where('line_code', $userId)
                     ->first();
 
-                dd($checkIMG);
+                //dd($checkIMG);
                 $pf_img = $checkIMG->local_pic;
                 if($pf_img===null){
                     $response = $bot->getProfile($userId);
