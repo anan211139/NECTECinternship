@@ -143,7 +143,7 @@ class BotController extends Controller
                     ->where('line_code',$userId)
                     ->where('subject_id',1)
                     ->count();
-                dd($checkGroup);
+                // dd($checkGroup);
                 if($checkGroup==0){
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
