@@ -175,11 +175,7 @@ class BotController extends Controller
                                 ->where('line_code', $userId)
                                 ->first();
                 $point_st = $score->point;
-                // dd($point_st);
-                if($point_st==14){
-                    $point_st="สวัสดีจ้าาา";
-                }
-                $textReplyMessage = $point_st;
+                $textReplyMessage = "น้องๆมีคะแนนทั้งหมด".$point_st."คะแนน";
                 $replyData = new TextMessageBuilder($textReplyMessage);
 
             }
