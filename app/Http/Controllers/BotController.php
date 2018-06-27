@@ -246,6 +246,8 @@ class BotController extends Controller
                 //--------INSERT AND CHECK DB--------
                 $checkIMG = DB::table('students')
                     ->where('line_code', $userId);
+
+                dd($checkIMG);
                 $pf_img = $checkIMG->local_pic;
                 if($pf_img===null){
                     $response = $bot->getProfile($userId);
