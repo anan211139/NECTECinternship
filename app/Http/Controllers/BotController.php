@@ -93,13 +93,13 @@ class BotController extends Controller
         // $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
 
 
-        // $response = $bot->getProfile('U038940166356c6b9fb0dcf051aded27f');
-        // if ($response->isSucceeded()) {
-        //     $profile = $response->getJSONDecodedBody();
-        //     echo $profile['displayName'];
-        //     echo $profile['pictureUrl'];
-        //     echo $profile['statusMessage'];
-        // }
+        $response = $bot->getProfile('U038940166356c6b9fb0dcf051aded27f');
+        if ($response->isSucceeded()) {
+            $profile = $response->getJSONDecodedBody();
+            echo $profile['displayName'];
+            echo $profile['pictureUrl'];
+            echo $profile['statusMessage'];
+        }
 
 
         $events = json_decode($content, true);
