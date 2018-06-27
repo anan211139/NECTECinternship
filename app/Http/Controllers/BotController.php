@@ -249,23 +249,23 @@ class BotController extends Controller
                     ->first();
 
                 dd($checkIMG);
-                // $pf_img = $checkIMG->local_pic;
-                // if($pf_img===null){
-                //     $response = $bot->getProfile($userId);
-                //     if ($response->isSucceeded()) {
-                //         $profile = $response->getJSONDecodedBody();
-                //         //echo $profile['displayName'];
-                //         //echo $profile['pictureUrl'];
-                //         //echo $profile['statusMessage'];
+                $pf_img = $checkIMG->local_pic;
+                if($pf_img===null){
+                    $response = $bot->getProfile($userId);
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        //echo $profile['displayName'];
+                        //echo $profile['pictureUrl'];
+                        //echo $profile['statusMessage'];
 
-                //         DB::table('students')
-                //         ->where('line_code', $userId)
-                //         ->update(['local_pic'=>$profile['pictureUrl']]);
-                //     }
+                        DB::table('students')
+                        ->where('line_code', $userId)
+                        ->update(['local_pic'=>$profile['pictureUrl']]);
+                    }
 
                     
 
-                // }
+                }
 
             }
             else if($userMessage =="เกี่ยวกับพี่หมี"){
