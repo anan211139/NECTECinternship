@@ -256,7 +256,7 @@ class BotController extends Controller
                         //echo $profile['pictureUrl'];
                         //echo $profile['statusMessage'];
 
-                        DB::table('students')->insertGetId([
+                        DB::table('students')->insert([
                             'line_code' => $userId, 
                             'name' => $profile['displayName'],
                             'local_pic' => $profile['pictureUrl']
