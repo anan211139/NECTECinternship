@@ -244,13 +244,28 @@ class BotController extends Controller
                 $replyData = $multiMessage;
 
                 //--------INSERT AND CHECK DB--------
-                $response = $bot->getProfile($userId);
-                if ($response->isSucceeded()) {
-                    $profile = $response->getJSONDecodedBody();
-                    echo $profile['displayName'];
-                    echo $profile['pictureUrl'];
-                    echo $profile['statusMessage'];
+                $checkIMG = DB::table('students')
+                    ->where('line_code', $userId);
+                if($checkIMG->local_pic===null){
+                    $response = $bot->getProfile($userId);
+                    if ($response->isSucceeded()) {
+                        $profile = $response->getJSONDecodedBody();
+                        //echo $profile['displayName'];
+                        //echo $profile['pictureUrl'];
+                        //echo $profile['statusMessage'];
+
+                        DB::table('student')
+                        ->where('line_code', $userId)
+                        ->update(['local_pic'=>$profile['pictureUrl']]);
+                    }
+
+                    
+
                 }
+
+
+
+                
 
 
             }
