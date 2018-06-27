@@ -258,8 +258,8 @@ class BotController extends Controller
 
                         DB::table('students')->insertGetId([
                             'line_code' => $userId, 
-                            'local_pic' => $profile['pictureUrl'],
-                            'create_at' => Carbon::now()
+                            'local_pic' => $profile['pictureUrl']
+                           
                         ]);
 
                         // DB::table('students')
