@@ -263,11 +263,6 @@ class BotController extends Controller
 
                 }
 
-
-
-                
-
-
             }
             else if($userMessage =="เกี่ยวกับพี่หมี"){
                 $arr_replyData = array();
