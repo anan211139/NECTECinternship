@@ -258,6 +258,7 @@ class BotController extends Controller
 
                         DB::table('students')->insertGetId([
                             'line_code' => $userId, 
+                            'name' => $profile['displayName'],
                             'local_pic' => $profile['pictureUrl']
                            
                         ]);
