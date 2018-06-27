@@ -144,8 +144,8 @@ class BotController extends Controller
                     ->where('subject_id',1)
                     // ->whereNull('is_correct')
                     ->orderBy('id','DESC')
-                    ->first();
-                if($checkGroup->status===true){
+                    ->count();
+                if($checkGroup==0){
                     DB::table('groups')->insert([
                         'line_code' => $userId, 
                         'subject_id' => 1,
