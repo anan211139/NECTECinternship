@@ -92,16 +92,6 @@ class BotController extends Controller
         // $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
         // $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
 
-
-        $response = $bot->getProfile('U038940166356c6b9fb0dcf051aded27f');
-        if ($response->isSucceeded()) {
-            $profile = $response->getJSONDecodedBody();
-            echo $profile['displayName'];
-            echo $profile['pictureUrl'];
-            echo $profile['statusMessage'];
-        }
-
-
         $events = json_decode($content, true);
         if(!is_null($events)){
             //echo $events;
@@ -247,11 +237,20 @@ class BotController extends Controller
 
 
                 //--------REPLY----------
-                $multiMessage =     new MultiMessageBuilder;
+                $multiMessage = new MultiMessageBuilder;
                 foreach($arr_replyData as $arr_Reply){
                         $multiMessage->add($arr_Reply);
                 }
                 $replyData = $multiMessage;
+
+                //--------INSERT AND CHECK DB--------
+                $response = $bot->getProfile($userId);
+                if ($response->isSucceeded()) {
+                    $profile = $response->getJSONDecodedBody();
+                    echo $profile['displayName'];
+                    echo $profile['pictureUrl'];
+                    echo $profile['statusMessage'];
+                }
 
 
             }
