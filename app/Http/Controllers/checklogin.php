@@ -25,4 +25,21 @@ class checklogin extends Controller
             return redirect('/')->with('login','login fail');
         }
     }
+    public function pslogininaddchild(Request $request){
+        $username = $request->input('uname');
+        $password = $request->input('pass');
+        $userresult = DB::table('managers')
+        ->select(DB::raw('*'))
+        ->whereRaw("username = '$username' and password = '$password'")
+        ->get();
+        // $id = $userresult[0]['id'];
+        if(count($userresult) > 0){
+            // Session::put('id',   $id);
+            Session::put('username',$username);
+            $sessiondata = Session::get('username','default');
+            return redirect('/addchild')->with('login',$sessiondata);
+        }else{
+            return redirect('/addchild')->with('login','login fail');
+        }
+    }
 }

@@ -21,11 +21,11 @@ class regisController extends Controller
             $message->password = $password;
             $message->email = $email;
             $message->save();
-            return redirect('/')->with('failregis','DONE Firstuser');
+            return redirect('/')->with('regis','DONE Firstuser');
         }else{
             for($i = 0;$i<count($userresult);$i++){
                 if($userresult[$i]["username"] == $username){
-                    return redirect('/')->with('failregis','error_username');
+                    return redirect('/')->with('regis','error_username');
                 }
             }
             if($password == $repassword){
@@ -35,9 +35,47 @@ class regisController extends Controller
                 $message->password = $password;
                 $message->email = $email;
                 $message->save();
-                return redirect('/')->with('failregis','DONE');
+                return redirect('/')->with('regis','DONE');
             }else{
-                return redirect('/')->with('failregis','Password and Re-Password not match');
+                return redirect('/')->with('regis','Password and Re-Password not match');
+            }
+        }
+        
+
+
+    }
+    
+    public function processinaddchild(Request $request){
+        $name = $request->input('nameRegis');
+        $username = $request->input('uname');
+        $password = $request->input('psw');
+        $repassword = $request->input('repsw');
+        $email = $request->input('email');
+        $userresult = Manager::all();
+        if(count($userresult)==0){
+            $message = new Manager;
+            $message->name = $name;
+            $message->username = $username;
+            $message->password = $password;
+            $message->email = $email;
+            $message->save();
+            return redirect('/addchild')->with('regis','DONE Firstuser');
+        }else{
+            for($i = 0;$i<count($userresult);$i++){
+                if($userresult[$i]["username"] == $username){
+                    return redirect('/addchild')->with('regis','error_username');
+                }
+            }
+            if($password == $repassword){
+                $message = new Manager;
+                $message->name = $name;
+                $message->username = $username;
+                $message->password = $password;
+                $message->email = $email;
+                $message->save();
+                return redirect('/addchild')->with('regis','DONE');
+            }else{
+                return redirect('/addchild')->with('regis','Password and Re-Password not match');
             }
         }
         

@@ -18,8 +18,11 @@ Route::get('/connectchild/{id}','Pagecontroller@addchild');
 Route::get('/addchild','Pagecontroller@addchildpage');
 
 Route::post('/loginsubmit', 'checklogin@pslogin');
+Route::post('/loginsubmitinaddchild', 'checklogin@pslogininaddchild');
 Route::post('/regissubmit', 'regisController@process');
+Route::post('/regissubmitinaddchild', 'regisController@processinaddchild');
 Route::post('/addchildsubmit','addchildcontroller@addchild');
+
 
 Route::resource('Line','LineController');  //call path ที่กำหนด
 

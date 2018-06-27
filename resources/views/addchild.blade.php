@@ -1,4 +1,3 @@
-<?php $username = Session::get('username','default'); ?>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -21,9 +20,9 @@
             {!! Form::close() !!}
             </div>
         </div>
-        @if(isset($username))
+        @if(session()->has('username'))
+        @else
             @include('inc.loginregis')
         @endif
-        
     </body>
 </html>
