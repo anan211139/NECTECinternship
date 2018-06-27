@@ -264,7 +264,7 @@ class BotController extends Controller
 
                     
 
-                }
+                // }
 
             }
             else if($userMessage =="เกี่ยวกับพี่หมี"){
