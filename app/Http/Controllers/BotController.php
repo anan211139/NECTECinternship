@@ -254,7 +254,7 @@ class BotController extends Controller
                         //echo $profile['pictureUrl'];
                         //echo $profile['statusMessage'];
 
-                        DB::table('student')
+                        DB::table('students')
                         ->where('line_code', $userId)
                         ->update(['local_pic'=>$profile['pictureUrl']]);
                     }
