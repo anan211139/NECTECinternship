@@ -138,19 +138,6 @@ class BotController extends Controller
                 ));
             }
             else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
-                
-                $checkGroup = DB::table('groups')
-                    ->where('line_code',$userId)
-                    ->where('subject_id',1)
-                    ->count();
-                // dd($checkGroup);
-                if($checkGroup==0){
-                    DB::table('groups')->insert([
-                        'line_code' => $userId, 
-                        'subject_id' => 1,
-                        'status' => false
-                    ]);
-                }
 
                 $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
                 $replyData = new ImagemapMessageBuilder(
