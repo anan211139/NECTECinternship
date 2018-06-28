@@ -202,10 +202,10 @@ class BotController extends Controller
                 // $columnTitles = array('foo', 'bar', 'buz','xc');
 
                 // echo $final_prizes;
-                dd($re_prizes);
+                //dd($re_prizes);
 
 
-                //echo $re_prizes[0]['name'];
+                echo $re_prizes[0]['name'];
 
 
                 // foreach ($re_prizes as $value) {
