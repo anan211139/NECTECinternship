@@ -196,26 +196,25 @@ class BotController extends Controller
                 );
                 $re_prizes = DB::table('prizes')
                     ->get();
-                $result_prizes = $re_prizes->toArray();
-                $final_prizes = $re_prizes ->name;
+                $result_prizes = $re_prizes;
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
                 // $columnTemplateBuilders = array();
                 // $columnTitles = array('foo', 'bar', 'buz','xc');
 
-                echo $final_prizes;
-                dd($final_prizes);
+                // echo $final_prizes;
+                // dd($final_prizes);
 
-                // foreach ($result_prizes as $values) {
-                //     $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prize[$values]['name'], 'description', $imageUrl, [
-                //         new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                //         new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                //     ]);
-                //     array_push($columnTemplateBuilders, $columnTemplateBuilder);
-                // }
+                foreach ($result_prizes as $values) {
+                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prize[$values]['name'], 'description', $imageUrl, [
+                        new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                        new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                    ]);
+                    array_push($columnTemplateBuilders, $columnTemplateBuilder);
+                }
 
-                // $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
-                // $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
+                $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
+                $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
           
             }
             else if($userMessage =="ดู Code"){
