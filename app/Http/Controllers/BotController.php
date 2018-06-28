@@ -194,18 +194,17 @@ class BotController extends Controller
                     //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                     // ),      
                 );
-                $prizes = DB::table('prizes')
-                    ->get();
-                $result_prizes = $prizes->toArray();
-                //dd($result_prizes);
-
+                // $sponsor = DB::table('sponsors')
+                //     ->get();
+                // $result_spon = $result->toArray();
+                
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
                 $columnTemplateBuilders = array();
-                $columnTitles = array('foo', 'bar', 'buz','dd','ss','xx');
+                $columnTitles = array('foo', 'bar', 'buz','xc');
 
-                foreach ($result_prizes as $value) {
-                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder('hhh', 'description', $imageUrl, [
+                foreach ($columnTitles as $title) {
+                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($title, 'description', $imageUrl, [
                         new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
                         new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
                     ]);
