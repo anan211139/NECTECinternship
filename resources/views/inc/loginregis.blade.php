@@ -1,8 +1,9 @@
 <div id="loginPop" class="modal">
-    <div class="modal-content animate">
+    <div class="modal-content">
         <div class="container">
             {!! Form::open(['url' => 'loginsubmitinaddchild']) !!}
                 <p class="headRegis">กรุณาลงชื่อเข้าใช้</p>
+                @include('inc.loginmessage')
                 <label for="uname">Username</label>
                 <input class="inputPop" type="text" name="uname" required>
                 <label for="psw">Password</label>
@@ -12,7 +13,9 @@
                 <div class="popBtnLayout">
                     <button class="registerBtn" type="submit">LOGIN</button>
                 </div> 
+                @include('inc.message')
             {!! Form::close() !!}
+            
         </div>
     </div>
 </div>

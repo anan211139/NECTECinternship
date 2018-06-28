@@ -15,13 +15,17 @@ class regisController extends Controller
         $email = $request->input('email');
         $userresult = Manager::all();
         if(count($userresult)==0){
-            $message = new Manager;
-            $message->name = $name;
-            $message->username = $username;
-            $message->password = $password;
-            $message->email = $email;
-            $message->save();
-            return redirect('/')->with('regis','DONE Firstuser');
+            if($password == $repassword){
+                $message = new Manager;
+                $message->name = $name;
+                $message->username = $username;
+                $message->password = $password;
+                $message->email = $email;
+                $message->save();
+                return redirect('/addchild')->with('regis','DONE Firstuser');
+            }else{
+                return redirect('/addchild')->with('regis','Password and Re-Password not match');
+            }
         }else{
             for($i = 0;$i<count($userresult);$i++){
                 if($userresult[$i]["username"] == $username){
@@ -53,13 +57,17 @@ class regisController extends Controller
         $email = $request->input('email');
         $userresult = Manager::all();
         if(count($userresult)==0){
-            $message = new Manager;
-            $message->name = $name;
-            $message->username = $username;
-            $message->password = $password;
-            $message->email = $email;
-            $message->save();
-            return redirect('/addchild')->with('regis','DONE Firstuser');
+            if($password == $repassword){
+                $message = new Manager;
+                $message->name = $name;
+                $message->username = $username;
+                $message->password = $password;
+                $message->email = $email;
+                $message->save();
+                return redirect('/addchild')->with('regis','DONE Firstuser');
+            }else{
+                return redirect('/addchild')->with('regis','Password and Re-Password not match');
+            }
         }else{
             for($i = 0;$i<count($userresult);$i++){
                 if($userresult[$i]["username"] == $username){

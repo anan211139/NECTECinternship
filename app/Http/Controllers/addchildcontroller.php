@@ -13,7 +13,7 @@ class addchildcontroller extends Controller
         $linecode = $request->input('code');
         $name = $request->input('nickname');
         $id = Session::get('id','default');
-
+        
         $insert = new Studentparent;
         $insert->line_code = $linecode;
         $insert->parent_id = $id;

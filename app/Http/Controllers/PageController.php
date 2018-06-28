@@ -23,7 +23,6 @@ class Pagecontroller extends Controller
         }else{
             return view('home');
         }
-        
     }
     public function addchild($id){
         Session::put('line_code',$id);
@@ -36,7 +35,6 @@ class Pagecontroller extends Controller
         $result = $resultArray[0]["local_pic"];
         Session::put('local_pic',$result);
         return redirect('/addchild')->with('code',$id);
-        https://www.picz.in.th/images/2018/05/10/z0CEml.jpg
     }
     
 }

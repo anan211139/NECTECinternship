@@ -15,13 +15,11 @@ class checklogin extends Controller
         ->select(DB::raw('id'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
-        $result = json_decode($userresult, true);
-        $id = $result[0]['id'];
-        // return $result;
         if(count($userresult) > 0){
+            $result = json_decode($userresult, true);
+            $id = $result[0]['id'];
             Session::put('id',$id);
             Session::put('username',$username);
-            $sessiondata = Session::get('username','default');
             return redirect('/')->with('login',$sessiondata);
         }else{
             return redirect('/')->with('login','login fail');
@@ -34,15 +32,14 @@ class checklogin extends Controller
         ->select(DB::raw('*'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
-        $result = json_decode($userresult, true);
-        $id = $result[0]['id'];
         if(count($userresult) > 0){
+            $result = json_decode($userresult, true);
+            $id = $result[0]['id'];
             Session::put('id',$id);
             Session::put('username',$username);
-            $sessiondata = Session::get('username','default');
             return redirect('/addchild')->with('login',$sessiondata);
         }else{
-            return redirect('/addchild')->with('login','login fail');
+            return redirect('/addchild')->with('login','Username and Password not match');
         }
     }
 }
