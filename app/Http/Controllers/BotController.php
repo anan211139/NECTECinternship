@@ -194,51 +194,26 @@ class BotController extends Controller
                     //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                     // ),      
                 );
-                $count_spon = DB::table('sponsors')
-                        ->count();
-                // $replyData = new TemplateMessageBuilder('Carousel',
-                //     new CarouselTemplateBuilder(
-                //         array(
-                            
-                //             foreach($count_spon as $value){
-                //                 new CarouselColumnTemplateBuilder(
-                //                     'Sponsor',
-                //                     'ใช้ 100 แต้ม เพื่อแลกของรางวัล',
-                //                     'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
-                //                     $actionBuilder
-                //                 ),
-                //             }
-                            
-                //             // new CarouselColumnTemplateBuilder(
-                //             //     'Sponsor',
-                //             //     'ใช้ 400 แต้ม เพื่อแลกของรางวัล',
-                //             //     'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
-                //             //     $actionBuilder
-                //             // ),
-                //             // new CarouselColumnTemplateBuilder(
-                //             //     'Sponsor',
-                //             //     'ใช้ 1000 แต้ม เพื่อแลกของรางวัล',
-                //             //     'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
-                //             //     $actionBuilder
-                //             // ),                                          
-                //         )
-                //     )
-                // );
-                $imageUrl = 'https://example.com/path/to/your/image.png';
+                $sponsor = DB::table('sponsors')
+                    ->get();
+                $result_spon = $sponsor->toArray();
+                dd($result_spon);
 
-                $columnTemplateBuilders = array();
-                $columnTitles = array('foo', 'bar', 'buz');
+                // $imageUrl = 'https://example.com/path/to/your/image.png';
 
-                foreach ($columnTitles as $title) {
-                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($title, 'description', $imageUrl, [
-                        new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                        new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                    ]);
-                    array_push($columnTemplateBuilders, $columnTemplateBuilder);
-                }
+                // $columnTemplateBuilders = array();
+                // $columnTitles = array('foo', 'bar', 'buz');
 
-                $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
-                $replyData = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
+                // foreach ($columnTitles as $title) {
+                //     $columnTemplateBuilder = new CarouselColumnTemplateBuilder($title, 'description', $imageUrl, [
+                //         new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                //         new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                //     ]);
+                //     array_push($columnTemplateBuilders, $columnTemplateBuilder);
+                // }
+
+                // $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
+                // $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
           
             }
             else if($userMessage =="ดู Code"){
