@@ -203,15 +203,15 @@ class BotController extends Controller
 
                 // echo $final_prizes;
                 // dd($re_prizes);
-
-                foreach ($re_prizes as $value) {
-                    echo $value;
-                    // $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prizes[$values]['name'], 'description', $imageUrl, [
-                    //     new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                    //     new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                    // ]);
-                    // array_push($columnTemplateBuilders, $columnTemplateBuilder);
-                }
+                echo $re_prizes[0]['name'];
+                // foreach ($re_prizes as $value) {
+                //     echo $value;
+                //     // $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prizes[$values]['name'], 'description', $imageUrl, [
+                //     //     new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                //     //     new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                //     // ]);
+                //     // array_push($columnTemplateBuilders, $columnTemplateBuilder);
+                // }
 
                 $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
                 $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
