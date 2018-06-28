@@ -197,13 +197,14 @@ class BotController extends Controller
                 $re_prizes = DB::table('prizes')
                     ->get();
                 $result_prizes = $re_prizes->toArray();
-                
+                $final_prizes = $result_prizes ->name;
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
                 // $columnTemplateBuilders = array();
                 // $columnTitles = array('foo', 'bar', 'buz','xc');
 
-                echo $result_prizes[0]['name'];
+                echo $final_prizes;
+                dd($final_prizes);
 
                 // foreach ($result_prizes as $values) {
                 //     $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prize[$values]['name'], 'description', $imageUrl, [
