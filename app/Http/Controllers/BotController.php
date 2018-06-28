@@ -177,43 +177,13 @@ class BotController extends Controller
                 );
             }
             else if($userMessage =="แลกของรางวัล"){
-                $actionBuilder = array(
-                    new MessageTemplateActionBuilder(
-                        'แลก',// ข้อความแสดงในปุ่ม
-                        'แลก' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                    ),
-                    // new UriTemplateActionBuilder(
-                    //     'Uri Template', // ข้อความแสดงในปุ่ม
-                    //     'https://www.ninenik.com'
-                    // ),
-                    // new PostbackTemplateActionBuilder(
-                    //     'Postback', // ข้อความแสดงในปุ่ม
-                    //     http_build_query(array(
-                    //         'action'=>'buy',
-             
-                    //         'item'=>100
-                    //     )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
-                    //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                    // ),      
-                );
-
-                $re_prizes = Prize::all()->toArray();
                 
-                // foreach($re_prizes as $prize){
-                //     echo '11111';
-                //     echo $prize['name'];
-                // }
-                // echo $re_prizes[1]['name'];
-                $imageUrl = 'https://example.com/path/to/your/image.png';
-
+                $re_prizes = Prize::all()->toArray();
                 $columnTemplateBuilders = array();
-                // $columnTitles = array('foo', 'bar', 'buz','xc');
-
                 foreach ($re_prizes as $prize) {
-                    //echo $value;
 
                     $columnTemplateBuilder = new CarouselColumnTemplateBuilder($prize['name'], 'ใช้ '.$prize['point'].' แต้มในการแลก', 'https://pkwang.herokuapp.com/'.$prize['local_pic'], [
-                        new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123'),
+                        new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123'),'พี่หมีส่งคำขอแลกเรียบร้อยแล้ว'
                     ]);
                     array_push($columnTemplateBuilders, $columnTemplateBuilder);
                 }
