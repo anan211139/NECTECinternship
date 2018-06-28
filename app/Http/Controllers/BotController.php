@@ -196,47 +196,31 @@ class BotController extends Controller
                     //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                     // ),      
                 );
-                // $re_prizes = DB::table('prizes')
-                //    ->select('name')
-                //     ->get()
-                //     ->toArray();
 
                 $re_prizes = Prize::all()->toArray();
                 
-                foreach($re_prizes as $prize){
-                    echo '11111';
-                    echo $prize['name'];
-                }
-                echo $re_prizes[1]['name'];
+                // foreach($re_prizes as $prize){
+                //     echo '11111';
+                //     echo $prize['name'];
+                // }
+                // echo $re_prizes[1]['name'];
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
                 // $columnTemplateBuilders = array();
                 // $columnTitles = array('foo', 'bar', 'buz','xc');
 
-                // echo $final_prizes;
-                //dd($re_prizes);
-                // echo var_dump($re_prizes[0]);
-                // echo var_dump($re_prizes);
+                foreach ($re_prizes as $prize) {
+                    echo $value;
 
-                // $data = $re_prizes[0]['name'];
+                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($prize['name'], 'description', $imageUrl, [
+                        new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                        new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                    ]);
+                    array_push($columnTemplateBuilders, $columnTemplateBuilder);
+                }
 
-                // echo $data;
-                //echo $re_prizes[$value]['name'];
-
-                //echo $re_prizes->name;
-
-
-                // foreach ($re_prizes as $value) {
-                //     echo $value;
-                //     // $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prizes[$values]['name'], 'description', $imageUrl, [
-                //     //     new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                //     //     new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                //     // ]);
-                //     // array_push($columnTemplateBuilders, $columnTemplateBuilder);
-                // }
-
-                // $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
-                // $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
+                $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
+                $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
           
             }
             else if($userMessage =="ดู Code"){
