@@ -206,7 +206,7 @@ class BotController extends Controller
                 // dd($final_prizes);
 
                 foreach ($result_prizes as $values) {
-                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prize[$values]['name'], 'description', $imageUrl, [
+                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prizes[$values]['name'], 'description', $imageUrl, [
                         new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
                         new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
                     ]);
