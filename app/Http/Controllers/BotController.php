@@ -206,7 +206,7 @@ class BotController extends Controller
                 // echo $re_prizes[1]['name'];
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
-                // $columnTemplateBuilders = array();
+                $columnTemplateBuilders = array();
                 // $columnTitles = array('foo', 'bar', 'buz','xc');
 
                 foreach ($re_prizes as $prize) {
