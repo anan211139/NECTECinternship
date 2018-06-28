@@ -84,8 +84,8 @@ class BotController extends Controller
 
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
-        echo "A";
-        echo $content;
+        //echo "A";
+        //echo $content;
 
         //$count = 0;
 
@@ -195,7 +195,8 @@ class BotController extends Controller
                     // ),      
                 );
                 $re_prizes = DB::table('prizes')
-                    ->get();
+                    ->get()
+                    ->toArray();
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
                 // $columnTemplateBuilders = array();
@@ -204,10 +205,10 @@ class BotController extends Controller
                 // echo $final_prizes;
                 //dd($re_prizes);
 
-                //echo var_dump($re_prizes);
-                //echo $re_prizes[0]['name'];
+                echo var_dump($re_prizes);
+                //echo $re_prizes[$value]['name'];
 
-                echo $re_prizes->name;
+                //echo $re_prizes->name;
 
 
                 // foreach ($re_prizes as $value) {
