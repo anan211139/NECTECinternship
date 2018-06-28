@@ -202,8 +202,14 @@ class BotController extends Controller
                 // $columnTitles = array('foo', 'bar', 'buz','xc');
 
                 // echo $final_prizes;
-                // dd($re_prizes);
-                echo $re_prizes[0]['name'];
+                //dd($re_prizes);
+
+                //echo var_dump($re_prizes);
+                //echo $re_prizes[0]['name'];
+
+                echo $re_prizes->name;
+
+
                 // foreach ($re_prizes as $value) {
                 //     echo $value;
                 //     // $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prizes[$values]['name'], 'description', $imageUrl, [
@@ -213,8 +219,8 @@ class BotController extends Controller
                 //     // array_push($columnTemplateBuilders, $columnTemplateBuilder);
                 // }
 
-                $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
-                $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
+                // $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
+                // $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
           
             }
             else if($userMessage =="ดู Code"){
