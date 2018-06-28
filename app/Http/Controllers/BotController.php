@@ -205,7 +205,7 @@ class BotController extends Controller
 
                 // echo $final_prizes;
                 //dd($re_prizes);
-                echo $re_prizes[0];
+                echo var_dump($re_prizes[0]);
                 echo var_dump($re_prizes);
                 //echo $re_prizes[$value]['name'];
 
