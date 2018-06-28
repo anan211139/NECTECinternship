@@ -1,25 +1,28 @@
 body{
-    /* background-image: url("picture/topbg.png");
+    /* background-image: url("picture/boat.png");
     background-size: 100% auto;
     background-repeat: no-repeat;
-    background-attachment: fixed; */
+    background-attachment: fixed;
+    background-position: bottom right; 
     margin: 0;       
-    background-color: #5bbcd2;       
+    background-color: #f7f7f7;  
+    font-family: 'Prompt', sans-serif; */
+}
+.cancal{
+    padding: 20px; 
+    color: #5bbcd2; 
+    cursor: pointer;
 }
 .logo{
     width: 70%;
     height: auto;
     padding: 20px;
+    border-radius: 50%;
 }
 .containerCode{
-    display: grid; 
-    grid-template-columns: auto;
     width: 20%; 
-    padding: 10px;
-    margin: 100px auto; 
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* padding: 10px; */
+    margin: 50px auto; 
 }
 .content{
     margin: auto; 
@@ -34,7 +37,7 @@ input{
     font-size: 18px;
     outline: none;
     background-color: transparent;
-    width: 80%;
+    width: 100%;
 }
 .loginBtn{
     /* display: block; */
@@ -65,6 +68,7 @@ input{
     color: black;
     font-size: 30px;
     margin-bottom: 20px;
+    font-family: 'Prompt', sans-serif;
 }
 
 /* Set a style for all buttons */
@@ -99,7 +103,7 @@ input{
 
 
 .container {
-    padding: 30px;
+    padding: 5px 30px 30px 30px;
 }
 span.psw {
     float: right;
@@ -120,7 +124,24 @@ span.psw {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     padding-top: 60px;
 }
-
+.modal2 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 7; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    padding-top: 60px;
+}
+.forgot{
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;    
+    color: #5bbcd2;  
+    font-size: 12px;
+    cursor: pointer;
+}
 /* Modal Content/Box */
 .modal-content {
     font-family: 'Roboto', sans-serif;
@@ -130,9 +151,9 @@ span.psw {
     margin: auto auto auto auto;
     border-width: 0;
     border-radius: 10px;
-    width: 50%;
-    display: grid;
-    grid-template-columns: auto auto;
+    width: 30%;
+    /* display: grid;
+    grid-template-columns: auto auto; */
 }
 
 /* The Close Button (x) */
@@ -173,7 +194,7 @@ span.psw {
 }
 @media screen and (max-width: 800px) {
     .modal-content{
-        grid-template-columns: auto;
+        /* grid-template-columns: auto; */
         width: 70%;
     }
 }

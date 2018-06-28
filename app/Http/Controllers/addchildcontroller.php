@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Studentparent;
+use App\Student;
+use Session;    
 
 class addchildcontroller extends Controller
 {
@@ -15,5 +17,10 @@ class addchildcontroller extends Controller
         $insert = new Studentparent;
         $insert->line_code = $linecode;
         $insert->parent_id = $id;
+        $insert->save();
+
+        $update_nickname = new Student;
+        $update_nickname::whereraw("line_code = '$linecode'")->update(['name' => $name]);
+        return 'Done';
     }
 }

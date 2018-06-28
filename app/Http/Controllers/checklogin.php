@@ -12,10 +12,12 @@ class checklogin extends Controller
         $username = $request->input('uname');
         $password = $request->input('pass');
         $userresult = DB::table('managers')
-        ->select(DB::raw('*'))
+        ->select(DB::raw('id'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
-        $id = $userresult[0]['id'];
+        $result = json_decode($userresult, true);
+        $id = $result[0]['id'];
+        // return $result;
         if(count($userresult) > 0){
             Session::put('id',$id);
             Session::put('username',$username);
@@ -32,9 +34,10 @@ class checklogin extends Controller
         ->select(DB::raw('*'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
-        // $id = $userresult[0]['id'];
+        $result = json_decode($userresult, true);
+        $id = $result[0]['id'];
         if(count($userresult) > 0){
-            // Session::put('id',   $id);
+            Session::put('id',$id);
             Session::put('username',$username);
             $sessiondata = Session::get('username','default');
             return redirect('/addchild')->with('login',$sessiondata);
