@@ -194,30 +194,52 @@ class BotController extends Controller
                     //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                     // ),      
                 );
-                $replyData = new TemplateMessageBuilder('Carousel',
-                    new CarouselTemplateBuilder(
-                        array(
-                            new CarouselColumnTemplateBuilder(
-                                'Sponsor',
-                                'ใช้ 100 แต้ม เพื่อแลกของรางวัล',
-                                'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
-                                $actionBuilder
-                            ),
-                            new CarouselColumnTemplateBuilder(
-                                'Sponsor',
-                                'ใช้ 400 แต้ม เพื่อแลกของรางวัล',
-                                'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
-                                $actionBuilder
-                            ),
-                            new CarouselColumnTemplateBuilder(
-                                'Sponsor',
-                                'ใช้ 1000 แต้ม เพื่อแลกของรางวัล',
-                                'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
-                                $actionBuilder
-                            ),                                          
-                        )
-                    )
-                );
+                $count_spon = DB::table('sponsors')
+                        ->count();
+                // $replyData = new TemplateMessageBuilder('Carousel',
+                //     new CarouselTemplateBuilder(
+                //         array(
+                            
+                //             foreach($count_spon as $value){
+                //                 new CarouselColumnTemplateBuilder(
+                //                     'Sponsor',
+                //                     'ใช้ 100 แต้ม เพื่อแลกของรางวัล',
+                //                     'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
+                //                     $actionBuilder
+                //                 ),
+                //             }
+                            
+                //             // new CarouselColumnTemplateBuilder(
+                //             //     'Sponsor',
+                //             //     'ใช้ 400 แต้ม เพื่อแลกของรางวัล',
+                //             //     'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
+                //             //     $actionBuilder
+                //             // ),
+                //             // new CarouselColumnTemplateBuilder(
+                //             //     'Sponsor',
+                //             //     'ใช้ 1000 แต้ม เพื่อแลกของรางวัล',
+                //             //     'https://github.com/anan211139/NECTECinternship/blob/master/img/Untitled-1.png?raw=true/700',
+                //             //     $actionBuilder
+                //             // ),                                          
+                //         )
+                //     )
+                // );
+                $imageUrl = 'https://example.com/path/to/your/image.png';
+
+                $columnTemplateBuilders = array();
+                $columnTitles = array('foo', 'bar', 'buz');
+
+                foreach ($columnTitles as $title) {
+                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($title, 'description', $imageUrl, [
+                        new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                        new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                    ]);
+                    array_push($columnTemplateBuilders, $columnTemplateBuilder);
+                }
+
+                $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
+                $replyData = new TemplateMessageBuilder('Button alt text', $carouselTemplateBuilder);
+          
             }
             else if($userMessage =="ดู Code"){
                 //$textReplyMessage = $userId;
@@ -252,20 +274,12 @@ class BotController extends Controller
                     $response = $bot->getProfile($userId);
                     if ($response->isSucceeded()) {
                         $profile = $response->getJSONDecodedBody();
-                        //echo $profile['displayName'];
-                        //echo $profile['pictureUrl'];
-                        //echo $profile['statusMessage'];
-
                         DB::table('students')->insert([
                             'line_code' => $userId, 
                             'name' => $profile['displayName'],
                             'local_pic' => $profile['pictureUrl']
                            
                         ]);
-
-                        // DB::table('students')
-                        // ->where('line_code', $userId)
-                        // ->update(['local_pic'=>$profile['pictureUrl']]);
                     }
 
                     
