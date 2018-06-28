@@ -10,8 +10,8 @@
                 <a onclick="document.getElementById('id01').style.display='block'">Register</a>
             </div>
         </div>
-        <a href="#detail" class="plus"><img src="picture/arrow.png"></a>
-        <div style='background-image: url("picture/topbg.png"); background-size: 100% auto; background-repeat: no-repeat; 
+        <a href="#detail" id ="arrowBtn"class="plus"><img id ="plus" src="picture/arrow.png"></a>
+        <div id="login" style='background-image: url("picture/topbg.png"); background-size: 100% auto; background-repeat: no-repeat; 
         background-position: bottom right; 
         height: 100%; '>
             <div class="layout">
