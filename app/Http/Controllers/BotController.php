@@ -202,7 +202,11 @@ class BotController extends Controller
                 //     ->toArray();
 
                 $re_prizes = Prize::all()->toArray();
-
+                
+                foreach($re_prizes as $prize){
+                    echo '11111';
+                    echo $prize['name'];
+                }
                 echo $re_prizes[1]['name'];
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
