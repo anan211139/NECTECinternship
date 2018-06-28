@@ -183,7 +183,7 @@ class BotController extends Controller
                 foreach ($re_prizes as $prize) {
 
                     $columnTemplateBuilder = new CarouselColumnTemplateBuilder($prize['name'], 'ใช้ '.$prize['point'].' แต้มในการแลก', 'https://pkwang.herokuapp.com/'.$prize['local_pic'], [
-                        new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123'),'พี่หมีส่งคำขอแลกเรียบร้อยแล้ว'
+                        new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123'),
                     ]);
                     array_push($columnTemplateBuilders, $columnTemplateBuilder);
                 }
