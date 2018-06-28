@@ -40,6 +40,8 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuilder;
 use Carbon\Carbon;
 
+use App\Prize;
+
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5uObrERh7O5m/tO3bbgEPeF2D//vC4kHTLQuQGbgpZSqU3C+WUJ86nQNptlraZZtek2tdLYoqREXuN8xy3swo9RVO3EL0VrmnhSQfuOl89AQdB04t89/1O/w1cDnyilFU=');
@@ -194,10 +196,14 @@ class BotController extends Controller
                     //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                     // ),      
                 );
-                $re_prizes = DB::table('prizes')
-                   ->select('name')
-                    ->get()
-                    ->toArray();
+                // $re_prizes = DB::table('prizes')
+                //    ->select('name')
+                //     ->get()
+                //     ->toArray();
+
+                $re_prizes = Prize::all()->toArray();
+
+                echo $re_prizes[1]['name'];
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
                 // $columnTemplateBuilders = array();
@@ -208,9 +214,9 @@ class BotController extends Controller
                 // echo var_dump($re_prizes[0]);
                 // echo var_dump($re_prizes);
 
-                $data = $re_prizes[0]['name'];
+                // $data = $re_prizes[0]['name'];
 
-                echo $data;
+                // echo $data;
                 //echo $re_prizes[$value]['name'];
 
                 //echo $re_prizes->name;
