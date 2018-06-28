@@ -203,7 +203,7 @@ class BotController extends Controller
                 // $columnTemplateBuilders = array();
                 // $columnTitles = array('foo', 'bar', 'buz','xc');
 
-                echo $result_prize[0]['name'];
+                echo $result_prizes[0]['name'];
 
                 // foreach ($result_prizes as $values) {
                 //     $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prize[$values]['name'], 'description', $imageUrl, [
