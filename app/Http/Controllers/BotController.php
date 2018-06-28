@@ -194,25 +194,27 @@ class BotController extends Controller
                     //     'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                     // ),      
                 );
-                // $sponsor = DB::table('sponsors')
-                //     ->get();
-                // $result_spon = $result->toArray();
+                $re_prizes = DB::table('prizes')
+                    ->get();
+                $result_prizes = $re_prizes->toArray();
                 
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
-                $columnTemplateBuilders = array();
-                $columnTitles = array('foo', 'bar', 'buz','xc');
+                // $columnTemplateBuilders = array();
+                // $columnTitles = array('foo', 'bar', 'buz','xc');
 
-                foreach ($columnTitles as $title) {
-                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($title, 'description', $imageUrl, [
-                        new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                        new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                    ]);
-                    array_push($columnTemplateBuilders, $columnTemplateBuilder);
-                }
+                echo $result_prize[0]['name'];
 
-                $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
-                $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
+                // foreach ($result_prizes as $values) {
+                //     $columnTemplateBuilder = new CarouselColumnTemplateBuilder($result_prize[$values]['name'], 'description', $imageUrl, [
+                //         new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                //         new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                //     ]);
+                //     array_push($columnTemplateBuilders, $columnTemplateBuilder);
+                // }
+
+                // $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
+                // $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
           
             }
             else if($userMessage =="ดู Code"){
