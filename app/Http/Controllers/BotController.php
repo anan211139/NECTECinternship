@@ -197,7 +197,7 @@ class BotController extends Controller
                 $re_prizes = DB::table('prizes')
                     ->get();
                 $result_prizes = $re_prizes->toArray();
-                $final_prizes = $result_prizes ->name;
+                $final_prizes = $re_prizes ->name;
                 $imageUrl = 'https://example.com/path/to/your/image.png';
 
                 // $columnTemplateBuilders = array();
