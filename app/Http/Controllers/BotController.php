@@ -197,7 +197,7 @@ class BotController extends Controller
                 $prizes = DB::table('prizes')
                     ->get();
                 $result_prizes = $prizes->toArray();
-                dd($result_prizes);
+                //dd($result_prizes);
 
                 // $imageUrl = 'https://example.com/path/to/your/image.png';
 
