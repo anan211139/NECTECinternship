@@ -410,23 +410,12 @@ class BotController extends Controller
                     ->select('id')
                     ->where('chapter_id', 1)
                     ->first();
-                    //->get();
-
-                //echo ($quizzesforsubj['id']);
-
-                // $query_gr = GroupRandom::all()
-                //     ->where('group_id', 1)
-                //     ->first();
-
-                // // dd($query_gr);
-                // echo ($query_gr['listexamid']);
 
                 $group_r = DB::table('groupRandoms')
                     ->where('group_id', 1)
                     ->first();
                 $group_rand = $group_r->listexamid;
 
-               // echo $group_rand;
 
                 $concat_quiz = $group_rand.','.$quizzesforsubj['id'];
 
@@ -434,7 +423,7 @@ class BotController extends Controller
                     ->where('group_id', 1)
                     ->update(['listexamid' => $concat_quiz]);
 
-                echo $new_quiz;
+                $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
                 
             }
 
