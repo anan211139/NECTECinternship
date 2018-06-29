@@ -405,12 +405,13 @@ class BotController extends Controller
             }
             else if($userMessage=="สุ่ม"){
 
-                $quizzesforsubj = Exam::all()
-                    ->where('chapter_id', 1)
-                    ->select('id')
-                    ->toArray();
+                // $quizzesforsubj = Exam::all()
+                //     ->where('chapter_id', 1)
+                //     ->select('id')
+                //     ->toArray();
+                    $quizzesforsubj = Exam::inRandomOrder()->get();
 
-                echo $quizzesforsubj['id'];
+                dd ($quizzesforsubj);
             }
 
              else{
