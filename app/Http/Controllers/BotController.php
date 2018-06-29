@@ -160,7 +160,7 @@ class BotController extends Controller
                                 ->where('line_code', $userId)
                                 ->first();
                 $point_st = $score->point;
-
+                dd($score);
                 $actionBuilder = array(
                     new MessageTemplateActionBuilder(
                         'แลกของรางวัล', // ข้อความแสดงในปุ่ม
