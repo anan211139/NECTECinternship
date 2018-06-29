@@ -406,19 +406,19 @@ class BotController extends Controller
             }
             else if($userMessage=="สุ่ม"){
 
-                // $quizzesforsubj = Exam::inRandomOrder()
-                //     ->select('id')
-                //     ->where('chapter_id', 1)
-                //     ->first();
-                //     //->get();
+                $quizzesforsubj = Exam::inRandomOrder()
+                    ->select('id')
+                    ->where('chapter_id', 1)
+                    ->first();
+                    //->get();
 
-                // echo ($quizzesforsubj['id']);
+                echo ($quizzesforsubj['id']);
 
                 // $query_gr = GroupRandom::all()
                 //     ->where('group_id', 1)
                 //     ->first();
 
-                // dd($query_gr);
+                // // dd($query_gr);
                 // echo ($query_gr['listexamid']);
 
                 $group_r = DB::table('groupRandoms')
@@ -428,13 +428,13 @@ class BotController extends Controller
 
                 echo $group_rand;
 
-                //$concat_quiz = $query_gr['listexamid'].','.$quizzesforsubj['id'];
+                $concat_quiz = $group_rand.','.$quizzesforsubj['id'];
 
                 // DB::table('groupRandoms')
                 //     ->where('group_id', 1)
                 //     ->update(['listexamid' => $concat_quiz]);
 
-                //echo $concat_quiz;
+                echo $concat_quiz;
                 
             }
 
