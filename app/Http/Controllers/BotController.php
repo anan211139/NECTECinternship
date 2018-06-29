@@ -149,16 +149,18 @@ class BotController extends Controller
             }
             else if($userMessage =="ดูคะแนน"){
 
-                $score = DB::table('students')
-                                ->where('line_code', $userId)
-                                ->first();
-                $point_st = $score->point;
-                $textReplyMessage = "น้องๆมีคะแนนทั้งหมด".$point_st."คะแนน";
+                
+                $textReplyMessage = "น้องๆมีคะแนนทั้งหมด 1 คะแนน";
                 $replyData = new TextMessageBuilder($textReplyMessage);
 
             }
             else if($userMessage =="สะสมแต้ม"){
                 //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
+                $score = DB::table('students')
+                                ->where('line_code', $userId)
+                                ->first();
+                $point_st = $score->point;
+
                 $actionBuilder = array(
                     new MessageTemplateActionBuilder(
                         'แลกของรางวัล', // ข้อความแสดงในปุ่ม
@@ -169,7 +171,7 @@ class BotController extends Controller
                 $replyData = new TemplateMessageBuilder('Button Template',
                     new ButtonTemplateBuilder(
                         'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
-                        'ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า', // กำหนดรายละเอียด
+                        'ตอนนี้น้องๆมีแต้มทั้งหมด >>'.$point_st.'แต้มจ้า', // กำหนดรายละเอียด
                         'https://github.com/anan211139/NECTECinternship/blob/master/img/score.png?raw=true/700', // กำหนด url รุปภาพ
                         $actionBuilder  // กำหนด action object
                     )                           
@@ -182,9 +184,14 @@ class BotController extends Controller
                 $columnTemplateBuilders = array();
                 foreach ($re_prizes as $prize) {
 
-                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder($prize['name'], 'ใช้ '.$prize['point'].' แต้มในการแลก', 'https://pkwang.herokuapp.com/'.$prize['local_pic'], [
-                        new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123'),
-                    ]);
+                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder(
+                        $prize['name'], 
+                        'ใช้ '.$prize['point'].' แต้มในการแลก',
+                        'https://pkwang.herokuapp.com/'.$prize['local_pic'], 
+                        [
+                            new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123')
+                        ,]
+                    );
                     array_push($columnTemplateBuilders, $columnTemplateBuilder);
                 }
 
