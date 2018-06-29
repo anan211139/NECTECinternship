@@ -407,7 +407,7 @@ class BotController extends Controller
                     ->where('chapter_id', 1)->inRandomOrder()
                     ->first()
                     ->toArray();
-                echo $quizzesforsub['id'];
+                dd( $quizzesforsub);
             }
 
              else{
