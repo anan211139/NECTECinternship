@@ -414,7 +414,7 @@ class BotController extends Controller
                     ->where('chapter_id', 1)
                     ->get();
 
-                dd ($quizzesforsubj);
+                echo ($quizzesforsubj);
             }
 
              else{
