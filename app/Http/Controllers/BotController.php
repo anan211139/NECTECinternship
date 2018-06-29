@@ -412,7 +412,7 @@ class BotController extends Controller
                     ->first();
                     //->get();
 
-                echo ($quizzesforsubj['id']);
+                //echo ($quizzesforsubj['id']);
 
                 // $query_gr = GroupRandom::all()
                 //     ->where('group_id', 1)
@@ -426,15 +426,15 @@ class BotController extends Controller
                     ->first();
                 $group_rand = $group_r->listexamid;
 
-                echo $group_rand;
+               // echo $group_rand;
 
                 $concat_quiz = $group_rand.','.$quizzesforsubj['id'];
 
-                // DB::table('groupRandoms')
-                //     ->where('group_id', 1)
-                //     ->update(['listexamid' => $concat_quiz]);
+                $new_quiz= DB::table('groupRandoms')
+                    ->where('group_id', 1)
+                    ->update(['listexamid' => $concat_quiz]);
 
-                echo $concat_quiz;
+                echo $new_quiz;
                 
             }
 
