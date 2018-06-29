@@ -420,9 +420,11 @@ class BotController extends Controller
                         ->count();
 
                     
-
+                    dd($group_r);
 
                     if($group_r == 0){  //check ไม่ซ้ำ 
+                        echo 'true';
+
                         $group_r = DB::table('groupRandoms')
                             ->where('group_id', 1)
                             ->first();
