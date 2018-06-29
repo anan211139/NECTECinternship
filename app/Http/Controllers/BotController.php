@@ -42,6 +42,7 @@ use Carbon\Carbon;
 
 use App\Prize;
 use App\Exam;
+use App\GroupRandom;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -413,9 +414,10 @@ class BotController extends Controller
 
                 echo ($quizzesforsubj['id']);
 
-                $query_gr = DB:: table('groupRandoms')
+                $query_gr = GroupRandom::all()
                     ->where('group_id', 1)
                     ->first();
+                echo ($query_gr['listexamid']);
 
                 $concat_quiz = $query_gr['listexamid'].','.$quizzesforsubj['id'];
 
