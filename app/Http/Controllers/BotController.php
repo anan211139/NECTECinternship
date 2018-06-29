@@ -411,10 +411,23 @@ class BotController extends Controller
                     ->where('chapter_id', 1)
                     ->first();
 
+                // $group_r = DB::table('groupRandoms')
+                //     ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
+                //     ->count();
+                $q=13;
+                $group_r = DB::table('groupRandoms')
+                    ->where('listexamid', 'like', '%' .$q. ',%')
+                    ->count();
+                dd($group_r);
+
+
                 $group_r = DB::table('groupRandoms')
                     ->where('group_id', 1)
                     ->first();
+
+
                 $group_rand = $group_r->listexamid;
+
 
 
                 $concat_quiz = $group_rand.','.$quizzesforsubj['id'];
