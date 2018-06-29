@@ -404,7 +404,8 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($content);
             }
             else if($userMessage=="สุ่ม"){
-                $quizzesforsubj = Exam::table('exams')
+
+                $quizzesforsubj = Exam::all()
                     ->where('chapter_id', 1)->inRandomOrder()
                     ->first()
                     ->toArray();
