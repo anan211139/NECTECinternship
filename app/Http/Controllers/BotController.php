@@ -413,9 +413,13 @@ class BotController extends Controller
                         ->where('chapter_id', 1)
                         ->first();
 
+                    $quizzesforsubj['id'] = 1 ;
+
                     $group_r = DB::table('groupRandoms')
                         ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
                         ->count();
+
+                    
 
 
                     if($group_r == 0){  //check ไม่ซ้ำ 
