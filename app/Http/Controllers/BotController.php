@@ -406,7 +406,7 @@ class BotController extends Controller
             else if($userMessage=="สุ่ม"){
 
                 $quizzesforsubj = Exam::all()
-                    ->where('chapter_id', 1)->inRandomOrder()
+                    ->where('chapter_id', 1)
                     ->first()
                     ->toArray();
                 echo $quizzesforsubj['id'];
