@@ -413,7 +413,7 @@ class BotController extends Controller
 
                 echo ($quizzesforsubj['id']);
 
-                $query_gr = DB:: table('groupsRandoms')
+                $query_gr = DB:: table('groupRandoms')
                     ->where('group_id', 1)
                     ->first();
 
