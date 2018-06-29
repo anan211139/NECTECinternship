@@ -86,14 +86,7 @@ class BotController extends Controller
 
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
-        //echo "A";
-        //echo $content;
-
-        //$count = 0;
-
-        // $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('<channel access token>');
-        // $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '<channel secret>']);
-
+        
         $events = json_decode($content, true);
         if(!is_null($events)){
             //echo $events;
@@ -155,12 +148,10 @@ class BotController extends Controller
 
             }
             else if($userMessage =="สะสมแต้ม"){
-                //$textReplyMessage = "ตอนนี้แต้มของน้องๆคือ >> 1 แต้มจ้า";
                 $score = DB::table('students')
                                 ->where('line_code', $userId)
                                 ->first();
                 $point_st = $score->point;
-                //dd($score);
                 $actionBuilder = array(
                     new MessageTemplateActionBuilder(
                         'แลกของรางวัล', // ข้อความแสดงในปุ่ม
@@ -200,7 +191,6 @@ class BotController extends Controller
           
             }
             else if($userMessage =="ดู Code"){
-                //$textReplyMessage = $userId;
                 $arr_replyData = array();
                 
                 $connectChild ='https://pkwang.herokuapp.com/connectchild/'.$userId;
@@ -312,16 +302,7 @@ class BotController extends Controller
                 
                 $replyData = new TextMessageBuilder($textReplyMessage);
             }
-            // else if($userMessage =="สร้างข้อสอบ"){
-            //     DB::table('groups')->insert([
-            //         'line_code' => $userId, 
-            //         'subject_id' => 1,
-            //         'chapter_id' => 1,
-            //         'status' => false
-            //     ]);
-            //     $textReplyMessage = "พี่หมีสร้างชุดข้อสอบให้แล้วนะจ้ะ";
-            //     $replyData = new TextMessageBuilder($textReplyMessage);
-            // }
+
             else if($userMessage =="โจทย์"){
                 $quizzesforsubj = DB::table('exams')
                                ->where('chapter_id', 1)->inRandomOrder()
@@ -344,18 +325,17 @@ class BotController extends Controller
                                ->where('line_code', $userId)
                                ->orderBy('id','DESC')
                                ->first();
-                //dd( $urgroup);
+
                 $currentlog = DB::table('logChildrenQuizzes')
                                 ->where('group_id', $urgroup->id)
-                                // ->whereNull('is_correct')
                                 ->orderBy('id','DESC')
                                 ->first();
-                //dd($currentlog);
+
                 $ans = DB::table('exams')
                         ->where('id', $currentlog->exam_id)
                         ->orderBy('id','DESC')
                         ->first();
-                //echo $ans;
+
                 $princ = DB::table('printciples')
                         ->where('id', $ans->principle_id)
                         ->first();
@@ -394,12 +374,7 @@ class BotController extends Controller
     
                     }
                 }
-                else if($ans_status ==false && $sec_chance ==false){
-
-                    // DB::table('logChildrenQuizzes')
-                    //     ->where('id', $currentlog->id)
-                    //     ->update(['second_chance' => true]);
-                            
+                else if($ans_status ==false && $sec_chance ==false){                            
 
                     if ((int)$userMessage == $ans->answer) {
                         $textReplyMessage = "Correct!";
