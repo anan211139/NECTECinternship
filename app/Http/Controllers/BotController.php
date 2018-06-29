@@ -417,6 +417,8 @@ class BotController extends Controller
                 $query_gr = GroupRandom::all()
                     ->where('group_id', 1)
                     ->first();
+
+                dd($query_gr);
                 echo ($query_gr['listexamid']);
 
                 //$concat_quiz = $query_gr['listexamid'].','.$quizzesforsubj['id'];
