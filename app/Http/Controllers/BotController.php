@@ -89,7 +89,6 @@ class BotController extends Controller
         
         $events = json_decode($content, true);
         if(!is_null($events)){
-            //echo $events;
             // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
             $replyToken = $events['events'][0]['replyToken'];
             //$replyInfo = $events['events']['type'];
@@ -229,9 +228,6 @@ class BotController extends Controller
                            
                         ]);
                     }
-
-                    
-
                 }
 
             }
@@ -406,6 +402,13 @@ class BotController extends Controller
                 
                 $replyData = new TextMessageBuilder($content);
             }
+            else if($userMessage=="สุ่ม"){
+                $quizzesforsubj = DB::table('exams')
+                    ->where('chapter_id', 1)->inRandomOrder()
+                    ->first();
+                echo $quizzesforsubj['id'];
+            }
+
              else{
                 $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
             }
