@@ -419,7 +419,7 @@ class BotController extends Controller
 
                 $concat_quiz = $query_gr['listexamid'].','.$quizzesforsubj['id'];
 
-                DB::table('groupsRandoms')
+                DB::table('groupRandoms')
                     ->where('group_id', 1)
                     ->update(['listexamid' => $concat_quiz]);
 
