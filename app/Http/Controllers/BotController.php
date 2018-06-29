@@ -413,7 +413,7 @@ class BotController extends Controller
                         ->where('chapter_id', 1)
                         ->first();
 
-                    $quizzesforsubj['id'] = 1 ;
+                    $quizzesforsubj['id'] = 31 ;
 
                     $group_r = DB::table('groupRandoms')
                         ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
