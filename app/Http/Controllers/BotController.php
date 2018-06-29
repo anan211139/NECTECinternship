@@ -407,6 +407,7 @@ class BotController extends Controller
 
                 $quizzesforsubj = Exam::all()
                     ->where('chapter_id', 1)
+                    ->inRandomOrder()
                     ->first()
                     ->toArray();
                 echo $quizzesforsubj['id'];
