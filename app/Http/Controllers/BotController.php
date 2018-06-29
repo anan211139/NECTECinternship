@@ -414,7 +414,7 @@ class BotController extends Controller
                 // $group_r = DB::table('groupRandoms')
                 //     ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
                 //     ->count();
-                $q=13;
+                $q=130;
                 $group_r = DB::table('groupRandoms')
                     ->where('listexamid', 'like', '%' .$q. ',%')
                     ->count();
