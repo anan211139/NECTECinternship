@@ -411,9 +411,8 @@ class BotController extends Controller
                     $quizzesforsubj = Exam::inRandomOrder()
                         ->select('id')
                         ->where('chapter_id', 1)
+                        ->where('level_id',1)
                         ->first();
-
-                    $quizzesforsubj['id'] = 31 ;
 
                     $group_r = DB::table('groupRandoms')
                         ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
