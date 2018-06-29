@@ -41,6 +41,7 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\ImageCarouselColumnTemplateBuild
 use Carbon\Carbon;
 
 use App\Prize;
+use App\Exam;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -403,7 +404,7 @@ class BotController extends Controller
                 $replyData = new TextMessageBuilder($content);
             }
             else if($userMessage=="สุ่ม"){
-                $quizzesforsubj = DB::table('exams')
+                $quizzesforsubj = Exam::table('exams')
                     ->where('chapter_id', 1)->inRandomOrder()
                     ->first()
                     ->toArray();
