@@ -442,7 +442,7 @@ class BotController extends Controller
                 // }
 
                 // $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
-                $data = $this ->randQuiz();
+                $data = $this ->randQuiz(5);
                 $replyData = new TextMessageBuilder($data);
                 
             }
@@ -456,7 +456,7 @@ class BotController extends Controller
     }
     
 
-    public function randQuiz(){
+    public function randQuiz($va){
         // $insert_status = false;
         // while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
         //     $quizzesforsubj = Exam::inRandomOrder()
@@ -491,10 +491,10 @@ class BotController extends Controller
             
         //     }
         // }
-        
+        $va += 2;
         // $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
         echo "perfect";
-        return "anan";
+        return $va;
     }
 
 
