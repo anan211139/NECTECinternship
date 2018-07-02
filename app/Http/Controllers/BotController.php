@@ -278,7 +278,17 @@ class BotController extends Controller
                 $num_group = Group::where('line_code', $userId)
                 ->orderBy('id','DESC')
                 ->first();
-                $num_quiz = $num_group['id'];
+                $num_quiz = $num_group['id'];// เลข Group
+
+                $count_quiz = DB::table('logChildrenQuizzes')
+                    ->where('group_id', $num_group['id'])
+                    // ->where('subject_id',1)
+                    // ->where('chapter_id',2)
+                    // ->where('status','false')
+                    // ->orderBy('id','DESC')
+                    ->count();
+
+                $num_quiz = $count_quiz;
 
 
                 //$num_quiz = $this ->randQuiz();
