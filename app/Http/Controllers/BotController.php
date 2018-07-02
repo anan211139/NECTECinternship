@@ -267,15 +267,27 @@ class BotController extends Controller
                     ]);
                     
                     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง หรม.ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                 }                
                 else{
                     $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง หรม.ครน.\n กันต่อเลยจ้า";
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                 }
                 $textReplyMessage = "อันอันขอลอง";
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+
+                $multiMessage =     new MultiMessageBuilder;
+                foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
+                }
+                $replyData = $multiMessage;
             }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
+
+                $arr_replyData = array();
+
+
                 $checkGroup_chap = DB::table('groups')
                     ->where('line_code', $userId)
                     ->where('subject_id',1)
