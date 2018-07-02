@@ -409,7 +409,7 @@ class BotController extends Controller
                 $insert_status = false;
 
 
-                for($i=0;$i<=15;$i++){
+                for($i=0;$i<15;$i++){
 
                     while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
                         $quizzesforsubj = Exam::inRandomOrder()
