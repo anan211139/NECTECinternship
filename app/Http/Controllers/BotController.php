@@ -406,46 +406,43 @@ class BotController extends Controller
             }
             else if($userMessage=="สุ่ม"){
 
-                $insert_status = false;
-                while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
-                    $quizzesforsubj = Exam::inRandomOrder()
-                        ->select('id')
-                        ->where('chapter_id', 1)
-                        ->where('level_id',1)
-                        ->first();
+                // $insert_status = false;
+                // while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
+                //     $quizzesforsubj = Exam::inRandomOrder()
+                //         ->select('id')
+                //         ->where('chapter_id', 1)
+                //         ->where('level_id',1)
+                //         ->first();
 
-                    $group_r = DB::table('groupRandoms')
-                        ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
-                        ->count();
+                //     $group_r = DB::table('groupRandoms')
+                //         ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
+                //         ->count();
 
                         
-                    // dd($group_r);
+                //     // dd($group_r);
 
-                    if($group_r == 0){  //check ไม่ซ้ำ 
-                    // echo 'true';
+                //     if($group_r == 0){  //check ไม่ซ้ำ 
+                //     // echo 'true';
 
-                        $group_r = DB::table('groupRandoms')
-                            ->where('group_id', 1)
-                            ->first();
+                //         $group_r = DB::table('groupRandoms')
+                //             ->where('group_id', 1)
+                //             ->first();
             
-                        $group_rand = $group_r->listexamid;
+                //         $group_rand = $group_r->listexamid;
         
-                        $concat_quiz = $group_rand.$quizzesforsubj['id'].',';
+                //         $concat_quiz = $group_rand.$quizzesforsubj['id'].',';
         
-                        $new_quiz= DB::table('groupRandoms')
-                            ->where('group_id', 1)
-                            ->update(['listexamid' => $concat_quiz]);
+                //         $new_quiz= DB::table('groupRandoms')
+                //             ->where('group_id', 1)
+                //             ->update(['listexamid' => $concat_quiz]);
 
-                        $insert_status = true;
+                //         $insert_status = true;
             
-                    }
-                }
+                //     }
+                // }
 
-                
-
-                
-
-                $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
+                // $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
+                $this ->randQuiz();
                 
             }
 
@@ -456,25 +453,49 @@ class BotController extends Controller
         // ส่วนของคำสั่งตอบกลับข้อความ
         $response = $bot->replyMessage($replyToken,$replyData);
     }
+    
 
-    public function generate_exam(){
-        $urgroup = DB::table('groups')
-            ->where('line_code', $userId)
-            ->orderBy('id','DESC')
-            ->first();
-        $group_id = $urgroup->id;
+    public function randQuiz(){
+        $insert_status = false;
+        while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
+            $quizzesforsubj = Exam::inRandomOrder()
+                ->select('id')
+                ->where('chapter_id', 1)
+                ->where('level_id',1)
+                ->first();
 
-        $quiz_easy = DB::table('exams')
-            ->where('level_id', '1')
-            ->count();
-        $quiz_med = DB::table('exams')
-            ->where('level_id', '2')
-            ->count();
-        $quiz_hard = DB::table('exams')
-            ->where('level_id', '3')
-            ->count();
-    }
+            $group_r = DB::table('groupRandoms')
+                ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
+                ->count();
+
+                        
+            // dd($group_r);
+
+            if($group_r == 0){  //check ไม่ซ้ำ 
+            // echo 'true';
+
+                $group_r = DB::table('groupRandoms')
+                    ->where('group_id', 1)
+                    ->first();
+            
+                $group_rand = $group_r->listexamid;
         
+                $concat_quiz = $group_rand.$quizzesforsubj['id'].',';
+        
+                $new_quiz= DB::table('groupRandoms')
+                    ->where('group_id', 1)
+                    ->update(['listexamid' => $concat_quiz]);
+
+                $insert_status = true;
+            
+            }
+        }
+        echo "perfect";
+
+        //$replyData = new TextMessageBuilder("สุ่มไปแล้ว");
+    }
+
+
     
     //use this function after the student pick their own lesson
     public function start_exam($userId, $subject_id, $chapter_id) {
