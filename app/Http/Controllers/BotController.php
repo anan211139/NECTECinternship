@@ -406,46 +406,42 @@ class BotController extends Controller
             }
             else if($userMessage=="สุ่ม"){
 
-                
+                $insert_status = false;
+                while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
+                    $quizzesforsubj = Exam::inRandomOrder()
+                        ->select('id')
+                        ->where('chapter_id', 1)
+                        ->where('level_id',1)
+                        ->first();
 
-
-                for($i=0;$i<15;$i++){
-                    $insert_status = false;
-                    while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
-                        $quizzesforsubj = Exam::inRandomOrder()
-                            ->select('id')
-                            ->where('chapter_id', 1)
-                            ->where('level_id',1)
-                            ->first();
-
-                        $group_r = DB::table('groupRandoms')
-                            ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
-                            ->count();
+                    $group_r = DB::table('groupRandoms')
+                        ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
+                        ->count();
 
                         
-                        // dd($group_r);
+                    // dd($group_r);
 
-                        if($group_r == 0){  //check ไม่ซ้ำ 
-                            // echo 'true';
+                    if($group_r == 0){  //check ไม่ซ้ำ 
+                    // echo 'true';
 
-                            $group_r = DB::table('groupRandoms')
-                                ->where('group_id', 1)
-                                ->first();
+                        $group_r = DB::table('groupRandoms')
+                            ->where('group_id', 1)
+                            ->first();
             
-                            $group_rand = $group_r->listexamid;
-            
-                            $concat_quiz = $group_rand.$quizzesforsubj['id'].',';
-            
-                            $new_quiz= DB::table('groupRandoms')
-                                ->where('group_id', 1)
-                                ->update(['listexamid' => $concat_quiz]);
+                        $group_rand = $group_r->listexamid;
+        
+                        $concat_quiz = $group_rand.$quizzesforsubj['id'].',';
+        
+                        $new_quiz= DB::table('groupRandoms')
+                            ->where('group_id', 1)
+                            ->update(['listexamid' => $concat_quiz]);
 
-                            $insert_status = true;
+                        $insert_status = true;
             
-                        }
                     }
-
                 }
+
+                
 
                 
 
