@@ -410,8 +410,8 @@ class BotController extends Controller
 
 
                 for($i=0;$i<=15;$i++){
-                    
-                    while( $insert_status === false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
+
+                    while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
                         $quizzesforsubj = Exam::inRandomOrder()
                             ->select('id')
                             ->where('chapter_id', 1)
@@ -425,7 +425,7 @@ class BotController extends Controller
                         
                         // dd($group_r);
 
-                        if($group_r ==0){  //check ไม่ซ้ำ 
+                        if($group_r == 0){  //check ไม่ซ้ำ 
                             // echo 'true';
 
                             $group_r = DB::table('groupRandoms')
