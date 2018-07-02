@@ -492,7 +492,7 @@ class BotController extends Controller
         //     }
         // }
         echo "perfect";
-        $data_r = "anan";
+        return $data_r = "anan";
         // $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
     }
 
