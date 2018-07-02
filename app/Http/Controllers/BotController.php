@@ -43,6 +43,7 @@ use Carbon\Carbon;
 use App\Prize;
 use App\Exam;
 use App\GroupRandom;
+use App\Group;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -274,10 +275,11 @@ class BotController extends Controller
                     $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                 }
 
-                $num_group = DB::table('groups')
+                $num_group = Group::all()
+                ->where('line_code', $userId)
                 ->orderBy('id','DESC')
                 ->first();
-                $num_quiz->id;
+                $num_quiz = $num_group['id'];
 
 
                 //$num_quiz = $this ->randQuiz();
