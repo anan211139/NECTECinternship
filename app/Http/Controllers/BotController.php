@@ -275,8 +275,7 @@ class BotController extends Controller
                     $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                 }
 
-                $num_group = Group::all()
-                ->where('line_code', $userId)
+                $num_group = Group::where('line_code', $userId)
                 ->orderBy('id','DESC')
                 ->first();
                 $num_quiz = $num_group['id'];
