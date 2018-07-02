@@ -292,6 +292,7 @@ class BotController extends Controller
                     ->where('is_correct',true)
                     ->count();
 
+                $num_quiz = $count_quiz_true;
 
 
                 //$num_quiz = $this ->randQuiz();
