@@ -12,10 +12,14 @@
 */
 Route::get('/', 'Pagecontroller@gethome');
 Route::get('/Laravel', 'Pagecontroller@getLaravelpage');
-Route::get('/user', 'Pagecontroller@gethome');
 Route::get('/logout', 'logoutcontroller@logout');
 Route::get('/connectchild/{id}','Pagecontroller@addchild');
 Route::get('/addchild','Pagecontroller@addchildpage');
+Route::get('/user', 'Pagecontroller@gethome');
+Route::get('/choose', 'Pagecontroller@getchoosepage'); //subset of /user
+Route::get('/step','Pagecontroller@getsteppage'); //subset of /user
+Route::get('/userpage','Pagecontroller@getuserpage'); //subset of /user
+
 
 Route::post('/loginsubmit', 'checklogin@pslogin');
 Route::post('/loginsubmitinaddchild', 'checklogin@pslogininaddchild');

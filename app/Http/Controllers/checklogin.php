@@ -15,13 +15,15 @@ class checklogin extends Controller
         $username = $request->input('uname');
         $password = $request->input('pass');
         $userresult = DB::table('managers')
-        ->select(DB::raw('id'))
+        ->select(DB::raw('id,name'))
         ->whereRaw("username = '$username' and password = '$password'")
         ->get();
         if(count($userresult) > 0){
             $result = json_decode($userresult, true);
             $id = $result[0]['id'];
+            $name = $result[0]['name'];
             Session::put('id',$id);
+            Session::put('name',$name);
             Session::put('username',$username);
             return redirect('/')->with('login',$id);
         }else{
