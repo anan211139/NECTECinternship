@@ -406,11 +406,11 @@ class BotController extends Controller
             }
             else if($userMessage=="สุ่ม"){
 
-                $insert_status = false;
+                
 
 
                 for($i=0;$i<15;$i++){
-
+                    $insert_status = false;
                     while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
                         $quizzesforsubj = Exam::inRandomOrder()
                             ->select('id')
