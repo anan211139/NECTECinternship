@@ -11,8 +11,8 @@
             </div>
         </div>
         <a href="#detail" id ="arrowBtn"class="plus"><img id ="plus" src="picture/arrow.png"></a>
-        <div id="login" style='background-image: url("picture/topbg.png"); background-size: 100% auto; background-repeat: no-repeat; 
-        background-position: bottom right; 
+        <div id="login" style='background-image: url("picture/topbg.png"); background-size: 100% auto; background-repeat: no-repeat;
+        background-position: bottom right;
         height: 100%; '>
             <div class="layout">
                 <div class="pMhee">
@@ -51,7 +51,7 @@
                 <div class="topic">
                     <p><b>ABOUT</b></p>
                 </div>
-                <p> พี่หมีติวเตอร์  โปรเเกรมจำลองบทสนทนา หรือเรียกสั้นๆว่าเเชทบอท ซึ่งอยู่บน Line 
+                <p> พี่หมีติวเตอร์  โปรเเกรมจำลองบทสนทนา หรือเรียกสั้นๆว่าเเชทบอท ซึ่งอยู่บน Line
                     ที่จะมาเป็นติวเตอร์ส่วนตัว ให้กับน้องๆ  โดยพี่หมีติวเตอร์สามารถส่งข้อความเเจ้งเตือน
                     ให้น้องๆมาทบทวนบทเรียน  ซึ่งน้องๆสามารถเลือกบทเรียนที่จะทบทวนได้  โดยจะมีการเก็บคะแนน
                     เพื่อนำมาแลกของรางวัล เพื่อเป็นเเรงจูงใจให้เด็กมีเป้าหมายในการทบทวน อีกทั้งมีการวัดระดับ

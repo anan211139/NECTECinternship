@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Student;
+use App\Manager;
+use App\Studentparent;
 use Session;
 
 class Pagecontroller extends Controller
@@ -17,8 +19,27 @@ class Pagecontroller extends Controller
     }
 
     public function gethome(){
-        $sessiondata = Session::get('username','default');
         if(session()->has('username')){
+            $id = session('id', 'default');
+            // query child
+            $querystatement = new Student;
+            $jsonresult = DB::table('students')
+            ->rightjoin('studentparents','students.line_code','=','studentparents.line_code')
+            ->leftjoin('managers','studentparents.parent_id','=','managers.id')
+            ->select(DB::raw('students.line_code'))
+            ->where('studentparents.parent_id',$id)
+            ->get();
+            // return $jsonresult;
+            $arrayresult = json_decode($jsonresult, true);
+            $countchild = count($jsonresult);
+            // return $countchild;
+            Session::put('countchild',$countchild);
+            if($countchild==1){
+                return view('userpage');
+            }
+            if($countchild>=2){
+                return view('userpage');
+            }
             return view('userpage');
         }else{
             return view('home');
@@ -27,14 +48,14 @@ class Pagecontroller extends Controller
     public function addchild($id){
         Session::put('line_code',$id);
         $getpic = new Student;
-        $getpicresult = DB::table('students')
+        $queryresult = DB::table('students')
         ->select(DB::raw('local_pic'))
         ->where('line_code' , $id)
         ->get();
-        $resultArray = json_decode($getpicresult, true);
-        $result = $resultArray[0]["local_pic"];
+        $arrayresult = json_decode($queryresult, true);
+        $result = $arrayresult[0]["local_pic"];
         Session::put('local_pic',$result);
         return redirect('/addchild')->with('code',$id);
     }
-    
+
 }

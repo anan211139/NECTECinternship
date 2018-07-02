@@ -11,7 +11,7 @@
 |
 */
 Route::get('/', 'Pagecontroller@gethome');
-Route::get('/getLaravelpage', 'Pagecontroller@getLaravelpage');
+Route::get('/Laravel', 'Pagecontroller@getLaravelpage');
 Route::get('/user', 'Pagecontroller@gethome');
 Route::get('/logout', 'logoutcontroller@logout');
 Route::get('/connectchild/{id}','Pagecontroller@addchild');

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Manager;
+use App\Student;
+use App\Studentparent;
 use Session;
+
 class checklogin extends Controller
 {
     public function pslogin(Request $request){
@@ -20,7 +23,7 @@ class checklogin extends Controller
             $id = $result[0]['id'];
             Session::put('id',$id);
             Session::put('username',$username);
-            return redirect('/')->with('login',$sessiondata);
+            return redirect('/')->with('login',$id);
         }else{
             return redirect('/')->with('login','login fail');
         }
@@ -37,7 +40,7 @@ class checklogin extends Controller
             $id = $result[0]['id'];
             Session::put('id',$id);
             Session::put('username',$username);
-            return redirect('/addchild')->with('login',$sessiondata);
+            return redirect('/addchild')->with('login',$id);
         }else{
             return redirect('/addchild')->with('login','Username and Password not match');
         }

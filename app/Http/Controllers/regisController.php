@@ -22,9 +22,9 @@ class regisController extends Controller
                 $message->password = $password;
                 $message->email = $email;
                 $message->save();
-                return redirect('/addchild')->with('regis','DONE Firstuser');
+                return redirect('/')->with('regis','DONE Firstuser');
             }else{
-                return redirect('/addchild')->with('regis','Password and Re-Password not match');
+                return redirect('/')->with('regis','Password and Re-Password not match');
             }
         }else{
             for($i = 0;$i<count($userresult);$i++){
@@ -44,11 +44,11 @@ class regisController extends Controller
                 return redirect('/')->with('regis','Password and Re-Password not match');
             }
         }
-        
+
 
 
     }
-    
+
     public function processinaddchild(Request $request){
         $name = $request->input('nameRegis');
         $username = $request->input('uname');
@@ -86,7 +86,7 @@ class regisController extends Controller
                 return redirect('/addchild')->with('regis','Password and Re-Password not match');
             }
         }
-        
+
 
 
     }
