@@ -492,7 +492,7 @@ class BotController extends Controller
         }
         echo "perfect";
 
-        //$replyData = new TextMessageBuilder("สุ่มไปแล้ว");
+        $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
     }
 
 
