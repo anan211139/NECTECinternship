@@ -274,7 +274,13 @@ class BotController extends Controller
                     $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                 }
 
-                $num_quiz = $this ->randQuiz();
+                $num_group = DB::table('groups')
+                ->orderBy('id','DESC')
+                ->first();
+                $num_quiz->id;
+
+
+                //$num_quiz = $this ->randQuiz();
 
                 $textReplyMessage = "ข้อที่ ".$num_quiz;
                 $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
