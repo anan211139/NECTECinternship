@@ -442,7 +442,8 @@ class BotController extends Controller
                 // }
 
                 // $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
-                $this ->randQuiz();
+                $this ->randQuiz($data);
+                $replyData = new TextMessageBuilder($data);
                 
             }
 
@@ -491,8 +492,8 @@ class BotController extends Controller
             }
         }
         echo "perfect";
-
-        $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
+        $data_r = "anan";
+        // $replyData = new TextMessageBuilder("สุ่มไปแล้ว");
     }
 
 
