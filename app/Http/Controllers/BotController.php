@@ -108,7 +108,7 @@ class BotController extends Controller
                         DB::table('students')
                             ->where('line_code', $event->getUserId())
                             ->update(['point' => $student->point - $selected->point]);
-                        $replyData = "แลกแล้วเรียบร้อย ตอนนี้เหลือแต้มอยู่ ". $student->point;
+                        $replyData = "แลกแล้วเรียบร้อย พี่หมีขอหักแต้มมม";
                     } else {
                         $replyData = "แต้มไม่พอนี่นา แลกไม่ได้นะเนี่ย";
                     }
