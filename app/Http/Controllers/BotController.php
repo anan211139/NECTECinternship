@@ -268,7 +268,10 @@ class BotController extends Controller
                 // $num_quiz = $count_quiz_true; //ข้อที่ถูก
 
 
-                $users = DB::table('logChildrenQuizzes')->skip(10)->take(5)->get();
+                $users = DB::table('logChildrenQuizzes')
+                    ->offset(10)
+                    ->limit(5)
+                    ->get();
                 dd($users);
 
                 // if(){
