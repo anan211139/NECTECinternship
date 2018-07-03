@@ -167,45 +167,6 @@ class BotController extends Controller
                             $actionBuilder  // กำหนด action object
                         )                           
 
-<<<<<<< HEAD
-            }
-            else if($userMessage =="สะสมแต้ม"){
-                $score = DB::table('students')
-                                ->where('line_code', $userId)
-                                ->first();
-                $point_st = $score->point;
-                $actionBuilder = array(
-                    new MessageTemplateActionBuilder(
-                        'แลกของรางวัล', // ข้อความแสดงในปุ่ม
-                        'แลกของรางวัล'
-                    )
-                );
-
-                $replyData = new TemplateMessageBuilder('Button Template',
-                    new ButtonTemplateBuilder(
-                        'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
-                        'ตอนนี้น้องๆมีแต้มทั้งหมด >>'.$point_st.'แต้มจ้า', // กำหนดรายละเอียด
-                        'https://github.com/anan211139/NECTECinternship/blob/master/img/score.png?raw=true/700', // กำหนด url รุปภาพ
-                        $actionBuilder  // กำหนด action object
-                    )                           
-
-                );
-            }
-            else if($userMessage =="แลกของรางวัล"){
-                
-                $re_prizes = Prize::all()->toArray();
-                $columnTemplateBuilders = array();
-                foreach ($re_prizes as $prize) {
-
-                    $columnTemplateBuilder = new CarouselColumnTemplateBuilder(
-                        $prize['name'], 
-                        'ใช้ '.$prize['point'].' แต้มในการแลก',
-                        'https://pkwang.herokuapp.com/'.$prize['local_pic'], 
-                        [
-                            new PostbackTemplateActionBuilder('แลก', 'action=buy&itemid=123')
-                        ,]
-=======
->>>>>>> origin/iitim
                     );
                 }
                 else if($userMessage =="แลกของรางวัล"){
@@ -323,68 +284,43 @@ class BotController extends Controller
 
                     $num_quiz = $count_quiz;//เลขข้อทั้งหมด
 
-<<<<<<< HEAD
-                $count_quiz_true = DB::table('logChildrenQuizzes')
-                    ->where('group_id', $num_group['id'])
-                    ->where('is_correct',true)
-                    ->offset(3)
-                    //->limit(2)
-                    //->get();
-                    ->count();
-
-                dd($count_quiz_true);
-=======
                     $count_quiz_true = DB::table('logChildrenQuizzes')
                         ->where('group_id', $num_group['id'])
                         ->where('is_correct',true)
+                        ->offset(3)
+                        //->limit(2)
+                        //->get();
                         ->count();
 
-                    $num_quiz = $count_quiz_true;
->>>>>>> origin/iitim
+                    dd($count_quiz_true);
 
-                //$num_quiz = $count_quiz_true; //ข้อที่ถูก
-
-<<<<<<< HEAD
-
-                // $users = DB::table('logChildrenQuizzes')
-                //     ->offset(10)
-                //     ->limit(5)
-                //     ->get();
-                // dd($users); // limit(5,10)
-
-                // if(){
-                      
-                // }
+                    //$num_quiz = $count_quiz_true; //ข้อที่ถูก
 
 
-                // $num_quiz = $this ->randQuiz();
+                    // $users = DB::table('logChildrenQuizzes')
+                    //     ->offset(10)
+                    //     ->limit(5)
+                    //     ->get();
+                    // dd($users); // limit(5,10)
 
-                // $textReplyMessage = "ข้อที่ ".$num_quiz;
-                // $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                    // if(){
+                        
+                    // }
 
-                // $multiMessage =     new MultiMessageBuilder;
-                // foreach($arr_replyData as $arr_Reply){
-                //         $multiMessage->add($arr_Reply);
-                // }
-                // $replyData = $multiMessage;
-            }
-            //------ สมการ -------
-            else if($userMessage =="สมการ"){
-=======
-                    //$num_quiz = $this ->randQuiz();
 
-                    $textReplyMessage = "ข้อที่ ".$num_quiz;
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                    // $num_quiz = $this ->randQuiz();
 
-                    $multiMessage =     new MultiMessageBuilder;
-                    foreach($arr_replyData as $arr_Reply){
-                            $multiMessage->add($arr_Reply);
-                    }
-                    $replyData = $multiMessage;
+                    // $textReplyMessage = "ข้อที่ ".$num_quiz;
+                    // $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+
+                    // $multiMessage =     new MultiMessageBuilder;
+                    // foreach($arr_replyData as $arr_Reply){
+                    //         $multiMessage->add($arr_Reply);
+                    // }
+                    // $replyData = $multiMessage;
                 }
                 //------ สมการ -------
                 else if($userMessage =="สมการ"){
->>>>>>> origin/iitim
 
                     $arr_replyData = array();
 
