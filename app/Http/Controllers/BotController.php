@@ -88,6 +88,7 @@ class BotController extends Controller
         foreach ($events as $event) {
             if (($event instanceof \LINE\LINEBot\Event\PostbackEvent)) {
                 $logger->info('Postback message has come');
+                $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($content));
 
                 list($postback_action_part, $postback_id_part) = split("&", $event->getPostbackData(), 2);
                 list($postback_title, $postback_action) = split("=", $postback_action_part);
