@@ -179,7 +179,7 @@ class BotController extends Controller
                             'ใช้ '.$prize['point'].' แต้มในการแลก',
                             'https://pkwang.herokuapp.com/'.$prize['local_pic'], 
                             [
-                                new PostbackTemplateActionBuilder('แลก', $prize['id'])
+                                new PostbackTemplateActionBuilder('แลก', http_build_query(array('action'=>'exchange', 'id'=>$prize['id'])))
                             ,]
                         );
                         array_push($columnTemplateBuilders, $columnTemplateBuilder);
