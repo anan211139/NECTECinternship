@@ -102,6 +102,7 @@ class BotController extends Controller
                     if ($student->point >= $selected->point) {
                         DB::table('exchanges')->insert([
                             'line_code' => $userId, 
+                            'send' => 1, 
                             'time' => $event->getPostbackParams()
                         ]);
                         DB::table('students')
