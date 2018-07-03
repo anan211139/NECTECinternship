@@ -105,9 +105,8 @@ class BotController extends Controller
                             'send' => 1, 
                             'time' => Carbon::now()
                         ]);
-                        $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(5));
                         DB::table('students')
-                            ->where('id', $currentlog->id)
+                            ->where('id', $event->getUserId())
                             ->update(['point' => $student->point - $selected->point]);
                         $replyData = "แลกแล้วเรียบร้อย ตอนนี้เหลือแต้มอยู่ ". $student->point;
                     } else {
