@@ -105,10 +105,9 @@ class BotController extends Controller
                         //     'send' => 1, 
                         //     'time' => Carbon::now()
                         // ]);
-                        $final_point = $student->point - $selected->point;
                         DB::table('students')
                             ->where('line_code', $event->getUserId())
-                            ->update(['point' => $final_point]);
+                            ->update(['point' => $student->point - $selected->point]);
                         $replyData = "แลกแล้วเรียบร้อย ตอนนี้เหลือแต้มอยู่ ". $student->point;
                     } else {
                         $replyData = "แต้มไม่พอนี่นา แลกไม่ได้นะเนี่ย";
