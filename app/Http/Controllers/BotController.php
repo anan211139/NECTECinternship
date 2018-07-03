@@ -174,13 +174,12 @@ class BotController extends Controller
                     $re_prizes = Prize::all()->toArray();
                     $columnTemplateBuilders = array();
                     foreach ($re_prizes as $prize) {
-
                         $columnTemplateBuilder = new CarouselColumnTemplateBuilder(
                             $prize['name'], 
                             'ใช้ '.$prize['point'].' แต้มในการแลก',
                             'https://pkwang.herokuapp.com/'.$prize['local_pic'], 
                             [
-                                new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123')
+                                new PostbackTemplateActionBuilder('แลก', $prize['id'])
                             ,]
                         );
                         array_push($columnTemplateBuilders, $columnTemplateBuilder);
