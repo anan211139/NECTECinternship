@@ -262,11 +262,11 @@ class BotController extends Controller
 
                 $count_quiz_true = DB::table('logChildrenQuizzes')
                     ->where('group_id', $num_group['id'])
-                    //->where('is_correct',true)
+                    ->where('is_correct',true)
                     ->offset(3)
-                    ->limit(2)
-                    ->get();
-                   // ->count();
+                    //->limit(2)
+                    //->get();
+                    ->count();
 
                 dd($count_quiz_true);
 
