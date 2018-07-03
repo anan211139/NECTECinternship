@@ -97,7 +97,7 @@ class BotController extends Controller
                         ->where('id', $postback_id)
                         ->first();
                     $student = DB::table('students')
-                                ->where('line_code', $userId)
+                                ->where('line_code', $event->getUserId())
                                 ->first();
                     if ($student->point >= $selected->point) {
                         DB::table('exchanges')->insert([
