@@ -100,14 +100,16 @@ class BotController extends Controller
                                 ->where('line_code', $event->getUserId())
                                 ->first();
                     if ($student->point >= $selected->point) {
-                        DB::table('exchanges')->insert([
-                            'line_code' => $event->getUserId(), 
-                            'send' => 1, 
-                            'time' => Carbon::now()
-                        ]);
+                        // DB::table('exchanges')->insert([
+                        //     'line_code' => $event->getUserId(), 
+                        //     'send' => 1, 
+                        //     'time' => Carbon::now()
+                        // ]);
+                        $fianl_point = $student->point - $selected->point;
+                        $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($fianl_point));
                         DB::table('students')
                             ->where('id', $event->getUserId())
-                            ->update(['point' => $student->point - $selected->point]);
+                            ->update(['point' => $fianl_point]);
                         $replyData = "แลกแล้วเรียบร้อย ตอนนี้เหลือแต้มอยู่ ". $student->point;
                     } else {
                         $replyData = "แต้มไม่พอนี่นา แลกไม่ได้นะเนี่ย";
