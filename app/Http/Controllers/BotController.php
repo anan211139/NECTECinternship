@@ -93,8 +93,6 @@ class BotController extends Controller
                 list($postback_title, $postback_action) = explode("=", $postback_action_part);
                 if ($postback_action == "exchange") {
                     list($postback_title, $postback_id) = explode("=", $postback_id_part);
-                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(1));
-                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(11));
                     $selected = DB::table('prizes')
                         ->where('id', $postback_id)
                         ->first();
