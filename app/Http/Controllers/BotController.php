@@ -93,7 +93,15 @@ class BotController extends Controller
                 list($postback_title, $postback_action) = explode("=", $postback_action_part);
                 if ($postback_action == "exchange") {
                     list($postback_title, $postback_id) = explode("=", $postback_id_part);
-                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($postback_id));
+                    $selected = DB::table('prizes')
+                        ->where('id', $postback_id)
+                        ->first();
+                    // DB::table('exchanges')->insert([
+                    //     'line_code' => $userId, 
+                    //     'send' => $profile['displayName'],
+                    //     'time' => $event->getPostbackParams()
+                    // ]);
+                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($event->getPostbackParams()));
                 }
                 continue;
             }
