@@ -182,7 +182,7 @@ class BotController extends Controller
                         'ใช้ '.$prize['point'].' แต้มในการแลก',
                         'https://pkwang.herokuapp.com/'.$prize['local_pic'], 
                         [
-                            new PostbackTemplateActionBuilder('แลก', 'action=exchange&itemid=123')
+                            new PostbackTemplateActionBuilder('แลก', 'action=buy&itemid=123')
                         ,]
                     );
                     array_push($columnTemplateBuilders, $columnTemplateBuilder);
@@ -292,7 +292,15 @@ class BotController extends Controller
                     ->where('is_correct',true)
                     ->count();
 
-                $num_quiz = $count_quiz_true;
+                $num_quiz = $count_quiz_true; //ข้อที่ถูก
+
+
+                $users = DB::table('logChildrenQuizzes')->skip(10)->take(5)->get();
+                dd($users);
+
+                // if(){
+                      
+                // }
 
 
                 //$num_quiz = $this ->randQuiz();
