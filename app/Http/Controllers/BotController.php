@@ -265,7 +265,8 @@ class BotController extends Controller
                     ->where('is_correct',true)
                     ->offset(3)
                     ->limit(2)
-                    ->count();
+                    ->get();
+                   // ->count();
 
                 dd($count_quiz_true);
 
