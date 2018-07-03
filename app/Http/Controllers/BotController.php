@@ -101,7 +101,7 @@ class BotController extends Controller
                                 ->first();
                     if ($student->point >= $selected->point) {
                         DB::table('exchanges')->insert([
-                            'line_code' => $userId, 
+                            'line_code' => $event->getUserId(), 
                             'send' => 1, 
                             'time' => Carbon::now()
                         ]);
