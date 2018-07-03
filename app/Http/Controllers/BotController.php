@@ -224,48 +224,48 @@ class BotController extends Controller
             }
             //------ หรม./ครน. -------
             else if($pos1 !== false||$pos2!== false){
-                $checkGroup_chap = DB::table('groups')
-                    ->where('line_code', $userId)
-                    ->where('subject_id',1)
-                    ->where('chapter_id',2)
-                    ->where('status','false')
-                    ->orderBy('id','DESC')
-                    ->count();
+                // $checkGroup_chap = DB::table('groups')
+                //     ->where('line_code', $userId)
+                //     ->where('subject_id',1)
+                //     ->where('chapter_id',2)
+                //     ->where('status','false')
+                //     ->orderBy('id','DESC')
+                //     ->count();
 
-                if($checkGroup_chap==0){
-                    DB::table('groups')->insert([
-                        'line_code' => $userId, 
-                        'subject_id' => 1,
-                        'chapter_id' => 2,
-                        'status' => false
-                    ]);
+                // if($checkGroup_chap==0){
+                //     DB::table('groups')->insert([
+                //         'line_code' => $userId, 
+                //         'subject_id' => 1,
+                //         'chapter_id' => 2,
+                //         'status' => false
+                //     ]);
                     
-                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง หรม.ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-                }                
-                else{
-                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง หรม.ครน.\n กันต่อเลยจ้า";
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-                }
+                //     $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง หรม.ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                //     $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                // }                
+                // else{
+                //     $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง หรม.ครน.\n กันต่อเลยจ้า";
+                //     $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                // }
 
-                $num_group = Group::where('line_code', $userId)
-                ->orderBy('id','DESC')
-                ->first();
+                // $num_group = Group::where('line_code', $userId)
+                // ->orderBy('id','DESC')
+                // ->first();
     
-                $num_quiz = $num_group['id'];// เลข Group
+                // $num_quiz = $num_group['id'];// เลข Group
 
-                $count_quiz = DB::table('logChildrenQuizzes')
-                    ->where('group_id', $num_group['id'])
-                    ->count();
+                // $count_quiz = DB::table('logChildrenQuizzes')
+                //     ->where('group_id', $num_group['id'])
+                //     ->count();
 
-                $num_quiz = $count_quiz;//เลขข้อทั้งหมด
+                // $num_quiz = $count_quiz;//เลขข้อทั้งหมด
 
-                $count_quiz_true = DB::table('logChildrenQuizzes')
-                    ->where('group_id', $num_group['id'])
-                    ->where('is_correct',true)
-                    ->count();
+                // $count_quiz_true = DB::table('logChildrenQuizzes')
+                //     ->where('group_id', $num_group['id'])
+                //     ->where('is_correct',true)
+                //     ->count();
 
-                $num_quiz = $count_quiz_true; //ข้อที่ถูก
+                // $num_quiz = $count_quiz_true; //ข้อที่ถูก
 
 
                 $users = DB::table('logChildrenQuizzes')->skip(10)->take(5)->get();
@@ -278,14 +278,14 @@ class BotController extends Controller
 
                 //$num_quiz = $this ->randQuiz();
 
-                $textReplyMessage = "ข้อที่ ".$num_quiz;
-                $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                // $textReplyMessage = "ข้อที่ ".$num_quiz;
+                // $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
 
-                $multiMessage =     new MultiMessageBuilder;
-                foreach($arr_replyData as $arr_Reply){
-                        $multiMessage->add($arr_Reply);
-                }
-                $replyData = $multiMessage;
+                // $multiMessage =     new MultiMessageBuilder;
+                // foreach($arr_replyData as $arr_Reply){
+                //         $multiMessage->add($arr_Reply);
+                // }
+                // $replyData = $multiMessage;
             }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
