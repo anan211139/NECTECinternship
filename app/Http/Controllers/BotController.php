@@ -107,7 +107,7 @@ class BotController extends Controller
                         // ]);
                         $final_point = $student->point - $selected->point;
                         DB::table('students')
-                            ->where('id', $event->getUserId())
+                            ->where('line_code', $event->getUserId())
                             ->update(['point' => $final_point]);
                         $replyData = "แลกแล้วเรียบร้อย ตอนนี้เหลือแต้มอยู่ ". $student->point;
                     } else {
