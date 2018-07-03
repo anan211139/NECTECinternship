@@ -85,6 +85,10 @@ class BotController extends Controller
             error_log('parseEventRequest failed. InvalidEventRequestException => '.var_export($e, true));
         }
 
+        $student = DB::table('students')
+                        ->where('line_code', $userId)
+                        ->first();
+
         foreach ($events as $event) {
             if (($event instanceof \LINE\LINEBot\Event\PostbackEvent)) {
                 $logger->info('Postback message has come');
@@ -96,11 +100,12 @@ class BotController extends Controller
                     $selected = DB::table('prizes')
                         ->where('id', $postback_id)
                         ->first();
-                    // DB::table('exchanges')->insert([
-                    //     'line_code' => $userId, 
-                    //     'send' => $profile['displayName'],
-                    //     'time' => $event->getPostbackParams()
-                    // ]);
+                    // if ($student->point >= $selected->point) {
+                    //     DB::table('exchanges')->insert([
+                    //         'line_code' => $userId, 
+                    //         'time' => $event->getPostbackParams()
+                    //     ]);
+                    // }
                     $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($event->getPostbackParams()));
                 }
                 continue;
@@ -161,10 +166,7 @@ class BotController extends Controller
 
                 }
                 else if($userMessage =="สะสมแต้ม"){
-                    $score = DB::table('students')
-                                    ->where('line_code', $userId)
-                                    ->first();
-                    $point_st = $score->point;
+                    $point_st = $student->point;
                     $actionBuilder = array(
                         new MessageTemplateActionBuilder(
                             'แลกของรางวัล', // ข้อความแสดงในปุ่ม
