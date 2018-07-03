@@ -104,7 +104,7 @@ class BotController extends Controller
                             'line_code' => $userId, 
                             'time' => $event->getPostbackParams()
                         ]);
-                        DB::table('logChildrenQuizzes')
+                        DB::table('students')
                             ->where('id', $currentlog->id)
                             ->update(['point' => $student->point - $selected->point]);
                         $replyData = "แลกแล้วเรียบร้อย ตอนนี้เหลือแต้มอยู่ ". $student->point;
