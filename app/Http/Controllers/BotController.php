@@ -97,15 +97,19 @@ class BotController extends Controller
                     $selected = DB::table('prizes')
                         ->where('id', $postback_id)
                         ->first();
+                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(2));
                     $student = DB::table('students')
                                 ->where('line_code', $event->getUserId())
                                 ->first();
+                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(3));
                     if ($student->point >= $selected->point) {
+                        $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(4));
                         DB::table('exchanges')->insert([
                             'line_code' => $userId, 
                             'send' => 1, 
                             'time' => $event->getPostbackParams()
                         ]);
+                        $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(5));
                         DB::table('students')
                             ->where('id', $currentlog->id)
                             ->update(['point' => $student->point - $selected->point]);
