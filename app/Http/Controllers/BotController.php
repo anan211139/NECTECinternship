@@ -100,7 +100,6 @@ class BotController extends Controller
                                 ->where('line_code', $event->getUserId())
                                 ->first();
                     if ($student->point >= $selected->point) {
-                        $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(4));
                         DB::table('exchanges')->insert([
                             'line_code' => $userId, 
                             'send' => 1, 
