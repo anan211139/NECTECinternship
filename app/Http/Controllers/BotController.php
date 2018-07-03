@@ -103,7 +103,7 @@ class BotController extends Controller
                         DB::table('exchanges')->insert([
                             'line_code' => $userId, 
                             'send' => 1, 
-                            'time' => $event->getPostbackParams()
+                            'time' => Carbon::now()
                         ]);
                         $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(5));
                         DB::table('students')
