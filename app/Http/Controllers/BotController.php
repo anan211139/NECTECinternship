@@ -96,7 +96,6 @@ class BotController extends Controller
                     $selected = DB::table('prizes')
                         ->where('id', $postback_id)
                         ->first();
-                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(2));
                     $student = DB::table('students')
                                 ->where('line_code', $event->getUserId())
                                 ->first();
