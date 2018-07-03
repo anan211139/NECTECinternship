@@ -1,5 +1,6 @@
 @extends('layout.app')
     @section('content')
+    <div class="main-container">
         <div id="navbar">
             <div class="navLeft">
                 <div><img class="logo" src="picture/bear_N.png"></div>
@@ -37,14 +38,17 @@
         </div>
         <div id="detail" class="detail">
             <div class="iconContainer">
-                <div style="text-align: center;">
+                <div class="iconStyle">
                     <img class="icon" src="picture/1024px-LINE_logo.svg.png">
+                    <p>สามารถเข้าถึงได้ด้วย LINE</p>
                 </div>
-                <div style="text-align: center;">
+                <div class="iconStyle">
                     <img class="icon" src="picture/noti.png">
+                    <p>จะมีการส่งข้อความแจ้งเตือนให้น้องๆทำข้อสอบ</p>
                 </div>
-                <div style="text-align: center;">
+                <div class="iconStyle">
                     <img class="icon" src="picture/chart.png">
+                    <p>สามารถติดตามผลได้จากกราฟ</p>
                 </div>
             </div>
             <div class="box">
@@ -71,5 +75,7 @@
             </div>
         </div>
         @include('inc.footer')
+      </div>
+
         @include('inc.pop-up-regis')
 @endsection

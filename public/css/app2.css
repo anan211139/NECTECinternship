@@ -1,0 +1,370 @@
+body{
+    margin: 0;
+    font-family: 'Kanit', sans-serif;
+    background-color: #f7f7f7;
+    /* background-image: url("picture/background.png"); */
+    
+}
+.logo{
+    width: 30px;
+    height: auto;
+    padding: 10px;
+}
+.top{
+    background-image: url("picture/topbg.png");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: bottom right; 
+    height: 100%;
+}
+.detail{
+    background-color: #5bbcd2;
+    width: 100%;
+    padding-top: 8%;
+    padding-bottom: 50px;
+    background-image: url("picture/duck.png"),url("picture/ball.png");
+    background-repeat: no-repeat,no-repeat;
+    background-position: 5% 90%,90%,100%; 
+    background-size: 110px 140px,155px 160px;
+}
+.topic{
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    padding-bottom: 20px;
+    width: 100%; 
+    text-align: center;
+}
+.detail2{
+    background-color: #f7f7f7;
+    /* background-image: url("picture/bg12.png");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top;  */
+    /* justify-content: center; */
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: auto;
+}
+.detail3{
+    /* background-color: #fff2b3; */
+    background-color: #f7f7f7;
+}
+/* .new{
+    background-color: #5bbcd2;
+    width: 100%;
+} */
+.intrinsic-container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+}
+.intrinsic-container-16x9{
+    padding-bottom: 56.25%;
+}
+.intrinsic-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-width: 0;
+    z-index: 5;
+}
+.layoutVideo{
+    width: 55%;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    margin: auto;
+}
+/* iframe{
+    border-width: 0;
+    margin: 30px;
+} */
+.icon{
+    width: 50%;
+    height: auto;
+}
+.iconContainer{
+    /* width: 50%;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 60px;
+    display: flex;
+    justify-content: space-around; */
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin: 40px auto;
+    width: 50%;
+    color: white;
+
+}
+.iconStyle{
+    text-align: center;
+    padding: 20px;
+}
+.box{
+    background-color: #f7f7f7;
+    width: 50%;
+    margin: auto;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: -5px 6px 0px 2px rgba(0,0,0,0.1);
+    font-family: 'Athiti', sans-serif;
+}
+.box p{
+    color: #5bbcd2;
+}
+.plus{
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 6;
+}
+.plus > img {
+    width: 50px;
+    height: auto;
+}
+.backgroundImg{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+}
+.pMhee{
+    margin-bottom: 40px;
+}
+p{
+    margin: 0;
+}
+.name{
+    font-size: 50px;
+    /* font-size: 3.8vw; */
+    white-space: nowrap;
+}
+.layout{
+    width: 50%;
+    padding-left: 8%;
+    padding-top: 5%;
+}
+.fonts{
+    color: rgb(177, 176, 176);
+    font-size: 18px;
+    /* font-size: 1.5vw; */
+}
+.fonts2{
+    color: rgb(177, 176, 176);
+    font-size: 12px;    
+    font-family: 'Roboto', sans-serif;
+}
+input{
+    border-width: 0px 0px 1px 0px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 5px;
+    font-size: 18px;
+    outline: none;
+    background-color: transparent;
+}
+.loginBtn{
+    display: block;
+    background-color: #5bbcd2;
+    border-width: 0;
+    border-radius: 100px;
+    color: white;
+    font-size: 18px;
+    padding: 10px 25px 10px 25px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    outline: none;
+    cursor: pointer;
+}
+.forgot{
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;    
+    color: #5bbcd2;  
+    font-size: 12px;
+    cursor: pointer;
+}
+span{
+    font-family: 'Roboto', sans-serif;    
+    color: rgb(177, 176, 176);
+    font-size: 12px;          
+}
+.main-container {
+    min-height: 100vh;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 50px;
+}
+/* pop-up */
+
+.inputPop{
+    width: 100%;
+    /* padding: 12px 20px; */
+    margin: 10px 0;
+    display: inline-block;
+}
+.headRegis{
+    color: black;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* Set a style for all buttons */
+.registerBtn {
+    background-color: #5bbcd2;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: white;
+    padding: 10px 25px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    outline: none;
+}
+.registerBtn:hover, .loginBtn:hover, #plus:hover {
+    opacity: 0.8;
+}
+.popBtnLayout{
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    color: #5bbcd2;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.container {
+    padding: 30px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 7; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(177, 176, 176);
+    font-size: 12px; 
+    background-color: #fefefe;
+    margin: auto auto auto auto;
+    border-width: 0;
+    border-radius: 10px;
+    width: 300px;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .iconContainer{
+        grid-template-columns: auto;
+    }
+}
+/* @media screen and (max-width: 800px) {
+   body{
+    background-size: auto 45%;
+   }
+} */
+
+/* nav */
+
+#navbar {
+    background-color: #f7f7f7;
+    box-shadow: 0px 5px 20px 2px rgba(0,0,0,0.2);
+    position: fixed;
+    top: -100px;
+    width: 100%;
+    display:flex;
+    justify-content: space-between;
+    transition: top 0.3s;
+    height: 50px;
+    align-items: center;
+    z-index: 10;
+  }
+  .navLeft{
+    display:flex;
+    align-items: center;
+  }
+  .navRight{
+    font-family: 'Roboto', sans-serif;
+    color: #5bbcd2;
+  }
+  .logoBtn{
+    padding: 10px;
+  }
+  .navLogin{
+      background-color: #5bbcd2;
+      color: white;
+      border-radius: 100px;
+  }
+  #navbar a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+  }

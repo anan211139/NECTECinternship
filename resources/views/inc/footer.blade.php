@@ -1,7 +1,5 @@
 <div class="footer">
-    <div class="footerLeft">
-        <img class="nectecLogo" src="picture/Nectec_logo.png">
-    </div>
+
     <div class="footerCenter">
         <div class="tooltip">
             <img class="imgContact" src="picture/facebook-logo-button.png">
@@ -15,5 +13,11 @@
             <img class="imgContact" src="picture/web.png">
             <span class="tooltiptext">www.พี่หมีติวเตอร์.com</span>
         </div>
+        <!-- <div class="contact">
+            <img class="imgContact" src="picture/facebook-logo-button.png">
+        </div> -->
     </div>
+    <div class="footerLeft">
+            <img class="nectecLogo" src="picture/Nectec_logo.png">
+        </div>
 </div>

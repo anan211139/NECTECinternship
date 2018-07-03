@@ -56,7 +56,7 @@ class Pagecontroller extends Controller
     }
     public function addchild($id){
         Session::put('line_code',$id);
-        $getpic = new Student;
+        // $getpic = new Student;
         $queryresult = DB::table('students')
         ->select(DB::raw('local_pic'))
         ->where('line_code' , $id)

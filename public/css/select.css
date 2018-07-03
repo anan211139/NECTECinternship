@@ -1,0 +1,40 @@
+body{
+    margin: 0;
+    font-family: 'Prompt', sans-serif;
+    text-align: center;
+    background-color: #5bbcd2;
+    padding-top: 10%;
+}
+.header{
+    font-size: 30px;
+    padding: 0 20px;
+    color: #5bbcd2;
+    background-color: white;
+    border-radius: 100px;
+}
+.layoutSelectPage{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+.layoutSelectPage > a{
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}
+.layoutSelectPage > a > img{
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+}
+.layoutSelectPage > a:hover{
+    background-color: white;
+    color: #5bbcd2;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    -ms-transform: scale(1.2); /* IE 9 */
+    -webkit-transform: scale(1.2); /* Safari 3-8 */
+    transform: scale(1.2);
+}
