@@ -111,7 +111,7 @@ class BotController extends Controller
                     } else {
                         $replyData = "แต้มไม่พอนี่นา แลกไม่ได้นะเนี่ย";
                     }
-                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($event->getPostbackParams()));
+                    $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($replyData));
                 }
                 continue;
             }
