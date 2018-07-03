@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
+use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\Event;
 use LINE\LINEBot\Event\BaseEvent;
@@ -56,71 +57,117 @@ class BotController extends Controller
 {
     public function index()
     {
+        $logger = new Logger('LineBot');
+        $logger->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
+
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
+        if (!isset($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE])) {
+            error_log("Signature header missing");
+            responseBadRequest('Signature header missing');
+        }
+        $signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
+
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
-        
-        $events = json_decode($content, true);
-        if(!is_null($events)){
-            // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-            $replyToken = $events['events'][0]['replyToken'];
-            //$replyInfo = $events['events']['type'];
-            $userId = $events['events'][0]['source']['userId'];
-            $typeMessage = $events['events'][0]['message']['type'];
-            $userMessage = $events['events'][0]['message']['text'];
 
+        try {
+            $events = $bot->parseEventRequest($content, $signature);
+        } catch(\LINE\LINEBot\Exception\InvalidSignatureException $e) {
+            error_log('parseEventRequest failed. InvalidSignatureException => '.var_export($e, true));
+        } catch(\LINE\LINEBot\Exception\UnknownEventTypeException $e) {
+            error_log('parseEventRequest failed. UnknownEventTypeException => '.var_export($e, true));
+        } catch(\LINE\LINEBot\Exception\UnknownMessageTypeException $e) {
+            error_log('parseEventRequest failed. UnknownMessageTypeException => '.var_export($e, true));
+        } catch(\LINE\LINEBot\Exception\InvalidEventRequestException $e) {
+            error_log('parseEventRequest failed. InvalidEventRequestException => '.var_export($e, true));
+        }
 
-            //------ SET VAR ---------
-            $pos1= strrpos($userMessage, 'หรม');
-            $pos2= strrpos($userMessage, 'ครน');
-            //$userMessage = strtolower($userMessage);
-
-
-            //------ RICH MENU -------
-            if($userMessage=="เปลี่ยนวิชา"){
-                $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
-                $replyData = new ImagemapMessageBuilder(
-                    $imageMapUrl,
-                    "รายการวิชา",
-                    new BaseSizeBuilder(546,1040),
-                    array(
-                    new ImagemapMessageActionBuilder(
-                        "วิชาคณิตศาสตร์",
-                        new AreaBuilder(91,199,873,155)
-                    ),
-                    new ImagemapMessageActionBuilder(
-                        "วิชาภาษาอังกฤษ",
-                        new AreaBuilder(87,350,873,155)
-                    ),
-                ));
+        foreach ($events as $event) {
+            if (($event instanceof \LINE\LINEBot\Event\PostbackEvent)) {
+                $logger->info('Postback message has come');
+                $outputText = new TextMessageBuilder($event->getPostbackData());
+                $bot->replyMessage($event->getReplyToken(), $outputText);
+                continue;
             }
-            else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
+            if (($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage)) {
+                // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
+                $replyToken = $event->getReplyToken();
+                //$replyInfo = $events['events']['type'];
+                $userId = $event->getUserId();
+                $typeMessage = $event->getMessageType();
+                $userMessage = $event->getText();
 
-                $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
-                $replyData = new ImagemapMessageBuilder(
-                    $imageMapUrl,
-                    'หัวข้อที่ต้องการเรียน',
-                    new BaseSizeBuilder(546,1040),
+                //------ SET VAR ---------
+                $pos1= strrpos($userMessage, 'หรม');
+                $pos2= strrpos($userMessage, 'ครน');
+
+                //------ RICH MENU -------
+                if($userMessage=="เปลี่ยนวิชา"){
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
+                    $replyData = new ImagemapMessageBuilder(
+                        $imageMapUrl,
+                        "รายการวิชา",
+                        new BaseSizeBuilder(546,1040),
                         array(
-                            new ImagemapMessageActionBuilder(
-                                'สมการ',
-                                new AreaBuilder(91,199,873,155)
-                            ),
-                            new ImagemapMessageActionBuilder(
-                                'หรม./ครน.',
-                                new AreaBuilder(87,350,873,155)
-                            ),
-                ));
-            }
-            else if($userMessage =="ดูคะแนน"){
+                        new ImagemapMessageActionBuilder(
+                            "วิชาคณิตศาสตร์",
+                            new AreaBuilder(91,199,873,155)
+                        ),
+                        new ImagemapMessageActionBuilder(
+                            "วิชาภาษาอังกฤษ",
+                            new AreaBuilder(87,350,873,155)
+                        ),
+                    ));
+                }
+                else if($userMessage=="เปลี่ยนหัวข้อ"||$userMessage=="วิชาคณิตศาสตร์"){
 
-                
-                $textReplyMessage = "น้องๆมีคะแนนทั้งหมด 1 คะแนน";
-                $replyData = new TextMessageBuilder($textReplyMessage);
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
+                    $replyData = new ImagemapMessageBuilder(
+                        $imageMapUrl,
+                        'หัวข้อที่ต้องการเรียน',
+                        new BaseSizeBuilder(546,1040),
+                            array(
+                                new ImagemapMessageActionBuilder(
+                                    'สมการ',
+                                    new AreaBuilder(91,199,873,155)
+                                ),
+                                new ImagemapMessageActionBuilder(
+                                    'หรม./ครน.',
+                                    new AreaBuilder(87,350,873,155)
+                                ),
+                    ));
+                }
+                else if($userMessage =="ดูคะแนน"){
 
+                    
+                    $textReplyMessage = "น้องๆมีคะแนนทั้งหมด 1 คะแนน";
+                    $replyData = new TextMessageBuilder($textReplyMessage);
+
+                }
+                else if($userMessage =="สะสมแต้ม"){
+                    $score = DB::table('students')
+                                    ->where('line_code', $userId)
+                                    ->first();
+                    $point_st = $score->point;
+                    $actionBuilder = array(
+                        new MessageTemplateActionBuilder(
+                            'แลกของรางวัล', // ข้อความแสดงในปุ่ม
+                            'แลกของรางวัล'
+                        )
+                    );
+
+                    $replyData = new TemplateMessageBuilder('Button Template',
+                        new ButtonTemplateBuilder(
+                            'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
+                            'ตอนนี้น้องๆมีแต้มทั้งหมด >>'.$point_st.'แต้มจ้า', // กำหนดรายละเอียด
+                            'https://github.com/anan211139/NECTECinternship/blob/master/img/score.png?raw=true/700', // กำหนด url รุปภาพ
+                            $actionBuilder  // กำหนด action object
+                        )                           
+
+<<<<<<< HEAD
             }
             else if($userMessage =="สะสมแต้ม"){
                 $score = DB::table('students')
@@ -157,109 +204,126 @@ class BotController extends Controller
                         [
                             new PostbackTemplateActionBuilder('แลก', 'action=buy&itemid=123')
                         ,]
+=======
+>>>>>>> origin/iitim
                     );
-                    array_push($columnTemplateBuilders, $columnTemplateBuilder);
                 }
-
-                $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
-                $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
-          
-            }
-            else if($userMessage =="ดู Code"){
-                $arr_replyData = array();
-                
-                $connectChild ='https://pkwang.herokuapp.com/connectchild/'.$userId;
-                $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='.$connectChild.'&choe=UTF-8';
-
-                $arr_replyData[] = new TextMessageBuilder($connectChild);
-
-                //------QR CODE-----------
-
-                $picFullSize = $dataQR;
-                $picThumbnail = $dataQR.'/240';
-
-                $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
-
-
-                //--------REPLY----------
-                $multiMessage = new MultiMessageBuilder;
-                foreach($arr_replyData as $arr_Reply){
-                        $multiMessage->add($arr_Reply);
-                }
-                $replyData = $multiMessage;
-
-                //--------INSERT AND CHECK DB--------
-                $checkIMG = DB::table('students')
-                    ->where('line_code', $userId)
-                    ->count();
-
-                if($checkIMG==0){
-                    $response = $bot->getProfile($userId);
-                    if ($response->isSucceeded()) {
-                        $profile = $response->getJSONDecodedBody();
-                        DB::table('students')->insert([
-                            'line_code' => $userId, 
-                            'name' => $profile['displayName'],
-                            'local_pic' => $profile['pictureUrl']
-                           
-                        ]);
-                    }
-                }
-
-            }
-            else if($userMessage =="เกี่ยวกับพี่หมี"){
-                $arr_replyData = array();
-                $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
-                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-
-                $textReplyMessage = "https://www.youtube.com/embed/Yad6t_EgwVw";
-                $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-
-                $multiMessage =     new MultiMessageBuilder;
-                foreach($arr_replyData as $arr_Reply){
-                        $multiMessage->add($arr_Reply);
-                }
-                $replyData = $multiMessage;
-
-            }
-            //------ หรม./ครน. -------
-            else if($pos1 !== false||$pos2!== false){
-                $checkGroup_chap = DB::table('groups')
-                    ->where('line_code', $userId)
-                    ->where('subject_id',1)
-                    ->where('chapter_id',2)
-                    ->where('status','false')
-                    ->orderBy('id','DESC')
-                    ->count();
-
-                if($checkGroup_chap==0){
-                    DB::table('groups')->insert([
-                        'line_code' => $userId, 
-                        'subject_id' => 1,
-                        'chapter_id' => 2,
-                        'status' => false
-                    ]);
+                else if($userMessage =="แลกของรางวัล"){
                     
-                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง หรม.ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-                }                
-                else{
-                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง หรม.ครน.\n กันต่อเลยจ้า";
-                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                    $re_prizes = Prize::all()->toArray();
+                    $columnTemplateBuilders = array();
+                    foreach ($re_prizes as $prize) {
+                        $columnTemplateBuilder = new CarouselColumnTemplateBuilder(
+                            $prize['name'], 
+                            'ใช้ '.$prize['point'].' แต้มในการแลก',
+                            'https://pkwang.herokuapp.com/'.$prize['local_pic'], 
+                            [
+                                new PostbackTemplateActionBuilder('แลก', $prize['id'])
+                            ,]
+                        );
+                        array_push($columnTemplateBuilders, $columnTemplateBuilder);
+                    }
+
+                    $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
+                    $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
+            
                 }
+                else if($userMessage =="ดู Code"){
+                    $arr_replyData = array();
+                    
+                    $connectChild ='https://pkwang.herokuapp.com/connectchild/'.$userId;
+                    $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl='.$connectChild.'&choe=UTF-8';
 
-                $num_group = Group::where('line_code', $userId)
-                ->orderBy('id','DESC')
-                ->first();
-    
-                $num_quiz = $num_group['id'];// เลข Group
+                    $arr_replyData[] = new TextMessageBuilder($connectChild);
 
-                $count_quiz = DB::table('logChildrenQuizzes')
-                    ->where('group_id', $num_group['id'])
-                    ->count();
+                    //------QR CODE-----------
 
-                $num_quiz = $count_quiz;//เลขข้อทั้งหมด
+                    $picFullSize = $dataQR;
+                    $picThumbnail = $dataQR.'/240';
 
+                    $arr_replyData[] = new ImageMessageBuilder($picFullSize,$picThumbnail);
+
+
+                    //--------REPLY----------
+                    $multiMessage = new MultiMessageBuilder;
+                    foreach($arr_replyData as $arr_Reply){
+                            $multiMessage->add($arr_Reply);
+                    }
+                    $replyData = $multiMessage;
+
+                    //--------INSERT AND CHECK DB--------
+                    $checkIMG = DB::table('students')
+                        ->where('line_code', $userId)
+                        ->count();
+
+                    if($checkIMG==0){
+                        $response = $bot->getProfile($userId);
+                        if ($response->isSucceeded()) {
+                            $profile = $response->getJSONDecodedBody();
+                            DB::table('students')->insert([
+                                'line_code' => $userId, 
+                                'name' => $profile['displayName'],
+                                'local_pic' => $profile['pictureUrl']
+                            
+                            ]);
+                        }
+                    }
+
+                }
+                else if($userMessage =="เกี่ยวกับพี่หมี"){
+                    $arr_replyData = array();
+                    $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+
+                    $textReplyMessage = "https://www.youtube.com/embed/Yad6t_EgwVw";
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+
+                    $multiMessage =     new MultiMessageBuilder;
+                    foreach($arr_replyData as $arr_Reply){
+                            $multiMessage->add($arr_Reply);
+                    }
+                    $replyData = $multiMessage;
+
+                }
+                //------ หรม./ครน. -------
+                else if($pos1 !== false||$pos2!== false){
+                    $checkGroup_chap = DB::table('groups')
+                        ->where('line_code', $userId)
+                        ->where('subject_id',1)
+                        ->where('chapter_id',2)
+                        ->where('status','false')
+                        ->orderBy('id','DESC')
+                        ->count();
+
+                    if($checkGroup_chap==0){
+                        DB::table('groups')->insert([
+                            'line_code' => $userId, 
+                            'subject_id' => 1,
+                            'chapter_id' => 2,
+                            'status' => false
+                        ]);
+                        
+                        $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง หรม.ครน.\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                    }                
+                    else{
+                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง หรม.ครน.\n กันต่อเลยจ้า";
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                    }
+
+                    $num_group = Group::where('line_code', $userId)
+                    ->orderBy('id','DESC')
+                    ->first();
+        
+                    $num_quiz = $num_group['id'];// เลข Group
+
+                    $count_quiz = DB::table('logChildrenQuizzes')
+                        ->where('group_id', $num_group['id'])
+                        ->count();
+
+                    $num_quiz = $count_quiz;//เลขข้อทั้งหมด
+
+<<<<<<< HEAD
                 $count_quiz_true = DB::table('logChildrenQuizzes')
                     ->where('group_id', $num_group['id'])
                     ->where('is_correct',true)
@@ -269,9 +333,18 @@ class BotController extends Controller
                     ->count();
 
                 dd($count_quiz_true);
+=======
+                    $count_quiz_true = DB::table('logChildrenQuizzes')
+                        ->where('group_id', $num_group['id'])
+                        ->where('is_correct',true)
+                        ->count();
+
+                    $num_quiz = $count_quiz_true;
+>>>>>>> origin/iitim
 
                 //$num_quiz = $count_quiz_true; //ข้อที่ถูก
 
+<<<<<<< HEAD
 
                 // $users = DB::table('logChildrenQuizzes')
                 //     ->offset(10)
@@ -297,151 +370,167 @@ class BotController extends Controller
             }
             //------ สมการ -------
             else if($userMessage =="สมการ"){
+=======
+                    //$num_quiz = $this ->randQuiz();
 
-                $arr_replyData = array();
+                    $textReplyMessage = "ข้อที่ ".$num_quiz;
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
 
-
-                $checkGroup_chap = DB::table('groups')
-                    ->where('line_code', $userId)
-                    ->where('subject_id',1)
-                    ->where('chapter_id',1)
-                    ->where('status','false')
-                    ->orderBy('id','DESC')
-                    ->count();
-
-                if($checkGroup_chap==0){
-                    DB::table('groups')->insert([
-                        'line_code' => $userId, 
-                        'subject_id' => 1,
-                        'chapter_id' => 1,
-                        'status' => false
-                    ]);
-                    
-                    $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                }                
-                else{
-                    $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
+                    $multiMessage =     new MultiMessageBuilder;
+                    foreach($arr_replyData as $arr_Reply){
+                            $multiMessage->add($arr_Reply);
+                    }
+                    $replyData = $multiMessage;
                 }
-                
-                $replyData = new TextMessageBuilder($textReplyMessage);
-            }
+                //------ สมการ -------
+                else if($userMessage =="สมการ"){
+>>>>>>> origin/iitim
 
-            else if($userMessage =="โจทย์"){
-                $quizzesforsubj = DB::table('exams')
-                               ->where('chapter_id', 1)->inRandomOrder()
-                               ->first();
-                $pathtoexam = 'https://pkwang.herokuapp.com/'.$quizzesforsubj->local_pic;
-                $urgroup = DB::table('groups')
-                    ->where('line_code', $userId)
-                    ->where('status',false)
-                    ->orderBy('id','DESC')
-                    ->first();
-                DB::table('logChildrenQuizzes')->insertGetId([
-                    'group_id' => $urgroup->id,
-                    'exam_id' => $quizzesforsubj->id,
-                    'time' => Carbon::now()
-                ]);
-                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-            }
-            else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
-                $urgroup = DB::table('groups')
-                               ->where('line_code', $userId)
-                               ->orderBy('id','DESC')
-                               ->first();
+                    $arr_replyData = array();
 
-                $currentlog = DB::table('logChildrenQuizzes')
-                                ->where('group_id', $urgroup->id)
+
+                    $checkGroup_chap = DB::table('groups')
+                        ->where('line_code', $userId)
+                        ->where('subject_id',1)
+                        ->where('chapter_id',1)
+                        ->where('status','false')
+                        ->orderBy('id','DESC')
+                        ->count();
+
+                    if($checkGroup_chap==0){
+                        DB::table('groups')->insert([
+                            'line_code' => $userId, 
+                            'subject_id' => 1,
+                            'chapter_id' => 1,
+                            'status' => false
+                        ]);
+                        
+                        $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                    }                
+                    else{
+                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
+                    }
+                    
+                    $replyData = new TextMessageBuilder($textReplyMessage);
+                }
+
+                else if($userMessage =="โจทย์"){
+                    $quizzesforsubj = DB::table('exams')
+                                ->where('chapter_id', 1)->inRandomOrder()
+                                ->first();
+                    $pathtoexam = 'https://pkwang.herokuapp.com/'.$quizzesforsubj->local_pic;
+                    $urgroup = DB::table('groups')
+                        ->where('line_code', $userId)
+                        ->where('status',false)
+                        ->orderBy('id','DESC')
+                        ->first();
+                    DB::table('logChildrenQuizzes')->insertGetId([
+                        'group_id' => $urgroup->id,
+                        'exam_id' => $quizzesforsubj->id,
+                        'time' => Carbon::now()
+                    ]);
+                    $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                }
+                else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
+                    $urgroup = DB::table('groups')
+                                ->where('line_code', $userId)
                                 ->orderBy('id','DESC')
                                 ->first();
 
-                $ans = DB::table('exams')
-                        ->where('id', $currentlog->exam_id)
-                        ->orderBy('id','DESC')
-                        ->first();
+                    $currentlog = DB::table('logChildrenQuizzes')
+                                    ->where('group_id', $urgroup->id)
+                                    ->orderBy('id','DESC')
+                                    ->first();
 
-                $princ = DB::table('printciples')
-                        ->where('id', $ans->principle_id)
-                        ->first();
-                $princ_pic = $princ->local_pic;
-                $ans_status = $currentlog->is_correct;
-                $sec_chance = $currentlog->second_chance;
-                
-                $arr_replyData = array();
+                    $ans = DB::table('exams')
+                            ->where('id', $currentlog->exam_id)
+                            ->orderBy('id','DESC')
+                            ->first();
 
-                if($ans_status===null){
-                    if ((int)$userMessage == $ans->answer) {
-                        $textReplyMessage = "Correct!";
-                        $ansst = true;
-    
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                        
-                        DB::table('logChildrenQuizzes')
-                            ->where('id', $currentlog->id)
-                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
-                            
-                    } else {
-                        $textReplyMessage = "Wrong!";
-                        $ansst = false;
-    
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                        
-                        DB::table('logChildrenQuizzes')
-                            ->where('id', $currentlog->id)
-                            ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                    $princ = DB::table('printciples')
+                            ->where('id', $ans->principle_id)
+                            ->first();
+                    $princ_pic = $princ->local_pic;
+                    $ans_status = $currentlog->is_correct;
+                    $sec_chance = $currentlog->second_chance;
                     
-    
-                        $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
-                        $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
-    
-                        $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
-    
+                    $arr_replyData = array();
+
+                    if($ans_status===null){
+                        if ((int)$userMessage == $ans->answer) {
+                            $textReplyMessage = "Correct!";
+                            $ansst = true;
+        
+                            $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                            
+                            DB::table('logChildrenQuizzes')
+                                ->where('id', $currentlog->id)
+                                ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                                
+                        } else {
+                            $textReplyMessage = "Wrong!";
+                            $ansst = false;
+        
+                            $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                            
+                            DB::table('logChildrenQuizzes')
+                                ->where('id', $currentlog->id)
+                                ->update(['answer' => $userMessage, 'is_correct' => $ansst]);
+                        
+        
+                            $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
+                            $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
+        
+                            $arr_replyData[] = new TextMessageBuilder("น้องๆลองตอบใหม่อีกครั้งสิจ๊ะ");
+        
+                        }
                     }
-                }
-                else if($ans_status ==false && $sec_chance ==false){                            
+                    else if($ans_status ==false && $sec_chance ==false){                            
 
-                    if ((int)$userMessage == $ans->answer) {
-                        $textReplyMessage = "Correct!";
-                        $ansst = true;
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                        
-                        
-                    } else {
-                        $textReplyMessage = "Wrong!";
-                        $ansst = false;
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-                        
+                        if ((int)$userMessage == $ans->answer) {
+                            $textReplyMessage = "Correct!";
+                            $ansst = true;
+                            $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                            
+                            
+                        } else {
+                            $textReplyMessage = "Wrong!";
+                            $ansst = false;
+                            $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                            
+                        }
+                        DB::table('logChildrenQuizzes')
+                                ->where('id', $currentlog->id)
+                                ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
                     }
-                    DB::table('logChildrenQuizzes')
-                            ->where('id', $currentlog->id)
-                            ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
+
+                    $multiMessage =     new MultiMessageBuilder;
+                    foreach($arr_replyData as $arr_Reply){
+                            $multiMessage->add($arr_Reply);
+                    }
+                    $replyData = $multiMessage;
+
+                    
+                }
+                
+                else if($userMessage=="content"){
+                    
+                    $replyData = new TextMessageBuilder($content);
+                }
+                else if($userMessage=="สุ่ม"){
+                    
+                    $data = $this ->randQuiz(5);
+                    $replyData = new TextMessageBuilder($data);
+                    
                 }
 
-                $multiMessage =     new MultiMessageBuilder;
-                foreach($arr_replyData as $arr_Reply){
-                        $multiMessage->add($arr_Reply);
+                else{
+                    $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
                 }
-                $replyData = $multiMessage;
-
-                
-            }
-            
-            else if($userMessage=="events"){
-                
-                $replyData = new TextMessageBuilder($content);
-            }
-            else if($userMessage=="สุ่ม"){
-                
-                $data = $this ->randQuiz(5);
-                $replyData = new TextMessageBuilder($data);
-                
-            }
-
-             else{
-                $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
+                // ส่วนของคำสั่งตอบกลับข้อความ
+                $response = $bot->replyMessage($replyToken,$replyData);
             }
         }
-        // ส่วนของคำสั่งตอบกลับข้อความ
-        $response = $bot->replyMessage($replyToken,$replyData);
     }
     
 
