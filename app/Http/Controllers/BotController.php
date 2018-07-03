@@ -94,30 +94,30 @@ class BotController extends Controller
                 if ($postback_action == "exchange") {
                     list($postback_title, $postback_id) = explode("=", $postback_id_part);
                     $selected = DB::table('prizes')
-                        ->where('id', $postback_id)
-                        ->first();
+                                ->where('id', $postback_id)
+                                ->first();
                     $student = DB::table('students')
                                 ->where('line_code', $event->getUserId())
                                 ->first();
                     if ($student->point >= $selected->point) {
-                        // DB::table('exchanges')->insert([
-                        //     'line_code' => $event->getUserId(), 
-                        //     'send' => 1, 
-                        //     'time' => Carbon::now()
-                        // ]);
-                        // DB::table('students')
-                        //     ->where('line_code', $event->getUserId())
-                        //     ->update(['point' => $student->point - $selected->point]);
+                        DB::table('exchanges')->insert([
+                            'line_code' => $event->getUserId(), 
+                            'send' => 1, 
+                            'time' => Carbon::now()
+                        ]);
+                        DB::table('students')
+                            ->where('line_code', $event->getUserId())
+                            ->update(['point' => $student->point - $selected->point]);
+                        $replyData = "แลกเรียบร้อย พี่หมีขอหักแต้มมม";
 
-                        $code = DB::table('codes')
-                                    ->where('prize_id', $selected->id)
-                                    ->where('send', 0)
-                                    ->first();
-                        $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder(1));
-                        DB::table('codes')
-                            ->where('id', $code->id)
-                            ->update(['send' => 1]);
-                        $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ ".$code->code;
+                        // $code = DB::table('codes')
+                        //             ->where('prize_id', $selected->id)
+                        //             ->where('send', 0)
+                        //             ->first();
+                        // DB::table('codes')
+                        //     ->where('id', $code->id)
+                        //     ->update(['send' => 1]);
+                        // $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ ".$code->code;
                     } else {
                         $replyData = "แต้มไม่พอนี่นา แลกไม่ได้นะเนี่ย";
                     }
