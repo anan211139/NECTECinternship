@@ -322,19 +322,23 @@ class BotController extends Controller
 
                     $count_quiz = DB::table('logChildrenQuizzes')
                         ->where('group_id', $num_group['id'])
+                    
                         ->count();
 
-                    $num_quiz = $count_quiz;//เลขข้อทั้งหมด
+                    $num_quiz = $count_quiz;//เลขข้อทั้งหมด ที่ตอบไปแล้ว
 
+                    //if($count_quiz==5||10 15 ) else level เดิม
                     $count_quiz_true = DB::table('logChildrenQuizzes')
                         ->where('group_id', $num_group['id'])
-                        ->where('is_correct',true)
-                        ->offset(3)
-                        //->limit(2)
+                        // ->where('is_correct',true)
+                        ->offset(0)//5,10,15
+                        ->limit(5)
                         //->get();
                         ->count();
 
-                    dd($count_quiz_true);
+                        //where is_correct -> true
+
+                    //dd($count_quiz_true);
 
                     //$num_quiz = $count_quiz_true; //ข้อที่ถูก
 
@@ -350,16 +354,16 @@ class BotController extends Controller
                     // }
 
 
-                    // $num_quiz = $this ->randQuiz();
+                    $num_quiz = $this ->randQuiz();
 
-                    // $textReplyMessage = "ข้อที่ ".$num_quiz;
-                    // $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+                    $textReplyMessage = "ข้อที่ ".$num_quiz;
+                    $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
 
-                    // $multiMessage =     new MultiMessageBuilder;
-                    // foreach($arr_replyData as $arr_Reply){
-                    //         $multiMessage->add($arr_Reply);
-                    // }
-                    // $replyData = $multiMessage;
+                    $multiMessage =     new MultiMessageBuilder;
+                    foreach($arr_replyData as $arr_Reply){
+                            $multiMessage->add($arr_Reply);
+                    }
+                    $replyData = $multiMessage;
                 }
                 //------ สมการ -------
                 else if($userMessage =="สมการ"){
