@@ -100,11 +100,6 @@ class BotController extends Controller
                                 ->where('line_code', $event->getUserId())
                                 ->first();
                     if ($student->point >= $selected->point) {
-                        DB::table('exchanges')->insert([
-                            'line_code' => $event->getUserId(), 
-                            'send' => 1, 
-                            'time' => Carbon::now()
-                        ]);
                         DB::table('students')
                             ->where('line_code', $event->getUserId())
                             ->update(['point' => $student->point - $selected->point]);
@@ -117,11 +112,19 @@ class BotController extends Controller
                             DB::table('codes')
                                 ->where('id', $avail_code->id)
                                 ->update(['status' => 1]);
-                            DB::table('exchanges')
-                                ->where('id', $selected->id)
-                                ->update(['code_id' => $avail_code->id]);
+                            DB::table('exchanges')->insert([
+                                'line_code' => $event->getUserId(), 
+                                'send' => 1,
+                                'code_id' => $avail_code->id,
+                                'time' => Carbon::now()
+                            ]);
                             $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ ".$avail_code->code;
                         } elseif ($selected->type_id === 2) {
+                            DB::table('exchanges')->insert([
+                                'line_code' => $event->getUserId(), 
+                                'send' => 1, 
+                                'time' => Carbon::now()
+                            ]);
                             $replyData = "รอส่งสินค้านะจ๊ะ";
                         }
                     } else {
