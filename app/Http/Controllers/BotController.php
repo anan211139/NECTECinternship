@@ -119,7 +119,7 @@ class BotController extends Controller
                                 ->update(['status' => 1]);
                             DB::table('exchanges')
                                 ->where('id', $selected->id)
-                                ->update(['code_id' => $avail_code->code]);
+                                ->update(['code_id' => $avail_code->id]);
                             $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ ".$avail_code->code;
                         } elseif ($selected->type_id === 2) {
                             $replyData = "รอส่งสินค้านะจ๊ะ";
