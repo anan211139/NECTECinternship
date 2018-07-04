@@ -17,7 +17,7 @@ class CreateCodesTable extends Migration
             $table->increments('id');
             $table->Integer('prize_id');
             $table->string('code'); //code to exchange
-            $table->smallInteger('send')->default(0); //0 still not send code to the student, 1 when the code id sent
+            $table->smallInteger('status')->default(0); //0 still not send code to the student, 1 when the code id sent
             $table->timestamps();
         });
     }

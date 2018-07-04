@@ -111,11 +111,11 @@ class BotController extends Controller
 
                         $avail_code = DB::table('codes')
                                     ->where('prize_id', $selected->id)
-                                    ->where('send', 0)
+                                    ->where('status', 0)
                                     ->first();
                         DB::table('codes')
                             ->where('id', $avail_code->id)
-                            ->update(['send' => 1]);
+                            ->update(['status' => 1]);
                         $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ ".$avail_code->code;
                     } else {
                         $replyData = "แต้มไม่พอนี่นา แลกไม่ได้นะเนี่ย";
