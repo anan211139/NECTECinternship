@@ -603,8 +603,22 @@ class BotController extends Controller
         $replyData = new TextMessageBuilder($textReplyMessage);
      }
 
-     public function result() {
+     public function results($groupId) {
 
+           $code = DB::table('groups')
+               ->where('id', $groupId)
+               ->first();
+
+
+           DB::table('results')->insert([
+               'line_code' => $code -> $line_code,
+               'group_id' => $groupId,
+
+               // 'level_id' => $levelId,
+               // 'total_level' => $totalLevel,
+               // 'total_level_true' => $totalLevelTrue
+
+       ]);
 
      }
 
