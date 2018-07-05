@@ -290,7 +290,7 @@ class BotController extends Controller
                 }
                 //------ หรม./ครน. -------
                 else if($pos1 !== false||$pos2!== false){
-                    $arr_replyData = start_exam($userId, 1, 2);
+                    $arr_replyData = $this->start_exam($userId, 1, 2);
                     
                     $multiMessage = new MultiMessageBuilder;
                     foreach($arr_replyData as $arr_Reply){
@@ -347,6 +347,7 @@ class BotController extends Controller
                     $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
                 }
                 else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
+                    $multiMessage = new MultiMessageBuilder;
                     $urgroup = DB::table('groups')
                                 ->where('line_code', $userId)
                                 ->orderBy('id','DESC')
@@ -377,7 +378,17 @@ class BotController extends Controller
                     if($ans_status === null){
                         if ((int)$userMessage == $ans->answer) {
                             $arr_replyData[] = new TextMessageBuilder("Correct!");
-                            $ansst = true;        
+                            $ansst = true;
+                            $multiMessage =     new MultiMessageBuilder;
+                            foreach($arr_replyData as $arr_Reply){
+                                $multiMessage->add($arr_Reply);
+                            }
+                            $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
+                            foreach($arr_replyData as $arr_Reply){
+                                $multiMessage->add($arr_Reply);
+                            }
+                            $arr_replyData = array();
+
                         } else {
                             $arr_replyData[] = new TextMessageBuilder("Wrong!");
                             $ansst = false;
@@ -387,7 +398,6 @@ class BotController extends Controller
                             $arr_replyData[] = new TextMessageBuilder("น้องลองตอบใหม่อีกครั้งสิจ๊ะ");
         
                         }
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                             
                         DB::table('logChildrenQuizzes')
                             ->where('id', $currentlog->id)
@@ -407,15 +417,17 @@ class BotController extends Controller
                         DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
                                 ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
+                        foreach($arr_replyData as $arr_Reply){
+                            $multiMessage->add($arr_Reply);
+                        }
+                        $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                     }
 
-                    $multiMessage = new MultiMessageBuilder;
+                    // $multiMessage = new MultiMessageBuilder;
                     foreach($arr_replyData as $arr_Reply){
                             $multiMessage->add($arr_Reply);
                     }
-                    $replyData = $multiMessage;
-
-                    
+                    $replyData = $multiMessage;                    
                 }
                 
                 else if($userMessage=="content"){
