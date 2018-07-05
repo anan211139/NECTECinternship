@@ -369,6 +369,9 @@ class BotController extends Controller
                     $princ = DB::table('printciples')
                             ->where('id', $ans->principle_id)
                             ->first();
+                    $count_quiz = DB::table('logChildrenQuizzes')
+                            ->where('group_id', $group_id)        
+                            ->count();
                     $princ_pic = $princ->local_pic;
                     $ans_status = $currentlog->is_correct;
                     $sec_chance = $currentlog->second_chance;
@@ -379,15 +382,22 @@ class BotController extends Controller
                         if ((int)$userMessage == $ans->answer) {
                             $arr_replyData[] = new TextMessageBuilder("Correct!");
                             $ansst = true;
-                            $multiMessage =     new MultiMessageBuilder;
-                            foreach($arr_replyData as $arr_Reply){
-                                $multiMessage->add($arr_Reply);
+                            
+                            if ($count_quiz < 20) {
+                                foreach($arr_replyData as $arr_Reply){
+                                    $multiMessage->add($arr_Reply);
+                                }
+                                $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
+                                foreach($arr_replyData as $arr_Reply){
+                                    $multiMessage->add($arr_Reply);
+                                }
+                                $arr_replyData = array();
                             }
-                            $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
-                            foreach($arr_replyData as $arr_Reply){
-                                $multiMessage->add($arr_Reply);
+                            else {
+                                ->where('id', $urgroup->id)
+                                ->update(['status' => true]);
+                                //call result function   
                             }
-                            $arr_replyData = array();
 
                         } else {
                             $arr_replyData[] = new TextMessageBuilder("Wrong!");
@@ -417,10 +427,20 @@ class BotController extends Controller
                         DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
                                 ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
-                        foreach($arr_replyData as $arr_Reply){
-                            $multiMessage->add($arr_Reply);
+                        
+                        if ($count_quiz < 20) {
+                            foreach($arr_replyData as $arr_Reply){
+                                $multiMessage->add($arr_Reply);
+                            }
+                            $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                         }
-                        $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
+                        else {
+                            DB::table('groups')
+                            ->where('id', $urgroup->id)
+                            ->update(['status' => true]);
+                            //call result function                        
+                        }
+
                     }
 
                     // $multiMessage = new MultiMessageBuilder;
@@ -589,7 +609,7 @@ class BotController extends Controller
 
         return $arr_replyData;
      }
-     
+
      public function results($groupId) {
 
            $code = DB::table('groups')
