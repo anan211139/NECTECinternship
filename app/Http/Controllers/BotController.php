@@ -609,14 +609,17 @@ class BotController extends Controller
                ->where('id', $groupId)
                ->first();
 
+           $totalTrue = DB::table('logChildrenQuizzes')
+               ->where('is_correct', true)
+               ->where('group_id', $groupId)
+               ->count();
 
            DB::table('results')->insert([
                'line_code' => $code -> $line_code,
                'group_id' => $groupId,
-
                // 'level_id' => $levelId,
                // 'total_level' => $totalLevel,
-               // 'total_level_true' => $totalLevelTrue
+               'total_level_true' => $totalTrue -> $totalLevelTrue;
 
        ]);
 
