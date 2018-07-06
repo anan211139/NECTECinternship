@@ -294,7 +294,7 @@ class BotController extends Controller
                     // $arr_replyData = $this->start_exam($userId, 1, 2);
                     $subject_id = 1;
                     $chapter_id = 2;
-                    // $arr_replyData = array();
+                    $arr_replyData = array();
                     $old_group_count = DB::table('groups')
                         ->where('line_code', $userId)
                         ->where('subject_id', $subject_id)
@@ -350,9 +350,9 @@ class BotController extends Controller
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
                         ->first();
-                        $replyData = new TextMessageBuilder($current_log->exam_id);
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
+                        // $replyData = new TextMessageBuilder($current_log->exam_id);
+                        // $bot->replyMessage($replyToken,$replyData);
+                        // continue;
                     $count_quiz = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
