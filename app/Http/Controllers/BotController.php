@@ -394,9 +394,11 @@ class BotController extends Controller
                                 $arr_replyData = array();
                             }
                             else {
+                            DB::table('groups')
                                 ->where('id', $urgroup->id)
                                 ->update(['status' => true]);
-                                //call result function   
+                                //call result function
+                                $arr_replyData[] = new TextMessageBuilder("Close group");
                             }
 
                         } else {
@@ -435,10 +437,11 @@ class BotController extends Controller
                             $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                         }
                         else {
-                            DB::table('groups')
+                        DB::table('groups')
                             ->where('id', $urgroup->id)
                             ->update(['status' => true]);
-                            //call result function                        
+                            //call result function 
+                            $arr_replyData[] = new TextMessageBuilder("Close group");                       
                         }
 
                     }
@@ -610,26 +613,26 @@ class BotController extends Controller
         return $arr_replyData;
      }
 
-     public function results($groupId) {
+    //  public function results($groupId) {
 
-           $code = DB::table('groups')
-               ->where('id', $groupId)
-               ->first();
+    //        $code = DB::table('groups')
+    //            ->where('id', $groupId)
+    //            ->first();
 
-           $totalTrue = DB::table('logChildrenQuizzes')
-               ->where('is_correct', true)
-               ->where('group_id', $groupId)
-               ->count();
+    //        $totalTrue = DB::table('logChildrenQuizzes')
+    //            ->where('is_correct', true)
+    //            ->where('group_id', $groupId)
+    //            ->count();
 
-           DB::table('results')->insert([
-               'line_code' => $code -> $line_code,
-               'group_id' => $groupId,
-               // 'level_id' => $levelId,
-               // 'total_level' => $totalLevel,
-               'total_level_true' => $totalTrue -> $totalLevelTrue;
+    //        DB::table('results')->insert([
+    //            'line_code' => $code -> $line_code,
+    //            'group_id' => $groupId,
+    //            // 'level_id' => $levelId,
+    //            // 'total_level' => $totalLevel,
+    //            'total_level_true' => $totalTrue -> $totalLevelTrue;
 
-       ]);
+    //    ]);
 
-     }
+    //  }
 
 }
