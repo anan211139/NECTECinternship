@@ -295,29 +295,24 @@ class BotController extends Controller
                     $subject_id = 1;
                     $chapter_id = 2;
                     // $arr_replyData = array();
+                    $old_group_count = DB::table('groups')
+                        ->where('line_code', $userId)
+                        ->where('subject_id', $subject_id)
+                        ->where('chapter_id', $chapter_id)
+                        ->orderBy('id','DESC')
+                        ->count();
                     $old_group = DB::table('groups')
                         ->where('line_code', $userId)
                         ->where('subject_id', $subject_id)
                         ->where('chapter_id', $chapter_id)
                         ->orderBy('id','DESC')
                         ->first();
-                    //if student has non-finish old group
-                    $replyData = new TextMessageBuilder($old_group->status);
-                    $bot->replyMessage($replyToken,$replyData);
-                    continue;
-                    if ($old_group->status === false) { //in the future, don't forget to check the expire date
-                        $replyData = new TextMessageBuilder("ด่าน 2");
-                    $bot->replyMessage($replyToken,$replyData);
-                    continue;
-                        $group_id = $old_group->id;
-                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                    }
-                    //if student has finished the old group or fist time create group
-                    else {
+                    
+                    // if student has finished the old group or fist time create group
+                    if ($old_group_count == 0 || $old_group->status === true) {
                         $replyData = new TextMessageBuilder("ด่าน 1");
-                    $bot->replyMessage($replyToken,$replyData);
-                    continue;
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
                         $group_id = DB::table('groups')->insertGetId([ //create new group
                             'line_code' => $userId, 
                             'subject_id' => $subject_id,
@@ -343,8 +338,16 @@ class BotController extends Controller
                         ]);
                         $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$chapter_id->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-                    }               
-
+                    }
+                    //if student has non-finish old group
+                    else { //in the future, don't forget to check the expire date
+                        $replyData = new TextMessageBuilder("ด่าน 2");
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
+                        $group_id = $old_group->id;
+                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                    }
                     //for now, there's a non-ans log for every case
                     $current_log = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
