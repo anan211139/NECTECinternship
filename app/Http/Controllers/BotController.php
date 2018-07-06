@@ -328,15 +328,15 @@ class BotController extends Controller
                             'listexamid' => $quizzesforsubj->id.',',
                             'listlevelid' => "2,"
                         ]);
-                        $test = DB::table('logChildrenQuizzes')->insertGetId([
+                        DB::table('logChildrenQuizzes')->insert([
                             'group_id' => $group_id, 
                             'exam_id' => $quizzesforsubj->id,
                             'time' => Carbon::now()
                         ]);
-                        $replyData = new TextMessageBuilder($test);
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
-                        $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$chapter_id->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                        $current_chapter = DB::table('chapters') //generate the first quiz
+                            ->where('id', $chapter_id)
+                            ->first();
+                        $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$current_chapter->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                     }
                     //if student has non-finish old group
