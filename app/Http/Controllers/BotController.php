@@ -347,6 +347,9 @@ class BotController extends Controller
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
                         ->first();
+                        $replyData = new TextMessageBuilder($current_log->exam_id);
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
                     $count_quiz = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
@@ -354,9 +357,6 @@ class BotController extends Controller
                     $current_quiz = DB::table('exams')
                         ->where('id', $current_log->exam_id)
                         ->first();
-                        $replyData = new TextMessageBuilder("ด่าน 2");
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
 
                     //show current quiz
                     $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
