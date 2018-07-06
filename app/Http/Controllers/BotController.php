@@ -290,6 +290,7 @@ class BotController extends Controller
                 }
                 //------ หรม./ครน. -------
                 else if($pos1 !== false||$pos2!== false){
+                    $replyData = new TextMessageBuilder("ด่าน 1");
                     // $arr_replyData = array();
                     // $arr_replyData = $this->start_exam($userId, 1, 2);
                     $subject_id = 1;
@@ -301,7 +302,7 @@ class BotController extends Controller
                         ->where('chapter_id',$chapter_id)
                         ->orderBy('id','DESC')
                         ->first();
-                    $replyData = new TextMessageBuilder("ด่าน 1");
+                    
                     continue;
                     //if student has non-finish old group
                     if ($old_group->status === false) { //in the future, don't forget to check the expire date
