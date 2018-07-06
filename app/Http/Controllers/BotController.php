@@ -347,7 +347,7 @@ class BotController extends Controller
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
                         ->first();
-                        $replyData = new TextMessageBuilder($current_log->exam_id);
+                        $replyData = new TextMessageBuilder($group_id);
                         $bot->replyMessage($replyToken,$replyData);
                         continue;
                     $count_quiz = DB::table('logChildrenQuizzes')
