@@ -302,9 +302,12 @@ class BotController extends Controller
                         ->orderBy('id','DESC')
                         ->first();
                     //if student has non-finish old group
-                    $replyData = new TextMessageBuilder($old_group->status);
-                    $bot->replyMessage($replyToken,$replyData);
-                    continue;
+                    if ($old_group->status === null) {
+                        $replyData = new TextMessageBuilder($old_group->status);
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
+                        
+                    }
                     if ($old_group->status === false) { //in the future, don't forget to check the expire date
                         $replyData = new TextMessageBuilder("ด่าน 2");
                     $bot->replyMessage($replyToken,$replyData);
