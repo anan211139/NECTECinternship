@@ -310,9 +310,6 @@ class BotController extends Controller
                     
                     // if student has finished the old group or fist time create group
                     if ($old_group_count == 0 || $old_group->status === true) {
-                        $replyData = new TextMessageBuilder("ด่าน 1");
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
                         $group_id = DB::table('groups')->insertGetId([ //create new group
                             'line_code' => $userId, 
                             'subject_id' => $subject_id,
@@ -321,6 +318,9 @@ class BotController extends Controller
                             '3day' => Carbon::now()->addDays(3),
                             '7day' => Carbon::now()->addDays(7)
                         ]);
+                        $replyData = new TextMessageBuilder($group_id);
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
                         $quizzesforsubj = Exam::inRandomOrder() //generate the first quiz
                             ->select('id')
                             ->where('chapter_id', $chapter_id)
