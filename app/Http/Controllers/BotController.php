@@ -294,7 +294,7 @@ class BotController extends Controller
                     // $arr_replyData = $this->start_exam($userId, 1, 2);
                     $subject_id = 1;
                     $chapter_id = 2;
-                    // $arr_replyData = array();
+                    $arr_replyData = array();
                     $old_group_count = DB::table('groups')
                         ->where('line_code', $userId)
                         ->where('subject_id', $subject_id)
@@ -318,9 +318,6 @@ class BotController extends Controller
                             '3day' => Carbon::now()->addDays(3),
                             '7day' => Carbon::now()->addDays(7)
                         ]);
-                        $replyData = new TextMessageBuilder($group_id);
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
                         $quizzesforsubj = Exam::inRandomOrder() //generate the first quiz
                             ->select('id')
                             ->where('chapter_id', $chapter_id)
