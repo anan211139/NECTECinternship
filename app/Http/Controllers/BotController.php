@@ -347,13 +347,13 @@ class BotController extends Controller
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
                         ->first();
-                        $replyData = new TextMessageBuilder("ด่าน 2");
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
                     $count_quiz = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
                         ->count();
+                        $replyData = new TextMessageBuilder("ด่าน 2");
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
                     $current_quiz = DB::table('exams')
                         ->where('id', $current_log->exam_id)
                         ->first();
