@@ -295,6 +295,10 @@ class BotController extends Controller
                     $subject_id = 1;
                     $chapter_id = 2;
                     $arr_replyData = array();
+
+                    $current_chapter = DB::table('chapters')
+                        ->where('id', $chapter_id)
+                        ->first();
                     $old_group_count = DB::table('groups')
                         ->where('line_code', $userId)
                         ->where('subject_id', $subject_id)
@@ -333,26 +337,20 @@ class BotController extends Controller
                             'exam_id' => $quizzesforsubj->id,
                             'time' => Carbon::now()
                         ]);
-                        $current_chapter = DB::table('chapters') //generate the first quiz
-                            ->where('id', $chapter_id)
-                            ->first();
                         $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$current_chapter->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
                     }
                     //if student has non-finish old group
                     else { //in the future, don't forget to check the expire date
                         $group_id = $old_group->id;
-                        // $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
-                        // $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อเลยจ้า";
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                     }
                     //for now, there's a non-ans log for every case
                     $current_log = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
                         ->first();
-                        // $replyData = new TextMessageBuilder($current_log->exam_id);
-                        // $bot->replyMessage($replyToken,$replyData);
-                        // continue;
                     $count_quiz = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
