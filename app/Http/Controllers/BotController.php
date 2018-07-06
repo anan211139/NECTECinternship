@@ -64,10 +64,10 @@ class BotController extends Controller
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-        // if (!isset($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE])) {
-        //     error_log("Signature header missing");
-        //     responseBadRequest('Signature header missing');
-        // }
+//         if (!isset($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE])) {
+//             error_log("Signature header missing");
+//             responseBadRequest('Signature header missing');
+//         }
         $signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
 
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
@@ -290,8 +290,69 @@ class BotController extends Controller
                 }
                 //------ หรม./ครน. -------
                 else if($pos1 !== false||$pos2!== false){
+                    // $arr_replyData = array();
+                    // $arr_replyData = $this->start_exam($userId, 1, 2);
+                    $subject_id = 1;
+                    $chapter_id = 2;
                     $arr_replyData = array();
-                    $arr_replyData = $this->start_exam($userId, 1, 2);
+        $old_group = DB::table('groups')
+            ->where('line_code', $userId)
+            ->where('subject_id', $subject_id)
+            ->where('chapter_id',$chapter_id)
+            ->orderBy('id','DESC')
+            ->first();
+        //if student has non-finish old group
+        if ($old_group->status === false) { //in the future, don't forget to check the expire date
+            $group_id = $old_group->id;
+            $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
+            $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+        }
+        //if student has finished the old group or fist time create group
+        else {
+            $group_id = DB::table('groups')->insertGetId([ //create new group
+                'line_code' => $userId, 
+                'subject_id' => $subject_id,
+                'chapter_id' => $chapter_id,
+                'status' => false,
+                '3day' => Carbon::now()->addDays(3),
+                '7day' => Carbon::now()->addDays(7)
+            ]);
+            $quizzesforsubj = Exam::inRandomOrder() //generate the first quiz
+                ->select('id')
+                ->where('chapter_id', $chapter_id)
+                ->where('level_id', $level_id)
+                ->first();
+            DB::table('groupRandoms')->insert([
+                'group_id' => $group_id, 
+                'listexamid' => $quizzesforsubj['id'].',',
+                'listlevelid' => "2,"
+            ]);
+            DB::table('logChildrenQuizzes')->insert([
+                'group_id' => $group_id, 
+                'exam_id' => $quizzesforsubj['id'],
+                'time' => Carbon::now()
+            ]);
+            $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$chapter_id->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+            $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+        }
+
+        //for now, there's a non-ans log for every case
+        $current_log = DB::table('logChildrenQuizzes')
+            ->where('group_id', $group_id)
+            ->orderBy('id','DESC')
+            ->first();
+        $count_quiz = DB::table('logChildrenQuizzes')
+            ->where('group_id', $group_id)
+            ->orderBy('id','DESC')
+            ->count();
+        $current_quiz = DB::table('exams')
+            ->where('id', $current_log->exam_id)
+            ->first();
+
+        //show current quiz
+        $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
+        $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+        //end of func
                     
                     $multiMessage = new MultiMessageBuilder;
                     foreach($arr_replyData as $arr_Reply){
