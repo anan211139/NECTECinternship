@@ -64,10 +64,10 @@ class BotController extends Controller
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-        // if (!isset($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE])) {
-        //     error_log("Signature header missing");
-        //     responseBadRequest('Signature header missing');
-        // }
+        if (!isset($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE])) {
+            error_log("Signature header missing");
+            responseBadRequest('Signature header missing');
+        }
         $signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
 
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
