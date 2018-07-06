@@ -303,7 +303,7 @@ class BotController extends Controller
                         ->first();
                     //if student has non-finish old group
                     if ($old_group->status === null) {
-                        $replyData = new TextMessageBuilder($old_group->status);
+                        $replyData = new TextMessageBuilder("เจ๊ง");
                         $bot->replyMessage($replyToken,$replyData);
                         continue;
                         
