@@ -294,7 +294,7 @@ class BotController extends Controller
                     // $arr_replyData = $this->start_exam($userId, 1, 2);
                     $subject_id = 1;
                     $chapter_id = 2;
-                    $arr_replyData = array();
+                    // $arr_replyData = array();
                     $old_group = DB::table('groups')
                         ->where('line_code', $userId)
                         ->where('subject_id', $subject_id)
@@ -302,6 +302,9 @@ class BotController extends Controller
                         ->orderBy('id','DESC')
                         ->first();
                     //if student has non-finish old group
+                    $replyData = new TextMessageBuilder($old_group->status);
+                    $bot->replyMessage($replyToken,$replyData);
+                    continue;
                     if ($old_group->status === false) { //in the future, don't forget to check the expire date
                         $replyData = new TextMessageBuilder("ด่าน 2");
                     $bot->replyMessage($replyToken,$replyData);
