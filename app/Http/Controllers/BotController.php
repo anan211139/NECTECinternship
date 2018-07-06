@@ -324,17 +324,14 @@ class BotController extends Controller
                             ->where('level_id', 2)
                             ->inRandomOrder()
                             ->first();
-                            $replyData = new TextMessageBuilder($quizzesforsubj->id);
-                            $bot->replyMessage($replyToken,$replyData);
-                            continue;
                         $test = DB::table('groupRandoms')->insertGetId([
                             'group_id' => $group_id, 
-                            'listexamid' => $quizzesforsubj['id'].',',
+                            'listexamid' => $quizzesforsubj->id.',',
                             'listlevelid' => "2,"
                         ]);
                         DB::table('logChildrenQuizzes')->insert([
                             'group_id' => $group_id, 
-                            'exam_id' => $quizzesforsubj['id'],
+                            'exam_id' => $quizzesforsubj->id,
                             'time' => Carbon::now()
                         ]);
                         $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$chapter_id->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
