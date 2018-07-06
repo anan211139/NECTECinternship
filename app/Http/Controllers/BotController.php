@@ -329,6 +329,10 @@ class BotController extends Controller
                             'listexamid' => $quizzesforsubj->id.',',
                             'listlevelid' => "2,"
                         ]);
+
+                        $replyData = new TextMessageBuilder($test);
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
                         DB::table('logChildrenQuizzes')->insert([
                             'group_id' => $group_id, 
                             'exam_id' => $quizzesforsubj->id,
