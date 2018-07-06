@@ -323,14 +323,14 @@ class BotController extends Controller
                             ->where('chapter_id', $chapter_id)
                             ->where('level_id', $level_id)
                             ->first();
+                            $replyData = new TextMessageBuilder($quizzesforsubj['id']);
+                            $bot->replyMessage($replyToken,$replyData);
+                            continue;
                         $test = DB::table('groupRandoms')->insertGetId([
                             'group_id' => $group_id, 
                             'listexamid' => $quizzesforsubj['id'].',',
                             'listlevelid' => "2,"
                         ]);
-                        $replyData = new TextMessageBuilder($test);
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
                         DB::table('logChildrenQuizzes')->insert([
                             'group_id' => $group_id, 
                             'exam_id' => $quizzesforsubj['id'],
