@@ -305,6 +305,7 @@ class BotController extends Controller
                     if ($old_group->status === false) { //in the future, don't forget to check the expire date
                         $replyData = new TextMessageBuilder("ด่าน 2");
                     $bot->replyMessage($replyToken,$replyData);
+                    continue;
                         $group_id = $old_group->id;
                         $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
@@ -313,6 +314,7 @@ class BotController extends Controller
                     else {
                         $replyData = new TextMessageBuilder("ด่าน 1");
                     $bot->replyMessage($replyToken,$replyData);
+                    continue;
                         $group_id = DB::table('groups')->insertGetId([ //create new group
                             'line_code' => $userId, 
                             'subject_id' => $subject_id,
