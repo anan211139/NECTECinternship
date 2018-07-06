@@ -298,11 +298,11 @@ class BotController extends Controller
                     $old_group = DB::table('groups')
                         ->where('line_code', $userId)
                         ->where('subject_id', $subject_id)
-                        ->where('chapter_id',$chapter_id)
+                        ->where('chapter_id', $chapter_id)
                         ->orderBy('id','DESC')
                         ->first();
                     //if student has non-finish old group
-                    $replyData = new TextMessageBuilder("เจ๊ง");
+                    $replyData = new TextMessageBuilder($old_group->status);
                     $bot->replyMessage($replyToken,$replyData);
                     continue;
                     if ($old_group->status === false) { //in the future, don't forget to check the expire date
