@@ -324,7 +324,7 @@ class BotController extends Controller
                             ->where('level_id', 2)
                             ->inRandomOrder()
                             ->first();
-                            $replyData = new TextMessageBuilder($quizzesforsubj['id']);
+                            $replyData = new TextMessageBuilder($quizzesforsubj->id);
                             $bot->replyMessage($replyToken,$replyData);
                             continue;
                         $test = DB::table('groupRandoms')->insertGetId([
