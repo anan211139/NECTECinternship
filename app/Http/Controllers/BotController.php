@@ -294,7 +294,7 @@ class BotController extends Controller
                     // $arr_replyData = $this->start_exam($userId, 1, 2);
                     $subject_id = 1;
                     $chapter_id = 2;
-                    $arr_replyData = array();
+                    // $arr_replyData = array();
                     $old_group_count = DB::table('groups')
                         ->where('line_code', $userId)
                         ->where('subject_id', $subject_id)
@@ -339,10 +339,13 @@ class BotController extends Controller
                     //if student has non-finish old group
                     else { //in the future, don't forget to check the expire date
                         $group_id = $old_group->id;
-                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+                        // $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
+                        // $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                     }
                     //for now, there's a non-ans log for every case
+                    $replyData = new TextMessageBuilder("ด่าน 2");
+                    $bot->replyMessage($replyToken,$replyData);
+                    continue;
                     $current_log = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
