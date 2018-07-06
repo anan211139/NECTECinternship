@@ -338,9 +338,6 @@ class BotController extends Controller
                     }
                     //if student has non-finish old group
                     else { //in the future, don't forget to check the expire date
-                        $replyData = new TextMessageBuilder("ด่าน 2");
-                        $bot->replyMessage($replyToken,$replyData);
-                        continue;
                         $group_id = $old_group->id;
                         $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
