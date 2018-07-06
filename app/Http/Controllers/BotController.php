@@ -322,7 +322,7 @@ class BotController extends Controller
                             // ->select('id')
                             // ->where('chapter_id', $chapter_id)
                             ->where('level_id', $level_id)
-                            ->get()
+                            // ->get()
                             ->random(1);
                             $replyData = new TextMessageBuilder($quizzesforsubj->id);
                             $bot->replyMessage($replyToken,$replyData);
