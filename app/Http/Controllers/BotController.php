@@ -318,12 +318,13 @@ class BotController extends Controller
                             '3day' => Carbon::now()->addDays(3),
                             '7day' => Carbon::now()->addDays(7)
                         ]);
-                        $quizzesforsubj = Exam::inRandomOrder() //generate the first quiz
-                            ->select('id')
-                            ->where('chapter_id', $chapter_id)
+                        $quizzesforsubj = Exam::where('chapter_id', $chapter_id) //generate the first quiz
+                            // ->select('id')
+                            // ->where('chapter_id', $chapter_id)
                             ->where('level_id', $level_id)
-                            ->first();
-                            $replyData = new TextMessageBuilder($quizzesforsubj['id']);
+                            // ->first();
+                            ->random(1);
+                            $replyData = new TextMessageBuilder($quizzesforsubj->id);
                             $bot->replyMessage($replyToken,$replyData);
                             continue;
                         $test = DB::table('groupRandoms')->insertGetId([
