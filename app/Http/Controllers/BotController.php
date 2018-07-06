@@ -343,9 +343,6 @@ class BotController extends Controller
                         // $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                     }
                     //for now, there's a non-ans log for every case
-                    $replyData = new TextMessageBuilder("ด่าน 2");
-                    $bot->replyMessage($replyToken,$replyData);
-                    continue;
                     $current_log = DB::table('logChildrenQuizzes')
                         ->where('group_id', $group_id)
                         ->orderBy('id','DESC')
@@ -358,6 +355,9 @@ class BotController extends Controller
                         ->where('id', $current_log->exam_id)
                         ->first();
 
+                        $replyData = new TextMessageBuilder("ด่าน 2");
+                        $bot->replyMessage($replyToken,$replyData);
+                        continue;
                     //show current quiz
                     $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
                     $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
