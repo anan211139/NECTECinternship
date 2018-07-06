@@ -321,7 +321,7 @@ class BotController extends Controller
                         $quizzesforsubj = DB::table('exams') //generate the first quiz
                             // ->select('id')
                             ->where('chapter_id', $chapter_id)
-                            ->where('level_id', $level_id)
+                            ->where('level_id', 2)
                             ->inRandomOrder()
                             ->first();
                             $replyData = new TextMessageBuilder($quizzesforsubj['id']);
