@@ -290,80 +290,7 @@ class BotController extends Controller
                 }
                 //------ หรม./ครน. -------
                 else if($pos1 !== false||$pos2!== false){
-                    // $arr_replyData = array();
-                    // $arr_replyData = $this->start_exam($userId, 1, 2);
-                    $subject_id = 1;
-                    $chapter_id = 2;
-                    $arr_replyData = array();
-
-                    $current_chapter = DB::table('chapters')
-                        ->where('id', $chapter_id)
-                        ->first();
-                    $old_group_count = DB::table('groups')
-                        ->where('line_code', $userId)
-                        ->where('subject_id', $subject_id)
-                        ->where('chapter_id', $chapter_id)
-                        ->orderBy('id','DESC')
-                        ->count();
-                    $old_group = DB::table('groups')
-                        ->where('line_code', $userId)
-                        ->where('subject_id', $subject_id)
-                        ->where('chapter_id', $chapter_id)
-                        ->orderBy('id','DESC')
-                        ->first();
-                    
-                    // if student has finished the old group or fist time create group
-                    if ($old_group_count == 0 || $old_group->status === true) {
-                        $group_id = DB::table('groups')->insertGetId([ //create new group
-                            'line_code' => $userId, 
-                            'subject_id' => $subject_id,
-                            'chapter_id' => $chapter_id,
-                            'status' => false,
-                            '3day' => Carbon::now()->addDays(3),
-                            '7day' => Carbon::now()->addDays(7)
-                        ]);
-                        $quizzesforsubj = DB::table('exams') //generate the first quiz
-                            ->where('chapter_id', $chapter_id)
-                            ->where('level_id', 2)
-                            ->inRandomOrder()
-                            ->first();
-                        DB::table('groupRandoms')->insert([
-                            'group_id' => $group_id, 
-                            'listexamid' => $quizzesforsubj->id.',',
-                            'listlevelid' => "2,"
-                        ]);
-                        DB::table('logChildrenQuizzes')->insert([
-                            'group_id' => $group_id, 
-                            'exam_id' => $quizzesforsubj->id,
-                            'time' => Carbon::now()
-                        ]);
-                        $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$current_chapter->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
-                    }
-                    //if student has non-finish old group
-                    else { //in the future, don't forget to check the expire date
-                        $group_id = $old_group->id;
-                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อเลยจ้า";
-                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-                    }
-                    //for now, there's a non-ans log for every case
-                    $current_log = DB::table('logChildrenQuizzes')
-                        ->where('group_id', $group_id)
-                        ->orderBy('id','DESC')
-                        ->first();
-                    $count_quiz = DB::table('logChildrenQuizzes')
-                        ->where('group_id', $group_id)
-                        ->orderBy('id','DESC')
-                        ->count();
-                    $current_quiz = DB::table('exams')
-                        ->where('id', $current_log->exam_id)
-                        ->first();
-
-                    //show current quiz
-                    $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
-                    $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-                    //end of func
-                    
+                    $arr_replyData = $this->start_exam($userId, 1, 2);
                     $multiMessage = new MultiMessageBuilder;
                     foreach($arr_replyData as $arr_Reply){
                             $multiMessage->add($arr_Reply);
@@ -371,36 +298,14 @@ class BotController extends Controller
                     $replyData = $multiMessage;
                 }
                 //------ สมการ -------
-                else if($userMessage =="สมการ"){
-
-                    $arr_replyData = array();
-
-
-                    $checkGroup_chap = DB::table('groups')
-                        ->where('line_code', $userId)
-                        ->where('subject_id',1)
-                        ->where('chapter_id',1)
-                        ->where('status','false')
-                        ->orderBy('id','DESC')
-                        ->count();
-
-                    if($checkGroup_chap==0){
-                        DB::table('groups')->insert([
-                            'line_code' => $userId,
-                            'subject_id' => 1,
-                            'chapter_id' => 1,
-                            'status' => false
-                        ]);
-
-                        $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่องสมการ\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+                else if($userMessage =="สมการ") {
+                    $arr_replyData = $this->start_exam($userId, 1, 1);
+                    $multiMessage = new MultiMessageBuilder;
+                    foreach($arr_replyData as $arr_Reply){
+                        $multiMessage->add($arr_Reply);
                     }
-                    else{
-                        $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่องสมการ\n กันต่อเลยจ้า";
-                    }
-
-                    $replyData = new TextMessageBuilder($textReplyMessage);
+                    $replyData = $multiMessage;
                 }
-
                 else if($userMessage =="โจทย์"){
                     $quizzesforsubj = DB::table('exams')
                                 ->where('chapter_id', 1)->inRandomOrder()
@@ -424,14 +329,13 @@ class BotController extends Controller
                                 ->where('line_code', $userId)
                                 ->orderBy('id','DESC')
                                 ->first();
+                    $currentlog = DB::table('logChildrenQuizzes')
+                        ->where('group_id', $urgroup->id)
+                        ->orderBy('id','DESC')
+                        ->first();
                     DB::table('groups')
                         ->where('id', $currentlog->id)
                         ->update(['3day' => Carbon::now()->addDays(3)]);
-                            
-                    $currentlog = DB::table('logChildrenQuizzes')
-                                    ->where('group_id', $urgroup->id)
-                                    ->orderBy('id','DESC')
-                                    ->first();
 
                     $ans = DB::table('exams')
                             ->where('id', $currentlog->exam_id)
@@ -442,7 +346,7 @@ class BotController extends Controller
                             ->where('id', $ans->principle_id)
                             ->first();
                     $count_quiz = DB::table('logChildrenQuizzes')
-                            ->where('group_id', $group_id)        
+                            ->where('group_id', $urgroup->id)
                             ->count();
                     $princ_pic = $princ->local_pic;
                     $ans_status = $currentlog->is_correct;
@@ -574,7 +478,7 @@ class BotController extends Controller
 
         //declare the next quiz
         $arr_replyData = array();
-        $textReplyMessage = "ข้อที่ ".$count_quiz+1;
+        $textReplyMessage = "ข้อที่ ".($count_quiz+1);
         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
 
         //random the new quiz and update log, group random
@@ -624,20 +528,24 @@ class BotController extends Controller
     //use this function after the student pick their own lesson
     public function start_exam($userId, $subject_id, $chapter_id) {
         $arr_replyData = array();
+        $current_chapter = DB::table('chapters')
+            ->where('id', $chapter_id)
+            ->first();
+        $old_group_count = DB::table('groups')
+            ->where('line_code', $userId)
+            ->where('subject_id', $subject_id)
+            ->where('chapter_id', $chapter_id)
+            ->orderBy('id','DESC')
+            ->count();
         $old_group = DB::table('groups')
             ->where('line_code', $userId)
             ->where('subject_id', $subject_id)
-            ->where('chapter_id',$chapter_id)
+            ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->first();
-        //if student has non-finish old group
-        if ($old_group->status === false) { //in the future, don't forget to check the expire date
-            $group_id = $old_group->id;
-            $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$chapter_id->name."\n กันต่อเลยจ้า";
-            $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-        }
-        //if student has finished the old group or fist time create group
-        else {
+        
+        // if student has finished the old group or fist time create group
+        if ($old_group_count == 0 || $old_group->status === true) {
             $group_id = DB::table('groups')->insertGetId([ //create new group
                 'line_code' => $userId, 
                 'subject_id' => $subject_id,
@@ -646,25 +554,30 @@ class BotController extends Controller
                 '3day' => Carbon::now()->addDays(3),
                 '7day' => Carbon::now()->addDays(7)
             ]);
-            $quizzesforsubj = Exam::inRandomOrder() //generate the first quiz
-                ->select('id')
+            $quizzesforsubj = DB::table('exams') //generate the first quiz
                 ->where('chapter_id', $chapter_id)
-                ->where('level_id', $level_id)
+                ->where('level_id', 2)
+                ->inRandomOrder()
                 ->first();
             DB::table('groupRandoms')->insert([
                 'group_id' => $group_id, 
-                'listexamid' => $quizzesforsubj['id'].',',
+                'listexamid' => $quizzesforsubj->id.',',
                 'listlevelid' => "2,"
             ]);
             DB::table('logChildrenQuizzes')->insert([
                 'group_id' => $group_id, 
-                'exam_id' => $quizzesforsubj['id'],
+                'exam_id' => $quizzesforsubj->id,
                 'time' => Carbon::now()
             ]);
-            $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$chapter_id->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
+            $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$current_chapter->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
             $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
         }
-
+        //if student has non-finish old group
+        else { //in the future, don't forget to check the expire date
+            $group_id = $old_group->id;
+            $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อเลยจ้า";
+            $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+        }
         //for now, there's a non-ans log for every case
         $current_log = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
@@ -681,6 +594,7 @@ class BotController extends Controller
         //show current quiz
         $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
         $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
+                    
 
         return $arr_replyData;
      }
