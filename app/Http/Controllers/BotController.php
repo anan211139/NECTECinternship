@@ -290,6 +290,7 @@ class BotController extends Controller
                 }
                 //------ หรม./ครน. -------
                 else if($pos1 !== false||$pos2!== false){
+                    $arr_replyData = array();
                     $arr_replyData = $this->start_exam($userId, 1, 2);
                     
                     $multiMessage = new MultiMessageBuilder;
