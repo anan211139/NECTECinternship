@@ -433,7 +433,7 @@ class BotController extends Controller
 
                     $replyData = new TextMessageBuilder($content);
                 }
-                else if($userMessage=="สุ่ม"){
+                else if($userMessage=="สุ่ม") {
 
                     $data = $this ->randQuiz(5);
                     $replyData = new TextMessageBuilder($data);
@@ -452,7 +452,8 @@ class BotController extends Controller
 
     public function randQuiz($chapter_id, $level_id, $group_id){
         //check changing level
-        $num_group = Group::where('line_code', $userId)
+        $num_group = DB::table('groups')
+            ->where('id', $group_id)
             ->orderBy('id','DESC')
             ->first();
         $count_quiz = DB::table('logChildrenQuizzes')
@@ -484,15 +485,15 @@ class BotController extends Controller
         //random the new quiz and update log, group random
         $insert_status = false;
         while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
-            $quizzesforsubj = Exam::inRandomOrder()
-                ->select('id')
+            $quizzesforsubj = DB::table('exams')
                 ->where('chapter_id', $chapter_id)
                 ->where('level_id', $level_id)
+                ->inRandomOrder()
                 ->first();
 
             $group_r = DB::table('groupRandoms')
                 ->where('group_id', $group_id)
-                ->where('listexamid', 'like', '%' .$quizzesforsubj['id'] . ',%')
+                ->where('listexamid', 'like', '%' .$quizzesforsubj->id . ',%')
                 ->count();
 
             if($group_r == 0){  //check ไม่ซ้ำ 
@@ -501,14 +502,14 @@ class BotController extends Controller
                     ->first();
             
                 $group_rand = $group_r->listexamid;        
-                $concat_quiz = $group_rand.$quizzesforsubj['id'].',';
+                $concat_quiz = $group_rand.$quizzesforsubj->id.',';
         
                 DB::table('groupRandoms')
                     ->where('group_id', $group_id)
                     ->update(['listexamid' => $concat_quiz]);
                 DB::table('logChildrenQuizzes')->insert([
                     'group_id' => $group_id, 
-                    'exam_id' => $quizzesforsubj['id'],
+                    'exam_id' => $quizzesforsubj->id,
                     'time' => Carbon::now()
                 ]);
                 $insert_status = true;          
@@ -517,7 +518,7 @@ class BotController extends Controller
 
         //show the new quiz
         $current_quiz = DB::table('exams')
-            ->where('id', $quizzesforsubj['id'])
+            ->where('id', $quizzesforsubj->id)
             ->first();
         $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
         $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
