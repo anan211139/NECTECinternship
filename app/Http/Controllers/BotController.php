@@ -358,7 +358,7 @@ class BotController extends Controller
                         if ((int)$userMessage == $ans->answer) {
                             $arr_replyData[] = new TextMessageBuilder("Correct!");
                             $ansst = true;
-                            
+
                             if ($count_quiz < 20) {
                                 foreach($arr_replyData as $arr_Reply){
                                     $multiMessage->add($arr_Reply);
@@ -384,13 +384,13 @@ class BotController extends Controller
                             $pathtoprinc = 'https://pkwang.herokuapp.com/'.$princ_pic.'/';
                             $arr_replyData[] = new ImageMessageBuilder($pathtoprinc,$pathtoprinc);
                             $arr_replyData[] = new TextMessageBuilder("น้องลองตอบใหม่อีกครั้งสิจ๊ะ");
-        
+
                         }
-                            
+
                         DB::table('logChildrenQuizzes')
                             ->where('id', $currentlog->id)
                             ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
-                        
+
                     }
                     else if($ans_status ==false && $sec_chance ==false){
 
@@ -405,7 +405,7 @@ class BotController extends Controller
                         DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
                                 ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
-                        
+
                         if ($count_quiz < 20) {
                             foreach($arr_replyData as $arr_Reply){
                                 $multiMessage->add($arr_Reply);
@@ -416,8 +416,8 @@ class BotController extends Controller
                         DB::table('groups')
                             ->where('id', $urgroup->id)
                             ->update(['status' => true]);
-                            //call result function 
-                            $arr_replyData[] = new TextMessageBuilder("Close group");                       
+                            //call result function
+                            $arr_replyData[] = new TextMessageBuilder("Close group");
                         }
 
                     }
@@ -426,7 +426,7 @@ class BotController extends Controller
                     foreach($arr_replyData as $arr_Reply){
                             $multiMessage->add($arr_Reply);
                     }
-                    $replyData = $multiMessage;                    
+                    $replyData = $multiMessage;
                 }
 
                 else if($userMessage=="content"){
@@ -457,7 +457,7 @@ class BotController extends Controller
             ->orderBy('id','DESC')
             ->first();
         $count_quiz = DB::table('logChildrenQuizzes')
-            ->where('group_id', $group_id)        
+            ->where('group_id', $group_id)
             ->count();
         if ($count_quiz % 5 == 0) {
             $count_quiz_true = DB::table('logChildrenQuizzes')
@@ -496,23 +496,23 @@ class BotController extends Controller
                 ->where('listexamid', 'like', '%' .$quizzesforsubj->id . ',%')
                 ->count();
 
-            if($group_r == 0){  //check ไม่ซ้ำ 
+            if($group_r == 0){  //check ไม่ซ้ำ
                 $group_r = DB::table('groupRandoms')
                     ->where('group_id', $group_id)
                     ->first();
-            
-                $group_rand = $group_r->listexamid;        
+
+                $group_rand = $group_r->listexamid;
                 $concat_quiz = $group_rand.$quizzesforsubj->id.',';
-        
+
                 DB::table('groupRandoms')
                     ->where('group_id', $group_id)
                     ->update(['listexamid' => $concat_quiz]);
                 DB::table('logChildrenQuizzes')->insert([
-                    'group_id' => $group_id, 
+                    'group_id' => $group_id,
                     'exam_id' => $quizzesforsubj->id,
                     'time' => Carbon::now()
                 ]);
-                $insert_status = true;          
+                $insert_status = true;
             }
         }
 
@@ -544,11 +544,11 @@ class BotController extends Controller
             ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->first();
-        
+
         // if student has finished the old group or fist time create group
         if ($old_group_count == 0 || $old_group->status === true) {
             $group_id = DB::table('groups')->insertGetId([ //create new group
-                'line_code' => $userId, 
+                'line_code' => $userId,
                 'subject_id' => $subject_id,
                 'chapter_id' => $chapter_id,
                 'status' => false,
@@ -561,17 +561,17 @@ class BotController extends Controller
                 ->inRandomOrder()
                 ->first();
             DB::table('groupRandoms')->insert([
-                'group_id' => $group_id, 
+                'group_id' => $group_id,
                 'listexamid' => $quizzesforsubj->id.',',
                 'listlevelid' => "2,"
             ]);
             DB::table('logChildrenQuizzes')->insert([
-                'group_id' => $group_id, 
+                'group_id' => $group_id,
                 'exam_id' => $quizzesforsubj->id,
                 'time' => Carbon::now()
             ]);
             $textReplyMessage = "ยินดีต้อนรับน้องๆเข้าสู่บทเรียน\nเรื่อง ".$current_chapter->name."\nเรามาเริ่มกันที่ข้อแรกกันเลยจ้า";
-            $arr_replyData[] = new TextMessageBuilder($textReplyMessage); 
+            $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
         }
         //if student has non-finish old group
         else { //in the future, don't forget to check the expire date
@@ -595,7 +595,7 @@ class BotController extends Controller
         //show current quiz
         $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
         $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-                    
+
 
         return $arr_replyData;
      }
@@ -621,5 +621,16 @@ class BotController extends Controller
     //    ]);
 
     //  }
+public function notification(){
 
+  $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
+  $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
+
+  
+
+
+
+
+
+}
 }
