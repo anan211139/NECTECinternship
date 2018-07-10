@@ -600,26 +600,37 @@ class BotController extends Controller
         return $arr_replyData;
      }
 
-    //  public function results($groupId) {
+      public function results($group_id, $level_id) {
 
-    //        $code = DB::table('groups')
-    //            ->where('id', $groupId)
-    //            ->first();
+            $current_group = DB::table('groups')
+                ->where('id', $group_id)
+                ->first();
 
-    //        $totalTrue = DB::table('logChildrenQuizzes')
-    //            ->where('is_correct', true)
-    //            ->where('group_id', $groupId)
-    //            ->count();
+            $stdanses = DB::table('logChildrenQuizzes')
+                ->where('group_id', $group_id)
+                ->get();
 
-    //        DB::table('results')->insert([
-    //            'line_code' => $code -> $line_code,
-    //            'group_id' => $groupId,
-    //            // 'level_id' => $levelId,
-    //            // 'total_level' => $totalLevel,
-    //            'total_level_true' => $totalTrue -> $totalLevelTrue;
+            $total_exam = 0;
+            $total_true = 0;
 
-    //    ]);
+            foreach($stdanses as $stdans) {
+                $examforweight = DB::table('exams')
+                    ->where('id', $stdans->exam_id)
+                    ->first();
+                if ($examforweight->level_id == $level_id) {
+                    $total_exam += 1;
+                    $total_true += ($stdans->is_correct ? 1 : 0);
+                }
+            }
 
-    //  }
+            DB::table('results')->insert([
+                'line_code' => $current_group->line_code,
+                'group_id' => $group_id,
+                'level_id' => $level_id,
+                'total_level' => $total_exam,
+                'total_level_true' => $total_true
+            ]);
+
+      }
 
 }
