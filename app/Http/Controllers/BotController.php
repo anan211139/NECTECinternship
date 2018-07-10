@@ -457,16 +457,22 @@ class BotController extends Controller
             ->where('group_id', $group_id)        
             ->count();
         if ($count_quiz % 5 == 0) {
+            echo "yeah";
+            $count_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
-                ->where('is_correct',true)
+                //->where('is_correct',true)
                 ->offset($count_quiz-5)
-                ->limit($count_quiz)
-                ->count();
-            if ($count_quiz_true >= 3 && $level_id < 3) {
+                ->limit(5);
+                //->count();
+                if($count_quiz_true->is_correct===true){
+                    $count_true++;
+                    dd($count_true);
+                }
+            if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
             }
-            else if ($count_quiz_true < 3 && $level_id > 1) {
+            else if ($count_true < 3 && $level_id > 1) {
                 $level_id = $level_id - 1;
             }
             DB::table('groupRandoms')
