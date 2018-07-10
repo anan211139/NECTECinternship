@@ -330,6 +330,7 @@ class BotController extends Controller
                         ->where('group_id', $urgroup->id)
                         ->orderBy('id','DESC')
                         ->first();
+                    dd($currentlog);
                     DB::table('groups')
                         ->where('id', $currentlog->id)
                         ->update(['3day' => Carbon::now()->addDays(3)]);
