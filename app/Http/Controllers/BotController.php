@@ -270,7 +270,7 @@ class BotController extends Controller
                     ->where('group_id', $urgroup->id)
                     ->orderBy('id','DESC')
                     ->first();
-                dd($currentlog);
+                // dd($currentlog);
                 DB::table('groups')
                     ->where('id', $currentlog->id)
                     ->update(['3day' => Carbon::now()->addDays(3)]);
@@ -398,7 +398,6 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->count();
         if ($count_quiz % 5 == 0) {
-            echo "yeah";
             $count_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
