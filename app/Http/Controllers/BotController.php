@@ -45,9 +45,6 @@ use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
 
 use App\Prize;
-use App\Exam;
-use App\GroupRandom;
-use App\Group;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -57,8 +54,8 @@ class BotController extends Controller
 {
     public function index()
     {
-        $logger = new Logger('LineBot');
-        $logger->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
+//        $logger = new Logger('LineBot');
+//        $logger->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
 
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
@@ -87,7 +84,7 @@ class BotController extends Controller
 
         foreach ($events as $event) {
             if (($event instanceof \LINE\LINEBot\Event\PostbackEvent)) {
-                $logger->info('Postback message has come');
+//                $logger->info('Postback message has come');
 
                 list($postback_action_part, $postback_id_part) = explode("&", $event->getPostbackData(), 2);
                 list($postback_title, $postback_action) = explode("=", $postback_action_part);
