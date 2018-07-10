@@ -143,8 +143,6 @@ class BotController extends Controller
                 $pos1= strrpos($userMessage, 'หรม');
                 $pos2= strrpos($userMessage, 'ครน');
 
-                echo "อันเอง";
-
                 //------ RICH MENU -------
                 if($userMessage=="เปลี่ยนวิชา"){
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
@@ -465,7 +463,8 @@ class BotController extends Controller
                 ->where('group_id', $group_id)
                 //->where('is_correct',true)
                 ->offset($count_quiz-5)
-                ->limit(5);
+                ->limit(5)
+                ->get();
                 //->count();
                 if($count_quiz_true->is_correct===true){
                     $count_true++;
