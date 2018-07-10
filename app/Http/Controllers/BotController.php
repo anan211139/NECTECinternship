@@ -367,11 +367,7 @@ class BotController extends Controller
                                 $arr_replyData = array();
                             }
                             else {
-                            DB::table('groups')
-                                ->where('id', $urgroup->id)
-                                ->update(['status' => true]);
-                                //call result function
-                                $arr_replyData[] = new TextMessageBuilder("Close group");
+                                $arr_replyData[] = new TextMessageBuilder($this->end_group($urgroup->id));
                             }
 
                         } else {
@@ -410,11 +406,7 @@ class BotController extends Controller
                             $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                         }
                         else {
-                        DB::table('groups')
-                            ->where('id', $urgroup->id)
-                            ->update(['status' => true]);
-                            //call result function 
-                            $arr_replyData[] = new TextMessageBuilder("Close group");                       
+                            $arr_replyData[] = new TextMessageBuilder($this->end_group($urgroup->id));
                         }
 
                     }
@@ -429,12 +421,6 @@ class BotController extends Controller
                 else if($userMessage=="content"){
 
                     $replyData = new TextMessageBuilder($content);
-                }
-                else if($userMessage=="สุ่ม") {
-
-                    $data = $this ->randQuiz(5);
-                    $replyData = new TextMessageBuilder($data);
-
                 }
 
                 else{
@@ -603,7 +589,7 @@ class BotController extends Controller
         return $arr_replyData;
      }
 
-      public function results($group_id, $level_id) {
+      public function result_a_level($group_id, $level_id) {
 
             $current_group = DB::table('groups')
                 ->where('id', $group_id)
@@ -626,16 +612,35 @@ class BotController extends Controller
                 }
             }
 
-            DB::table('results')->insert([
-                'line_code' => $current_group->line_code,
-                'group_id' => $group_id,
-                'level_id' => $level_id,
-                'total_level' => $total_exam,
-                'total_level_true' => $total_true
-            ]);
+            if ($total_exam == 0) {
+                DB::table('results')->insert([
+                    'line_code' => $current_group->line_code,
+                    'group_id' => $group_id,
+                    'level_id' => $level_id,
+                    'total_level' => $total_exam,
+                    'total_level_true' => $total_true
+                ]);
+            }
 
-            return "group: ". $group_id .", lvl: ". $level_id . ", total_exam: " . $total_exam . ", total_true: ". $total_true;
+            return $total_true * $level_id;
 
+      }
+
+      public function end_group($group_id) {
+          $current_group = DB::table('groups')
+              ->where('id', $group_id)
+              ->first();
+          DB::table('groups')
+              ->where('id', $group_id)
+              ->update(['status' => true]);
+          $point = $this->result_a_level($group_id, 1) + $this->result_a_level($group_id, 2) + $this->result_a_level($group_id, 3);
+          $student = DB::table('students')
+              ->where('line_code', $current_group->line_code)
+              ->first();
+          DB::table('students')
+              ->where('line_code', $current_group->line_code)
+              ->update(['point' => $student->point + $point]);
+          return "Close group with ". $point . " points";
       }
 
 }
