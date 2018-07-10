@@ -457,6 +457,7 @@ class BotController extends Controller
             ->where('group_id', $group_id)        
             ->count();
         if ($count_quiz % 5 == 0) {
+            echo "yeah";
             $count_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
