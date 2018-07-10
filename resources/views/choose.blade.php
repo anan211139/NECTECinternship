@@ -1,3 +1,7 @@
+<<?php
+  $childdata = session('childdata','default');
+  $countchild = session('countchild','default');
+ ?>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -11,22 +15,30 @@
     <body>
         <label class="header">กรุณาเลือกนักเรียน</label>
         <div class="layoutSelectPage">
+          @if($countchild >0)
             <a href="/logout">
-                <img src="picture/c96f90063fe961d88c043faa29b545b6.jpg">
-                <p>N'Ton</p>
+                <img src="{{$childdata[0]["local_pic"]}}">
+                <p>{{$childdata[0]["name"]}}</p>
             </a>
+          @endif
+          @if($countchild >1)
             <a>
-                <img src="picture/c96f90063fe961d88c043faa29b545b6.jpg">
-                <p>N'Pei</p>
+                <img src="{{$childdata[1]["local_pic"]}}">
+                <p>{{$childdata[1]["name"]}}</p>
             </a>
+          @endif
+          @if($countchild >2)
             <a>
-                <img src="picture/c96f90063fe961d88c043faa29b545b6.jpg">
-                <p>N'Oat</p>
+                <img src="{{$childdata[2]["local_pic"]}}">
+                <p>{{$childdata[2]["name"]}}</p>
             </a>
+          @endif
+          @if($countchild >3)
             <a>
-                <img src="picture/c96f90063fe961d88c043faa29b545b6.jpg">
-                <p>N'Milk</p>
+                <img src="{{$childdata[3]["local_pic"]}}">
+                <p>{{$childdata[3]["name"]}}</p>
             </a>
+          @endif
         </div>
     </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Manager;
 
 class regisController extends Controller
@@ -19,7 +20,7 @@ class regisController extends Controller
                 $message = new Manager;
                 $message->name = $name;
                 $message->username = $username;
-                $message->password = $password;
+                $message->password = Hash::make($password);
                 $message->email = $email;
                 $message->save();
                 return redirect('/')->with('regis','DONE Firstuser');
@@ -36,7 +37,7 @@ class regisController extends Controller
                 $message = new Manager;
                 $message->name = $name;
                 $message->username = $username;
-                $message->password = $password;
+                $message->password = Hash::make($password);
                 $message->email = $email;
                 $message->save();
                 return redirect('/')->with('regis','DONE');
@@ -58,12 +59,12 @@ class regisController extends Controller
         $userresult = Manager::all();
         if(count($userresult)==0){
             if($password == $repassword){
-                $message = new Manager;
-                $message->name = $name;
-                $message->username = $username;
-                $message->password = $password;
-                $message->email = $email;
-                $message->save();
+              $message = new Manager;
+              $message->name = $name;
+              $message->username = $username;
+              $message->password = Hash::make($password);
+              $message->email = $email;
+              $message->save();
                 return redirect('/addchild')->with('regis','DONE Firstuser');
             }else{
                 return redirect('/addchild')->with('regis','Password and Re-Password not match');
@@ -75,12 +76,12 @@ class regisController extends Controller
                 }
             }
             if($password == $repassword){
-                $message = new Manager;
-                $message->name = $name;
-                $message->username = $username;
-                $message->password = $password;
-                $message->email = $email;
-                $message->save();
+              $message = new Manager;
+              $message->name = $name;
+              $message->username = $username;
+              $message->password = Hash::make($password);
+              $message->email = $email;
+              $message->save();
                 return redirect('/addchild')->with('regis','DONE');
             }else{
                 return redirect('/addchild')->with('regis','Password and Re-Password not match');

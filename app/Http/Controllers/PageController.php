@@ -16,14 +16,26 @@ class Pagecontroller extends Controller
     }
     public function getchoosepage(){
       //require picture,name
+      if(session()->has('username')){
       return view('choose');
+      }else{
+        return redirect('/');
+      }
     }
     public function getsteppage(){
+      if(session()->has('username')){
+      $childdata = session('childdata','default');
       return view('step');
+      }else{
+        return redirect('/');
+      }
     }
     public function getuserpage(){
-      //require line_code ChooseChild
+      if(session()->has('username')){
       return view('userpage');
+      }else{
+        return redirect('/');
+      }
     }
     public function gethome(){
         if(session()->has('username')){
@@ -32,11 +44,12 @@ class Pagecontroller extends Controller
             $jsonresult = DB::table('students')
             ->rightjoin('studentparents','students.line_code','=','studentparents.line_code')
             ->leftjoin('managers','studentparents.parent_id','=','managers.id')
-            ->select(DB::raw('students.line_code,students.local_pic'))
+            ->select(DB::raw('students.line_code,students.local_pic,students.name'))
             ->where('studentparents.parent_id',$id)
             ->get();
             $arrayresult = json_decode($jsonresult, true);
             $countchild = count($jsonresult);
+            Session::put('childdata',$arrayresult);
             Session::put('countchild',$countchild);
             if($countchild==0){
                 return redirect('/step');
