@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Studentparent;
 use App\Student;
-use Session;    
+use Session;
 
 class addchildcontroller extends Controller
 {
@@ -13,7 +13,7 @@ class addchildcontroller extends Controller
         $linecode = $request->input('code');
         $name = $request->input('nickname');
         $id = Session::get('id','default');
-        
+
         $insert = new Studentparent;
         $insert->line_code = $linecode;
         $insert->parent_id = $id;
@@ -22,5 +22,9 @@ class addchildcontroller extends Controller
         $update_nickname = new Student;
         $update_nickname::whereraw("line_code = '$linecode'")->update(['name' => $name]);
         return 'Done';
+    }
+    public function sessionaddchild($id){
+      Session::put('choosechild',$id);
+      return redirect('/userpage');
     }
 }

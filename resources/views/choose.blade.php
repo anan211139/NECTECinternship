@@ -13,28 +13,29 @@
         <link rel="shortcut icon" href="picture/bear_N.png">
     </head>
     <body>
+      {{session('choosechild','default')}}
         <label class="header">กรุณาเลือกนักเรียน</label>
         <div class="layoutSelectPage">
           @if($countchild >0)
-            <a href="/logout">
+            <a href="choosechild/{{$childdata[0]["line_code"]}}">
                 <img src="{{$childdata[0]["local_pic"]}}">
                 <p>{{$childdata[0]["name"]}}</p>
             </a>
           @endif
           @if($countchild >1)
-            <a>
+            <a href="choosechild/{{$childdata[1]["line_code"]}}">
                 <img src="{{$childdata[1]["local_pic"]}}">
                 <p>{{$childdata[1]["name"]}}</p>
             </a>
           @endif
           @if($countchild >2)
-            <a>
+            <a href="choosechild/{{$childdata[2]["line_code"]}}">>
                 <img src="{{$childdata[2]["local_pic"]}}">
                 <p>{{$childdata[2]["name"]}}</p>
             </a>
           @endif
           @if($countchild >3)
-            <a>
+            <a href="choosechild/{{$childdata[3]["line_code"]}}">>
                 <img src="{{$childdata[3]["local_pic"]}}">
                 <p>{{$childdata[3]["name"]}}</p>
             </a>

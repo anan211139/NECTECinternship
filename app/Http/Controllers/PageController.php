@@ -55,6 +55,7 @@ class Pagecontroller extends Controller
                 return redirect('/step');
             }elseif($countchild==1){
                 Session::put('childdata',$arrayresult);
+                Session::put('choosechild',$arrayresult[0]['line_code']);
                 return redirect('/userpage');
             }elseif($countchild>=2){
                 Session::put('childdata',$arrayresult);

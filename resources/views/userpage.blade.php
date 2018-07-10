@@ -1,3 +1,6 @@
+<?php
+  $childdata = session('childdata','default');
+ ?>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -17,7 +20,7 @@
                     <p class="logoP">พี่หมีติวเตอร์</p>
                 </div>
                 <div id="menu">
-                    <a href="" class="layoutMenu">name</a>
+                    <a href="" class="layoutMenu">{{session('name','default')}}</a>
                     <a href="/logout" class="layoutMenu">Log out</a>
                 </div>
                 <a  class="icon" onclick="openNav()">
