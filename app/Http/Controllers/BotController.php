@@ -45,9 +45,6 @@ use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
 
 use App\Prize;
-use App\Exam;
-use App\GroupRandom;
-use App\Group;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -57,8 +54,8 @@ class BotController extends Controller
 {
     public function index()
     {
-        $logger = new Logger('LineBot');
-        $logger->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
+//        $logger = new Logger('LineBot');
+//        $logger->pushHandler(new StreamHandler('php://stderr', Logger::DEBUG));
 
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
@@ -87,7 +84,7 @@ class BotController extends Controller
 
         foreach ($events as $event) {
             if (($event instanceof \LINE\LINEBot\Event\PostbackEvent)) {
-                $logger->info('Postback message has come');
+//                $logger->info('Postback message has come');
 
                 list($postback_action_part, $postback_id_part) = explode("&", $event->getPostbackData(), 2);
                 list($postback_title, $postback_action) = explode("=", $postback_action_part);
@@ -460,16 +457,23 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->count();
         if ($count_quiz % 5 == 0) {
+            echo "yeah";
+            $count_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
-                ->where('is_correct',true)
+                //->where('is_correct',true)
                 ->offset($count_quiz-5)
-                ->limit($count_quiz)
-                ->count();
-            if ($count_quiz_true >= 3 && $level_id < 3) {
+                ->limit(5)
+                ->get();
+                //->count();
+                if($count_quiz_true->is_correct===true){
+                    $count_true++;
+                    dd($count_true);
+                }
+            if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
             }
-            else if ($count_quiz_true < 3 && $level_id > 1) {
+            else if ($count_true < 3 && $level_id > 1) {
                 $level_id = $level_id - 1;
             }
             DB::table('groupRandoms')
@@ -600,33 +604,48 @@ class BotController extends Controller
         return $arr_replyData;
      }
 
-    //  public function results($groupId) {
+      public function results($group_id, $level_id) {
 
-    //        $code = DB::table('groups')
-    //            ->where('id', $groupId)
-    //            ->first();
+            $current_group = DB::table('groups')
+                ->where('id', $group_id)
+                ->first();
 
-    //        $totalTrue = DB::table('logChildrenQuizzes')
-    //            ->where('is_correct', true)
-    //            ->where('group_id', $groupId)
-    //            ->count();
+            $stdanses = DB::table('logChildrenQuizzes')
+                ->where('group_id', $group_id)
+                ->get();
 
-    //        DB::table('results')->insert([
-    //            'line_code' => $code -> $line_code,
-    //            'group_id' => $groupId,
-    //            // 'level_id' => $levelId,
-    //            // 'total_level' => $totalLevel,
-    //            'total_level_true' => $totalTrue -> $totalLevelTrue;
+            $total_exam = 0;
+            $total_true = 0;
 
-    //    ]);
+            foreach($stdanses as $stdans) {
+                $examforweight = DB::table('exams')
+                    ->where('id', $stdans->exam_id)
+                    ->first();
+                if ($examforweight->level_id == $level_id) {
+                    $total_exam += 1;
+                    $total_true += ($stdans->is_correct ? 1 : 0);
+                }
+            }
 
-    //  }
+            DB::table('results')->insert([
+                'line_code' => $current_group->line_code,
+                'group_id' => $group_id,
+                'level_id' => $level_id,
+                'total_level' => $total_exam,
+                'total_level_true' => $total_true
+            ]);
+
+            return "group: ". $group_id .", lvl: ". $level_id . ", total_exam: " . $total_exam . ", total_true: ". $total_true;
+
+     }
+
+
 public function notification(){
 
   $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
   $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-  
+
 
 
 
