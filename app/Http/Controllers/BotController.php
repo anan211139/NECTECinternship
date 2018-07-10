@@ -73,11 +73,11 @@ class BotController extends Controller
         
         
             // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-            $replyToken = $event->getReplyToken();
-            //$replyInfo = $events['events']['type'];
-            $userId = $event->getUserId();
-            $typeMessage = $event->getMessageType();
-            $userMessage = $event->getText();
+            // $replyToken = $event->getReplyToken();
+            // //$replyInfo = $events['events']['type'];
+            // $userId = $event->getUserId();
+            // $typeMessage = $event->getMessageType();
+            // $userMessage = $event->getText();
 
             //------ SET VAR ---------
             $pos1= strrpos($userMessage, 'หรม');
