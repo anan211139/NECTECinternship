@@ -645,11 +645,12 @@ public function notification(){
   $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
   $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
+  // $Message1 =  $a[$random_keys[0]];
+  $Message1 =  'สวัสดีครับ เราเคยรู้จักกันหรือเปล่า';
 
+  $textMessageBuilder = new TextMessageBuilder($Message1);
 
+  $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
 
-
-
-
-}
+    }
 }
