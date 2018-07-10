@@ -628,6 +628,8 @@ class BotController extends Controller
                 'total_level_true' => $total_true
             ]);
 
+            return "group: ". $group_id .", lvl: ". $level_id . ", total_exam: " . $total_exam . ", total_true: ". $total_true;
+
       }
 
 }
