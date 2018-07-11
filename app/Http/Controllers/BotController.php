@@ -506,7 +506,7 @@ class BotController extends Controller
                 'listexamid' => $quizzesforsubj->id.',',
                 'listlevelid' => "2,"
             ]);
-            dd($tests);
+            // dd($tests);
             DB::table('logChildrenQuizzes')->insert([
                 'group_id' => $group_id,
                 'exam_id' => $quizzesforsubj->id,
