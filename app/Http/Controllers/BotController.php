@@ -371,12 +371,6 @@ class BotController extends Controller
 
                 $replyData = new TextMessageBuilder($content);
             }
-            else if($userMessage=="สุ่ม") {
-
-                $data = $this ->randQuiz(5);
-                $replyData = new TextMessageBuilder($data);
-
-            }
 
             else{
                 $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
@@ -394,10 +388,11 @@ class BotController extends Controller
             ->where('id', $group_id)
             ->orderBy('id','DESC')
             ->first();
+        
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->count();
-        dd($count_quiz) ;
+        // dd($count_quiz) ;
         if ($count_quiz % 5 == 0) {
             $count_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
@@ -530,6 +525,8 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
             ->first();
+
+        dd($current_log);
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
