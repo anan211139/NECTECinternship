@@ -525,7 +525,7 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
             ->first();
-
+        echo $group_id;
         dd($current_log);
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
