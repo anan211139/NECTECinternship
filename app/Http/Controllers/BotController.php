@@ -501,11 +501,12 @@ class BotController extends Controller
                 ->where('level_id', 2)
                 ->inRandomOrder()
                 ->first();
-            DB::table('groupRandoms')->insert([
+            $tests = DB::table('groupRandoms')->insert([
                 'group_id' => $group_id,
                 'listexamid' => $quizzesforsubj->id.',',
                 'listlevelid' => "2,"
             ]);
+            dd($tests);
             DB::table('logChildrenQuizzes')->insert([
                 'group_id' => $group_id,
                 'exam_id' => $quizzesforsubj->id,
@@ -525,8 +526,8 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
             ->first();
-        echo $group_id;
-        dd($current_log);
+        // echo $group_id;
+        // dd($current_log);
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
