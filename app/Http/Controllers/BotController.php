@@ -641,17 +641,25 @@ class BotController extends Controller
      }
 
 
-public function notification(){
+        public function notification(){
 
-  $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
-  $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
+        $user_select = DB::table('students')->pluck('line_code')->all();
 
-  // $Message1 =  $a[$random_keys[0]];
-  $Message1 =  'สวัสดีครับ เราเคยรู้จักกันหรือเปล่า';
+        $arraylen = count($user_select);
+        for($x=0; $x < $arraylen; ++$x) {
+              $user_id = $user_select[$x];
+              $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
+              $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-  $textMessageBuilder = new TextMessageBuilder($Message1);
+              // $Message1 =  $a[$random_keys[0]];
+              $Message1 =  'สวัสดีครับ เราเคยรู้จักกันหรือเปล่า';
 
-  $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
+              $textMessageBuilder = new TextMessageBuilder($Message1);
 
-    }
-}
+              $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
+              //$response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
+
+              }
+
+            }
+        }
