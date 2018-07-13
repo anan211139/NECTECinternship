@@ -341,7 +341,7 @@ class BotController extends Controller
                     } else {
                         $textReplyMessage = "Wrong!";
                         $ansst = false;
-                        echo "T";
+                        echo "F";
                     }
                     $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                     DB::table('logChildrenQuizzes')
