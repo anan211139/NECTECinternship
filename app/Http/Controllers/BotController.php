@@ -403,10 +403,10 @@ class BotController extends Controller
                 ->limit(5)
                 ->get();
                 //->count();
-                dd($count_quiz_true);
+                //dd($count_quiz_true);
                 if($count_quiz_true->is_correct===true){
                     $count_true++;
-                    dd($count_true);
+                    //dd($count_true);
                 }
             if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
@@ -474,7 +474,7 @@ class BotController extends Controller
         $current_chapter = DB::table('chapters')
             ->where('id', $chapter_id)
             ->first();
-        dd($current_chapter);
+        // dd($current_chapter);
         $old_group_count = DB::table('groups')
             ->where('line_code', $userId)
             ->where('subject_id', $subject_id)
