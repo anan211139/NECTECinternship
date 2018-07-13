@@ -270,7 +270,7 @@ class BotController extends Controller
                     ->where('group_id', $urgroup->id)
                     ->orderBy('id','DESC')
                     ->first();
-                dd($currentlog);
+                // dd($currentlog);
                 DB::table('groups')
                     ->where('id', $currentlog->id)
                     ->update(['3day' => Carbon::now()->addDays(3)]);
@@ -294,6 +294,7 @@ class BotController extends Controller
                 $arr_replyData = array();
 
                 if($ans_status === null){
+                    echo "Yeah";
                     if ((int)$userMessage == $ans->answer) {
                         $arr_replyData[] = new TextMessageBuilder("Correct!");
                         $ansst = true;
