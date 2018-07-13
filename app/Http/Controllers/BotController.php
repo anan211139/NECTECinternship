@@ -333,13 +333,15 @@ class BotController extends Controller
 
                 }
                 else if($ans_status ==false && $sec_chance ==false){
-
+                    echo "Round2";
                     if ((int)$userMessage == $ans->answer) {
                         $textReplyMessage = "Correct!";
                         $ansst = true;
+                        echo "T";
                     } else {
                         $textReplyMessage = "Wrong!";
                         $ansst = false;
+                        echo "T";
                     }
                     $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                     DB::table('logChildrenQuizzes')
