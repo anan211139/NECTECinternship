@@ -473,6 +473,7 @@ class BotController extends Controller
         $current_chapter = DB::table('chapters')
             ->where('id', $chapter_id)
             ->first();
+        dd($current_chapter);
         $old_group_count = DB::table('groups')
             ->where('line_code', $userId)
             ->where('subject_id', $subject_id)
