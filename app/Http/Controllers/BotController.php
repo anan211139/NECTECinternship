@@ -347,7 +347,7 @@ class BotController extends Controller
                     DB::table('logChildrenQuizzes')
                             ->where('id', $currentlog->id)
                             ->update(['second_chance' => true,'is_correct_secound' => $ansst]);
-
+                    echo "before check <20";
                     if ($count_quiz < 20) {
                         foreach($arr_replyData as $arr_Reply){
                             $multiMessage->add($arr_Reply);
@@ -387,6 +387,7 @@ class BotController extends Controller
 
 
     public function randQuiz($chapter_id, $level_id, $group_id){
+        echo "into Rand";
         //check changing level
         $num_group = DB::table('groups')
             ->where('id', $group_id)
