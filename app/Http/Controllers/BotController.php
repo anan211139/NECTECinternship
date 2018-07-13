@@ -330,7 +330,7 @@ class BotController extends Controller
                         ->where('group_id', $urgroup->id)
                         ->orderBy('id','DESC')
                         ->first();
-                    dd($currentlog);
+                    //dd($currentlog);
                     DB::table('groups')
                         ->where('id', $currentlog->id)
                         ->update(['3day' => Carbon::now()->addDays(3)]);
@@ -468,10 +468,10 @@ class BotController extends Controller
                 ->limit(5)
                 ->get();
                 //->count();
-                dd($count_quiz_true);
+                //dd($count_quiz_true);
                 if($count_quiz_true->is_correct===true){
                     $count_true++;
-                    dd($count_true);
+                    echo "A";
                 }
             if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
