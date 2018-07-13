@@ -413,11 +413,14 @@ class BotController extends Controller
                     $count_true++;
                     //dd($count_true);
                 }
+            echo "CT>>".$count_true;
             if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
+                echo "VU";
             }
             else if ($count_true < 3 && $level_id > 1) {
                 $level_id = $level_id - 1;
+                echo "VD";
             }
             DB::table('groupRandoms')
             ->where('group_id', $num_group->id)
