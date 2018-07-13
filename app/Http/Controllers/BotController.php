@@ -65,22 +65,22 @@ class BotController extends Controller
 //             error_log("Signature header missing");
 //             responseBadRequest('Signature header missing');
 //         }
-        $signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
+//        $signature = $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE];
 
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
 
-        try {
-            $events = $bot->parseEventRequest($content, $signature);
-        } catch(\LINE\LINEBot\Exception\InvalidSignatureException $e) {
-            error_log('parseEventRequest failed. InvalidSignatureException => '.var_export($e, true));
-        } catch(\LINE\LINEBot\Exception\UnknownEventTypeException $e) {
-            error_log('parseEventRequest failed. UnknownEventTypeException => '.var_export($e, true));
-        } catch(\LINE\LINEBot\Exception\UnknownMessageTypeException $e) {
-            error_log('parseEventRequest failed. UnknownMessageTypeException => '.var_export($e, true));
-        } catch(\LINE\LINEBot\Exception\InvalidEventRequestException $e) {
-            error_log('parseEventRequest failed. InvalidEventRequestException => '.var_export($e, true));
-        }
+//        try {
+            $events = $bot->parseEventRequest($content, $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE]);
+//        } catch(\LINE\LINEBot\Exception\InvalidSignatureException $e) {
+//            error_log('parseEventRequest failed. InvalidSignatureException => '.var_export($e, true));
+//        } catch(\LINE\LINEBot\Exception\UnknownEventTypeException $e) {
+//            error_log('parseEventRequest failed. UnknownEventTypeException => '.var_export($e, true));
+//        } catch(\LINE\LINEBot\Exception\UnknownMessageTypeException $e) {
+//            error_log('parseEventRequest failed. UnknownMessageTypeException => '.var_export($e, true));
+//        } catch(\LINE\LINEBot\Exception\InvalidEventRequestException $e) {
+//            error_log('parseEventRequest failed. InvalidEventRequestException => '.var_export($e, true));
+//        }
 
         foreach ($events as $event) {
             if (($event instanceof \LINE\LINEBot\Event\PostbackEvent)) {
@@ -303,23 +303,6 @@ class BotController extends Controller
                     }
                     $replyData = $multiMessage;
                 }
-                else if($userMessage =="โจทย์"){
-                    $quizzesforsubj = DB::table('exams')
-                                ->where('chapter_id', 1)->inRandomOrder()
-                                ->first();
-                    $pathtoexam = 'https://pkwang.herokuapp.com/'.$quizzesforsubj->local_pic;
-                    $urgroup = DB::table('groups')
-                        ->where('line_code', $userId)
-                        ->where('status',false)
-                        ->orderBy('id','DESC')
-                        ->first();
-                    DB::table('logChildrenQuizzes')->insert([
-                        'group_id' => $urgroup->id,
-                        'exam_id' => $quizzesforsubj->id,
-                        'time' => Carbon::now()
-                    ]);
-                    $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-                }
                 else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                     $multiMessage = new MultiMessageBuilder;
                     $urgroup = DB::table('groups')
@@ -431,12 +414,6 @@ class BotController extends Controller
 
                     $replyData = new TextMessageBuilder($content);
                 }
-                else if($userMessage=="สุ่ม") {
-
-                    $data = $this ->randQuiz(5);
-                    $replyData = new TextMessageBuilder($data);
-
-                }
 
                 else{
                     $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"".$userMessage."\" พี่หมีขอโทษนะ");
@@ -458,7 +435,6 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->count();
         if ($count_quiz % 5 == 0) {
-            echo "yeah";
             $count_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
@@ -603,45 +579,45 @@ class BotController extends Controller
 
 
         return $arr_replyData;
-     }
+    }
 
-      public function results($group_id, $level_id) {
+    public function results($group_id, $level_id) {
 
-            $current_group = DB::table('groups')
-                ->where('id', $group_id)
+        $current_group = DB::table('groups')
+            ->where('id', $group_id)
+            ->first();
+
+        $stdanses = DB::table('logChildrenQuizzes')
+            ->where('group_id', $group_id)
+            ->get();
+
+        $total_exam = 0;
+        $total_true = 0;
+
+        foreach($stdanses as $stdans) {
+            $examforweight = DB::table('exams')
+                ->where('id', $stdans->exam_id)
                 ->first();
-
-            $stdanses = DB::table('logChildrenQuizzes')
-                ->where('group_id', $group_id)
-                ->get();
-
-            $total_exam = 0;
-            $total_true = 0;
-
-            foreach($stdanses as $stdans) {
-                $examforweight = DB::table('exams')
-                    ->where('id', $stdans->exam_id)
-                    ->first();
-                if ($examforweight->level_id == $level_id) {
-                    $total_exam += 1;
-                    $total_true += ($stdans->is_correct ? 1 : 0);
-                }
+            if ($examforweight->level_id == $level_id) {
+                $total_exam += 1;
+                $total_true += ($stdans->is_correct ? 1 : 0);
             }
+        }
 
-            DB::table('results')->insert([
-                'line_code' => $current_group->line_code,
-                'group_id' => $group_id,
-                'level_id' => $level_id,
-                'total_level' => $total_exam,
-                'total_level_true' => $total_true
-            ]);
+        DB::table('results')->insert([
+            'line_code' => $current_group->line_code,
+            'group_id' => $group_id,
+            'level_id' => $level_id,
+            'total_level' => $total_exam,
+            'total_level_true' => $total_true
+        ]);
 
-            return "group: ". $group_id .", lvl: ". $level_id . ", total_exam: " . $total_exam . ", total_true: ". $total_true;
+        return "group: ". $group_id .", lvl: ". $level_id . ", total_exam: " . $total_exam . ", total_true: ". $total_true;
 
-     }
+    }
 
 
-        public function notification(){
+    public function notification() {
 
         $user_select = DB::table('students')->pluck('line_code')->all();
 
@@ -659,7 +635,6 @@ class BotController extends Controller
               $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
               //$response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
 
-              }
-
-            }
         }
+    }
+}
