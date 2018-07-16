@@ -389,18 +389,18 @@ class BotController extends Controller
                 ->offset($count_quiz-5)
                 ->limit(5)
                 ->get();
-                echo "count_quiz";
+            echo "CQ";
                 //dd($count_quiz_true);
-                foreach ($count_quiz_true as $count_true) {
-                    if($count_quiz_true->is_correct === true){
-                        $count_true++;
-                        echo "*";
-                        //dd($count_true);
-                    }
-                    else{
-                        echo "+";
-                    }
+            foreach ($count_quiz_true as $count_true) {
+                if($count_quiz_true->is_correct === true){
+                    $count_true++;
+                    echo "*";
+                    //dd($count_true);
                 }
+                else{
+                    echo "+";
+                }
+            }
                 
 
 
