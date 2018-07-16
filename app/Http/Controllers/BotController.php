@@ -391,7 +391,7 @@ class BotController extends Controller
                 ->get();
             echo "CQ";
                 //dd($count_quiz_true);
-            $count_true=0;
+            $count_num_true=0;
             foreach ($count_quiz_true as $count_true) {
                 if($count_true->is_correct === true){
                     $count_true++;
@@ -403,12 +403,12 @@ class BotController extends Controller
                 }
             }
             echo "CT";
-            echo $count_true;
-            if ($count_true >= 3 && $level_id < 3) {
+            echo $count_num_true;
+            if ($count_num_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
                 echo "VU";
             }
-            else if ($count_true < 3 && $level_id > 1) {
+            else if ($count_num_true < 3 && $level_id > 1) {
                 $level_id = $level_id - 1;
                 echo "VD";
             }
