@@ -76,8 +76,9 @@ class BotController extends Controller
                 $replyInfo = $event['type'];
                 $userId = $event['source']['userId'];
 
-                if (($event instanceof \LINE\LINEBot\Event\PostbackEvent)) {
-                    list($postback_action_part, $postback_id_part) = explode("&", $event->getPostbackData(), 2);
+                if ($replyInfo == "postback") {
+                    $postbackData = $event['postback']['data'];
+                    list($postback_action_part, $postback_id_part) = explode("&", $postbackData, 2);
                     list($postback_title, $postback_action) = explode("=", $postback_action_part);
                     if ($postback_action == "exchange") {
                         list($postback_title, $postback_id) = explode("=", $postback_id_part);
@@ -85,11 +86,11 @@ class BotController extends Controller
                                     ->where('id', $postback_id)
                                     ->first();
                         $student = DB::table('students')
-                                    ->where('line_code', $event->getUserId())
+                                    ->where('line_code', $userId)
                                     ->first();
                         if ($student->point >= $selected->point) {
                             DB::table('students')
-                                ->where('line_code', $event->getUserId())
+                                ->where('line_code', $userId)
                                 ->update(['point' => $student->point - $selected->point]);
 
                             if ($selected->type_id === 1) {
@@ -101,7 +102,7 @@ class BotController extends Controller
                                     ->where('id', $avail_code->id)
                                     ->update(['status' => 1]);
                                 DB::table('exchanges')->insert([
-                                    'line_code' => $event->getUserId(),
+                                    'line_code' => $userId,
                                     'send' => 1,
                                     'code_id' => $avail_code->id,
                                     'time' => Carbon::now()
@@ -109,7 +110,7 @@ class BotController extends Controller
                                 $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ ".$avail_code->code;
                             } elseif ($selected->type_id === 2) {
                                 DB::table('exchanges')->insert([
-                                    'line_code' => $event->getUserId(),
+                                    'line_code' => $userId,
                                     'send' => 1,
                                     'time' => Carbon::now()
                                 ]);
@@ -118,11 +119,11 @@ class BotController extends Controller
                         } else {
                             $replyData = "แต้มไม่พอนี่นา แลกไม่ได้นะเนี่ย";
                         }
-                        $bot->replyMessage($event->getReplyToken(), new TextMessageBuilder($replyData));
+                        $bot->replyMessage($replyToken, new TextMessageBuilder($replyData));
                     }
                     continue;
                 }
-                if (($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage)) {
+                if ($replyInfo == "message") {
                     $typeMessage = $event['message']['type'];
                     $userMessage = $event['message']['text'];
 
