@@ -45,6 +45,7 @@ use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
 
 use App\Prize;
+use App\LogChildrenQuiz;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -383,29 +384,35 @@ class BotController extends Controller
         // dd($count_quiz) ;
         if ($count_quiz % 5 == 0) {
             $count_true = 0;
-            $count_quiz_true = DB::table('logChildrenQuizzes')
-                ->where('group_id', $group_id)
-                //->where('is_correct',true)
-                ->offset($count_quiz-5)
-                ->limit(5)
-                ->get();
-                //->count();s
-                echo "count_quiz_eiei";
-                //dd($count_quiz_true);
-                if($count_quiz_true->is_correct === true){
-                    $count_true++;
-                    echo "*";
-                    //dd($count_true);
-                }
-            echo "CT>>".$count_true;
-            if ($count_true >= 3 && $level_id < 3) {
-                $level_id = $level_id + 1;
-                echo "VU";
-            }
-            else if ($count_true < 3 && $level_id > 1) {
-                $level_id = $level_id - 1;
-                echo "VD";
-            }
+            // $count_quiz_true = DB::table('logChildrenQuizzes')
+            //     ->where('group_id', $group_id)
+            //     ->offset($count_quiz-5)
+            //     ->limit(5)
+            //     ->get();
+            //     echo "count_quiz_eiei";
+            //     //dd($count_quiz_true);
+            //     if($count_quiz_true->is_correct === true){
+            //         $count_true++;
+            //         echo "*";
+            //         //dd($count_true);
+            //     }
+
+            $count_quiz_true = LogChildrenQuiz::all()
+                ->get()
+                ->toArray();
+
+
+            // echo "CT>>".$count_true;
+            // if ($count_true >= 3 && $level_id < 3) {
+            //     $level_id = $level_id + 1;
+            //     echo "VU";
+            // }
+            // else if ($count_true < 3 && $level_id > 1) {
+            //     $level_id = $level_id - 1;
+            //     echo "VD";
+            // }
+            dd($count_quiz_true);
+            
             DB::table('groupRandoms')
             ->where('group_id', $num_group->id)
             ->update(['listlevelid' => $num_group->listlevelid.$level_id.","]);
