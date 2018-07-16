@@ -315,7 +315,7 @@ class BotController extends Controller
 
                         $arr_replyData = array();
 
-                        if ($ans_status === null) {
+                        if ($ans_status == null) {
                             if ((int)$userMessage == $ans->answer) {
                                 $arr_replyData[] = new TextMessageBuilder("Correct!");
                                 $ansst = true;
