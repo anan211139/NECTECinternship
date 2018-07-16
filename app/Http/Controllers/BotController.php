@@ -420,9 +420,17 @@ class BotController extends Controller
 
             //dd($count_quiz_true);
 
+            $group_r = DB::table('groupRandoms')
+                ->where('group_id', $group_id)
+                ->first();
+
+            $group_rand = $group_r->listlevelid;
+            $concat_level = $group_rand.$level_id.',';
+
+
             DB::table('groupRandoms')
-            ->where('group_id', $num_group->id)
-            ->update(['listlevelid' => $num_group->listlevelid.$level_id.","]);
+                ->where('group_id', $num_group->id)
+                ->update(['listlevelid' => $concat_level]);
         }
 
         //declare the next quiz
@@ -591,13 +599,5 @@ class BotController extends Controller
 public function notification(){
 
   $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
-  $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
-
-
-
-
-
-
-
-}
+  $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));}
 }
