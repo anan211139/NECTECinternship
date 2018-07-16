@@ -243,23 +243,6 @@ class BotController extends Controller
                 }
                 $replyData = $multiMessage;
             }
-            else if($userMessage =="โจทย์"){
-                $quizzesforsubj = DB::table('exams')
-                            ->where('chapter_id', 1)->inRandomOrder()
-                            ->first();
-                $pathtoexam = 'https://pkwang.herokuapp.com/'.$quizzesforsubj->local_pic;
-                $urgroup = DB::table('groups')
-                    ->where('line_code', $userId)
-                    ->where('status',false)
-                    ->orderBy('id','DESC')
-                    ->first();
-                DB::table('logChildrenQuizzes')->insert([
-                    'group_id' => $urgroup->id,
-                    'exam_id' => $quizzesforsubj->id,
-                    'time' => Carbon::now()
-                ]);
-                $replyData = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-            }
             else if($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                 $multiMessage = new MultiMessageBuilder;
                 $urgroup = DB::table('groups')
