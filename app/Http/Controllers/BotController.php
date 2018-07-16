@@ -389,7 +389,7 @@ class BotController extends Controller
                 ->offset($count_quiz-5)
                 ->limit(5)
                 ->get();
-                //->count();
+                //->count();s
                 echo "count_quiz_eiei";
                 dd($count_quiz_true);
                 if($count_quiz_true->is_correct === true){
