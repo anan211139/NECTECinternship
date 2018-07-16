@@ -308,6 +308,7 @@ class BotController extends Controller
                         $count_quiz = DB::table('logChildrenQuizzes')
                             ->where('group_id', $urgroup->id)
                             ->count();
+                        echo $count_quiz;
                         $princ_pic = $princ->local_pic;
                         $ans_status = $currentlog->is_correct;
                         $sec_chance = $currentlog->second_chance;
