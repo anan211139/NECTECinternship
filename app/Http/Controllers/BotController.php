@@ -398,7 +398,9 @@ class BotController extends Controller
             //     }
 
             $count_quiz_true = LogChildrenQuiz::all()
+                ->first()
                 ->get();
+            echo $count_quiz_true['group_id'];
 
 
             // echo "CT>>".$count_true;
