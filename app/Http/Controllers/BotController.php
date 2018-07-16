@@ -401,7 +401,8 @@ class BotController extends Controller
                     echo "+";
                 }
             }
-            echo "CT>>".$count_true;
+            echo "CT";
+            echo $count_true;
             if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
                 echo "VU";
