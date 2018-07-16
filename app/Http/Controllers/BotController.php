@@ -391,7 +391,7 @@ class BotController extends Controller
                 ->get();
                 //->count();s
                 echo "count_quiz_eiei";
-                dd($count_quiz_true);
+                //dd($count_quiz_true);
                 if($count_quiz_true->is_correct === true){
                     $count_true++;
                     echo "*";
