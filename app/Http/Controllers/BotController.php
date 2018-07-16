@@ -308,17 +308,19 @@ class BotController extends Controller
                         $count_quiz = DB::table('logChildrenQuizzes')
                             ->where('group_id', $urgroup->id)
                             ->count();
-                        echo $count_quiz;
+
                         $princ_pic = $princ->local_pic;
                         $ans_status = $currentlog->is_correct;
                         $sec_chance = $currentlog->second_chance;
 
                         $arr_replyData = array();
 
-                        if ($ans_status === null) {
+                        if ($ans_status == null) {
                             if ((int)$userMessage == $ans->answer) {
                                 $arr_replyData[] = new TextMessageBuilder("Correct!");
                                 $ansst = true;
+
+                                echo $count_quiz;
 
                                 if ($count_quiz < 20) {
                                     foreach ($arr_replyData as $arr_Reply) {
