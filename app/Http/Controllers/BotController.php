@@ -413,7 +413,7 @@ class BotController extends Controller
                 ->get();
                 //->count();
                 if($count_quiz_true->is_correct===true){
-                    $count_true++;                    dd($count_true);
+                    $count_true++;                    //dd($count_true);
                 }
             if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
