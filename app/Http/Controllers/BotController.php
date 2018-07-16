@@ -410,6 +410,7 @@ class BotController extends Controller
                 $level_id = $level_id - 1;
                 echo "VD";
             }
+            echo "\nLEVEL_ID IS".$level_id;
 
 
             //dd($count_quiz_true);
