@@ -45,7 +45,6 @@ use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
 
 use App\Prize;
-use App\LogChildrenQuiz;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
@@ -384,23 +383,23 @@ class BotController extends Controller
         // dd($count_quiz) ;
         if ($count_quiz % 5 == 0) {
             $count_true = 0;
-            // $count_quiz_true = DB::table('logChildrenQuizzes')
-            //     ->where('group_id', $group_id)
-            //     ->offset($count_quiz-5)
-            //     ->limit(5)
-            //     ->get();
-            //     echo "count_quiz_eiei";
-            //     //dd($count_quiz_true);
-            //     if($count_quiz_true->is_correct === true){
-            //         $count_true++;
-            //         echo "*";
-            //         //dd($count_true);
-            //     }
+            $count_quiz_true = DB::table('logChildrenQuizzes')
+                ->where('group_id', $group_id)
+                ->offset($count_quiz-5)
+                ->limit(5)
+                ->first();
+                echo "count_quiz_eiei";
+                //dd($count_quiz_true);
+                if($count_quiz_true->is_correct === true){
+                    $count_true++;
+                    echo "*";
+                    //dd($count_true);
+                }
+                else{
+                    echo "+";
+                }
 
-            $count_quiz_true = LogChildrenQuiz::all()
-                ->first()
-                ->get();
-            echo $count_quiz_true['group_id'];
+
 
 
             // echo "CT>>".$count_true;
