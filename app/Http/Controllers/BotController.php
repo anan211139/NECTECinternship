@@ -384,23 +384,24 @@ class BotController extends Controller
         if ($count_quiz % 5 == 0) {
             $count_true = 0;
 
-            $new_val = $count_quiz-5;
-            echo "\n Value offset >>".$new_val."<<";
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
                 ->offset($count_quiz-5)
                 ->limit(5)
-                ->first();
+                ->get();
                 echo "count_quiz";
                 //dd($count_quiz_true);
-                if($count_quiz_true->is_correct === true){
-                    $count_true++;
-                    echo "*";
-                    //dd($count_true);
+                foreach ($count_quiz_true as $count_true) {
+                    if($count_quiz_true->is_correct === true){
+                        $count_true++;
+                        echo "*";
+                        //dd($count_true);
+                    }
+                    else{
+                        echo "+";
+                    }
                 }
-                else{
-                    echo "+";
-                }
+                
 
 
 
