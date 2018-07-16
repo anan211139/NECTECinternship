@@ -391,7 +391,7 @@ class BotController extends Controller
                 ->offset($count_quiz-5)
                 ->limit(5)
                 ->first();
-                echo "count_quiz_eiei";
+                echo "count_quiz";
                 //dd($count_quiz_true);
                 if($count_quiz_true->is_correct === true){
                     $count_true++;
@@ -414,7 +414,9 @@ class BotController extends Controller
             //     $level_id = $level_id - 1;
             //     echo "VD";
             // }
-            dd($count_quiz_true);
+
+
+            //dd($count_quiz_true);
 
             DB::table('groupRandoms')
             ->where('group_id', $num_group->id)
