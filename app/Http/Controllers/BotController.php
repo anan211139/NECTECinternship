@@ -328,10 +328,7 @@ class BotController extends Controller
                                     }
                                     $arr_replyData = array();
                                 } else {
-                                    DB::table('groups')
-                                        ->where('id', $urgroup->id)
-                                        ->update(['status' => true]);
-                                    //call result function
+                                    $this->close_group($urgroup->id);
                                     $arr_replyData[] = new TextMessageBuilder("Close group");
                                 }
 
@@ -369,10 +366,7 @@ class BotController extends Controller
                                 }
                                 $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                             } else {
-                                DB::table('groups')
-                                    ->where('id', $urgroup->id)
-                                    ->update(['status' => true]);
-                                //call result function
+                                $this->close_group($urgroup->id);
                                 $arr_replyData[] = new TextMessageBuilder("Close group");
                             }
 
@@ -552,8 +546,31 @@ class BotController extends Controller
         return $arr_replyData;
     }
 
-    public function results($group_id, $level_id) {
+    public function close_group($group_id) {
+        DB::table('groups')
+            ->where('id', $group_id)
+            ->update(['status' => true]);
 
+        $current_group = DB::table('groups')
+            ->where('id', $group_id)
+            ->first();
+
+        $current_std = DB::table('students')
+            ->where('line_code', $current_group->line_code)
+            ->first();
+
+        $all_lvl = DB::table('levels')
+            ->get();
+
+        foreach ($all_lvl as $lvl) {
+            $point = $this->results($group_id, $lvl->id);
+            DB::table('students')
+                ->where('line_code', $current_group->line_code)
+                ->update(['point' => ($current_std->point + $point) * $lvl->id]);
+        }
+    }
+
+    public function results($group_id, $level_id) {
         $current_group = DB::table('groups')
             ->where('id', $group_id)
             ->first();
@@ -575,15 +592,17 @@ class BotController extends Controller
             }
         }
 
-        DB::table('results')->insert([
-            'line_code' => $current_group->line_code,
-            'group_id' => $group_id,
-            'level_id' => $level_id,
-            'total_level' => $total_exam,
-            'total_level_true' => $total_true
-        ]);
+        if ($total_exam != 0) {
+            DB::table('results')->insert([
+                'line_code' => $current_group->line_code,
+                'group_id' => $group_id,
+                'level_id' => $level_id,
+                'total_level' => $total_exam,
+                'total_level_true' => $total_true
+            ]);
+        }
 
-        return "group: ". $group_id .", lvl: ". $level_id . ", total_exam: " . $total_exam . ", total_true: ". $total_true;
+        return $total_true;
 
     }
 
