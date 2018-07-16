@@ -382,7 +382,7 @@ class BotController extends Controller
             ->count();
         // dd($count_quiz) ;
         if ($count_quiz % 5 == 0) {
-            $count_true = 0;
+            
 
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
@@ -391,6 +391,7 @@ class BotController extends Controller
                 ->get();
             echo "CQ";
                 //dd($count_quiz_true);
+            $count_true=0;
             foreach ($count_quiz_true as $count_true) {
                 if($count_true->is_correct === true){
                     $count_true++;
@@ -402,7 +403,7 @@ class BotController extends Controller
                 }
             }
             echo "CT";
-            echo $count_true;
+            echo (int)$count_true;
             if ($count_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
                 echo "VU";
