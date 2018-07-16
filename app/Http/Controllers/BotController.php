@@ -401,20 +401,15 @@ class BotController extends Controller
                     echo "+";
                 }
             }
-                
-
-
-
-
-            // echo "CT>>".$count_true;
-            // if ($count_true >= 3 && $level_id < 3) {
-            //     $level_id = $level_id + 1;
-            //     echo "VU";
-            // }
-            // else if ($count_true < 3 && $level_id > 1) {
-            //     $level_id = $level_id - 1;
-            //     echo "VD";
-            // }
+            echo "CT>>".$count_true;
+            if ($count_true >= 3 && $level_id < 3) {
+                $level_id = $level_id + 1;
+                echo "VU";
+            }
+            else if ($count_true < 3 && $level_id > 1) {
+                $level_id = $level_id - 1;
+                echo "VD";
+            }
 
 
             //dd($count_quiz_true);
