@@ -383,6 +383,9 @@ class BotController extends Controller
         // dd($count_quiz) ;
         if ($count_quiz % 5 == 0) {
             $count_true = 0;
+
+            $new_val = $count_quiz-5;
+            echo "\n Value offset >>".$new_val."<<";
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
                 ->offset($count_quiz-5)
