@@ -328,7 +328,7 @@ class BotController extends Controller
                                     }
                                     $arr_replyData = array();
                                 } else {
-                                    dd("test2");
+                                    echo "test2";
                                     $this->close_group($urgroup->id);
                                     $arr_replyData[] = new TextMessageBuilder("Close group");
                                 }
@@ -367,7 +367,7 @@ class BotController extends Controller
                                 }
                                 $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                             } else {
-                                dd("test1");
+                                echo "test1";
                                 $this->close_group($urgroup->id);
                                 $arr_replyData[] = new TextMessageBuilder("Close group");
                             }
@@ -549,7 +549,7 @@ class BotController extends Controller
     }
 
     public function close_group($group_id) {
-        dd('test');
+        echo 'test';
         DB::table('groups')
             ->where('id', $group_id)
             ->update(['status' => true]);
