@@ -392,7 +392,7 @@ class BotController extends Controller
             echo "CQ";
                 //dd($count_quiz_true);
             foreach ($count_quiz_true as $count_true) {
-                if($count_quiz_true->is_correct === true){
+                if($count_true->is_correct === true){
                     $count_true++;
                     echo "*";
                     //dd($count_true);
