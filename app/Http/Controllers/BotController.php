@@ -398,8 +398,7 @@ class BotController extends Controller
             //     }
 
             $count_quiz_true = LogChildrenQuiz::all()
-                ->get()
-                ->toArray();
+                ->get();
 
 
             // echo "CT>>".$count_true;
@@ -412,7 +411,7 @@ class BotController extends Controller
             //     echo "VD";
             // }
             dd($count_quiz_true);
-            
+
             DB::table('groupRandoms')
             ->where('group_id', $num_group->id)
             ->update(['listlevelid' => $num_group->listlevelid.$level_id.","]);
