@@ -547,6 +547,7 @@ class BotController extends Controller
     }
 
     public function close_group($group_id) {
+        dd('test');
         DB::table('groups')
             ->where('id', $group_id)
             ->update(['status' => true]);
