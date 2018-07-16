@@ -328,6 +328,7 @@ class BotController extends Controller
                                     }
                                     $arr_replyData = array();
                                 } else {
+                                    dd("test2");
                                     $this->close_group($urgroup->id);
                                     $arr_replyData[] = new TextMessageBuilder("Close group");
                                 }
@@ -366,6 +367,7 @@ class BotController extends Controller
                                 }
                                 $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                             } else {
+                                dd("test1");
                                 $this->close_group($urgroup->id);
                                 $arr_replyData[] = new TextMessageBuilder("Close group");
                             }
