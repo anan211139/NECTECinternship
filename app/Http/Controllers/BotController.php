@@ -315,12 +315,10 @@ class BotController extends Controller
 
                         $arr_replyData = array();
 
-                        if ($ans_status == null) {
+                        if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
                                 $arr_replyData[] = new TextMessageBuilder("Correct!");
                                 $ansst = true;
-
-                                echo $count_quiz;
 
                                 if ($count_quiz < 20) {
                                     foreach ($arr_replyData as $arr_Reply) {
@@ -332,7 +330,6 @@ class BotController extends Controller
                                     }
                                     $arr_replyData = array();
                                 } else {
-                                    echo "test2";
                                     $this->close_group($urgroup->id);
                                     $arr_replyData[] = new TextMessageBuilder("Close group");
                                 }
@@ -371,7 +368,6 @@ class BotController extends Controller
                                 }
                                 $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
                             } else {
-                                echo "test1";
                                 $this->close_group($urgroup->id);
                                 $arr_replyData[] = new TextMessageBuilder("Close group");
                             }
