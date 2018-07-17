@@ -129,7 +129,7 @@ class BotController extends Controller
                 // dd($group_true);
                 $group_result = DB::table('results')
                     ->where('group_id',$group_true->id)
-                    ->count();
+                    ->get();
 
                 //$concat_result = "";
 
