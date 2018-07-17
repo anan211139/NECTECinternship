@@ -132,7 +132,9 @@ class BotController extends Controller
                     ->get();
 
                 $concat_result = "";
-                
+
+                dd($group_result);
+
                 if($group_result === null){
                     $concat_result = "น้องยังไม่มีคะแนนสอบชุดล่าสุด";
                 }
