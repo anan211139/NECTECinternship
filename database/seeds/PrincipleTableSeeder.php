@@ -15,7 +15,6 @@ class PrincipleTableSeeder extends Seeder
         DB::table('printciples')->delete();
         //insert some dummy records
         DB::table('printciples')->insert(array(
-            array('local_pic'=>'img/princ/Math/princ.png'),
             array('local_pic'=>'img/princ/Math/eq.png'),
             array('local_pic'=>'img/princ/Math/clock.png'),
             array('local_pic'=>'img/princ/Math/gcd_frac.png'),
