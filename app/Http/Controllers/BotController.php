@@ -131,7 +131,7 @@ class BotController extends Controller
                     ->where('group_id',$group_true->id)
                     ->get();
 
-                //$concat_result = "";
+                $concat_result = "";
 
                 
                 foreach ($group_result as $g_result) {
