@@ -15,7 +15,6 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->increments('id');
-            $table->Integer('subject_id');
             $table->Integer('chapter_id');
             $table->Integer('level_id');
             $table->string('local_pic');

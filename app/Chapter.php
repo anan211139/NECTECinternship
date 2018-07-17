@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chapter extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['subject_id', 'name'];
 }

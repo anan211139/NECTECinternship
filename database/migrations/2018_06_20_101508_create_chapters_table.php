@@ -15,6 +15,7 @@ class CreateChaptersTable extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->increments('id');
+            $table->Integer('subject_id');
             $table->string('name');
             $table->timestampsTz();
         });

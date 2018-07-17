@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info("Exam & Principle table seeded :)");
 
         //other fixed table
-        DB::table('chapters')->insert([['name' => 'Equation'],['name' => 'GCD']]);
+        DB::table('chapters')->insert([['subject_id' => 1, 'name' => 'Equation'],['subject_id' => 1, 'name' => 'GCD']]);
         DB::table('subjects')->insert([['name' => 'Mathematics'],['name' => 'English']]);
         DB::table('levels')->insert([['name' => 'easy'],['name' => 'medium'],['name' => 'hard']]);
         DB::table('types')->insert([['name' => 'code'],['name' => 'delivery']]);

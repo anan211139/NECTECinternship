@@ -264,7 +264,7 @@ class BotController extends Controller
 
                     } //------ หรม./ครน. -------
                     else if ($pos1 !== false || $pos2 !== false) {
-                        $arr_replyData = $this->start_exam($userId, 1, 2);
+                        $arr_replyData = $this->start_exam($userId, 2);
                         $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
@@ -272,7 +272,7 @@ class BotController extends Controller
                         $replyData = $multiMessage;
                     } //------ สมการ -------
                     else if ($userMessage == "สมการ") {
-                        $arr_replyData = $this->start_exam($userId, 1, 1);
+                        $arr_replyData = $this->start_exam($userId, 1);
                         $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
@@ -288,23 +288,11 @@ class BotController extends Controller
                             ->where('group_id', $urgroup->id)
                             ->orderBy('id', 'DESC')
                             ->first();
-//                        dd($currentlog);
-                        DB::table('groups')
-                            ->where('id', $currentlog->id)
-                            ->update(['3day' => Carbon::now()->addDays(3)]);
 
                         $ans = DB::table('exams')
                             ->where('id', $currentlog->exam_id)
                             ->orderBy('id', 'DESC')
                             ->first();
-                $currentlog = DB::table('logChildrenQuizzes')
-                    ->where('group_id', $urgroup->id)
-                    ->orderBy('id','DESC')
-                    ->first();
-                // dd($currentlog);
-                DB::table('groups')
-                    ->where('id', $currentlog->id)
-                    ->update(['3day' => Carbon::now()->addDays(3)]);
 
                         $princ = DB::table('printciples')
                             ->where('id', $ans->principle_id)
@@ -363,7 +351,7 @@ class BotController extends Controller
                             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
                             DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
-                                ->update(['second_chance' => true, 'is_correct_secound' => $ansst]);
+                                ->update(['second_chance' => true, 'is_correct_second' => $ansst]);
 
                             if ($count_quiz < 20) {
                                 foreach ($arr_replyData as $arr_Reply) {
@@ -492,7 +480,7 @@ class BotController extends Controller
     }
 
     //use this function after the student pick their own lesson
-    public function start_exam($userId, $subject_id, $chapter_id) {
+    public function start_exam($userId, $chapter_id) {
         $arr_replyData = array();
         $current_chapter = DB::table('chapters')
             ->where('id', $chapter_id)
@@ -500,13 +488,11 @@ class BotController extends Controller
         // dd($current_chapter);
         $old_group_count = DB::table('groups')
             ->where('line_code', $userId)
-            ->where('subject_id', $subject_id)
             ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->count();
         $old_group = DB::table('groups')
             ->where('line_code', $userId)
-            ->where('subject_id', $subject_id)
             ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->first();
@@ -515,11 +501,8 @@ class BotController extends Controller
         if ($old_group_count == 0 || $old_group->status === true) {
             $group_id = DB::table('groups')->insertGetId([ //create new group
                 'line_code' => $userId,
-                'subject_id' => $subject_id,
                 'chapter_id' => $chapter_id,
-                'status' => false,
-                '3day' => Carbon::now()->addDays(3),
-                '7day' => Carbon::now()->addDays(7)
+                'status' => false
             ]);
             $quizzesforsubj = DB::table('exams') //generate the first quiz
                 ->where('chapter_id', $chapter_id)
