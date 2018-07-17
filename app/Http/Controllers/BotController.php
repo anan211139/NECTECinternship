@@ -165,12 +165,8 @@ class BotController extends Controller
                                     new AreaBuilder(87, 350, 873, 155)
                                 ),
                             ));
-                    } else if ($userMessage == "ดูคะแนน") {
-
-
-                        $textReplyMessage = "น้องๆมีคะแนนทั้งหมด 1 คะแนน";
-                        $replyData = new TextMessageBuilder($textReplyMessage);
-
+                    } else if($userMessage =="ดูคะแนน"){
+                        $replyData = $this->declare_point($userId);
                     } else if ($userMessage == "สะสมแต้ม") {
                         $score = DB::table('students')
                             ->where('line_code', $userId)
@@ -301,6 +297,14 @@ class BotController extends Controller
                             ->where('id', $currentlog->exam_id)
                             ->orderBy('id', 'DESC')
                             ->first();
+                $currentlog = DB::table('logChildrenQuizzes')
+                    ->where('group_id', $urgroup->id)
+                    ->orderBy('id','DESC')
+                    ->first();
+                // dd($currentlog);
+                DB::table('groups')
+                    ->where('id', $currentlog->id)
+                    ->update(['3day' => Carbon::now()->addDays(3)]);
 
                         $princ = DB::table('printciples')
                             ->where('id', $ans->principle_id)
@@ -315,7 +319,7 @@ class BotController extends Controller
 
                         $arr_replyData = array();
 
-                        if ($ans_status == null) {
+                        if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
                                 $arr_replyData[] = new TextMessageBuilder("Correct!");
                                 $ansst = true;
@@ -330,8 +334,7 @@ class BotController extends Controller
                                     }
                                     $arr_replyData = array();
                                 } else {
-                                    $this->close_group($urgroup->id);
-                                    $arr_replyData[] = new TextMessageBuilder("Close group");
+                                    $arr_replyData[] = $this->close_group($urgroup->id);
                                 }
 
                             } else {
@@ -348,7 +351,7 @@ class BotController extends Controller
                                 ->where('id', $currentlog->id)
                                 ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
 
-                        } else if ($ans_status == false && $sec_chance == false) {
+                        } else if ($ans_status === false && $sec_chance === false) {
 
                             if ((int)$userMessage == $ans->answer) {
                                 $textReplyMessage = "Correct!";
@@ -367,9 +370,12 @@ class BotController extends Controller
                                     $multiMessage->add($arr_Reply);
                                 }
                                 $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
+                                foreach ($arr_replyData as $arr_Reply) {
+                                    $multiMessage->add($arr_Reply);
+                                }
+                                $arr_replyData = array();
                             } else {
-                                $this->close_group($urgroup->id);
-                                $arr_replyData[] = new TextMessageBuilder("Close group");
+                                $arr_replyData[] = $this->close_group($urgroup->id);
                             }
 
                         }
@@ -389,6 +395,9 @@ class BotController extends Controller
                     $response = $bot->replyMessage($replyToken, $replyData);
                 }
             }
+            // ส่วนของคำสั่งตอบกลับข้อความ
+            $response = $bot->replyMessage($replyToken,$replyData);
+            
         }
     }
 
@@ -399,30 +408,38 @@ class BotController extends Controller
             ->where('id', $group_id)
             ->orderBy('id','DESC')
             ->first();
+        
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->count();
         if ($count_quiz % 5 == 0) {
-            $count_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
-                //->where('is_correct',true)
                 ->offset($count_quiz-5)
                 ->limit(5)
                 ->get();
-                //->count();
-                if($count_quiz_true->is_correct===true){
-                    $count_true++;                    //dd($count_true);
+            $count_num_true=0;
+            foreach ($count_quiz_true as $count_true) {
+                if($count_true->is_correct === true){
+                    $count_num_true++;
                 }
-            if ($count_true >= 3 && $level_id < 3) {
+            }
+            if ($count_num_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
             }
-            else if ($count_true < 3 && $level_id > 1) {
+            else if ($count_num_true < 3 && $level_id > 1) {
                 $level_id = $level_id - 1;
             }
+
+            $group_r = DB::table('groupRandoms')
+            ->where('group_id', $group_id)
+                ->first();
+            $group_rand = $group_r->listlevelid;
+            $concat_level = $group_rand.$level_id.',';
+
             DB::table('groupRandoms')
-            ->where('group_id', $num_group->id)
-            ->update(['listlevelid' => $num_group->listlevelid.$level_id.","]);
+                ->where('group_id', $num_group->id)
+                ->update(['listlevelid' => $concat_level]);
         }
 
         //declare the next quiz
@@ -480,6 +497,7 @@ class BotController extends Controller
         $current_chapter = DB::table('chapters')
             ->where('id', $chapter_id)
             ->first();
+        // dd($current_chapter);
         $old_group_count = DB::table('groups')
             ->where('line_code', $userId)
             ->where('subject_id', $subject_id)
@@ -508,11 +526,12 @@ class BotController extends Controller
                 ->where('level_id', 2)
                 ->inRandomOrder()
                 ->first();
-            DB::table('groupRandoms')->insert([
+            $tests = DB::table('groupRandoms')->insert([
                 'group_id' => $group_id,
                 'listexamid' => $quizzesforsubj->id.',',
                 'listlevelid' => "2,"
             ]);
+            // dd($tests);
             DB::table('logChildrenQuizzes')->insert([
                 'group_id' => $group_id,
                 'exam_id' => $quizzesforsubj->id,
@@ -532,6 +551,8 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
             ->first();
+        // echo $group_id;
+        // dd($current_log);
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
@@ -569,8 +590,9 @@ class BotController extends Controller
             $point = $this->results($group_id, $lvl->id);
             DB::table('students')
                 ->where('line_code', $current_group->line_code)
-                ->update(['point' => ($current_std->point + $point) * $lvl->id]);
+                ->update(['point' => ($current_std->point + ($point * $lvl->id))]);
         }
+        return $this->declare_point($current_group->line_code);
     }
 
     public function results($group_id, $level_id) {
@@ -607,6 +629,48 @@ class BotController extends Controller
 
         return $total_true;
 
+    }
+
+    public function declare_point($userId) {
+        $group_true = DB::table('groups')
+            ->where('line_code', $userId)
+            ->where('status',true)
+            ->orderBy('id','DESC')
+            ->first();
+        $group_result = DB::table('results')
+            ->where('group_id',$group_true->id)
+            ->get();
+        
+        $group_count = DB::table('results')
+            ->where('group_id',$group_true->id)
+            ->count();
+        if($group_count == 0){
+            $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
+        }
+        else{
+            $concat_result = "";
+
+            foreach ($group_result as $g_result) {
+                
+                if($g_result->level_id == 1){
+                    $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    echo "E";
+                }
+                else if($g_result->level_id == 2){
+                    $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    echo "M";
+                }
+                else if($g_result->level_id == 3){
+                    $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    echo "H";
+                }
+                $concat_result = $concat_result.$text_result;
+            }
+        }
+        
+        $textReplyMessage = $concat_result;
+        $replyData = new TextMessageBuilder($textReplyMessage);
+        return $replyData;
     }
 
 
