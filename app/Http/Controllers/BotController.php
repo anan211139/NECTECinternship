@@ -121,15 +121,46 @@ class BotController extends Controller
             }
             else if($userMessage =="ดูคะแนน"){
 
+                $group_true = DB::table('groups')
+                    ->where('line_code', $userId)
+                    ->where('status',true)
+                    ->orderBy('id','DESC')
+                    ->first();
+              
+                $group_result = DB::table('results')
+                    ->where('group_id',$group_true)
+                    ->get();
 
-                $textReplyMessage = "น้องๆมีคะแนนทั้งหมด 1 คะแนน";
+                $concat_result = "";
+                
+                if($group_result === null){
+                    $concat_result = "น้องยังไม่มีคะแนนสอบชุดล่าสุด";
+                }
+                else{
+                    $text_result = "คะแนนสอบของน้องในชุดล่าสุด\n";
+                    foreach ($group_result as $g_result) {
+                        $concat_result = $concat_result.$text_result;
+                        if($g_result->level_id == 1){
+                            $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                        }
+                        else if($g_result->level_id == 2){
+                            $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                        }
+                        else if($g_result->level_id == 3){
+                            $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                        }
+                    }
+                }
+                
+
+                $textReplyMessage = $concat_result;
                 $replyData = new TextMessageBuilder($textReplyMessage);
 
             }
             else if($userMessage =="สะสมแต้ม"){
                 $score = DB::table('students')
-                                ->where('line_code', $userId)
-                                ->first();
+                    ->where('line_code', $userId)
+                    ->first();
                 $point_st = $score->point;
                 $actionBuilder = array(
                     new MessageTemplateActionBuilder(
