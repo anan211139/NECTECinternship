@@ -129,28 +129,24 @@ class BotController extends Controller
                 // dd($group_true);
                 $group_result = DB::table('results')
                     ->where('group_id',$group_true->id)
-                    ->get();
+                    ->count();
 
                 //$concat_result = "";
 
-                dd($group_result);
-
-                if($group_result === null){
-                    $concat_result = "น้องยังไม่มีคะแนนสอบชุดล่าสุด";
-                }
-                else{
-                    $text_result = "คะแนนสอบของน้องในชุดล่าสุด\n";
-                    foreach ($group_result as $g_result) {
-                        $concat_result = $concat_result.$text_result;
-                        if($g_result->level_id == 1){
-                            $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                        }
-                        else if($g_result->level_id == 2){
-                            $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                        }
-                        else if($g_result->level_id == 3){
-                            $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                        }
+                
+                foreach ($group_result as $g_result) {
+                    $concat_result = $concat_result.$text_result;
+                    if($g_result->level_id == 1){
+                        $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    }
+                    else if($g_result->level_id == 2){
+                        $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    }
+                    else if($g_result->level_id == 3){
+                        $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    }
+                    else{
+                        $text_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
                     }
                 }
                 
