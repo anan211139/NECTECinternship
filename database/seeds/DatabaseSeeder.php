@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
         //call uses table seeder class
         $this->call([
             ExamTableSeeder::class,
-            PrincipleTableSeeder::class
+            PrincipleTableSeeder::class,
+            PrizesTableSeeder::class,
+            SponsorTableSeeder::class
         ]);
         //this message shown in your terminal after running db:seed command
         $this->command->info("Exam & Principle table seeded :)");
