@@ -569,11 +569,12 @@ class BotController extends Controller
         $all_lvl = DB::table('levels')
             ->get();
 
+        $point_update = $current_std->point;
         foreach ($all_lvl as $lvl) {
-            $point = $this->results($group_id, $lvl->id);
+            $point_update += ($this->results($group_id, $lvl->id)) * $lvl->id;
             DB::table('students')
                 ->where('line_code', $current_group->line_code)
-                ->update(['point' => ($current_std->point + ($point * $lvl->id))]);
+                ->update(['point' => $point_update]);
         }
         return $this->declare_point($current_group->line_code);
     }
