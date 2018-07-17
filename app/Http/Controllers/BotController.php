@@ -621,7 +621,7 @@ class BotController extends Controller
               $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
               // $Message1 =  $a[$random_keys[0]];
-              $Message1 =  'สวัสดีครับ เราเคยรู้จักกันหรือเปล่า';
+              $Message1 =  'เราจะลองไปเรื่อยๆ เราไม่เมื่อย เราไม่เหนื่อย';
 
               $textMessageBuilder = new TextMessageBuilder($Message1);
 
