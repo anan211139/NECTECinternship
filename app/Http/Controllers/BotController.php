@@ -397,7 +397,7 @@ class BotController extends Controller
             }
             // ส่วนของคำสั่งตอบกลับข้อความ
             $response = $bot->replyMessage($replyToken,$replyData);
-            
+
         }
     }
 
@@ -408,7 +408,7 @@ class BotController extends Controller
             ->where('id', $group_id)
             ->orderBy('id','DESC')
             ->first();
-        
+
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->count();
@@ -640,7 +640,7 @@ class BotController extends Controller
         $group_result = DB::table('results')
             ->where('group_id',$group_true->id)
             ->get();
-        
+
         $group_count = DB::table('results')
             ->where('group_id',$group_true->id)
             ->count();
@@ -651,7 +651,7 @@ class BotController extends Controller
             $concat_result = "";
 
             foreach ($group_result as $g_result) {
-                
+
                 if($g_result->level_id == 1){
                     $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
                     echo "E";
@@ -667,7 +667,7 @@ class BotController extends Controller
                 $concat_result = $concat_result.$text_result;
             }
         }
-        
+
         $textReplyMessage = $concat_result;
         $replyData = new TextMessageBuilder($textReplyMessage);
         return $replyData;
@@ -689,8 +689,8 @@ class BotController extends Controller
 
               $textMessageBuilder = new TextMessageBuilder($Message1);
 
-              $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
-              //$response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
+              // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
+              $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
 
         }
     }
