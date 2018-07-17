@@ -633,7 +633,7 @@ class BotController extends Controller
             $point = $this->results($group_id, $lvl->id);
             DB::table('students')
                 ->where('line_code', $current_group->line_code)
-                ->update(['point' => ($current_std->point + $point) * $lvl->id]);
+                ->update(['point' => ($current_std->point + ($point * $lvl->id))]);
         }
     }
 
