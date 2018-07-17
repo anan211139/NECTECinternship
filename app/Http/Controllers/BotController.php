@@ -166,48 +166,7 @@ class BotController extends Controller
                                 ),
                             ));
                     } else if($userMessage =="ดูคะแนน"){
-
-                        $group_true = DB::table('groups')
-                            ->where('line_code', $userId)
-                            ->where('status',true)
-                            ->orderBy('id','DESC')
-                            ->first();
-                        // dd($group_true);
-                        $group_result = DB::table('results')
-                            ->where('group_id',$group_true->id)
-                            ->get();
-                        
-                        $group_count = DB::table('results')
-                            ->where('group_id',$group_true->id)
-                            ->count();
-                        if($group_count == 0){
-                            $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
-                            echo "EM";
-                        }
-                        else{
-                            $concat_result = "";
-        
-                            foreach ($group_result as $g_result) {
-                                
-                                if($g_result->level_id == 1){
-                                    $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                                    echo "E";
-                                }
-                                else if($g_result->level_id == 2){
-                                    $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                                    echo "M";
-                                }
-                                else if($g_result->level_id == 3){
-                                    $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                                    echo "H";
-                                }
-                                $concat_result = $concat_result.$text_result;
-                            }
-                        }
-                        
-                        $textReplyMessage = $concat_result;
-                        $replyData = new TextMessageBuilder($textReplyMessage);
-        
+                        $replyData = $this->declare_point($userId);
                     } else if ($userMessage == "สะสมแต้ม") {
                         $score = DB::table('students')
                             ->where('line_code', $userId)
@@ -375,8 +334,7 @@ class BotController extends Controller
                                     }
                                     $arr_replyData = array();
                                 } else {
-                                    $this->close_group($urgroup->id);
-                                    $arr_replyData[] = new TextMessageBuilder("Close group");
+                                    $arr_replyData[] = $this->close_group($urgroup->id);
                                 }
 
                             } else {
@@ -417,8 +375,7 @@ class BotController extends Controller
                                 }
                                 $arr_replyData = array();
                             } else {
-                                $this->close_group($urgroup->id);
-                                $arr_replyData[] = new TextMessageBuilder("Close group");
+                                $arr_replyData[] = $this->close_group($urgroup->id);
                             }
 
                         }
@@ -635,6 +592,7 @@ class BotController extends Controller
                 ->where('line_code', $current_group->line_code)
                 ->update(['point' => ($current_std->point + ($point * $lvl->id))]);
         }
+        return $this->declare_point($current_group->line_code);
     }
 
     public function results($group_id, $level_id) {
@@ -671,6 +629,48 @@ class BotController extends Controller
 
         return $total_true;
 
+    }
+
+    public function declare_point($userId) {
+        $group_true = DB::table('groups')
+            ->where('line_code', $userId)
+            ->where('status',true)
+            ->orderBy('id','DESC')
+            ->first();
+        $group_result = DB::table('results')
+            ->where('group_id',$group_true->id)
+            ->get();
+        
+        $group_count = DB::table('results')
+            ->where('group_id',$group_true->id)
+            ->count();
+        if($group_count == 0){
+            $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
+        }
+        else{
+            $concat_result = "";
+
+            foreach ($group_result as $g_result) {
+                
+                if($g_result->level_id == 1){
+                    $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    echo "E";
+                }
+                else if($g_result->level_id == 2){
+                    $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    echo "M";
+                }
+                else if($g_result->level_id == 3){
+                    $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    echo "H";
+                }
+                $concat_result = $concat_result.$text_result;
+            }
+        }
+        
+        $textReplyMessage = $concat_result;
+        $replyData = new TextMessageBuilder($textReplyMessage);
+        return $replyData;
     }
 
 
