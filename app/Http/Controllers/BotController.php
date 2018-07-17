@@ -138,15 +138,19 @@ class BotController extends Controller
                     
                     if($g_result->level_id == 1){
                         $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                        echo "E";
                     }
                     else if($g_result->level_id == 2){
                         $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                        echo "M";
                     }
                     else if($g_result->level_id == 3){
                         $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                        echo "H";
                     }
                     else{
                         $text_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
+                        echo "EM";
                     }
                     $concat_result = $concat_result.$text_result;
                 }
