@@ -407,7 +407,7 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->count();
         if ($count_quiz % 5 == 0) {
-            $count_true = 0;
+            $count_num_true = 0;
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
                 //->where('is_correct',true)
@@ -415,18 +415,20 @@ class BotController extends Controller
                 ->limit(5)
                 ->get();
                 //->count();
-                if($count_quiz_true->is_correct===true){
-                    $count_true++;                    //dd($count_true);
+                foreach ($count_quiz_true as $count_true) {
+                    if($count_true->is_correct === true){
+                        $count_num_true++;
+                    }
                 }
-            if ($count_true >= 3 && $level_id < 3) {
+            if ($count_num_true >= 3 && $level_id < 3) {
                 $level_id = $level_id + 1;
             }
-            else if ($count_true < 3 && $level_id > 1) {
+            else if ($count_num_true < 3 && $level_id > 1) {
                 $level_id = $level_id - 1;
             }
             DB::table('groupRandoms')
             ->where('group_id', $num_group->id)
-            ->update(['listlevelid' => $num_group->listlevelid.$level_id.","]);
+            ->update(['listlevelid' => $num_group->listlevelid.$level_id.","]);            
         }
 
         //declare the next quiz
