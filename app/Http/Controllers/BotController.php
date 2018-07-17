@@ -133,7 +133,7 @@ class BotController extends Controller
                 
                 $group_count = DB::table('results')
                     ->where('group_id',$group_true->id)
-                    ->get();
+                    ->count();
                 if($group_count == 0){
                     $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
                     echo "EM";
