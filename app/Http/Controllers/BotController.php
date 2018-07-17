@@ -130,33 +130,35 @@ class BotController extends Controller
                 $group_result = DB::table('results')
                     ->where('group_id',$group_true->id)
                     ->get();
-                dd($group_result);
-
-                $concat_result = "";
-
                 
-                foreach ($group_result as $g_result) {
-                    
-                    if($g_result->level_id == 1){
-                        $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                        echo "E";
+                $group_count = DB::table('results')
+                    ->where('group_id',$group_true->id)
+                    ->get();
+                if($group_count == 0){
+                    $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
+                    echo "EM";
+                }
+                else{
+                    $concat_result = "";
+
+                    foreach ($group_result as $g_result) {
+                        
+                        if($g_result->level_id == 1){
+                            $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                            echo "E";
+                        }
+                        else if($g_result->level_id == 2){
+                            $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                            echo "M";
+                        }
+                        else if($g_result->level_id == 3){
+                            $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                            echo "H";
+                        }
+                        $concat_result = $concat_result.$text_result;
                     }
-                    else if($g_result->level_id == 2){
-                        $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                        echo "M";
-                    }
-                    else if($g_result->level_id == 3){
-                        $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                        echo "H";
-                    }
-                    else{
-                        $text_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
-                        echo "EM";
-                    }
-                    $concat_result = $concat_result.$text_result;
                 }
                 
-
                 $textReplyMessage = $concat_result;
                 $replyData = new TextMessageBuilder($textReplyMessage);
 
