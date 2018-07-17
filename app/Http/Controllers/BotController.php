@@ -474,7 +474,10 @@ class BotController extends Controller
                 $level_id = $level_id - 1;
             }
 
-            $group_rand = $num_group->listlevelid;
+            $group_r = DB::table('groupRandoms')
+            ->where('group_id', $group_id)
+                ->first();
+            $group_rand = $group_r->listlevelid;
             $concat_level = $group_rand.$level_id.',';
 
             DB::table('groupRandoms')
