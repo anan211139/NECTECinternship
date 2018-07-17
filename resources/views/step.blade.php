@@ -17,7 +17,7 @@
                     <p class="logoP">พี่หมีติวเตอร์</p>
                 </div>
                 <div>
-                    <a href="" class="layoutMenu">name</a>
+                    <a href="" class="layoutMenu">{{session('name','default')}}</a>
                     <a href="/logout" class="layoutMenu">Log out</a>
                 </div>
             </div>

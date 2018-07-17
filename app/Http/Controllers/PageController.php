@@ -31,8 +31,15 @@ class Pagecontroller extends Controller
       }
     }
     public function getuserpage(){
-      if(session()->has('username')){
-      return view('userpage');
+      if(session()->has('choosechild')){
+        $selectsubject = DB::table('subjects')
+        ->rightjoin('chapters','subjects.id','=','chapters.subject_id')
+        ->select('subject_id','chapters.id AS chapters_id','subjects.name AS subjects_name','chapters.name AS chapters_name')
+        ->get();
+        $arrayresult = json_decode($selectsubject, true);
+        Session::put('subject_list',$arrayresult);
+        // return $selectsubject;
+        return view('userpage');
       }else{
         return redirect('/');
       }
@@ -63,14 +70,12 @@ class Pagecontroller extends Controller
             }else{
                 return redirect('/step');
             }
-
         }else{
             return view('home');
         }
     }
     public function addchild($id){
         Session::put('line_code',$id);
-        // $getpic = new Student;
         $queryresult = DB::table('students')
         ->select(DB::raw('local_pic'))
         ->where('line_code' , $id)

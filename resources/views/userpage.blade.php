@@ -1,5 +1,8 @@
 <?php
   $childdata = session('childdata','default');
+  $choosechild = session('choosechild','default');
+  $subject_list = session('subject_list', 'default');
+  $count = count($childdata);
  ?>
 <html>
     <head>
@@ -34,26 +37,47 @@
             <div id="layoutDropdown" class="layoutDropdown">
                 <div class="dropdown">
                     <button onclick="selectFunction()" id="nameBtn" class="dropbtn dropbtn2">
-                        <img class="avata" src="picture/bear_N.png">
-                        <p>Ton</p>
-                        <img class="dropdownicon" src="picture/down-arrow.png">
+                      @for($i=0;$i<$count;$i++)
+                        @if($choosechild == $childdata[$i]["line_code"])
+                          <img class="avata" src="{{$childdata["$i"]["local_pic"]}}">
+                          <p>{{$childdata["$i"]["name"]}}</p>
+                          <img class="dropdownicon" src="picture/down-arrow.png">
+                        @endif
+                      @endfor
                     </button>
                     <div id="selectDropdown" class="dropdown-content">
                         <div id="child">
-                            <a href="#pei">
-                                <img class="avata" src="picture/bear_N.png">
-                                <p>Pei</p>
+                          @for($i=0;$i<$count;$i++)
+                            <a href="/choosechild/{{$childdata["$i"]["line_code"]}}">
+                                <img class="avata" src="{{$childdata["$i"]["local_pic"]}}">
+                                <p>{{$childdata[0]["name"]}}</p>
                             </a>
-                            <a href="#oat">
-                                <img class="avata" src="picture/bear_N.png">
-                                <p>oat</p>
-                            </a>
+                          @endfor
                         </div>
                         <a onclick="document.getElementById('addPop').style.display='block'">
                             <img class="avata" src="picture/plus.png">
                         </a>
                         <a>ดูทั้งหมด</a>
                     </div>
+                    <!-- namespace -->
+                    @for($i=0;$i<count($subject_list);$i++)
+
+                      @if($i == 0)
+                        {{$subject_list["$i"]["subjects_name"]}}
+                        @for($j=0;$j<count($subject_list);$j++)
+                          @if($subject_list["$i"]["subjects_name"] == $subject_list["$j"]["subjects_name"])
+                            {{$subject_list["$j"]["chapters_name"]}}
+                          @endif
+                        @endfor
+                      @else
+                        @for($k=0;$k<$i;$k++)
+                          @if($subject_list["$k"]["subjects_name"] != $subject_list["$i"]["subjects_name"])
+                            {{$subject_list["$i"]["subjects_name"]}}
+                          @endif
+                        @endfor
+                      @endif
+
+                    @endfor
                 </div>
                 <div class="dropdown">
                     <button onclick="dropdownFunction()" class="dropbtn">
@@ -86,17 +110,23 @@
                         <li class="has-children">
                             <input type="checkbox" name="group-2" id="group-2">
                                 <label class="sidenavImgLogo" for="group-2">
-                                    <img class="avata" src="picture/bear_N.png">
-                                    <p>Ton</p>
+                                  @for($i=0;$i<$count;$i++)
+                                  @if($choosechild == $childdata[$i]["line_code"])
+                                    <img class="avata" src="{{$childdata["$i"]["local_pic"]}}">
+                                    <p>{{$childdata["$i"]["name"]}}</p>
+                                    @endif
+                                  @endfor
                                     <img class="dropdownicon" src="picture/down-arrowblack.png">
                                 </label>
                               <ul>
                                   <li class="has-children">
-                                    <a class="backgroundsub" href="#ggp">pei</a>
-                                    <a class="backgroundsub" href="#ggo">oat</a>
+                                    @for($i=0;$i<$count;$i++)
+                                      <a class="backgroundsub" href="/choosechild/{{$childdata["$i"]["line_code"]}}">{{$childdata["$i"]["name"]}}</a>
+                                    @endfor
                                     <a class="backgroundsub" onclick="document.getElementById('addPop').style.display='block'">
                                         <img class="avata" src="picture/plusffff.png">
                                     </a>
+
                                   </li>
                                   <!-- <li class="has-children">
                                     <a class="backgroundsub" href="#ggo">oat</a>

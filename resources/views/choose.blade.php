@@ -1,4 +1,4 @@
-<<?php
+<?php
   $childdata = session('childdata','default');
   $countchild = session('countchild','default');
  ?>
@@ -13,7 +13,6 @@
         <link rel="shortcut icon" href="picture/bear_N.png">
     </head>
     <body>
-      {{session('choosechild','default')}}
         <label class="header">กรุณาเลือกนักเรียน</label>
         <div class="layoutSelectPage">
           @if($countchild >0)
