@@ -348,7 +348,7 @@ class BotController extends Controller
                                 ->where('id', $currentlog->id)
                                 ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
 
-                        } else if ($ans_status == false && $sec_chance == false) {
+                        } else if ($ans_status === false && $sec_chance === false) {
 
                             if ((int)$userMessage == $ans->answer) {
                                 $textReplyMessage = "Correct!";
@@ -367,6 +367,10 @@ class BotController extends Controller
                                     $multiMessage->add($arr_Reply);
                                 }
                                 $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
+                                foreach ($arr_replyData as $arr_Reply) {
+                                    $multiMessage->add($arr_Reply);
+                                }
+                                $arr_replyData = array();
                             } else {
                                 $this->close_group($urgroup->id);
                                 $arr_replyData[] = new TextMessageBuilder("Close group");
