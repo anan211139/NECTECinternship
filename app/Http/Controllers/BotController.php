@@ -135,7 +135,7 @@ class BotController extends Controller
 
                 
                 foreach ($group_result as $g_result) {
-                    $concat_result = $concat_result.$text_result;
+                    
                     if($g_result->level_id == 1){
                         $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
                     }
@@ -148,6 +148,7 @@ class BotController extends Controller
                     else{
                         $text_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
                     }
+                    $concat_result = $concat_result.$text_result;
                 }
                 
 
