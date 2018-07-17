@@ -126,12 +126,12 @@ class BotController extends Controller
                     ->where('status',true)
                     ->orderBy('id','DESC')
                     ->first();
-              
+                dd($group_true);
                 $group_result = DB::table('results')
                     ->where('group_id',$group_true)
                     ->get();
 
-                $concat_result = "";
+                //$concat_result = "";
 
                 dd($group_result);
 
