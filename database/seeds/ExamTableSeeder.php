@@ -105,5 +105,6 @@ class ExamTableSeeder extends Seeder
             array('chapter_id'=> 1, 'level_id'=> 3, 'local_pic'=>'img/exam/Math/Equation/eq06_hard_4.png', 'answer'=> 4 , 'principle_id'=> 1 ),
             array('chapter_id'=> 1, 'level_id'=> 3, 'local_pic'=>'img/exam/Math/Equation/eq46_hard_2.png', 'answer'=> 2 , 'principle_id'=> 24 ),
             array('chapter_id'=> 1, 'level_id'=> 2, 'local_pic'=>'img/exam/Math/Equation/eq37_med_2.png', 'answer'=> 2 , 'principle_id'=> 15 ),
+        ));
     }
 }
