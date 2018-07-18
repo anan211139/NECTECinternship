@@ -379,7 +379,7 @@ class BotController extends Controller
 
                         $join_log_group = DB::table('logChildrenQuizzes')
                             ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.date')
+                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.time')
                             ->get();
                         dd( $join_log_group);
 
