@@ -658,10 +658,10 @@ class BotController extends Controller
             ->where('group_id',$group_true->id)
             ->get();
 
-        $group_count = DB::table('results')
-            ->where('group_id',$group_true->id)
-            ->count();
-        if($group_count == 0){
+        // $group_count = DB::table('results')
+        //     ->where('group_id',$group_true->id)
+        //     ->count();
+        if($group_true === null){
             $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
         }
         else{
