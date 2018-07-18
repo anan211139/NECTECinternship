@@ -388,7 +388,29 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
-                    $replyData = new TextMessageBuilder("สวัสดีชาวโลก");
+                    $stdprofile = ($bot->getProfile($userId))->getJSONDecodedBody();
+                    $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง (moon wink)\n\t ยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']." (clap)(clap)(clap)");
+                    $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
+                    $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
+                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
+                    $arr_replyData[] = new ImagemapMessageBuilder(
+                        $imageMapUrl,
+                        "รายการวิชา",
+                        new BaseSizeBuilder(546, 1040),
+                        array(
+                            new ImagemapMessageActionBuilder(
+                                "วิชาคณิตศาสตร์",
+                                new AreaBuilder(91, 199, 873, 155)
+                            ),
+                            new ImagemapMessageActionBuilder(
+                                "วิชาภาษาอังกฤษ",
+                                new AreaBuilder(87, 350, 873, 155)
+                            ),
+                        ));
+                    foreach ($arr_replyData as $arr_Reply) {
+                        $multiMessage->add($arr_Reply);
+                    }
+                    $replyData = $multiMessage;
                 }
             }
             // ส่วนของคำสั่งตอบกลับข้อความ
