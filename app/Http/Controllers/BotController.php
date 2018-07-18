@@ -228,25 +228,6 @@ class BotController extends Controller
                             $multiMessage->add($arr_Reply);
                         }
                         $replyData = $multiMessage;
-
-                        //--------INSERT AND CHECK DB--------
-                        $checkIMG = DB::table('students')
-                            ->where('line_code', $userId)
-                            ->count();
-
-                        if ($checkIMG == 0) {
-                            $response = $bot->getProfile($userId);
-                            if ($response->isSucceeded()) {
-                                $profile = $response->getJSONDecodedBody();
-                                DB::table('students')->insert([
-                                    'line_code' => $userId,
-                                    'name' => $profile['displayName'],
-                                    'local_pic' => $profile['pictureUrl']
-
-                                ]);
-                            }
-                        }
-
                     } else if ($userMessage == "เกี่ยวกับพี่หมี") {
                         $arr_replyData = array();
                         $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
@@ -387,6 +368,24 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
+                    //--------INSERT AND CHECK DB--------
+                    $checkIMG = DB::table('students')
+                    ->where('line_code', $userId)
+                    ->count();
+
+                    if ($checkIMG == 0) {
+                        $response = $bot->getProfile($userId);
+                        if ($response->isSucceeded()) {
+                            $profile = $response->getJSONDecodedBody();
+                            DB::table('students')->insert([
+                                'line_code' => $userId,
+                                'name' => $profile['displayName'],
+                                'local_pic' => $profile['pictureUrl']
+
+                            ]);
+                        }
+                    }
+                    
                     $multiMessage = new MultiMessageBuilder;
                     $response = $bot->getProfile($userId);
                     $stdprofile = $response->getJSONDecodedBody();
