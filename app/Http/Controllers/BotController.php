@@ -382,7 +382,7 @@ class BotController extends Controller
                             ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.time')
                             ->where('groups.line_code', $userId)
                             ->orderBy('groups.id', 'desc')
-                            ->orderBy('logChildrenQuizzes.id', 'desc')
+                            // ->orderBy('logChildrenQuizzes.id', 'desc')
                             ->first();
                         dd( $join_log_group);
 
