@@ -51,41 +51,47 @@ class Pagecontroller extends Controller
         ->groupBy('chapters.subject_id')
         ->orderBy('results.group_id', 'asc')
         ->get(); //คะเเนนนักเรียน เศษ
-        return $student_score_allsubject;
+
         $student_score_count = DB::table('results')
         ->select(DB::raw('count(level_id) as count'))
         ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
+        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
+        ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
         ->where('level_id', '=', 2)
-        ->where('results.line_code', '=',$choosechild)
-        ->groupBy('groups.subject_id')
+        ->where('results.line_code', '=','$choosechild')
+        ->groupBy('chapters.subject_id')
         ->orderBy('group_id', 'asc')
         ->get(); //คะเเนนนักเรียน ส่วน
 
         $overall_score = DB::table('results')
         ->select(DB::raw('sum(total_level_true*level_id) as overall'))
         ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
-        ->where('results.line_code', '!=', $choosechild)
-        ->groupBy('groups.subject_id')
+        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
+        ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
+        ->where('results.line_code', '!=', '$choosechild')
+        ->groupBy('chapters.subject_id')
         ->orderBy('group_id', 'asc')
         ->get(); //รวมวิชา คะเเนนรวม เศษ (เอาไปบวกกับคะแนนนักเรียนที่ได้)
 
         $student_count = DB::table('results')
         ->select(DB::raw('count(distinct results.line_code) as student_count'))
         ->leftjoin('groups', 'groups.id','=','results.group_id')
-        ->groupBy('groups.subject_id')
+        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
+        ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
+        ->groupBy('chapters.subject_id')
         ->get(); //จำนวนนักเรียนที่ทำในแต่ละวิชา
-
+        // return $student_count;
          $pie_inside = DB::table('results')
          ->select(DB::raw('sum(total_level)as inside'))
          ->leftjoin('groups', 'groups.id', '=', 'results.group_id')
-         ->where('results.line_code','=', $choosechild)
+         ->where('results.line_code','=', '$choosechild')
          ->groupBy('groups.subject_id')
          ->get(); //ได้ทำ
 
          $pie_outside =DB::table('results')
          ->select(DB::raw('sum(total_level_true)as outside'))
          ->leftjoin('groups', 'groups.id', '=', 'results.group_id')
-         ->where('results.line_code','=', $choosechild)
+         ->where('results.line_code','=', '$choosechild')
          ->groupBy('groups.subject_id')
          ->get(); //ข้อที่ทำได้
 
