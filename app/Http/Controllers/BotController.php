@@ -659,27 +659,22 @@ class BotController extends Controller
     }
 
 
-    public function notification() {
-        $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
-        $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
+    // public function notification() {
+    //     $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
+    //     $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-        $user_select = DB::table('groups')->pluck('line_code')->all();
+    //     $user_select = DB::table('groups')->pluck('line_code')->all();
 
-        foreach ($user_select as $line_u) {
+    //     foreach ($user_select as $line_u) {
 
 
-            $Message1 =  $line_u;
+    //         $Message1 =  $line_u;
 
-            $textMessageBuilder = new TextMessageBuilder($Message1);
+    //         $textMessageBuilder = new TextMessageBuilder($Message1);
 
-<<<<<<< HEAD
-            $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
-=======
-              // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
-              $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
->>>>>>> 2b910b30ef51a3ba2b6d69c061b6d435ddcc261f
+    //         $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
 
-            // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
-        }
-    }
+    //         // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
+    //     }
+    // }
 }
