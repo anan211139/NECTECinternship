@@ -308,7 +308,7 @@ class BotController extends Controller
 
                         if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
-                                $arr_replyData[] = new TextMessageBuilder("Correct!");
+                                $arr_replyData[] = new TextMessageBuilder("ถูกต้อง! เก่งจังเลย");
                                 $ansst = true;
 
                                 if ($count_quiz < 20) {
@@ -325,7 +325,7 @@ class BotController extends Controller
                                 }
 
                             } else {
-                                $arr_replyData[] = new TextMessageBuilder("Wrong!");
+                                $arr_replyData[] = new TextMessageBuilder("ผิดแล้ว พี่หมีจะสอนให้");
                                 $ansst = false;
 
                                 $pathtoprinc = 'https://pkwang.herokuapp.com/' . $princ_pic . '/';
@@ -341,10 +341,10 @@ class BotController extends Controller
                         } else if ($ans_status === false && $sec_chance === false) {
 
                             if ((int)$userMessage == $ans->answer) {
-                                $textReplyMessage = "Correct!";
+                                $textReplyMessage = "ถูกต้อง! เก่งจังเลย";
                                 $ansst = true;
                             } else {
-                                $textReplyMessage = "Wrong!";
+                                $textReplyMessage = "ยังผิดอยู่เลย ไปแก้ตัวที่ข้อต่อไปกันดีกว่า";
                                 $ansst = false;
                             }
                             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
@@ -373,7 +373,6 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     } else if ($userMessage == "content") {
-
                         $replyData = new TextMessageBuilder($content);
                     } else if($userMessage == "ลองNOTI"){
 
@@ -385,7 +384,7 @@ class BotController extends Controller
 
 
                     }else {
-                        $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
+                        $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า✩☆✪★ \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
                     $multiMessage = new MultiMessageBuilder;
@@ -534,7 +533,6 @@ class BotController extends Controller
         }
         // if student has finished the old group or fist time create group
         if ($old_group_count == 0 || $check_old_g === true) {
-            echo "YEAH!!!!!";
             $group_id = DB::table('groups')->insertGetId([ //create new group
                 'line_code' => $userId,
                 'chapter_id' => $chapter_id,
@@ -571,8 +569,6 @@ class BotController extends Controller
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
             ->first();
-        // echo $group_id;
-        // dd($current_log);
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->orderBy('id','DESC')
@@ -669,12 +665,12 @@ class BotController extends Controller
             $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
         }
         else{
-            $concat_result = "";
+            $concat_result = "ผลคะแนนจากข้อสอบชุดล่าสุด \n\t";
 
             foreach ($group_result as $g_result) {
 
                 if($g_result->level_id == 1){
-                    $text_result = "ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
+                    $text_result = "✩☆✪★ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
                     echo "E";
                 }
                 else if($g_result->level_id == 2){
