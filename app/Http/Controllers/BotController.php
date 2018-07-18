@@ -500,12 +500,13 @@ class BotController extends Controller
 
         // if student has finished the old group or fist time create group
         if ($old_group_count == 0 | $old_group->status === true) {
+            echo "YEAH!!!!!";
             $group_id = DB::table('groups')->insertGetId([ //create new group
                 'line_code' => $userId,
                 'chapter_id' => $chapter_id,
                 'status' => false
             ]);
-            echo "YEAH!!!!!";
+            
             $quizzesforsubj = DB::table('exams') //generate the first quiz
                 ->where('chapter_id', $chapter_id)
                 ->where('level_id', 2)
