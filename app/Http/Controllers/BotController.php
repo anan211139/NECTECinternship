@@ -376,7 +376,16 @@ class BotController extends Controller
                     } else if ($userMessage == "content") {
 
                         $replyData = new TextMessageBuilder($content);
-                    } else {
+                    } else if($userMessage == "ลองNOTI"){
+
+                        $join_log_group = DB::table('logChildrenQuizzes')
+                            ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
+                            ->get();
+                        dd( $join_log_group);
+
+
+                    }else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                     // ส่วนของคำสั่งตอบกลับข้อความ
@@ -667,7 +676,14 @@ class BotController extends Controller
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-        $user_select = DB::table('groups')->pluck('line_code')->all();
+        $user_select = DB::table('groups')
+            ->pluck('line_code')
+            ->all();
+        
+        $join_log_group = DB::table('logChildrenQuizzes')
+            ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
+            ->get();
 
         foreach ($user_select as $line_u) {
 
