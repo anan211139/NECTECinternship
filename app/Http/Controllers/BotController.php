@@ -505,6 +505,7 @@ class BotController extends Controller
                 'chapter_id' => $chapter_id,
                 'status' => false
             ]);
+            echo "YEAH!!!!!";
             $quizzesforsubj = DB::table('exams') //generate the first quiz
                 ->where('chapter_id', $chapter_id)
                 ->where('level_id', 2)
