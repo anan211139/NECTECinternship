@@ -661,10 +661,9 @@ class BotController extends Controller
         // $group_count = DB::table('results')
         //     ->where('group_id',$group_true->id)
         //     ->count();
-        if($group_true === null){
-            $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
-        }
-        else{
+        
+        $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
+        if($group_true !== null){
             $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกัน \n";
 
             $group_result = DB::table('results')
