@@ -377,14 +377,14 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder($content);
                     } else if($userMessage == "ลองNOTI"){
                         echo "ice";
-                        $join_log_group = DB::table('logChildrenQuizzes')
-                            ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.time')
-                            ->where('groups.line_code', $userId)
-                            ->orderBy('groups.id', 'desc')
-                            // ->orderBy('logChildrenQuizzes.id', 'desc')
-                            ->first();
-                        dd( $join_log_group);
+                        // $join_log_group = DB::table('logChildrenQuizzes')
+                        //     ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+                        //     ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.time')
+                        //     ->where('groups.line_code', $userId)
+                        //     ->orderBy('groups.id', 'desc')
+                        //     // ->orderBy('logChildrenQuizzes.id', 'desc')
+                        //     ->first();
+                        // dd( $join_log_group);
 
 
                     }else {
