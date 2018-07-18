@@ -504,6 +504,7 @@ class BotController extends Controller
             ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->count();
+        dd($old_group_count);
         $old_group = DB::table('groups')
             ->where('line_code', $userId)
             ->where('subject_id', $subject_id)
@@ -675,23 +676,21 @@ class BotController extends Controller
 
 
     public function notification() {
+        $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
+        $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-        $user_select = DB::table('students')->pluck('line_code')->all();
+        $user_select = DB::table('groups')->pluck('line_code')->all();
 
-        $arraylen = count($user_select);
-        for($x=0; $x < $arraylen; ++$x) {
-              $user_id = $user_select[$x];
-              $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
-              $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
+        foreach ($user_select as $line_u) {
 
-              // $Message1 =  $a[$random_keys[0]];
-              $Message1 =  'เราจะลองไปเรื่อยๆ เราไม่เมื่อย เราไม่เหนื่อย';
 
-              $textMessageBuilder = new TextMessageBuilder($Message1);
+            $Message1 =  $line_u;
 
-              $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
-              //$response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
+            $textMessageBuilder = new TextMessageBuilder($Message1);
 
+            $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
+
+            // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
         }
     }
 }
