@@ -379,7 +379,8 @@ class BotController extends Controller
 
                         $join_log_group = DB::table('logChildrenQuizzes')
                             ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.time')
+                            // ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.time')
+                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code',DB::raw('MAX(time) as time'))
                             // ->orderBy('logChildrenQuizzes.id', 'desc')
                             ->groupBy('group_id')
                             ->get();
