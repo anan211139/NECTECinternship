@@ -378,19 +378,19 @@ class BotController extends Controller
 
                         $join_log_group = DB::table('logChildrenQuizzes')
                             ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.line_code','logChildrenQuizzes.time')
+                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
                             ->get();
                         dd( $join_log_group);
 
 
                     }else {
-                        $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า✩☆✪★ \"" . $userMessage . "\" พี่หมีขอโทษนะ");
+                        $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
                     $multiMessage = new MultiMessageBuilder;
                     $response = $bot->getProfile($userId);
                     $stdprofile = $response->getJSONDecodedBody();
-                    $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\n\t ยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
+                    $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
                     $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
                     $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
@@ -665,22 +665,15 @@ class BotController extends Controller
             $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
         }
         else{
-            $concat_result = "ผลคะแนนจากข้อสอบชุดล่าสุด \n\t";
+            $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกัน \n";
 
             foreach ($group_result as $g_result) {
+                $text_result = "ข้อสอบระดับ ";
+                for ($i=0; $i < $g_result->level_id; $i++) { 
+                    $text_result = $text_result."✩";
+                }
+                $text_result = $text_result." ถูกต้อง ".$g_result->total_level_true." ข้อ จากทั้งหมด ".$g_result->total_level." ข้อ";
 
-                if($g_result->level_id == 1){
-                    $text_result = "✩☆✪★ระดับง่าย >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                    echo "E";
-                }
-                else if($g_result->level_id == 2){
-                    $text_result = "ระดับกลาง >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                    echo "M";
-                }
-                else if($g_result->level_id == 3){
-                    $text_result = "ระดับยาก >".$g_result->total_level_true."จากทั้งหมด".$g_result->total_level."\n";
-                    echo "H";
-                }
                 $concat_result = $concat_result.$text_result;
             }
         }
