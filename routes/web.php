@@ -20,6 +20,7 @@ Route::get('/choose', 'Pagecontroller@getchoosepage'); //subset of /user
 Route::get('/step','Pagecontroller@getsteppage'); //subset of /user
 Route::get('/userpage','Pagecontroller@getuserpage'); //subset of /user
 Route::get('/choosechild/{id}','addchildcontroller@sessionaddchild');
+Route::get('/selectchapter/{id}','Pagecontroller@selectchapter');
 
 Route::post('/loginsubmit', 'checklogin@pslogin');
 Route::post('/loginsubmitinaddchild', 'checklogin@pslogininaddchild');

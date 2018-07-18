@@ -2,6 +2,7 @@
   $childdata = session('childdata','default');
   $choosechild = session('choosechild','default');
   $subject_list = session('subject_list', 'default');
+  $chapther_list = session('chapter_list', 'default');
   $count = count($childdata);
  ?>
 <html>
@@ -59,25 +60,6 @@
                         </a>
                         <a>ดูทั้งหมด</a>
                     </div>
-                    <!-- namespace -->
-                    @for($i=0;$i<count($subject_list);$i++)
-
-                      @if($i == 0)
-                        {{$subject_list["$i"]["subjects_name"]}}
-                        @for($j=0;$j<count($subject_list);$j++)
-                          @if($subject_list["$i"]["subjects_name"] == $subject_list["$j"]["subjects_name"])
-                            {{$subject_list["$j"]["chapters_name"]}}
-                          @endif
-                        @endfor
-                      @else
-                        @for($k=0;$k<$i;$k++)
-                          @if($subject_list["$k"]["subjects_name"] != $subject_list["$i"]["subjects_name"])
-                            {{$subject_list["$i"]["subjects_name"]}}
-                          @endif
-                        @endfor
-                      @endif
-
-                    @endfor
                 </div>
                 <div class="dropdown">
                     <button onclick="dropdownFunction()" class="dropbtn">
@@ -85,22 +67,20 @@
                         <img class="dropdownicon" src="picture/down-arrowblack.png">
                     </button>
                     <div id="myDropdown" class="dropdown-content">
-                        <ul class="main-navigation" onmouseover="hover();" onmouseout="unhover();">
-                            <li class="list"><a class="a">ภาษาอังกฤษ <img id="rightarrow" class="dropdownicon" src="picture/right-arrowblack.png"></a>
-                              <ul class="main-navigation">
-                                <li class="list"><a class="a" href="#Grammar">Grammar</a></li>
-                                <li class="list"><a class="a" href="#Listening">Listening</a></li>
-                              </ul>
-                            </li>
-                        </ul>
-                        <ul class="main-navigation" onmouseover="hover2();" onmouseout="unhover2();">
-                            <li class="list"><a class="a">คณิตศาสตร์ <img id="rightarrow2" class="dropdownicon" src="picture/right-arrowblack.png"></a>
+                      @for($i=0;$i<count($subject_list);$i++)
+                          <ul class="main-navigation" onmouseover="hover();" onmouseout="unhover();">
+                              <li class="list"><a class="a">{{$subject_list["$i"]["name"]}}<img id="rightarrow" class="dropdownicon" src="picture/right-arrowblack.png"></a>
                                 <ul class="main-navigation">
-                                  <li class="list"><a class="a">สมการ</a></li>
-                                  <li class="list"><a class="a">หรม./ครน.</a></li>
+                                  @for($j=0;$j<count($chapther_list);$j++)
+                                    @if($subject_list["$i"]["id"] == $chapther_list["$j"]["subject_id"])
+                                        <li class="list"><a class="a" href="/selectchapter/{{$chapther_list["$j"]["id"]}}">{{$chapther_list["$j"]["name"]}}</a></li>
+                                    @endif
+                                  @endfor
                                 </ul>
-                            </li>
-                        </ul>
+                              </li>
+                          </ul>
+                      @endfor
+
                     </div>
                 </div>
             </div>

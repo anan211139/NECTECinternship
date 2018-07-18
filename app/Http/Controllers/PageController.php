@@ -30,15 +30,18 @@ class Pagecontroller extends Controller
         return redirect('/');
       }
     }
+    public function selectchapter($id){
+        return redirect('/userpage');
+    }
     public function getuserpage(){
       if(session()->has('choosechild')){
-        $selectsubject = DB::table('subjects')
-        ->rightjoin('chapters','subjects.id','=','chapters.subject_id')
-        ->select('subject_id','chapters.id AS chapters_id','subjects.name AS subjects_name','chapters.name AS chapters_name')
-        ->get();
-        $arrayresult = json_decode($selectsubject, true);
-        Session::put('subject_list',$arrayresult);
-        // return $selectsubject;
+        $jsonsubject = DB::table('subjects')->get();
+        $jsonchapters = DB::table('chapters')->get();
+        $arraysubject = json_decode($jsonsubject, true);
+        $arraychapters = json_decode($jsonchapters, true);
+        Session::put('subject_list',$arraysubject);
+        Session::put('chapter_list',$arraychapters);
+        // return $arraychapters;
         return view('userpage');
       }else{
         return redirect('/');

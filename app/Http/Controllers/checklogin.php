@@ -45,7 +45,9 @@ class checklogin extends Controller
             $result = json_decode($userresult, true);
             if (Hash::check($password, $result[0]['password'])) {
               $id = $result[0]['id'];
+              $name = $result[0]['name'];
               Session::put('id',$id);
+              Session::put('name',$name);
               Session::put('username',$username);
               return redirect('/addchild')->with('login',$id);
             }
