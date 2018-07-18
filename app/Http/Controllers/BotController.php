@@ -654,9 +654,9 @@ class BotController extends Controller
             ->where('status',true)
             ->orderBy('id','DESC')
             ->first();
-        $group_result = DB::table('results')
-            ->where('group_id',$group_true->id)
-            ->get();
+        
+
+        dd($group_true);
 
         // $group_count = DB::table('results')
         //     ->where('group_id',$group_true->id)
@@ -667,6 +667,9 @@ class BotController extends Controller
         else{
             $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกัน \n";
 
+            $group_result = DB::table('results')
+            ->where('group_id',$group_true->id)
+            ->get();
             foreach ($group_result as $g_result) {
                 $text_result = "ข้อสอบระดับ ";
                 for ($i=0; $i < $g_result->level_id; $i++) { 
