@@ -491,13 +491,13 @@ class BotController extends Controller
             ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->count();
-        dd($old_group_count);
+        
         $old_group = DB::table('groups')
             ->where('line_code', $userId)
             ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->first();
-
+        dd($old_group);
         // if student has finished the old group or fist time create group
         if ($old_group_count == 0 | $old_group->status === true) {
             echo "YEAH!!!!!";
