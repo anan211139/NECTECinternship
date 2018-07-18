@@ -391,7 +391,7 @@ class BotController extends Controller
                     $multiMessage = new MultiMessageBuilder;
                     $response = $bot->getProfile($userId);
                     $stdprofile = $response->getJSONDecodedBody();
-                    $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง (moon wink)\n\t ยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']." (clap)(clap)(clap)");
+                    $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\n\t ยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
                     $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
                     $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
