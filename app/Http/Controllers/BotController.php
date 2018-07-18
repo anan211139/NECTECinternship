@@ -654,30 +654,20 @@ class BotController extends Controller
             ->where('status',true)
             ->orderBy('id','DESC')
             ->first();
-        
 
-        dd($group_true);
+        $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกัน \n";
 
-        // $group_count = DB::table('results')
-        //     ->where('group_id',$group_true->id)
-        //     ->count();
-        
-        $concat_result = "ยังไม่มีคะแนนสอบชุดล่าสุด";
-        if($group_true !== null){
-            $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกัน \n";
-
-            $group_result = DB::table('results')
-            ->where('group_id',$group_true->id)
-            ->get();
-            foreach ($group_result as $g_result) {
-                $text_result = "ข้อสอบระดับ ";
-                for ($i=0; $i < $g_result->level_id; $i++) { 
-                    $text_result = $text_result."✩";
-                }
-                $text_result = $text_result." ถูกต้อง ".$g_result->total_level_true." ข้อ จากทั้งหมด ".$g_result->total_level." ข้อ";
-
-                $concat_result = $concat_result.$text_result;
+        $group_result = DB::table('results')
+        ->where('group_id',$group_true->id)
+        ->get();
+        foreach ($group_result as $g_result) {
+            $text_result = "ข้อสอบระดับ ";
+            for ($i=0; $i < $g_result->level_id; $i++) { 
+                $text_result = $text_result."✩";
             }
+            $text_result = $text_result." ถูกต้อง ".$g_result->total_level_true." ข้อ จากทั้งหมด ".$g_result->total_level." ข้อ";
+
+            $concat_result = $concat_result.$text_result;
         }
 
         $textReplyMessage = $concat_result;
