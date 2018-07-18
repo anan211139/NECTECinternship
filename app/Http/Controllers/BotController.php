@@ -83,11 +83,11 @@ class BotController extends Controller
                     if ($postback_action == "exchange") {
                         list($postback_title, $postback_id) = explode("=", $postback_id_part);
                         $selected = DB::table('prizes')
-                                    ->where('id', $postback_id)
-                                    ->first();
+                            ->where('id', $postback_id)
+                            ->first();
                         $student = DB::table('students')
-                                    ->where('line_code', $userId)
-                                    ->first();
+                            ->where('line_code', $userId)
+                            ->first();
                         if ($student->point >= $selected->point) {
                             DB::table('students')
                                 ->where('line_code', $userId)
@@ -95,9 +95,9 @@ class BotController extends Controller
 
                             if ($selected->type_id === 1) {
                                 $avail_code = DB::table('codes')
-                                            ->where('prize_id', $selected->id)
-                                            ->where('status', 0)
-                                            ->first();
+                                    ->where('prize_id', $selected->id)
+                                    ->where('status', 0)
+                                    ->first();
                                 DB::table('codes')
                                     ->where('id', $avail_code->id)
                                     ->update(['status' => 1]);
@@ -107,7 +107,7 @@ class BotController extends Controller
                                     'code_id' => $avail_code->id,
                                     'time' => Carbon::now()
                                 ]);
-                                $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ ".$avail_code->code;
+                                $replyData = "เก่งมาก นำโค้ดนี้ไปใช้นะ " . $avail_code->code;
                             } elseif ($selected->type_id === 2) {
                                 DB::table('exchanges')->insert([
                                     'line_code' => $userId,
@@ -122,8 +122,7 @@ class BotController extends Controller
                         $bot->replyMessage($replyToken, new TextMessageBuilder($replyData));
                     }
                     continue;
-                }
-                if ($replyInfo == "message") {
+                } else if ($replyInfo == "message") {
                     $typeMessage = $event['message']['type'];
                     $userMessage = $event['message']['text'];
 
@@ -388,8 +387,8 @@ class BotController extends Controller
                     }else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
-                    // ส่วนของคำสั่งตอบกลับข้อความ
-                    $response = $bot->replyMessage($replyToken, $replyData);
+                } else if ($replyInfo == "follow") {
+                    $replyData = new TextMessageBuilder("สวัสดีชาวโลก");
                 }
             }
             // ส่วนของคำสั่งตอบกลับข้อความ
@@ -672,29 +671,29 @@ class BotController extends Controller
     }
 
 
-    // public function notification() {
-    //     $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
-    //     $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
+    //  public function notification() {
+    //      $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
+    //      $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 
-    //     $user_select = DB::table('groups')
-    //         ->pluck('line_code')
-    //         ->all();
+    // //     $user_select = DB::table('groups')
+    // //         ->pluck('line_code')
+    // //         ->all();
         
-    //     $join_log_group = DB::table('logChildrenQuizzes')
-    //         ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-    //         ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
-    //         ->get();
+    // //     $join_log_group = DB::table('logChildrenQuizzes')
+    // //         ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+    // //         ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
+    // //         ->get();
 
-    //     foreach ($user_select as $line_u) {
+    //      foreach ($user_select as $line_u) {
 
 
-    //         $Message1 =  $line_u;
+    //          $Message1 =  $line_u;
 
-    //         $textMessageBuilder = new TextMessageBuilder($Message1);
+    //          $textMessageBuilder = new TextMessageBuilder($Message1);
 
-    //         $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
+    //          $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
 
-    //         // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
-    //     }
-    // }
+    //          // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
+    //      }
+    //  }
 }
