@@ -388,6 +388,7 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
+                    $multiMessage = new MultiMessageBuilder;
                     $response = $bot->getProfile($userId);
                     $stdprofile = $response->getJSONgetJSONDecodedBody();
                     $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง (moon wink)\n\t ยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']." (clap)(clap)(clap)");
