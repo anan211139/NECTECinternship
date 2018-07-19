@@ -284,7 +284,7 @@ class BotController extends Controller
                         $lastdate = new Carbon($join_log_group->time);
                         $now = Carbon::now();
                         echo $lastdate->diffInDays($now);
-                        //dd($join_log_group);
+                        dd($join_log_group);
 
                         if($lastdate->diffInDays($now)==7){
                             DB::table('groupRandoms')
