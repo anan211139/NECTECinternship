@@ -393,9 +393,14 @@ class BotController extends Controller
 
                         
 
-                        if($lastdate->diffInDays($now)>3){
+                        if($lastdate->diffInDays($now)>=3){
                             $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->$chap_name."กับพี่หมีกันเถอะ !!!!!!";
                             $replyData = new TextMessageBuilder($textReplyMessage);
+                        }
+                        else{
+                            $textReplyMessage = "เยี่ยมยยอด";
+                            $replyData = new TextMessageBuilder($textReplyMessage);
+                        
                         }
                         // if (($join_log_group->time)->addDays(3) >= Carbon::now()) {
                         //     $textReplyMessage = "สวัสดีจ้า";
