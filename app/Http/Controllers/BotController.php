@@ -598,6 +598,9 @@ class BotController extends Controller
         DB::table('groups')
             ->where('id', $group_id)
             ->update(['status' => true, 'score' => $point_update]);
+        DB::table('groupRandoms')
+                ->where('group_id', '=', $group_id)
+                ->delete();
         return $this->declare_point($current_group->line_code);
     }
 
