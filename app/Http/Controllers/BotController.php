@@ -394,7 +394,7 @@ class BotController extends Controller
                         
 
                         if($lastdate->diffInDays($now)>=3){
-                            $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->$chap_name."กับพี่หมีกันเถอะ !!!!!!";
+                            $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
                             $replyData = new TextMessageBuilder($textReplyMessage);
                         }
                         else{
