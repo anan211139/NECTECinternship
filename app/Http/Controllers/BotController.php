@@ -391,7 +391,7 @@ class BotController extends Controller
                         echo $lastdate->diffInDays($now);
                         //dd($join_log_group);
 
-                        if($lastdate->diffInDays($now)==7){
+                        if($lastdate->diffInDays($now)>=7){
                             DB::table('groupRandoms')
                                 ->where('group_id', '=',$join_log_group->group_id)
                                 ->delete();
