@@ -376,19 +376,14 @@ class BotController extends Controller
 
                         $replyData = new TextMessageBuilder($content);
                     } else if($userMessage == "ลองNOTI"){
-                        $last_group_id = DB::table('groups')
-                            ->where('line_code', $userId)
-                            ->where('status', false)
-                            ->pluck('id');
-                        echo $last_group_id;
                         $join_log_group = DB::table('logChildrenQuizzes')
                             ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                             ->select('logChildrenQuizzes.id as log_id', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
                             ->where('groups.line_code', $userId)
-                            ->whereIn('groups.id', $last_group_id)
-                            ->orderBy('groups.id', 'desc')
+                            ->whereIn('groups.status', false)
+                            ->orderBy('logChildrenQuizzes.time')
                             // ->orderBy('logChildrenQuizzes.id', 'desc')
-                            ->first();
+                            ->get();
                         dd( $join_log_group);
 
 
