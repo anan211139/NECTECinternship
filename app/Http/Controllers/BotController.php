@@ -723,20 +723,17 @@ class BotController extends Controller
                     ->delete();
                 $textReplyMessage = "ข้อสอบเรื่อง".$join_log_group->chap_name."ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
                 $replyData = new TextMessageBuilder($textReplyMessage);
+                $response = $bot->pushMessage($line_u ,$replyData);
 
             }
             else if($lastdate->diffInDays($now)>=3){
                 $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
                 $replyData = new TextMessageBuilder($textReplyMessage);
-            }
-            else{
-                $textReplyMessage = "เยี่ยมยยอด";
-                $replyData = new TextMessageBuilder($textReplyMessage);
-            
+                $response = $bot->pushMessage($line_u ,$replyData);
+
             }
     
-            $response = $bot->pushMessage($line_u ,$replyData);
-
+            
         }
     }
 }
