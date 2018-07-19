@@ -385,12 +385,13 @@ class BotController extends Controller
                             ->orderBy('logChildrenQuizzes.time', 'DESC')
                             ->first();
 
-                        $lastdate = new Carbon($join_log_group->time);
-                        $now = Carbon::now();
-                        echo $lastdate->diffInDays($now);
+                        // $lastdate = new Carbon($join_log_group->time);
+                        // $now = Carbon::now();
+                        // echo $lastdate->diffInDays($now);
 
                         //dd( $join_log_group);
-                        if (($join_log_group->time)->addDays(3) == Carbon::now()) {
+                        if (($join_log_group->time)->addDays(3) >= Carbon::now()) {
+                            $textReplyMessage = "สวัสดีจ้า";
                             $textMessageBuilder = new TextMessageBuilder($textReplyMessage);
                             $response = $bot->pushMessage($userId, $textMessageBuilder);
                         }
