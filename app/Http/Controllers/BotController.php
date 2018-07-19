@@ -391,9 +391,21 @@ class BotController extends Controller
                         echo $lastdate->diffInDays($now);
                         //dd($join_log_group);
 
-                        
+                        if($lastdate->diffInDays($now)==7){
+                            DB::table('groupRandoms')
+                                ->where('group_id', '=',$join_log_group->group_id)
+                                ->delete();
+                            DB::table('logChildrenQuizzes')
+                                ->where('group_id', '=',$join_log_group->group_id)
+                                ->delete();
+                            DB::table('groups')
+                                ->where('id', '=',$join_log_group->group_id)
+                                ->delete();
+                            $textReplyMessage = "ข้อสอบเรื่อง".$join_log_group->chap_name."ที่ทำค้างไว้ถูกแล้วแล้วนะครับบบบ";
+                            $replyData = new TextMessageBuilder($textReplyMessage);
 
-                        if($lastdate->diffInDays($now)>=3){
+                        }
+                        else if($lastdate->diffInDays($now)>=3){
                             $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
                             $replyData = new TextMessageBuilder($textReplyMessage);
                         }
