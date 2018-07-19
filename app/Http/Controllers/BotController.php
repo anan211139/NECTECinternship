@@ -376,8 +376,8 @@ class BotController extends Controller
 
                         $replyData = new TextMessageBuilder($content);
                     } else if($userMessage == "ลองNOTI"){
-                        $join_log_group = DB::table('logChildrenQuizzes')
-                            ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+                        $join_log_group = DB::table('groups')
+                            ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                             ->select('logChildrenQuizzes.id as log_id', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
                             ->where('groups.line_code', $userId)
                             ->where('groups.status', false)
@@ -386,15 +386,16 @@ class BotController extends Controller
                             ->first();
 
                         $lastdate = new Carbon($join_log_group->time);
-                        echo "LAST>>".$lastdate;
                         $now = Carbon::now();
-                        echo "NOW>>".$now;
                         echo $lastdate->diffInDays($now);
+                        dd($join_log_group);
 
-                        $textReplyMessage = "สวัสดีจ้า";
-                        $replyData = new TextMessageBuilder($textReplyMessage);
+                        
 
-                        dd( $join_log_group);
+                        if($lastdate->diffInDays($now)>3){
+                            $textReplyMessage = "กลับมาทำโจทย์เรื่อง ///// กับพี่หมีกันเถอะ !!!!!!";
+                            $replyData = new TextMessageBuilder($textReplyMessage);
+                        }
                         // if (($join_log_group->time)->addDays(3) >= Carbon::now()) {
                         //     $textReplyMessage = "สวัสดีจ้า";
                         //     $textMessageBuilder = new TextMessageBuilder($textReplyMessage);
