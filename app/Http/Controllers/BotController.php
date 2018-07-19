@@ -250,7 +250,8 @@ class BotController extends Controller
                             $multiMessage->add($arr_Reply);
                         }
                         $replyData = $multiMessage;
-                    } //------ สมการ -------
+                    }
+                    //------ สมการ -------
                     else if ($userMessage == "สมการ") {
                         $arr_replyData = $this->start_exam($userId, 1);
                         $multiMessage = new MultiMessageBuilder;
@@ -355,16 +356,7 @@ class BotController extends Controller
                         $replyData = $multiMessage;
                     } else if ($userMessage == "content") {
                         $replyData = new TextMessageBuilder($content);
-                    } else if($userMessage == "ลองNOTI"){
-
-                        $join_log_group = DB::table('logChildrenQuizzes')
-                            ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                            ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
-                            ->get();
-                        dd( $join_log_group);
-
-
-                    }else {
+                    } else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
@@ -537,7 +529,7 @@ class BotController extends Controller
                 'chapter_id' => $chapter_id,
                 'status' => false
             ]);
-            
+
             $quizzesforsubj = DB::table('exams') //generate the first quiz
                 ->where('chapter_id', $chapter_id)
                 ->where('level_id', 2)
@@ -675,29 +667,54 @@ class BotController extends Controller
     }
 
 
-    //  public function notification() {
-    //      $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
-    //      $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
+    public function notification() {
+         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
+         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
+    
+        $user_select = DB::table('groups')
+            ->pluck('line_code')
+            ->all();
 
-    // //     $user_select = DB::table('groups')
-    // //         ->pluck('line_code')
-    // //         ->all();
-        
-    // //     $join_log_group = DB::table('logChildrenQuizzes')
-    // //         ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-    // //         ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
-    // //         ->get();
+        foreach ($user_select as $line_u) {
 
-    //      foreach ($user_select as $line_u) {
+            $join_log_group = DB::table('groups')
+                ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+                ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
+                ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
+                ->where('groups.line_code', $line_u)
+                ->where('groups.status', false)
+                ->orderBy('groups.id','ASC')
+                ->orderBy('logChildrenQuizzes.time', 'DESC')
+                ->first();
 
+            $lastdate = new Carbon($join_log_group->time);
+            $now = Carbon::now();
+            echo $lastdate->diffInDays($now);
+            //dd($join_log_group);
 
-    //          $Message1 =  $line_u;
+            if($lastdate->diffInDays($now)==6){
+                DB::table('groupRandoms')
+                    ->where('group_id', '=',$join_log_group->group_id)
+                    ->delete();
+                DB::table('logChildrenQuizzes')
+                    ->where('group_id', '=',$join_log_group->group_id)
+                    ->delete();
+                DB::table('groups')
+                    ->where('id', '=',$join_log_group->group_id)
+                    ->delete();
+                $textReplyMessage = "ข้อสอบเรื่อง".$join_log_group->chap_name."ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+                $response = $bot->pushMessage($line_u ,$replyData);
 
-    //          $textMessageBuilder = new TextMessageBuilder($Message1);
+            }
+            else if($lastdate->diffInDays($now)>=2){
+                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
+                $replyData = new TextMessageBuilder($textReplyMessage);
+                $response = $bot->pushMessage($line_u ,$replyData);
 
-    //          $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
-
-    //          // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
-    //      }
-    //  }
+            }
+    
+            
+        }
+    }
 }
