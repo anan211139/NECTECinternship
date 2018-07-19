@@ -378,7 +378,8 @@ class BotController extends Controller
                     } else if($userMessage == "ลองNOTI"){
                         $join_log_group = DB::table('groups')
                             ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                            ->select('logChildrenQuizzes.id as log_id', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
+                            ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
+                            ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
                             ->where('groups.line_code', $userId)
                             ->where('groups.status', false)
                             ->orderBy('groups.id','ASC')
@@ -393,7 +394,7 @@ class BotController extends Controller
                         
 
                         if($lastdate->diffInDays($now)>3){
-                            $textReplyMessage = "กลับมาทำโจทย์เรื่อง ///// กับพี่หมีกันเถอะ !!!!!!";
+                            $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->$chap_name."กับพี่หมีกันเถอะ !!!!!!";
                             $replyData = new TextMessageBuilder($textReplyMessage);
                         }
                         // if (($join_log_group->time)->addDays(3) >= Carbon::now()) {
