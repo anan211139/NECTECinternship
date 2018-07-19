@@ -270,45 +270,6 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     }
-                    else if($userMessage == "NOTI"){
-                        $join_log_group = DB::table('groups')
-                            ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                            ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
-                            ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
-                            ->where('groups.line_code', $userId)
-                            ->where('groups.status', false)
-                            ->orderBy('groups.id','ASC')
-                            ->orderBy('logChildrenQuizzes.time', 'DESC')
-                            ->first();
-
-                        $lastdate = new Carbon($join_log_group->time);
-                        $now = Carbon::now();
-                        echo $lastdate->diffInDays($now);
-                        dd($join_log_group);
-
-                        if($lastdate->diffInDays($now)==7){
-                            DB::table('groupRandoms')
-                                ->where('group_id', '=',$join_log_group->group_id)
-                                ->delete();
-                            DB::table('logChildrenQuizzes')
-                                ->where('group_id', '=',$join_log_group->group_id)
-                                ->delete();
-                            DB::table('groups')
-                                ->where('id', '=',$join_log_group->group_id)
-                                ->delete();
-                            $textReplyMessage = "ข้อสอบเรื่อง".$join_log_group->chap_name."ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
-                            $replyData = new TextMessageBuilder($textReplyMessage);
-                            $response = $bot->pushMessage($line_u ,$replyData);
-
-                        }
-                        else if($lastdate->diffInDays($now)>=3){
-                            $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
-                            $replyData = new TextMessageBuilder($textReplyMessage);
-                            $response = $bot->pushMessage($line_u ,$replyData);
-
-                        }
-                    }
-                    
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
                         $arr_replyData = $this->start_exam($userId, 1);
@@ -751,7 +712,7 @@ class BotController extends Controller
             echo $lastdate->diffInDays($now);
             //dd($join_log_group);
 
-            if($lastdate->diffInDays($now)==7){
+            if($lastdate->diffInDays($now)==6){
                 DB::table('groupRandoms')
                     ->where('group_id', '=',$join_log_group->group_id)
                     ->delete();
@@ -766,7 +727,7 @@ class BotController extends Controller
                 $response = $bot->pushMessage($line_u ,$replyData);
 
             }
-            else if($lastdate->diffInDays($now)>=3){
+            else if($lastdate->diffInDays($now)>=2){
                 $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
