@@ -552,7 +552,7 @@ class BotController extends Controller
                 'chapter_id' => $chapter_id,
                 'status' => false
             ]);
-            
+
             $quizzesforsubj = DB::table('exams') //generate the first quiz
                 ->where('chapter_id', $chapter_id)
                 ->where('level_id', 2)
@@ -710,25 +710,25 @@ class BotController extends Controller
     //  public function notification() {
     //      $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
     //      $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
-
+    //
     // //     $user_select = DB::table('groups')
     // //         ->pluck('line_code')
     // //         ->all();
-        
+    //
     // //     $join_log_group = DB::table('logChildrenQuizzes')
     // //         ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
     // //         ->select('logChildrenQuizzes.id', 'groups.id', 'groups.Line_code','logChildrenQuizzes.date')
     // //         ->get();
-
+    //
     //      foreach ($user_select as $line_u) {
-
-
+    //
+    //
     //          $Message1 =  $line_u;
-
+    //
     //          $textMessageBuilder = new TextMessageBuilder($Message1);
-
+    //
     //          $response = $bot->pushMessage( 'U64f1e2fafcec762ce15e48cc567d696b' ,$textMessageBuilder);
-
+    //
     //          // $response = $bot->pushMessage( $user_id ,$textMessageBuilder);
     //      }
     //  }
