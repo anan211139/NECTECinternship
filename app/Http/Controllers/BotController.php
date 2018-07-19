@@ -380,7 +380,7 @@ class BotController extends Controller
                             ->where('line_code', $userId)
                             ->where('status', false)
                             ->pluck('id');
-                        echo $last_group;
+                        echo $last_group_id;
                         $join_log_group = DB::table('logChildrenQuizzes')
                             ->join('groups', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                             ->select('logChildrenQuizzes.id as log_id', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
