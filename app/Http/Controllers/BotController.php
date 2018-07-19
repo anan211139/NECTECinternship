@@ -381,9 +381,14 @@ class BotController extends Controller
                             ->select('logChildrenQuizzes.id as log_id', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
                             ->where('groups.line_code', $userId)
                             ->where('groups.status', false)
+                            ->where('groups.id','ASC')
                             ->orderBy('logChildrenQuizzes.time', 'DESC')
                             ->first();
                         dd( $join_log_group);
+                        if (($join_log_group->time)->addDays(3) == Carbon::now()) {
+                            $textMessageBuilder = new TextMessageBuilder($textReplyMessage);
+                            $response = $bot->pushMessage($userId, $textMessageBuilder);
+                        }
 
 
                     }else {
