@@ -386,9 +386,13 @@ class BotController extends Controller
                             ->first();
 
                         $lastdate = new Carbon($join_log_group->time);
+                        echo "LAST>>".$lastdate;
                         $now = Carbon::now();
+                        echo "NOW>>".$now;
                         echo $lastdate->diffInDays($now);
+
                         $textReplyMessage = "สวัสดีจ้า";
+                        $textMessageBuilder = new TextMessageBuilder($textReplyMessage);
 
                         // dd( $join_log_group);
                         // if (($join_log_group->time)->addDays(3) >= Carbon::now()) {
