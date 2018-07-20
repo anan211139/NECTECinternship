@@ -9,13 +9,6 @@ use Session;
 class graph_chapterController extends Controller
 {
     public function main($subject,$chapter){
-      if(session()->has('choosechild')){
-        $jsonsubject = DB::table('subjects')->get();
-        $jsonchapters = DB::table('chapters')->get();
-        $arraysubject = json_decode($jsonsubject, true);
-        $arraychapters = json_decode($jsonchapters, true);
-        Session::put('subject_list',$arraysubject);
-        Session::put('chapter_list',$arraychapters);
         $line_code = session('choosechild','default');
         $chapter_id = $chapter;
         $subject_id = $subject;
@@ -79,8 +72,5 @@ class graph_chapterController extends Controller
         ->with('level_total', $level_total)
         ->with('level_true',$level_true)
         ->with('chapter', 'chapter');
-      }else{
-        return redirect('/');
-      }
     }
 }
