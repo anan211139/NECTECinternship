@@ -380,12 +380,10 @@ class BotController extends Controller
                               'line_code' => $userId,
                               'name' => $profile['displayName'],
                               'local_pic' => $img_path
-
                             ]);
                         }
                         else{
-                          echo "wari";
-
+                          echo "test";
                         }
                     }
 
