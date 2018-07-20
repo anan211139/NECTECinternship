@@ -367,8 +367,7 @@ class BotController extends Controller
                   if ($checkIMG == 0) {
                       $response = $bot->getProfile($userId);
                       echo "RES";
-                      // if ($response->isSucceeded()) {
-                        if (3>2) {
+                      if ($response->isSucceeded()) {
                           echo "TRUE";
                           $profile = $response->getJSONDecodedBody();
                           $url_img = $profile['pictureUrl'];
@@ -383,6 +382,10 @@ class BotController extends Controller
                               'local_pic' => $img_path
 
                             ]);
+                        }
+                        else{
+                          echo "wari";
+
                         }
                     }
 
