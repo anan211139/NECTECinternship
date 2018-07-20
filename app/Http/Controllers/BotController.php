@@ -611,6 +611,10 @@ class BotController extends Controller
         $stdanses = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->get();
+        
+        DB::table('groupRandoms')
+            ->where('group_id', '=',$group_id)
+            ->delete();
 
         $total_exam = 0;
         $total_true = 0;
