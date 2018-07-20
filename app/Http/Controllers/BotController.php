@@ -367,7 +367,7 @@ class BotController extends Controller
                   if ($checkIMG == 0) {
                       $response = $bot->getProfile($userId);
                       echo "RES";
-                      if (1) {
+                      if ($response->isSucceeded()) {
                           echo "TRUE";
                           $profile = $response->getJSONDecodedBody();
                           $url_img = $profile['pictureUrl'];
