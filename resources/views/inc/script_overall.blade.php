@@ -1,3 +1,5 @@
+@if(session()->has('student_score_allsubject'))
+
 <script type="text/javascript">
  var student = @json($student_score_allsubject);
  var score_count = @json($student_score_count);
@@ -122,3 +124,4 @@ var pieChart = new Chart (pie,{
     }
   );
 </script>
+@endif

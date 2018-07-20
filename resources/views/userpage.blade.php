@@ -169,15 +169,9 @@
 
         <script type="text/javascript" src="js/progress.js"></script>
 
-
-        @if(session('overall'))
-          {{$choosechild}}
-          @include('inc.script_overall')
-        @elseif(session('subject'))
-          @include('inc.script_subject')
-        @elseof(session('chapter'))
-          @include('inc.script_chapter')
-        @endif
+        @include('inc.script_overall')
+        @include('inc.script_subject')
+        @include('inc.script_chapter')
 
     </body>
 </html>

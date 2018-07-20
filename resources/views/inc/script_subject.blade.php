@@ -1,9 +1,10 @@
+@if(session()->has('student_score'))
 <script type="text/javascript">
-  var student_data = @json($student_score);
-  var above = @json($above);
-  var below = @json($below);
-  var inside = @json($pie_inside);
-  var outside = @json($pie_outside);
+  var student_data = @json(session('student_score','default'));
+  var above = @json(session('score_above','default'));
+  var below = @json(session('score_below','default'));
+  var inside = @json(session('pie_outside','default'));
+  var outside = @json(session('pie_inside','default'));
 
   var student_score = [];
   var group = [];
@@ -122,3 +123,4 @@
   );
 
 </script>
+@endif

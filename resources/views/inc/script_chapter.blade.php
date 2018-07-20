@@ -1,3 +1,5 @@
+@if(session()->has('student_score_chapter'))
+
 <script type="text/javascript">
   var student = @json($student_score_chapter);
   var overall = @json($overall_score);
@@ -152,3 +154,4 @@
   }
   );
 </script>
+@endif
