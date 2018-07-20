@@ -364,7 +364,7 @@ class BotController extends Controller
                     $checkIMG = DB::table('students')
                     ->where('line_code', $userId)
                     ->count();
-
+                    dd($checkIMG);
                     if ($checkIMG == 0) {
                         $response = $bot->getProfile($userId);
                         if ($response->isSucceeded()) {
