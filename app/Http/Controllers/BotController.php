@@ -577,11 +577,6 @@ class BotController extends Controller
     }
 
     public function close_group($group_id) {
-        echo 'test';
-        DB::table('groups')
-            ->where('id', $group_id)
-            ->update(['status' => true]);
-
         $current_group = DB::table('groups')
             ->where('id', $group_id)
             ->first();
@@ -593,13 +588,19 @@ class BotController extends Controller
         $all_lvl = DB::table('levels')
             ->get();
 
-        $point_update = $current_std->point;
+        $point_update = 0;
         foreach ($all_lvl as $lvl) {
             $point_update += ($this->results($group_id, $lvl->id)) * $lvl->id;
-            DB::table('students')
-                ->where('line_code', $current_group->line_code)
-                ->update(['point' => $point_update]);
         }
+        DB::table('students')
+            ->where('line_code', $current_group->line_code)
+            ->update(['point' => $current_std->point + $point_update]);
+        DB::table('groups')
+            ->where('id', $group_id)
+            ->update(['status' => true, 'score' => $point_update]);
+        DB::table('groupRandoms')
+                ->where('group_id', '=', $group_id)
+                ->delete();
         return $this->declare_point($current_group->line_code);
     }
 
