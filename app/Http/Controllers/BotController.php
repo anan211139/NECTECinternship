@@ -366,7 +366,7 @@ class BotController extends Controller
                   ->count();
                   if ($checkIMG == 0) {
                       $response = $bot->getProfile($userId);
-                      echo "RES".$response;
+                      echo "RES";
                       if ($response->isSucceeded()) {
                           echo "TRUE";
                           $profile = $response->getJSONDecodedBody();
