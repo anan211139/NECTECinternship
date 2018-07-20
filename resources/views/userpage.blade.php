@@ -76,7 +76,7 @@
                                 <ul class="main-navigation">
                                   @for($j=0;$j<count($chapther_list);$j++)
                                     @if($subject_list["$i"]["id"] == $chapther_list["$j"]["subject_id"])
-                                        <li class="list"><a class="a" href="/selectchapter/{{$chapther_list["$j"]["id"]}}">{{$chapther_list["$j"]["name"]}}</a></li>
+                                        <li class="list"><a class="a" href="/selectchapter/{{$subject_list["$i"]["id"]}}/{{$chapther_list["$j"]["id"]}}">{{$chapther_list["$j"]["name"]}}</a></li>
                                     @endif
                                   @endfor
                                 </ul>
@@ -155,48 +155,29 @@
                 <div class="layoutContent">
                     <div id="pieChart">
                         <p>Pie Chart</p>
+                        <canvas id="pieChart_subject"></canvas>
                     </div>
                     <div id="barChart">
                         <p>Bar Chart</p>
+                        <canvas id="barChart_subject"></canvas>
                     </div>
-                </div>
-                <!-- <a class="button">จัดการข้อมูล</a>  -->
-            </div>
-            <div class="footer">
-                <div class="footerCenter">
-                    <div class="tooltip">
-                        <img class="imgContact" src="picture/facebook-logo-button.png">
-                        <span class="tooltiptext">พี่หมีติวเตอร์</span>
-                    </div>
-                    <div class="tooltip">
-                        <img class="imgContact" src="picture/linefooter.png">
-                        <span class="tooltiptext">@พี่หมีติวเตอร์</span>
-                    </div>
-                    <div class="tooltip">
-                        <img class="imgContact" src="picture/web.png">
-                        <span class="tooltiptext">www.พี่หมีติวเตอร์.com</span>
-                    </div>
-                </div>
-                <div class="footerLeft">
-                        <img class="nectecLogo" src="picture/Nectec_logo.png">
                 </div>
             </div>
-
-
-            <div id="addPop" class="modal">
-                    <div class="modal-content animate" action="/action_page.php">
-                        <div class="container">
-                            <p class="headRegis"><b>เพิ่มนักเรียน</b></p>
-                            <p>ท่านสามารถเพิ่มนักเรียนได้โดยรับลิ้งค์จากไลน์พี่หมีติวเตอร์</p>
-                            <div class="popBtnLayout">
-                                <button class="registerBtn" type="submit" onclick="document.getElementById('addPop').style.display='none'">OK</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @include('inc.footer')
+            @include('inc.pop-up-addchild')
+            @include('inc.footer')
         </div>
 
         <script type="text/javascript" src="js/progress.js"></script>
+
+
+        @if(session('overall'))
+          {{$choosechild}}
+          @include('inc.script_overall')
+        @elseif(session('subject'))
+          @include('inc.script_subject')
+        @elseof(session('chapter'))
+          @include('inc.script_chapter')
+        @endif
+
     </body>
 </html>
