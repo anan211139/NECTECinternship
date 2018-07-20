@@ -370,7 +370,6 @@ class BotController extends Controller
                       if ($response->isSucceeded()) {
                           echo "TRUE";
                           $profile = $response->getJSONDecodedBody();
-
                           $url_img = $profile['pictureUrl'];
                           echo "PATH".$profile['pictureUrl'];
                           $img_path = asset('img/profile/'.$userId.'.jpeg');
