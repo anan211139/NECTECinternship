@@ -371,11 +371,11 @@ class BotController extends Controller
                     }
                 } else if ($replyInfo == "follow") {
                     //--------INSERT AND CHECK DB--------
-                    $checkIMG = DB::table('students')
-                    ->where('line_code', $userId)
-                    ->count();
-                    dd($checkIMG);
-                    $arr_replyData[] = new TextMessageBuilder($checkIMG);
+                    // $checkIMG = DB::table('students')
+                    // ->where('line_code', $userId)
+                    // ->count();
+                    // dd($checkIMG);
+                    // $arr_replyData[] = new TextMessageBuilder($checkIMG);
                     // if ($checkIMG == 0) {
                     //     $response = $bot->getProfile($userId);
                     //     if ($response->isSucceeded()) {
