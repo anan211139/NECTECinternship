@@ -521,7 +521,7 @@ class BotController extends Controller
         $old_group_count = DB::table('groups')
             ->where('line_code', $userId)
             ->where('chapter_id', $chapter_id)
-            ->where('status',true)
+            ->where('status',false)
             ->orderBy('id','DESC')
             ->count();
         // dd($old_group_count);
