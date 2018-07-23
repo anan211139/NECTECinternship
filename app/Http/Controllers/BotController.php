@@ -523,17 +523,17 @@ class BotController extends Controller
             ->where('chapter_id', $chapter_id)
             ->orderBy('id','DESC')
             ->count();
-        $check_old_g = false;
-        if($old_group_count != 0){
-            $old_group = DB::table('groups')
-            ->where('line_code', $userId)
-            ->where('chapter_id', $chapter_id)
-            ->orderBy('id','DESC')
-            ->first();
-            $check_old_g = true;
-        }
+        // $check_old_g = false;
+        // if($old_group_count != 0){
+        //     $old_group = DB::table('groups')
+        //     ->where('line_code', $userId)
+        //     ->where('chapter_id', $chapter_id)
+        //     ->orderBy('id','DESC')
+        //     ->first();
+        //     $check_old_g = true;
+        // }
         // if student has finished the old group or fist time create group
-        if ($old_group_count == 0 || $check_old_g === true) {
+        if ($old_group_count == 0) {
             $group_id = DB::table('groups')->insertGetId([ //create new group
                 'line_code' => $userId,
                 'chapter_id' => $chapter_id,
@@ -608,9 +608,9 @@ class BotController extends Controller
         DB::table('groups')
             ->where('id', $group_id)
             ->update(['status' => true, 'score' => $point_update]);
-        DB::table('groupRandoms')
-                ->where('group_id', '=', $group_id)
-                ->delete();
+        // DB::table('groupRandoms')
+        //     ->where('group_id', '=', $group_id)
+        //     ->delete();
         return $this->declare_point($current_group->line_code);
     }
 
@@ -708,15 +708,15 @@ class BotController extends Controller
             //dd($join_log_group);
 
             if($lastdate->diffInDays($now)==6){
-                DB::table('groupRandoms')
-                    ->where('group_id', '=',$join_log_group->group_id)
-                    ->delete();
-                DB::table('logChildrenQuizzes')
-                    ->where('group_id', '=',$join_log_group->group_id)
-                    ->delete();
-                DB::table('groups')
-                    ->where('id', '=',$join_log_group->group_id)
-                    ->delete();
+                // DB::table('groupRandoms')
+                //     ->where('group_id', '=',$join_log_group->group_id)
+                //     ->delete();
+                // DB::table('logChildrenQuizzes')
+                //     ->where('group_id', '=',$join_log_group->group_id)
+                //     ->delete();
+                // DB::table('groups')
+                //     ->where('id', '=',$join_log_group->group_id)
+                //     ->delete();
                 $textReplyMessage = "ข้อสอบเรื่อง".$join_log_group->chap_name."ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
