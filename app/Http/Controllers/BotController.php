@@ -379,19 +379,15 @@ class BotController extends Controller
                         $response = $bot->getProfile($userId);
                         if ($response->isSucceeded()) {
                             $profile = $response->getJSONDecodedBody();
-                            
                             $url_img = $profile['pictureUrl'];
-                            echo "PATH".$profile['pictureUrl'];
                             $img_path = asset('img/profile/'.$userId.'.jpg');
-                            echo "IMG".$img_path;
-                            file_put_contents($img_path,file_get_contents($url_img));
-                            echo "SUCC";
-                            DB::table('students')->insert([
-                                'line_code' => $userId,
-                                'name' => $profile['displayName'],
-                                'local_pic' => $img_path
-
-                            ]);
+                            // file_put_contents($img_path,file_get_contents($url_img));
+                            // DB::table('students')->insert([
+                            //     'line_code' => $userId,
+                            //     'name' => $profile['displayName'],
+                            //     'local_pic' => $img_path
+                            // ]);
+                            $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
                         }
                     }
                     
