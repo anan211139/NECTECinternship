@@ -360,32 +360,33 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
-                    //--------INSERT AND CHECK DB--------
-                    $checkIMG = DB::table('students')
-                    ->where('line_code', $userId)
-                    ->count();
-                    if ($checkIMG == 0) {
-                        $response = $bot->getProfile($userId);
-                        echo "RES";
-                        if ($response->isSucceeded()) {
-                            echo "TRUE";                            
-                            $profile = $response->getJSONDecodedBody();
-                            
-                            $url_img = $profile['pictureUrl'];
-                            echo "PATH".$profile['pictureUrl'];
-                            $img_path = asset('img/profile/'.$userId.'.jpeg');
-                            echo "IMG".$img_path;
-                            file_put_contents($img_path,file_get_contents($url_img));
-                            echo "SUCC";
-                            DB::table('students')->insert([
-                                'line_code' => $userId,
-                                'name' => $profile['displayName'],
-                                'local_pic' => $img_path
-
+                  //--------INSERT AND CHECK DB--------
+                  $checkIMG = DB::table('students')
+                  ->where('line_code', $userId)
+                  ->count();
+                  if ($checkIMG == 0) {
+                      $response = $bot->getProfile($userId);
+                      echo "RES";
+                      if ($response->isSucceeded()) {
+                          echo "TRUE";
+                          $profile = $response->getJSONDecodedBody();
+                          $url_img = $profile['pictureUrl'];
+                          echo "PATH".$profile['pictureUrl'];
+                          $img_path = asset('img/profile/'.$userId.'.jpeg');
+                          echo "IMG".$img_path;
+                          file_put_contents($img_path,file_get_contents($url_img));
+                          echo "SUCC";
+                          DB::table('students')->insert([
+                              'line_code' => $userId,
+                              'name' => $profile['displayName'],
+                              'local_pic' => $img_path
                             ]);
                         }
+                        else{
+                          echo "test";
+                        }
                     }
-                    
+
                     $multiMessage = new MultiMessageBuilder;
                     $response = $bot->getProfile($userId);
                     $stdprofile = $response->getJSONDecodedBody();
@@ -620,7 +621,7 @@ class BotController extends Controller
         $stdanses = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->get();
-        
+
         DB::table('groupRandoms')
             ->where('group_id', '=',$group_id)
             ->delete();
@@ -666,7 +667,7 @@ class BotController extends Controller
         ->get();
         foreach ($group_result as $g_result) {
             $text_result = "ข้อสอบระดับ ";
-            for ($i=0; $i < $g_result->level_id; $i++) { 
+            for ($i=0; $i < $g_result->level_id; $i++) {
                 $text_result = $text_result."✩";
             }
             $text_result = $text_result." ถูกต้อง ".$g_result->total_level_true." ข้อ จากทั้งหมด ".$g_result->total_level." ข้อ";
@@ -683,7 +684,7 @@ class BotController extends Controller
     public function notification() {
          $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
          $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
-    
+
         $user_select = DB::table('groups')
             ->pluck('line_code')
             ->all();
@@ -726,8 +727,8 @@ class BotController extends Controller
                 $response = $bot->pushMessage($line_u ,$replyData);
 
             }
-    
-            
+
+
         }
     }
 }
