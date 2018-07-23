@@ -244,6 +244,9 @@ class BotController extends Controller
 
                     } //------ หรม./ครน. -------
                     else if ($pos1 !== false || $pos2 !== false) {
+                        DB::table('students')
+                            ->where('line_code', $userId)
+                            ->update(['chapter_id' => 2]);
                         $arr_replyData = $this->start_exam($userId, 2);
                         $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
@@ -253,6 +256,9 @@ class BotController extends Controller
                     }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
+                        DB::table('students')
+                            ->where('line_code', $userId)
+                            ->update(['chapter_id' => 1]);
                         $arr_replyData = $this->start_exam($userId, 1);
                         $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
@@ -261,8 +267,12 @@ class BotController extends Controller
                         $replyData = $multiMessage;
                     } else if ($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                         $multiMessage = new MultiMessageBuilder;
+                        $std = DB::table('students')
+                            ->where('line_code', $userId)
+                            ->first();
                         $urgroup = DB::table('groups')
                             ->where('line_code', $userId)
+                            ->where('chapter_id', $std->chapter_id)
                             ->orderBy('id', 'DESC')
                             ->first();
                         $currentlog = DB::table('logChildrenQuizzes')
