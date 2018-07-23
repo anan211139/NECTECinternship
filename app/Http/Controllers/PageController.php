@@ -31,7 +31,6 @@ class Pagecontroller extends Controller
       }
     }
     public function getuserpage(){
-      if(session()->has('choosechild')){
         $jsonsubject = DB::table('subjects')->get();
         $jsonchapters = DB::table('chapters')->get();
         $arraysubject = json_decode($jsonsubject, true);
@@ -41,8 +40,10 @@ class Pagecontroller extends Controller
         // return $arraychapters;
         // $line_code = 'st11';
         return view('userpage');
-      }else{
-        return redirect('/');
+    }
+    public function dashboard(){
+      if(session()->has('username')){
+        return view('dashboard');
       }
     }
     public function gethome(){
@@ -56,21 +57,10 @@ class Pagecontroller extends Controller
             ->where('studentparents.parent_id',$id)
             ->get();
             $arrayresult = json_decode($jsonresult, true);
-            $countchild = count($jsonresult);
+            // $countchild = count($jsonresult);
             Session::put('childdata',$arrayresult);
-            Session::put('countchild',$countchild);
-            if($countchild==0){
-                return redirect('/step');
-            }elseif($countchild==1){
-                Session::put('childdata',$arrayresult);
-                Session::put('choosechild',$arrayresult[0]['line_code']);
-                return redirect('/selectoverall');
-            }elseif($countchild>=2){
-                Session::put('childdata',$arrayresult);
-                return redirect('/choose');
-            }else{
-                return redirect('/step');
-            }
+            // Session::put('countchild',$countchild);
+            return redirect('/dashboard');
         }else{
             return view('home');
         }

@@ -20,9 +20,10 @@ Route::get('/choose', 'Pagecontroller@getchoosepage'); //subset of /user
 Route::get('/step','Pagecontroller@getsteppage'); //subset of /user
 Route::get('/userpage','Pagecontroller@getuserpage'); //subset of /user
 Route::get('/choosechild/{id}','addchildcontroller@sessionaddchild');
-Route::get('/selectoverall','graph_overallController@main');
+Route::get('/selectoverall/{id}','graph_overallController@main');
 Route::get('/selectchapter/{subject}/{chapter}','graph_chapterController@main');
 Route::get('/selectsubject/{id}','graph_subjectController@main');
+Route::get('/dashboard','Pagecontroller@dashboard');
 
 Route::post('/loginsubmit', 'checklogin@pslogin');
 Route::post('/loginsubmitinaddchild', 'checklogin@pslogininaddchild');

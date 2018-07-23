@@ -16,6 +16,12 @@
  var student_count = [];
  var pie_inside = [];
  var pie_outside = [];
+ var pie_subj1_total =[];
+ var pie_subj1_true=[];
+ var pie_subj2_total =[];
+ var pie_subj2_true=[];
+ var subj1_name = [];
+ var subj2_name = [];
 
 
  for (var i = 0; i < student.length; i++) {
@@ -26,15 +32,27 @@
    student_count.push(st_count[i].student_count);
    student_score_allsubject[i] /= student_score_count[i]; //คะแนนบาร์ชาตนักเรียน
    overall_score[i] = (overall_score[i]+student_score_allsubject[i]) / student_count[i]; //คะแนนบาร์ชาตรวม
-   console.log(overall_score[i]);
 
-   pie_inside.push(inside[i].inside);
-   pie_outside.push(outside[i].outside);
+
+   if (i === 0) {
+     pie_subj1_total.push(Number(inside[i].inside));
+     pie_subj1_true.push(Number(outside[i].outside));
+     pie_subj1_true.push(pie_subj1_total[0]-pie_subj1_true[0]);
+     subj1_name.push(student[i].name);
+   } else if (i === 1) {
+     pie_subj2_total.push(Number(inside[i].inside));
+     pie_subj2_true.push(Number(outside[i].outside));
+     pie_subj2_true.push(pie_subj2_total[0]-pie_subj2_true[0]);
+     subj2_name.push(student[i].name);
+   }
  }
- console.log(overall_score);
+  console.log(pie_subj1_total);
+  console.log(pie_subj1_true);
+  console.log(subj1_name);
 
   var bar = document.getElementById('barChart_allsubject').getContext('2d');
-  var pie = document.getElementById('pieChart_allsubject').getContext('2d');
+  var pie_subj1 = document.getElementById('pieChart_allsubject_subj1').getContext('2d');
+  var pie_subj2 = document.getElementById('pieChart_allsubject_subj2').getContext('2d');
   Chart.defaults.global.defaultFontSize = 20;
   var barChart = new Chart (bar,{
     type:'bar',
@@ -81,32 +99,36 @@
   }
 );
 
-var pieChart = new Chart (pie,{
+var pieChart_subj1 = new Chart (pie_subj1,{
   type:'pie',
   data:{
-    labels:subject_name,
     datasets:[
       {
-        backgroundColor: ["#f0882f","#013f73"],
-        data:pie_outside
+        backgroundColor: ["#f0882f"],
+        data:pie_subj1_true
       },
       {
-        backgroundColor: ["#f0882f","#013f73"],
-        data:pie_inside
+        backgroundColor: ["#f0882f"],
+        data:pie_subj1_total
       }
     ]
   },
   options:{
     title:{
       display: true,
-      text: 'จำนวนแบบฝึกหัดที่ทำได้ในแต่ละวิชา'
+      text: subj1_name
     },
     tooltips: {
+      filter: function (tooltipItem, data) {
+      var label = data.labels[tooltipItem.index];
+      console.log(tooltipItem);
+      if (tooltipItem.datasetIndex === 0 && tooltipItem.index % 2 !== 0) {
+        return false;
+      } else {
+        return true;
+      }
+  },
          callbacks: {
-//          title: function (tooltipItem, data){
-//          console.log( data);
-//          return "จำนวนข้อที่ทำได้" ;
-//       },
             label: function(tooltipItem, data) {
             var label = data.datasets[tooltipItem.datasetIndex].label || '';
             var total = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
@@ -123,5 +145,52 @@ var pieChart = new Chart (pie,{
      }
     }
   );
+
+  var pieChart_subj2 = new Chart (pie_subj2,{
+    type:'pie',
+    data:{
+      datasets:[
+        {
+          backgroundColor: ["#013f73"],
+          data:pie_subj2_true
+        },
+        {
+          backgroundColor: ["#013f73"],
+          data:pie_subj2_total
+        }
+      ]
+    },
+    options:{
+      title:{
+        display: true,
+        text: subj2_name
+      },
+      tooltips: {
+        filter: function (tooltipItem, data) {
+        var label = data.labels[tooltipItem.index];
+        console.log(tooltipItem);
+        if (tooltipItem.datasetIndex === 0 && tooltipItem.index % 2 !== 0) {
+          return false;
+        } else {
+          return true;
+        }
+    },
+           callbacks: {
+              label: function(tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+              var total = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
+              label += total;
+              console.log(label);
+              if(tooltipItem.datasetIndex === 0){
+                return  "จำนวนข้อที่ทำได้"+ ":" + " " +  + label + " " + "ข้อ";
+              } else if (tooltipItem.datasetIndex === 1) {
+                  return  "จำนวนข้อที่ได้ทำ" + ":" + " " + label + " " + "ข้อ";
+              }
+             }
+           }
+         }
+       }
+      }
+    );
 </script>
 @endif

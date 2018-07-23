@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Session;
 class graph_overallController extends Controller
 {
-    public function main(){
-      $choosechild = session('choosechild', 'default');
+    public function main($id){
+      $choosechild = $id;
+      Session::put('choosechild',$choosechild);
       if(session()->has('student_score')){
         session()->forget('student_score');
         session()->forget('score_above');
@@ -23,6 +24,12 @@ class graph_overallController extends Controller
         session()->forget('level_total');
         session()->forget('level_true');
       }
+      $jsonsubject = DB::table('subjects')->get();
+      $jsonchapters = DB::table('chapters')->get();
+      $arraysubject = json_decode($jsonsubject, true);
+      $arraychapters = json_decode($jsonchapters, true);
+      Session::put('subject_list',$arraysubject);
+      Session::put('chapter_list',$arraychapters);
       $student_score_allsubject = DB::table('results')
       ->select(DB::raw('subjects.name as name,sum(total_level_true*level_id) as score'))
       ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
@@ -87,7 +94,7 @@ class graph_overallController extends Controller
         Session::put('pie_inside',$pie_inside);
         Session::put('pie_outside',$pie_outside);
 
-        return view('userpage');
+        return redirect('/userpage');
         // ->with('student_score_allsubject', $student_score_allsubject)
         // ->with('student_score_count', $student_score_count)
         // ->with('overall_score', $overall_score)
