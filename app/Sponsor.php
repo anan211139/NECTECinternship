@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sponsor extends Model
 {
-    protected $fillable = ['name', 'address', 'phone'];
+    protected $fillable = ['name', 'local_pic', 'phone'];
 }

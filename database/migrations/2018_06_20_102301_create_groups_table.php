@@ -17,8 +17,8 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('line_code');
             $table->Integer('chapter_id');
-            $table->Integer('score')->nullable();
             $table->boolean('status')->default(false); //boolean true if the student finish all their exam
+            $table->Integer('score')->nullable();
             $table->timestampsTz();
         });
     }
