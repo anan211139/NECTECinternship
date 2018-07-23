@@ -382,7 +382,7 @@ class BotController extends Controller
                             
                             $url_img = $profile['pictureUrl'];
                             echo "PATH".$profile['pictureUrl'];
-                            $img_path = asset('img/profile/'.$userId.'.jpeg');
+                            $img_path = asset('img/profile/'.$userId.'.jpg');
                             echo "IMG".$img_path;
                             file_put_contents($img_path,file_get_contents($url_img));
                             echo "SUCC";
