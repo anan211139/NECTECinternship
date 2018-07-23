@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('line_code');
             $table->string('name');
             $table->string('local_pic')->nullable();
-            $table->Integer('point');
+            $table->Integer('point')->default(0);
             $table->date('birthdate')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();

@@ -17,7 +17,7 @@ class CreatePrizesTable extends Migration
             $table->increments('id');
             $table->Integer('sponsor_id');
             $table->string('name');
-            $table->string('address');
+            $table->string('local_pic');
             $table->Integer('value');
             $table->Integer('point'); //least point to exchange
             $table->dateTimeTz('limit')->nullable();

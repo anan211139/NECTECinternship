@@ -16,11 +16,9 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('line_code');
-            $table->Integer('subject_id');
             $table->Integer('chapter_id');
-            $table->boolean('status'); //boolean true if the student finish all their exam
-            $table->dateTimeTz('3day')->nullable();
-            $table->dateTimeTz('7day')->nullable();
+            $table->boolean('status')->default(false); //boolean true if the student finish all their exam
+            $table->Integer('score')->nullable();
             $table->timestampsTz();
         });
     }
