@@ -376,50 +376,41 @@ class BotController extends Controller
                     ->where('line_code', $userId)
                     ->count();
                     if ($checkIMG == 0) {
+
                         $response = $bot->getProfile($userId);
-                        $profile = $response->getJSONDecodedBody();
-                        $url_img = $profile['pictureUrl'];
-                        $img_path = asset('img/profile/'.$userId.'.jpg');
-                        file_put_contents($img_path,file_get_contents($url_img.".jpg"));
+                        $stdprofile = $response->getJSONDecodedBody();
+                        $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
+                        $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
+                        $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
+                        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
+                        $arr_replyData[] = new TextMessageBuilder($stdprofile['pictureUrl']);
+                        $arr_replyData[] = new ImagemapMessageBuilder(
+                            $imageMapUrl,
+                            "รายการวิชา",
+                            new BaseSizeBuilder(546, 1040),
+                            array(
+                                new ImagemapMessageActionBuilder(
+                                    "วิชาคณิตศาสตร์",
+                                    new AreaBuilder(91, 199, 873, 155)
+                                ),
+                                new ImagemapMessageActionBuilder(
+                                    "วิชาภาษาอังกฤษ",
+                                    new AreaBuilder(87, 350, 873, 155)
+                                ),
+                            ));
+                        foreach ($arr_replyData as $arr_Reply) {
+                            $multiMessage->add($arr_Reply);
+                        }
+                        $replyData = $multiMessage;
+                        
                         DB::table('students')->insert([
                             'line_code' => $userId,
-                            'name' => $profile['displayName'],
-                            'local_pic' => $img_path
+                            'name' => $stdprofile['displayName'],
+                            'local_pic' => $stdprofile['pictureUrl']
                         ]);
                         $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
-                        if ($response->isSucceeded()) {
-                        }
+                        
                     }
-
-
-                    
-                    
-                    
-                    $response = $bot->getProfile($userId);
-                    $stdprofile = $response->getJSONDecodedBody();
-                    $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
-                    $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
-                    $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
-                    $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
-                    $arr_replyData[] = new TextMessageBuilder($stdprofile['pictureUrl']);
-                    $arr_replyData[] = new ImagemapMessageBuilder(
-                        $imageMapUrl,
-                        "รายการวิชา",
-                        new BaseSizeBuilder(546, 1040),
-                        array(
-                            new ImagemapMessageActionBuilder(
-                                "วิชาคณิตศาสตร์",
-                                new AreaBuilder(91, 199, 873, 155)
-                            ),
-                            new ImagemapMessageActionBuilder(
-                                "วิชาภาษาอังกฤษ",
-                                new AreaBuilder(87, 350, 873, 155)
-                            ),
-                        ));
-                    foreach ($arr_replyData as $arr_Reply) {
-                        $multiMessage->add($arr_Reply);
-                    }
-                    $replyData = $multiMessage;
                 }
             }
             // ส่วนของคำสั่งตอบกลับข้อความ
