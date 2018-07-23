@@ -36,6 +36,9 @@ class DatabaseSeeder extends Seeder
         DB::table('types')->insert([['name' => 'code'],['name' => 'delivery']]);
         DB::table('codes')->insert([['prizes_id' => 1,'code' => 'hitherethisisacat'],['prizes_id' => 1,'code' => 'a8e3f3f'],
                                     ['prizes_id' => 1,'code' => 'asdfghj'],['prizes_id' => 2,'code' => 'khunWARI'],
-                                    ['prizes_id' => 2,'code' => '001f4da'],['prizes_id' => 3,'code' => '0104d1a']]);
+                                    ['prizes_id' => 2,'code' => '001f4da'],['prizes_id' => 3,'code' => '0104d1a'],
+                                    ['prizes_id' => 3,'code' => 'khunICE'],['prizes_id' => 4,'code' => 'khunANAN'],
+                                    ['prizes_id' => 4,'code' => 'khunPEI'],['prizes_id' => 5,'code' => 'khunOAT'],
+                                    ['prizes_id' => 5,'code' => 'khunTON']]);
     }
 }
