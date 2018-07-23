@@ -383,15 +383,6 @@ class BotController extends Controller
                         $url_img = $profile['pictureUrl'];
                         $img_path = asset('img/profile/'.$userId.'.jpg');
                         // file_put_contents($url_img."jpg",file_get_contents($url_img));
-
-                        $ch = curl_init($url_img);
-                        $fp = fopen('/my/folder/flower.gif', 'wb');
-                        curl_setopt($ch, CURLOPT_FILE, $fp);
-                        curl_setopt($ch, CURLOPT_HEADER, 0);
-                        curl_exec($ch);
-                        curl_close($ch);
-                        fclose($fp);
-
                         DB::table('students')->insert([
                             'line_code' => $userId,
                             'name' => $profile['displayName'],
