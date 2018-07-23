@@ -400,7 +400,7 @@ class BotController extends Controller
                     $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
                     $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
-                    $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
+                    $arr_replyData[] = new TextMessageBuilder($stdprofile['pictureUrl']);
                     $arr_replyData[] = new ImagemapMessageBuilder(
                         $imageMapUrl,
                         "รายการวิชา",
