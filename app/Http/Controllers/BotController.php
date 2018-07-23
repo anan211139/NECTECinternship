@@ -563,6 +563,12 @@ class BotController extends Controller
         }
         //if student has non-finish old group
         else { //in the future, don't forget to check the expire date
+            $old_group = DB::table('groups')
+                ->where('line_code', $userId)
+                ->where('chapter_id', $chapter_id)
+                ->orderBy('id','DESC')
+                ->first();
+
             $group_id = $old_group->id;
             $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อเลยจ้า";
             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
