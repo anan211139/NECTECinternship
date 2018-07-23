@@ -372,31 +372,31 @@ class BotController extends Controller
                 } else if ($replyInfo == "follow") {
                     $multiMessage = new MultiMessageBuilder;
                     //--------INSERT AND CHECK DB--------
-                    $checkIMG = DB::table('students')
-                    ->where('line_code', $userId)
-                    ->count();
-                    dd($checkIMG);
-                    $arr_replyData[] = new TextMessageBuilder($checkIMG);
-                    if ($checkIMG == 0) {
-                        $response = $bot->getProfile($userId);
-                        if ($response->isSucceeded()) {
-                            $profile = $response->getJSONDecodedBody();
-                            $url_img = $profile['pictureUrl'];
-                            $img_path = asset('img/profile/'.$userId.'.jpg');
-                            file_put_contents($img_path,file_get_contents($url_img));
-                            DB::table('students')->insert([
-                                'line_code' => $userId,
-                                'name' => $profile['displayName'],
-                                'local_pic' => $img_path
-                            ]);
-                            $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
-                        }
-                    }
+                    // $checkIMG = DB::table('students')
+                    // ->where('line_code', $userId)
+                    // ->count();
+                    // dd($checkIMG);
+                    // $arr_replyData[] = new TextMessageBuilder($checkIMG);
+                    // if ($checkIMG == 0) {
+                    //     $response = $bot->getProfile($userId);
+                    //     if ($response->isSucceeded()) {
+                    //         $profile = $response->getJSONDecodedBody();
+                    //         $url_img = $profile['pictureUrl'];
+                    //         $img_path = asset('img/profile/'.$userId.'.jpg');
+                    //         file_put_contents($img_path,file_get_contents($url_img));
+                    //         DB::table('students')->insert([
+                    //             'line_code' => $userId,
+                    //             'name' => $profile['displayName'],
+                    //             'local_pic' => $img_path
+                    //         ]);
+                    //         $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
+                    //     }
+                    // }
                     
                     
-                    // $response = $bot->getProfile($userId);
-                    // $stdprofile = $response->getJSONDecodedBody();
-                    // $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
+                    $response = $bot->getProfile($userId);
+                    $stdprofile = $response->getJSONDecodedBody();
+                    $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
                     $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
                     $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
                     $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
