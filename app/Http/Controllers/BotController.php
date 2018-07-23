@@ -372,26 +372,38 @@ class BotController extends Controller
                 } else if ($replyInfo == "follow") {
                     $multiMessage = new MultiMessageBuilder;
                     //--------INSERT AND CHECK DB--------
-                    // $checkIMG = DB::table('students')
-                    // ->where('line_code', $userId)
-                    // ->count();
-                    // dd($checkIMG);
-                    // $arr_replyData[] = new TextMessageBuilder($checkIMG);
-                    // if ($checkIMG == 0) {
-                    //     $response = $bot->getProfile($userId);
-                    //     if ($response->isSucceeded()) {
-                    //         $profile = $response->getJSONDecodedBody();
-                    //         $url_img = $profile['pictureUrl'];
-                    //         $img_path = asset('img/profile/'.$userId.'.jpg');
-                    //         file_put_contents($img_path,file_get_contents($url_img));
-                    //         DB::table('students')->insert([
-                    //             'line_code' => $userId,
-                    //             'name' => $profile['displayName'],
-                    //             'local_pic' => $img_path
-                    //         ]);
-                    //         $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
-                    //     }
-                    // }
+                    $checkIMG = DB::table('students')
+                    ->where('line_code', $userId)
+                    ->count();
+                    dd($checkIMG);
+                    $arr_replyData[] = new TextMessageBuilder($checkIMG);
+                    if ($checkIMG == 0) {
+                        $response = $bot->getProfile($userId);
+                        if ($response->isSucceeded()) {
+                            $profile = $response->getJSONDecodedBody();
+                            $url_img = $profile['pictureUrl'];
+                            $img_path = asset('img/profile/'.$userId.'.jpg');
+                            file_put_contents($img_path.".jpg",file_get_contents($url_img));
+
+                            $ch = curl_init($url_img);
+                            $fp = fopen('/my/folder/flower.gif', 'wb');
+                            curl_setopt($ch, CURLOPT_FILE, $fp);
+                            curl_setopt($ch, CURLOPT_HEADER, 0);
+                            curl_exec($ch);
+                            curl_close($ch);
+                            fclose($fp);
+
+                            DB::table('students')->insert([
+                                'line_code' => $userId,
+                                'name' => $profile['displayName'],
+                                'local_pic' => $img_path
+                            ]);
+                            $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
+                        }
+                    }
+
+
+                    
                     
                     
                     $response = $bot->getProfile($userId);
