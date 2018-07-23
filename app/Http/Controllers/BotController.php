@@ -518,25 +518,17 @@ class BotController extends Controller
         $old_group_count = DB::table('groups')
             ->where('line_code', $userId)
             ->where('chapter_id', $chapter_id)
+            ->where('status',false)
             ->orderBy('id','DESC')
             ->count();
-        $check_old_g = false;
-        if($old_group_count != 0){
-            $old_group = DB::table('groups')
-            ->where('line_code', $userId)
-            ->where('chapter_id', $chapter_id)
-            ->orderBy('id','DESC')
-            ->first();
-            $check_old_g = true;
-        }
         // if student has finished the old group or fist time create group
-        if ($old_group_count == 0 || $check_old_g === true) {
+        if ($old_group_count == 0) {
             $group_id = DB::table('groups')->insertGetId([ //create new group
                 'line_code' => $userId,
                 'chapter_id' => $chapter_id,
                 'status' => false
             ]);
-
+            
             $quizzesforsubj = DB::table('exams') //generate the first quiz
                 ->where('chapter_id', $chapter_id)
                 ->where('level_id', 2)
@@ -558,6 +550,12 @@ class BotController extends Controller
         }
         //if student has non-finish old group
         else { //in the future, don't forget to check the expire date
+            $old_group = DB::table('groups')
+                ->where('line_code', $userId)
+                ->where('chapter_id', $chapter_id)
+                ->orderBy('id','DESC')
+                ->first();
+            
             $group_id = $old_group->id;
             $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อเลยจ้า";
             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
@@ -574,12 +572,11 @@ class BotController extends Controller
         $current_quiz = DB::table('exams')
             ->where('id', $current_log->exam_id)
             ->first();
-
+        
         //show current quiz
         $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
         $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-
-
+        
         return $arr_replyData;
     }
 
