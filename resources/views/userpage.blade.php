@@ -150,19 +150,7 @@
                     </ul>
                 <a href="/logout">Log out</a>
             </div>
-            <div class="content">
-                <h1 id="label">ทุกวิชา</h1>
-                <div class="layoutContent">
-                    <div id="pieChart">
-                        <p>Pie Chart</p>
-                        <canvas id="pieChart_subject"></canvas>
-                    </div>
-                    <div id="barChart">
-                        <p>Bar Chart</p>
-                        <canvas id="barChart_subject"></canvas>
-                    </div>
-                </div>
-            </div>
+            @include('inc.graph_space')
             @include('inc.pop-up-addchild')
             @include('inc.footer')
         </div>

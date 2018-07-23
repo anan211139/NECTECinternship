@@ -7,14 +7,28 @@ use Illuminate\Support\Facades\DB;
 use Session;
 class graph_overallController extends Controller
 {
-    public $student_score_allsubject,$student_score_count,$overall_score,$student_count,$pie_inside,$pie_outside;
     public function main(){
+      $choosechild = session('choosechild', 'default');
+      if(session()->has('student_score')){
+        session()->forget('student_score');
+        session()->forget('score_above');
+        session()->forget('score_below');
+        session()->forget('pie_outside');
+        session()->forget('pie_inside');
+      }
+      if(session()->has('student_score_chapter')){
+        session()->forget('student_score_chapter');
+        session()->forget('overall_score');
+        session()->forget('student_count');
+        session()->forget('level_total');
+        session()->forget('level_true');
+      }
       $student_score_allsubject = DB::table('results')
       ->select(DB::raw('subjects.name as name,sum(total_level_true*level_id) as score'))
       ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
       ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
       ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
-      ->where('groups.line_code', '=', '$choosechild')
+      ->where('groups.line_code', '=', $choosechild)
       ->groupBy('chapters.subject_id')
       ->orderBy('results.group_id', 'asc')
       ->get(); //คะเเนนนักเรียน เศษ
@@ -25,7 +39,7 @@ class graph_overallController extends Controller
       ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
       ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
       ->where('level_id', '=', 2)
-      ->where('groups.line_code', '=','$choosechild')
+      ->where('groups.line_code', '=',$choosechild)
       ->groupBy('chapters.subject_id')
       ->orderBy('group_id', 'asc')
       ->get(); //คะเเนนนักเรียน ส่วน
@@ -35,7 +49,7 @@ class graph_overallController extends Controller
       ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
       ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
       ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
-      ->where('groups.line_code', '!=', '$choosechild')
+      ->where('groups.line_code', '!=', $choosechild)
       ->groupBy('chapters.subject_id')
       ->orderBy('group_id', 'asc')
       ->get(); //รวมวิชา คะเเนนรวม เศษ (เอาไปบวกกับคะแนนนักเรียนที่ได้)
@@ -53,7 +67,7 @@ class graph_overallController extends Controller
        ->leftjoin('groups', 'groups.id', '=', 'results.group_id')
        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
        ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
-       ->where('groups.line_code','=', '$choosechild')
+       ->where('groups.line_code','=', $choosechild)
        ->groupBy('chapters.subject_id')
        ->get(); //ได้ทำ
        // return $pie_inside;
@@ -62,17 +76,24 @@ class graph_overallController extends Controller
        ->leftjoin('groups', 'groups.id', '=', 'results.group_id')
        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
        ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
-       ->where('groups.line_code','=', '$choosechild')
+       ->where('groups.line_code','=', $choosechild)
        ->groupBy('chapters.subject_id')
        ->get(); //ข้อที่ทำได้
       // return $pie_outside;
-        return view('userpage')
-        ->with('student_score_allsubject', $student_score_allsubject)
-        ->with('student_score_count', $student_score_count)
-        ->with('overall_score', $overall_score)
-        ->with('student_count', $student_count)
-        ->with('pie_inside', $pie_inside)
-        ->with('pie_outside', $pie_outside)
-        ->with('overall', 'overall');
+        Session::put('student_score_allsubject',$student_score_allsubject);
+        Session::put('student_score_count',$student_score_count);
+        Session::put('overall_score',$overall_score);
+        Session::put('student_count',$student_count);
+        Session::put('pie_inside',$pie_inside);
+        Session::put('pie_outside',$pie_outside);
+
+        return view('userpage');
+        // ->with('student_score_allsubject', $student_score_allsubject)
+        // ->with('student_score_count', $student_score_count)
+        // ->with('overall_score', $overall_score)
+        // ->with('student_count', $student_count)
+        // ->with('pie_inside', $pie_inside)
+        // ->with('pie_outside', $pie_outside)
+        // ->with('overall', 'overall');
     }
 }

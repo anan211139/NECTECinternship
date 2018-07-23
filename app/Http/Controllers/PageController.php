@@ -38,11 +38,8 @@ class Pagecontroller extends Controller
         $arraychapters = json_decode($jsonchapters, true);
         Session::put('subject_list',$arraysubject);
         Session::put('chapter_list',$arraychapters);
-        $choosechild = session('choosechild', 'default');
         // return $arraychapters;
         // $line_code = 'st11';
-        $overall = new graph_overallController();
-        $overall->main();
         return view('userpage');
       }else{
         return redirect('/');
@@ -67,7 +64,7 @@ class Pagecontroller extends Controller
             }elseif($countchild==1){
                 Session::put('childdata',$arrayresult);
                 Session::put('choosechild',$arrayresult[0]['line_code']);
-                return redirect('/userpage');
+                return redirect('/selectoverall');
             }elseif($countchild>=2){
                 Session::put('childdata',$arrayresult);
                 return redirect('/choose');

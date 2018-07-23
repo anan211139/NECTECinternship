@@ -5,7 +5,7 @@
   var below = @json(session('score_below','default'));
   var inside = @json(session('pie_outside','default'));
   var outside = @json(session('pie_inside','default'));
-
+  console.log("student_data");
   var student_score = [];
   var group = [];
   var chapter_name = [];
@@ -59,9 +59,9 @@
         beginAtZero:true
           }
         }]
-      },
+      }
 
-    }tooltips: {
+    },tooltips: {
            callbacks: {
                label: function(tooltipItem, data) {
                    var label = data.datasets[tooltipItem.datasetIndex].label || '';

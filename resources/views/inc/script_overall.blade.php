@@ -1,13 +1,13 @@
 @if(session()->has('student_score_allsubject'))
 
 <script type="text/javascript">
- var student = @json($student_score_allsubject);
- var score_count = @json($student_score_count);
- var overall = @json($overall_score);
- var st_count = @json($student_count);
- var inside =  @json($pie_inside);
- var outside = @json($pie_outside);
- console.log(overall);
+ var student = @json(session('student_score_allsubject','default'));
+ var score_count = @json(session('student_score_count','default'));
+ var overall = @json(session('overall_score','default'));
+ var st_count = @json(session('student_count','default'));
+ var inside =  @json(session('pie_inside','default'));
+ var outside = @json(session('pie_outside','default'));
+ console.log(student);
 
  var subject_name = [];
  var student_score_allsubject = [];

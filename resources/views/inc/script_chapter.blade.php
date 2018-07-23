@@ -1,11 +1,11 @@
 @if(session()->has('student_score_chapter'))
 
 <script type="text/javascript">
-  var student = @json($student_score_chapter);
-  var overall = @json($overall_score);
-  var st_count = @json($student_count);
-  var lv_total = @json($level_total);
-  var lv_true = @json($level_true);
+  var student = @json(session('student_score_chapter','default'));
+  var overall = @json(session('overall_score','default'));
+  var st_count = @json(session('student_count','default'));
+  var lv_total = @json(session('level_total','default'));
+  var lv_true = @json(session('level_true','default'));
   console.log(overall);
 
   var student_score_chapter = [];
