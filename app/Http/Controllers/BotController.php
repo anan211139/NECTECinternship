@@ -380,7 +380,7 @@ class BotController extends Controller
                         $profile = $response->getJSONDecodedBody();
                         $url_img = $profile['pictureUrl'];
                         $img_path = asset('img/profile/'.$userId.'.jpg');
-                        file_put_contents($img_path,file_get_contents($url_img."jpg"));
+                        file_put_contents($img_path,file_get_contents($url_img.".jpg"));
                         DB::table('students')->insert([
                             'line_code' => $userId,
                             'name' => $profile['displayName'],
