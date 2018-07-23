@@ -375,14 +375,12 @@ class BotController extends Controller
                     $checkIMG = DB::table('students')
                     ->where('line_code', $userId)
                     ->count();
-                    dd($checkIMG);
-                    $arr_replyData[] = new TextMessageBuilder($checkIMG);
                     if ($checkIMG == 0) {
                         $response = $bot->getProfile($userId);
                         $profile = $response->getJSONDecodedBody();
                         $url_img = $profile['pictureUrl'];
                         $img_path = asset('img/profile/'.$userId.'.jpg');
-                        // file_put_contents($url_img."jpg",file_get_contents($url_img));
+                        file_put_contents($url_img."jpg",file_get_contents($url_img));
                         DB::table('students')->insert([
                             'line_code' => $userId,
                             'name' => $profile['displayName'],
