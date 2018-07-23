@@ -408,7 +408,6 @@ class BotController extends Controller
                             'name' => $stdprofile['displayName'],
                             'local_pic' => $stdprofile['pictureUrl']
                         ]);
-                        $arr_replyData[] = new TextMessageBuilder($profile['pictureUrl']);
                         
                     }
                 }
