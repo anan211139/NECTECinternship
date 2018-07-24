@@ -667,11 +667,11 @@ class BotController extends Controller
         ->where('group_id',$group_true->id)
         ->get();
         foreach ($group_result as $g_result) {
-            $text_result = "\nข้อสอบระดับ ";
+            $text_result = "\nระดับ ";
             for ($i=0; $i < $g_result->level_id; $i++) { 
                 $text_result = $text_result."✩";
             }
-            $text_result = $text_result.": ถูกต้อง ".$g_result->total_level_true." ข้อ / ".$g_result->total_level." ข้อ";
+            $text_result = $text_result.": ถูกต้อง ".$g_result->total_level_true."/".$g_result->total_level." ข้อ";
 
             $concat_result = $concat_result.$text_result;
         }
