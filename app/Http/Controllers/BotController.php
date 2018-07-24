@@ -370,6 +370,7 @@ class BotController extends Controller
                         $replyData = $multiMessage;
                     } else if ($userMessage == "content") {
                         $replyData = new TextMessageBuilder($content);
+                        echo "ANAN YOOOOO!!!!!";
                     } else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
