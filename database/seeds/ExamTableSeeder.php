@@ -60,7 +60,7 @@ class ExamTableSeeder extends Seeder
             array('chapter_id'=> 1, 'level_id'=> 3, 'local_pic'=>'img/exam/Math/Equation/eq05_hard_1.png', 'answer'=> 1 , 'principle_id'=> 13 ),
             array('chapter_id'=> 1, 'level_id'=> 3, 'local_pic'=>'img/exam/Math/Equation/eq08_hard_4.png', 'answer'=> 4 , 'principle_id'=> 19 ),
             array('chapter_id'=> 1, 'level_id'=> 3, 'local_pic'=>'img/exam/Math/Equation/eq07_hard_3.png', 'answer'=> 3 , 'principle_id'=> 18 ),
-            array('chapter_id'=> 1, 'level_id'=> 2, 'local_pic'=>'img/exam/Math/Equation/eq10_med_2.png', 'answer'=> 4 , 'principle_id'=> 1 ),
+            array('chapter_id'=> 1, 'level_id'=> 2, 'local_pic'=>'img/exam/Math/Equation/eq10_med_2.png', 'answer'=> 2 , 'principle_id'=> 1 ),
             array('chapter_id'=> 1, 'level_id'=> 3, 'local_pic'=>'img/exam/Math/Equation/eq09_hard_2.png', 'answer'=> 2 , 'principle_id'=> 14 ),
             array('chapter_id'=> 1, 'level_id'=> 2, 'local_pic'=>'img/exam/Math/Equation/eq23_med_3.png', 'answer'=> 3 , 'principle_id'=> 19 ),
             array('chapter_id'=> 1, 'level_id'=> 1, 'local_pic'=>'img/exam/Math/Equation/eq24_easy_3.png', 'answer'=> 3 , 'principle_id'=> 19 ),
