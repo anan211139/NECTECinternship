@@ -298,6 +298,8 @@ class BotController extends Controller
 
                         $arr_replyData = array();
 
+                        echo "REPLY";
+
                         if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
                                 $arr_replyData[] = new TextMessageBuilder("ถูกต้อง! เก่งจังเลย");
