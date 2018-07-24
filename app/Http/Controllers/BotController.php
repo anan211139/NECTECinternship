@@ -266,6 +266,8 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     } else if ($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
+                        echo "1234";
+
                         $multiMessage = new MultiMessageBuilder;
                         $std = DB::table('students')
                             ->where('line_code', $userId)
