@@ -116,7 +116,7 @@ p{
 }
 /* bar */
 .layoutScore{
-    display: flex; 
+    display: flex;
     align-items: baseline;
     justify-content: center;
 }
@@ -199,14 +199,14 @@ p{
 }
 
 .searchCon{
-    height: calc(10px + 1.5vw); 
+    height: calc(10px + 1.5vw);
     margin: calc(5px + 1vw);
 }
 .searchCon > input{
     height: 100%;
     width: calc(200px + 1.5vw);
     padding: calc(6px + 0.1vw);
-    float: left; 
+    float: left;
     border-radius: 100px 0px 0px 100px;
     border-width: 0;
     background-color: #eeeeee;
@@ -214,9 +214,9 @@ p{
 }
 .searchCon > button{
     font-family: 'Kanit', sans-serif;
-    width: calc(50px + 1.5vw);    
+    width: calc(50px + 1.5vw);
     height: 100%;
-    float: left; 
+    float: left;
     border-radius: 0px 100px 100px 0px;
     border-width: 0;
     background-color: #5fbddf;
@@ -227,24 +227,24 @@ p{
     background-color: #4297b6;
 }
 
-::-webkit-scrollbar {
+.overflow::-webkit-scrollbar {
     width: calc(1px + 0.5vw);
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+.overflow::-webkit-scrollbar-track {
     background: #dfdfdf;
 }
- 
+
 /* Handle */
-::-webkit-scrollbar-thumb {
+.overflow::-webkit-scrollbar-thumb {
     background: rgb(206, 206, 206);
-    border-radius: 100px; 
+    border-radius: 100px;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+.overflow::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 @media screen and (max-width: 900px) {

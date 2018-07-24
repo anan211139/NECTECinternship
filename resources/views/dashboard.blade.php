@@ -1,5 +1,9 @@
 <?php
   $stu = session('childdata','default');
+  $pointsub1 = session('sub1','default');
+  $pointsub2 = session('sub2','default');
+  $meansub1 = session('meansub1','default');
+  $meansub2 = session('meansub2','default');
  ?>
 <html>
     <head>
@@ -20,19 +24,19 @@
                     <div class="logoBtn">พี่หมีติวเตอร์</div>
                 </div>
                 <div class="navRight">
-                    <a>สุพาพร</a>
+                    <a>{{session('name','default')}}</a>
                     <a class="navLogOut" href="/logout" >ออกจากระบบ</a>
                 </div>
             </div>
             <div class="section1">
                 <div class="item colorGreen">
                     <label class="label">จำนวนนักเรียนในห้อง (คน)</label>
-                    <div class="value">45</div>
+                    <div class="value">{{count($stu)}}</div>
                 </div>
                 <div class="item colorYellow">
                     <label class="label">ค่าเฉลี่ยของนักเรียนทั้งหมด</label>
                     <div class="layoutScore">
-                        <div class="value">12.65</div>
+                        <div class="value">{{12.65}}</div>
                         <div class="smallLabel">/55</div>
                     </div>
                 </div>
@@ -53,14 +57,14 @@
                             <div class="pro">
                                 <div id="bar1" class="bar" style="background-color: #ff525b;"></div>
                             </div>
-                            <label class="smallLabel">นักเรียนทำข้อสอบไปแล้ว 36 จาก 45 คน</label>
+                            <label class="smallLabel">นักเรียนทำข้อสอบไปแล้ว {{count($pointsub1)}} จาก {{count($stu)}} คน</label>
                         </div>
                         <div class="barCon">
                             <p class="align-left label">ข้อสอบภาษาอังกฤษ</p>
                             <div class="pro">
                                 <div id="bar2" class="bar" style="background-color: #5fbddf;"></div>
                             </div>
-                            <label class="smallLabel">นักเรียนทำข้อสอบไปแล้ว 21 จาก 45 คน</label>
+                            <label class="smallLabel">นักเรียนทำข้อสอบไปแล้ว {{count($pointsub2)}} จาก {{count($stu)}} คน</label>
                         </div>
                     </div>
                 </div>
@@ -70,18 +74,19 @@
                         <div>
                             <label class="subjectIcon" style="background-color: #ff525b;">วิชาคณิตศาสตร์</label>
                             <div class="layoutScore">
-                                <div class="value">12.65</div>
+                                <div class="value">{{number_format($meansub1[0]['mean'], 2, '.', '')}}</div>
                                 <div class="smallLabel">/55</div>
                             </div>
-                            <label class="smallLabel">ทำแล้ว 36/55 คน</label>
+                            <label class="smallLabel">ทำแล้ว {{count($pointsub1)}}/{{count($stu)}} คน</label>
                         </div>
                         <div>
                             <label class="subjectIcon" style="background-color: #5fbddf;">วิชาภาษาอังกฤษ</label>
                             <div class="layoutScore">
-                                <div class="value">12.65</div>
+                                <div class="value">{{number_format($meansub2[0]['mean'], 2, '.', '')}}</div>
+
                                 <div class="smallLabel">/55</div>
                             </div>
-                            <label class="smallLabel">ทำแล้ว 29/55 คน</label>
+                            <label class="smallLabel">ทำแล้ว {{count($pointsub2)}}/{{count($stu)}} คน</label>
                         </div>
                     </div>
                         <!-- <div class="subSection1" style="margin-top: 1vw; padding-bottom: 22px;">
@@ -108,11 +113,20 @@
                             <th scope="col">ภาษาอังกฤษ</th>
                         </tr>
                         @for($i = 0;$i < count($stu); $i++)
-                        <tr>
+                        <tr onclick = "window.location.href = '/selectoverall/{{$stu[$i]['line_code']}}';">
                             <td><img src="{{$stu[$i]['local_pic']}}"></td>
                             <td>{{$stu[$i]['name']}}</td>
-                            <td>40.5</td>
-                            <td>5.2</td>
+                            @for($j =0;$j < count($pointsub1);$j++)
+                              @if($pointsub1[$j]['name'] == $stu[$i]['name'])
+                                <td>{{number_format($pointsub1[$j]['mean'], 2, '.', '')}}</td>
+                              @endif
+                            @endfor
+                            @for($j =0;$j < count($pointsub2);$j++)
+                              @if($pointsub2[$j]['name'] == $stu[$i]['name'])
+                                <td>{{number_format($pointsub2[$j]['mean'], 2, '.', '')}}</td>
+                              @endif
+                            @endfor
+
                         </tr>
                         @endfor
                     </table>
@@ -122,4 +136,30 @@
         </div>
         <script type="text/javascript" src="js/dashboard.js"></script>
     </body>
+    <script type="text/javascript">
+      var elemMath = document.getElementById("bar1");
+      var elemEng = document.getElementById("bar2");
+      var maxValue = {{count($stu)}};
+      move({{count($pointsub1)}},elemMath,maxValue);
+      move({{count($pointsub2)}},elemEng,maxValue);
+      function move(value,elem,max) {
+          var width = 0;
+          var id = setInterval(frame, 15);
+          var data = (value/max)*100;
+          console.log(data);
+          function frame() {
+              if(data != 0){
+                  if (width >= data) {
+                  clearInterval(id);
+                  } else {
+                  width++;
+                  elem.style.width = width + '%';
+                  }
+              } else {
+                  elem.style.width = 0+ '%';
+              }
+          }
+      }
+    </script>
+
 </html>
