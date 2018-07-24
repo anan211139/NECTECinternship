@@ -332,6 +332,8 @@ class BotController extends Controller
 
                         } else if ($ans_status === false && $sec_chance === false) {
 
+                            echo "Check";
+
                             if ((int)$userMessage == $ans->answer) {
                                 $textReplyMessage = "ถูกต้อง! เก่งจังเลย";
                                 $ansst = true;
