@@ -181,7 +181,7 @@ class BotController extends Controller
                         $replyData = new TemplateMessageBuilder('Button Template',
                             new ButtonTemplateBuilder(
                                 'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
-                                'ตอนนี้น้องๆมีแต้มทั้งหมด >>' . $point_st . 'แต้มจ้า', // กำหนดรายละเอียด
+                                'ตอนนี้น้องมีแต้มทั้งหมด ' . $point_st . 'แต้มจ้า', // กำหนดรายละเอียด
                                 'https://github.com/anan211139/NECTECinternship/blob/master/img/score.png?raw=true/700', // กำหนด url รุปภาพ
                                 $actionBuilder  // กำหนด action object
                             )
@@ -390,7 +390,6 @@ class BotController extends Controller
                         $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ");
                         $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
                         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
-                        $arr_replyData[] = new TextMessageBuilder($stdprofile['pictureUrl']);
                         $arr_replyData[] = new ImagemapMessageBuilder(
                             $imageMapUrl,
                             "รายการวิชา",
@@ -672,7 +671,7 @@ class BotController extends Controller
             for ($i=0; $i < $g_result->level_id; $i++) { 
                 $text_result = $text_result."✩";
             }
-            $text_result = $text_result." ถูกต้อง ".$g_result->total_level_true." ข้อ จากทั้งหมด ".$g_result->total_level." ข้อ";
+            $text_result = $text_result." ถูกต้อง ".$g_result->total_level_true." ข้อ จากทั้งหมด ".$g_result->total_level." ข้อ\n";
 
             $concat_result = $concat_result.$text_result;
         }
