@@ -661,7 +661,7 @@ class BotController extends Controller
             ->orderBy('id','DESC')
             ->first();
 
-        $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกัน";
+        $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกันเถอะ :)";
 
         $group_result = DB::table('results')
         ->where('group_id',$group_true->id)
