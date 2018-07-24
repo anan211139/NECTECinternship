@@ -23,7 +23,7 @@ class CreateStudentsTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->Integer('school_id')->nullable();
+            $table->Integer('chapter_id')->nullable();
             $table->timestampsTz();
         });
     }
