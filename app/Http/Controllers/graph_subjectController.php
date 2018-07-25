@@ -11,12 +11,7 @@ class graph_subjectController extends Controller
     public function main($id){
         $line_code = session('choosechild','default');
         $subject_id = $id;
-        $jsonsubject = DB::table('subjects')->get();
-        $jsonchapters = DB::table('chapters')->get();
-        $arraysubject = json_decode($jsonsubject, true);
-        $arraychapters = json_decode($jsonchapters, true);
-        Session::put('subject_list',$arraysubject);
-        Session::put('chapter_list',$arraychapters);
+
         if(session()->has('student_score_allsubject')){
           session()->forget('student_score_allsubject');
           session()->forget('student_score_count');

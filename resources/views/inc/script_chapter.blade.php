@@ -6,7 +6,7 @@
   var st_count = @json(session('student_count','default'));
   var lv_total = @json(session('level_total','default'));
   var lv_true = @json(session('level_true','default'));
-  console.log(overall);
+
 
   var student_score_chapter = [];
   var chapter_group = [];
@@ -47,10 +47,7 @@
     level_name.push(lv_total[i].level_name);
     overall_score.push(overall[0].score/student_count);
   }
-  console.log(level_total_easy);
-  console.log(level_true_easy);
-  console.log(level_total_medium);
-  console.log(level_true_medium);
+
 
 
   var bar = document.getElementById('barChart_chapter').getContext('2d');
@@ -62,6 +59,7 @@
 
   var line = document.getElementById('lineChart_chapter').getContext('2d');
   Chart.defaults.global.defaultFontSize = 20;
+    Chart.defaults.global.defaultFontFamily = "'Kanit', sans-serif";
   var barChart = new Chart (bar,{
     type:'bar',
     data:{
@@ -69,12 +67,12 @@
       datasets:[
         {
           label: "นักเรียน",
-          backgroundColor: "#f0882f",
+          backgroundColor: "#fec956",
           data:  student_score_chapter
         },
         {
           label: "นักเรียนทั้งหมดในระบบ",
-          backgroundColor: "#013f73",
+          backgroundColor: "#32d36b",
           data: overall_score
         }
       ]
@@ -95,8 +93,6 @@
            callbacks: {
                label: function(tooltipItem, data) {
                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
-                // console.log(tooltipItem.yLabel);
-                //    console.log(label);
 
                    if (label) {
                        label += ': ';
@@ -115,11 +111,11 @@
   data:{
     datasets:[
       {
-        backgroundColor: ["#f0882f"],
+        backgroundColor: ["#ff525b"],
         data:level_true_easy
       },
       {
-        backgroundColor: ["#f0882f"],
+        backgroundColor: ["#ff525b"],
         data:level_total_easy
       }
     ]
@@ -132,7 +128,7 @@
     tooltips: {
       filter: function (tooltipItem, data) {
       var label = data.labels[tooltipItem.index];
-      console.log(tooltipItem);
+
       if (tooltipItem.datasetIndex === 0 && tooltipItem.index % 2 !== 0) {
         return false;
       } else {
@@ -144,7 +140,7 @@
                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
                  var total = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
                  label += total;
-                 console.log(label);
+
                    if(tooltipItem.datasetIndex === 0){
                       return  "จำนวนข้อที่ทำได้"+ ":" + " " +  + label + " " + "ข้อ";
                    } else if (tooltipItem.datasetIndex === 1) {
@@ -156,16 +152,17 @@
   }
   }
   );
+
   var pieChart_medium = new Chart (pie_medium,{
   type:'pie',
   data:{
     datasets:[
       {
-        backgroundColor: ["#013f73"],
+        backgroundColor: ["#5fbddf"],
         data:level_true_medium
       },
       {
-        backgroundColor: ["#013f73"],
+        backgroundColor: ["#5fbddf"],
         data:level_total_medium
       }
     ]
@@ -178,7 +175,7 @@
     tooltips: {
       filter: function (tooltipItem, data) {
       var label = data.labels[tooltipItem.index];
-      console.log(tooltipItem);
+
       if (tooltipItem.datasetIndex === 0  && tooltipItem.index % 2 !== 0) {
         return false;
       } else {
@@ -190,7 +187,7 @@
                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
                  var total = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
                  label += total;
-                 console.log(label);
+
                    if(tooltipItem.datasetIndex === 0){
                       return  "จำนวนข้อที่ทำได้"+ ":" + " " +  + label + " " + "ข้อ";
                    } else if (tooltipItem.datasetIndex === 1) {
@@ -207,11 +204,11 @@
   data:{
     datasets:[
       {
-        backgroundColor: ["#f0882f"],
+        backgroundColor: ["#ff525b"],
         data:level_true_hard
       },
       {
-        backgroundColor: ["#f0882f"],
+        backgroundColor: ["#ff525b"],
         data:level_total_hard
       }
     ]
@@ -224,7 +221,7 @@
     tooltips: {
       filter: function (tooltipItem, data) {
       var label = data.labels[tooltipItem.index];
-      console.log(tooltipItem);
+
       if (tooltipItem.datasetIndex === 0  && tooltipItem.index % 2 !== 0) {
         return false;
       } else {
@@ -236,7 +233,7 @@
                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
                  var total = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
                  label += total;
-                 console.log(label);
+
                    if(tooltipItem.datasetIndex === 0){
                       return  "จำนวนข้อที่ทำได้"+ ":" + " " +  + label + " " + "ข้อ";
                    } else if (tooltipItem.datasetIndex === 1) {

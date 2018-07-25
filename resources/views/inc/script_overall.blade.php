@@ -54,6 +54,8 @@
   var pie_subj1 = document.getElementById('pieChart_allsubject_subj1').getContext('2d');
   var pie_subj2 = document.getElementById('pieChart_allsubject_subj2').getContext('2d');
   Chart.defaults.global.defaultFontSize = 20;
+  Chart.defaults.global.elements.rectangle.borderWidth = 0;
+  Chart.defaults.global.defaultFontFamily = "'Kanit', sans-serif";
   var barChart = new Chart (bar,{
     type:'bar',
     data:{
@@ -61,12 +63,15 @@
       datasets:[
         {
           label: "นักเรียน",
-          backgroundColor: "#f0882f",
+          backgroundColor: "#fec956",
+          borderWidth : 0,
           data:student_score_allsubject
+
         },
         {
           label: "นักเรียนทั้งหมดในระบบ",
-          backgroundColor: "#013f73",
+          backgroundColor: "#32d36b",
+          borderWidth : 0,
           data: overall_score
         }
       ]
@@ -104,11 +109,11 @@ var pieChart_subj1 = new Chart (pie_subj1,{
   data:{
     datasets:[
       {
-        backgroundColor: ["#f0882f"],
+        backgroundColor: ["#ff525b"],
         data:pie_subj1_true
       },
       {
-        backgroundColor: ["#f0882f"],
+        backgroundColor: ["#ff525b"],
         data:pie_subj1_total
       }
     ]
@@ -151,11 +156,11 @@ var pieChart_subj1 = new Chart (pie_subj1,{
     data:{
       datasets:[
         {
-          backgroundColor: ["#013f73"],
+          backgroundColor: ["#5fbddf"],
           data:pie_subj2_true
         },
         {
-          backgroundColor: ["#013f73"],
+          backgroundColor: ["#5fbddf"],
           data:pie_subj2_total
         }
       ]

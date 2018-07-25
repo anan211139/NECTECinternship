@@ -71,8 +71,8 @@
                     </button>
                     <div id="myDropdown" class="dropdown-content">
                       @for($i=0;$i<count($subject_list);$i++)
-                          <ul class="main-navigation" onmouseover="hover();" onmouseout="unhover();">
-                              <li class="list"><a href="/selectsubject/{{$subject_list["$i"]["id"]}}" class="a">{{$subject_list["$i"]["name"]}}<img id="rightarrow" class="dropdownicon" src="picture/right-arrowblack.png"></a>
+                          <ul class="main-navigation">
+                              <li class="list"><a class="a">{{$subject_list["$i"]["name"]}}</a>
                                 <ul class="main-navigation">
                                   @for($j=0;$j<count($chapther_list);$j++)
                                     @if($subject_list["$i"]["id"] == $chapther_list["$j"]["subject_id"])

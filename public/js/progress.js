@@ -33,21 +33,6 @@ function selectFunction(){
 //   }
 // }
 
-function hover() {
-    document.getElementById("rightarrow").setAttribute('src', 'picture/right-arrow.png');
-}
-  
-function unhover() {
-    document.getElementById("rightarrow").setAttribute('src', 'picture/right-arrowblack.png');
-}
-function hover2() {
-    document.getElementById("rightarrow2").setAttribute('src', 'picture/right-arrow.png');
-}
-  
-function unhover2() {
-    document.getElementById("rightarrow2").setAttribute('src', 'picture/right-arrowblack.png');
-}
-
 function openNav() {
     document.getElementById("mySidenav").style.width = "300px";
 }

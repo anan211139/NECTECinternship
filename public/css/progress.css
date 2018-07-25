@@ -29,7 +29,7 @@ body {
     color: white;
     font-size: 17px;
     text-decoration: none;
-    font-family: 'Roboto', sans-serif;    
+    font-family: 'Roboto', sans-serif;
 }
 .logoP{
     color: white;
@@ -45,8 +45,26 @@ body {
 }
 .layoutContent{
     display: grid;
-    grid-template-columns: auto auto;
-    padding: 50px;
+    grid-template-columns: 50% 50%;
+    padding: 0px 50px;
+    justify-content: center;
+}
+.layoutContent2{
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    padding: 0px 50px;
+    justify-content: center;
+}
+.thChart{
+  width: 50%
+}
+.barChart{
+  width: 70%;
+  /* width: calc(500px + 1.5vw); */
+  margin: auto;
+}
+.labelPie{
+  margin-top: 50px;
 }
 .layoutContentTutor{
     display: grid;
@@ -105,11 +123,11 @@ body {
     top: 0 ;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   }
-  
+
 .main-navigation .list {
     position: relative;
     float: left;
-} 
+}
 .list .main-navigation {
     display: none;
 }
@@ -125,33 +143,33 @@ body {
     display: block;
     position: absolute;
 }
-  
-.list:hover .list { 
+
+.list:hover .list {
     float: none;
 }
-  
+
 .list:hover .a {
     background: #6ad7f0;
     color: white;
 }
-  
-.list:hover .list .a:hover { 
-    background: #3da0b6; 
+
+.list:hover .list .a:hover {
+    background: #3da0b6;
 }
 .main-navigation ul ul {
     left: 100%;
     top: 0;
 }
-  
+
   /* Simple clearfix */
 
 .main-navigation:before,
 .main-navigation:after {
     content: " "; /* 1 */
 }
-  
-.main-navigation:after { 
-    clear: both; 
+
+.main-navigation:after {
+    clear: both;
 }
 
 .dropbtn {
@@ -170,8 +188,8 @@ body {
     height: 100%;
 }
 .dropbtn2{
-    background-color: #bc2035; 
-    border-radius: 100px; 
+    background-color: #bc2035;
+    border-radius: 100px;
     color: white;
 }
 
@@ -180,7 +198,7 @@ body {
     display: inline-block;
     margin-left: 20px;
 }
-  
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -189,7 +207,7 @@ body {
     /* z-index: 1; */
     margin-left: 20px;
 }
-  
+
 #child > a {
     color: black;
     padding: 12px 16px;
@@ -268,7 +286,7 @@ body {
 .topnav .icon {
     display: none;
 }
-  
+
 @media screen and (max-width: 600px) {
     .topnav #menu {display: none;}
     .topnav a.icon {
@@ -303,7 +321,7 @@ body {
     transition: 0.3s;
 }
 .sidenav a {
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 /* .sidenav a:hover {
@@ -325,28 +343,28 @@ body {
     list-style: none;
     padding: 0;
   }
-  
-  
+
+
   .cd-accordion-menu {
     white-space: nowrap;
   }
-  
+
   .cd-accordion-menu ul {
     /* by default hide all sub menus */
-    
+
     display: none;
   }
-  
+
   .cd-accordion-menu li {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   .cd-accordion-menu input[type=checkbox] {
     /* hide native checkbox */
-    
+
     position: absolute;
     opacity: 0;
   }
@@ -385,7 +403,7 @@ body {
 .cd-accordion-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
   /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
   /* show children when item is checked */
-  
+
   display: block;
 }
 .backgroundsub{
@@ -440,9 +458,9 @@ body {
 }
 
 
-.container {
+/* .container {
     padding: 30px;
-}
+} */
 
 span.psw {
     float: right;
@@ -468,7 +486,7 @@ span.psw {
 .modal-content {
     font-family: 'Roboto', sans-serif;
     color: rgb(177, 176, 176);
-    font-size: 12px; 
+    font-size: 12px;
     background-color: #fefefe;
     margin: auto auto auto auto;
     border-width: 0;
@@ -493,12 +511,12 @@ span.psw {
 }
 
 @-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
+    from {-webkit-transform: scale(0)}
     to {-webkit-transform: scale(1)}
 }
-    
+
 @keyframes animatezoom {
-    from {transform: scale(0)} 
+    from {transform: scale(0)}
     to {transform: scale(1)}
 }
 
@@ -511,4 +529,17 @@ span.psw {
     .cancelbtn {
        width: 100%;
     }
+}
+@media screen and (max-width: 900px) {
+  .layoutContent, .layoutContent2{
+    grid-template-columns: 90%;
+  }
+  .thChart{
+    width: 90%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .barChart{
+    width: 100%;
+  }
 }

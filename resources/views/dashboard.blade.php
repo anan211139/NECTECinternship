@@ -105,7 +105,7 @@
                     </div>
                     <table id="student">
                         <tr>
-                            <th scope="col" rowspan="2">#</th>
+                            <th scope="col" rowspan="2"></th>
                             <th scope="col" rowspan="2">ชื่อ</th>
                             <th colspan="2" scope="colgroup">ค่าเฉลี่ยรายวิชา</th>
                         </tr>

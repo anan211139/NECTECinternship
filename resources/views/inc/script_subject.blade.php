@@ -1,11 +1,11 @@
-@if(session()->has('student_score'))
+@if(session()->has('student_score_chapter'))
 <script type="text/javascript">
   var student_data = @json(session('student_score','default'));
-  var above = @json(session('score_above','default'));
-  var below = @json(session('score_below','default'));
-  var inside = @json(session('pie_outside','default'));
-  var outside = @json(session('pie_inside','default'));
-  console.log("student_data");
+  var above = @json(session('above','default'));
+  var below = @json(session('below','default'));
+  var inside = @json(session('pie_inside','default'));
+  var outside = @json(session('pie_outside','default'));
+  console.log(outside);
   var student_score = [];
   var group = [];
   var ch1_name = [];
@@ -26,6 +26,7 @@
     score_below.push(below[i].below);
     chapter_name.push(student_data[i].name);
     score_above[i] /= score_below[i];
+
     if (i === 0) {
       pie_ch1_total.push(Number(inside[i].pie_inside));
       pie_ch1_true.push(Number(outside[i].pie_outside));
@@ -39,31 +40,12 @@
     }
 
   }
-console.log(  pie_ch1_total,  pie_ch1_true);
-console.log(  pie_ch2_total,  pie_ch2_true);  // for (var i = 0; i < above.length; i++) {
-  //   score_above.push(Number(above[i].above));
-  //   score_below.push(below[i].below);
-  //   score_above[i] /= score_below[i];
-  // } //เอาไปรวมด้านบนแล้ว
-  // console.log(score_above);
-
-  // for (var i = 0; i < inside.length; i++) {
-  //   pie_inside.push(Number(inside[i].pie_inside));
-  //   pie_outside.push(Number(outside[i].pie_outside));
-  //   sum += pie_inside[i];
-  // }
-
-  // for (var i = 0; i < pie_inside.length; i++) {
-  //   pie_inside[i] = (pie_inside[i]/sum) * 100;
-  //   pie_outside[i] = (pie_outside[i]/20) * pie_inside[i];
-  // }
-  //  console.log(pie_outside);
-  // คิดเป็นเปอร์เซ็น
 
   var bar = document.getElementById('barChart_subject').getContext('2d');
   var pie_ch1 = document.getElementById('pieChart_subject_ch1').getContext('2d');
   var pie_ch2 = document.getElementById('pieChart_subject_ch2').getContext('2d');
 Chart.defaults.global.defaultFontSize = 20;
+  Chart.defaults.global.defaultFontFamily = "'Kanit', sans-serif";
   var barChart = new Chart (bar,{
     type:'bar',
     data:{
@@ -71,12 +53,12 @@ Chart.defaults.global.defaultFontSize = 20;
       datasets:[
         {
           label: "นักเรียน",
-          backgroundColor: "#f0882f",
+          backgroundColor: "#fec956",
           data:student_score
         },
         {
           label: "นักเรียนทั้งหมดในระบบ",
-          backgroundColor: "#013f73",
+          backgroundColor: "#32d36b",
           data:score_above
         }
       ]

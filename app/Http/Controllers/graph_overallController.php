@@ -9,6 +9,12 @@ class graph_overallController extends Controller
 {
     public function main($id){
       $choosechild = $id;
+      $jsonsubject = DB::table('subjects')->get();
+      $jsonchapters = DB::table('chapters')->get();
+      $arraysubject = json_decode($jsonsubject, true);
+      $arraychapters = json_decode($jsonchapters, true);
+      Session::put('subject_list',$arraysubject);
+      Session::put('chapter_list',$arraychapters);
       Session::put('choosechild',$choosechild);
       if(session()->has('student_score')){
         session()->forget('student_score');

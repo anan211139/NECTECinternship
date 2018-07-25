@@ -177,6 +177,7 @@ p{
 
 #student td, #student th {
     padding: 1vw;
+    cursor: pointer;
 }
 
 #student tr:nth-child(even){background-color: #f2f2f2;}
