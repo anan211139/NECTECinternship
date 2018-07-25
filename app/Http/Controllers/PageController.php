@@ -76,7 +76,7 @@ class Pagecontroller extends Controller
         ->rightjoin('students','groups.line_code','=','students.line_code')
         ->where('parent_id', '=', $id )
         ->where('subject_id', '=', '2' )
-        ->groupBy('groups.line_code')
+        ->groupBy('students.name')
         ->orderBy('students.name','asc')
         ->get();
         $arrayresult = json_decode($student_mean_sub2, true);
