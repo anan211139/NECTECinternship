@@ -4,6 +4,7 @@
   $pointsub2 = session('sub2','default');
   $meansub1 = session('meansub1','default');
   $meansub2 = session('meansub2','default');
+  $overall = ($meansub1[0]['mean']+$meansub2[0]['mean'])/2;
  ?>
 <html>
     <head>
@@ -36,7 +37,7 @@
                 <div class="item colorYellow">
                     <label class="label">ค่าเฉลี่ยของนักเรียนทั้งหมด</label>
                     <div class="layoutScore">
-                        <div class="value">{{12.65}}</div>
+                        <div class="value">{{number_format($overall, 2, '.', '')}}</div>
                         <div class="smallLabel">/55</div>
                     </div>
                 </div>
@@ -112,21 +113,32 @@
                             <th scope="col">คณิตศาสตร์</th>
                             <th scope="col">ภาษาอังกฤษ</th>
                         </tr>
+
+
                         @for($i = 0;$i < count($stu); $i++)
                         <tr onclick = "window.location.href = '/selectoverall/{{$stu[$i]['line_code']}}';">
-                            <td><img src="{{$stu[$i]['local_pic']}}"></td>
-                            <td>{{$stu[$i]['name']}}</td>
-                            @for($j =0;$j < count($pointsub1);$j++)
-                              @if($pointsub1[$j]['name'] == $stu[$i]['name'])
-                                <td>{{number_format($pointsub1[$j]['mean'], 2, '.', '')}}</td>
-                              @endif
-                            @endfor
+                          <td><img src="{{$stu[$i]['local_pic']}}"></td>
+                          <td>{{$stu[$i]['name']}}</td>
+                          <td>
+                          @for($j =0;$j < count($pointsub1);$j++)
+                            @if($pointsub1[$j]['name'] == $stu[$i]['name'])
+                              {{number_format($pointsub1[$j]['mean'], 0, '.', '')}}
+                            @endif
+                          @endfor
+
+                          </td>
+
+                          <td>
                             @for($j =0;$j < count($pointsub2);$j++)
                               @if($pointsub2[$j]['name'] == $stu[$i]['name'])
-                                <td>{{number_format($pointsub2[$j]['mean'], 2, '.', '')}}</td>
+                                {{number_format($pointsub1[$j]['mean'], 0, '.', '')}}
+                              @elseif($pointsub2[$j]['name'] != $stu[$i]['name'])
+
+                              @else
+
                               @endif
                             @endfor
-
+                          </td>
                         </tr>
                         @endfor
                     </table>
