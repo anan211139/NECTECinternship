@@ -82,7 +82,7 @@ class Pagecontroller extends Controller
         $arrayresult = json_decode($student_mean_sub2, true);
         Session::put('sub2',$arrayresult);
 
-        $meanoverall = DB::table(DB::raw("(select groups.line_code,subjects.name,sum(score) / count(score) as score from groups
+        $meanoverall = DB::table(DB::raw("(select groups.line_code,sum(score) / count(score) as score from groups
                                           left join chapters on chapter_id = chapters.id
                                           left join subjects on subject_id = subjects.id
                                           left join studentparents on groups.line_code = studentparents.line_code
@@ -93,7 +93,7 @@ class Pagecontroller extends Controller
         ->get();
         $arrayresult = json_decode($meanoverall, true);
         Session::put('meansub1',$arrayresult);
-        $meanoverall2 = DB::table(DB::raw("(select groups.line_code,subjects.name,sum(score) / count(score) as score from groups
+        $meanoverall2 = DB::table(DB::raw("(select groups.line_code,sum(score) / count(score) as score from groups
                                           left join chapters on chapter_id = chapters.id
                                           left join subjects on subject_id = subjects.id
                                           left join studentparents on groups.line_code = studentparents.line_code
