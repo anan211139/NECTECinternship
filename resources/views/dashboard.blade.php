@@ -117,27 +117,43 @@
 
                         @for($i = 0;$i < count($stu); $i++)
                         <tr onclick = "window.location.href = '/selectoverall/{{$stu[$i]['line_code']}}';">
-                          <td><img src="{{$stu[$i]['local_pic']}}"></td>
+                          <td><img src="@if($stu[$i]['local_pic']){{$stu[$i]['local_pic']}}@else picture/bear_N.png @endif"></td>
                           <td>{{$stu[$i]['name']}}</td>
                           <td>
-                          @for($j =0;$j < count($pointsub1);$j++)
-                            @if($pointsub1[$j]['name'] == $stu[$i]['name'])
-                              {{number_format($pointsub1[$j]['mean'], 0, '.', '')}}
-                            @endif
-                          @endfor
-
-                          </td>
-
-                          <td>
-                            @for($j =0;$j < count($pointsub2);$j++)
-                              @if($pointsub2[$j]['name'] == $stu[$i]['name'])
-                                {{number_format($pointsub1[$j]['mean'], 0, '.', '')}}
-                              @elseif($pointsub2[$j]['name'] != $stu[$i]['name'])
-
-                              @else
-
+                            @php $index = 0;
+                            $haveData = False;
+                            @endphp
+                            @for($j =0;$j < count($pointsub1);$j++)
+                              @if($pointsub1[$j]['name'] == $stu[$i]['name'])
+                                @php
+                                  $haveData = True;
+                                  $index = $j;
+                                @endphp
                               @endif
                             @endfor
+                            @if($haveData)
+                              {{number_format($pointsub1[$index]['mean'], 0, '.', '')}}
+                            @else
+                              -
+                            @endif
+                          </td>
+                          <td>
+                            @php $index = 0;
+                            $haveData = False;
+                            @endphp
+                            @for($j =0;$j < count($pointsub2);$j++)
+                              @if($pointsub2[$j]['name'] == $stu[$i]['name'])
+                                @php
+                                $haveData = True;
+                                $index = $j;
+                                @endphp
+                              @endif
+                            @endfor
+                            @if($haveData)
+                              {{number_format($pointsub1[$index]['mean'], 0, '.', '')}}
+                            @else
+                              -
+                            @endif
                           </td>
                         </tr>
                         @endfor
