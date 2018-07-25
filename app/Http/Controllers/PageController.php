@@ -55,18 +55,18 @@ class Pagecontroller extends Controller
         $arrayresult = json_decode($jsonresult, true);
         Session::put('childdata',$arrayresult);
 
-        $student_mean_sub1 = DB::table('groups')
-        ->leftjoin('chapters', 'chapter_id', '=', 'chapters.id')
-        ->leftjoin('subjects', 'subject_id', '=', 'subjects.id')
-        ->leftjoin('studentparents','groups.line_code','=','studentparents.line_code')
-        ->rightjoin('students','groups.line_code','=','students.line_code')
-        ->select(DB::raw('students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
-        ->where('parent_id', '=', $id )
-        ->where('subject_id', '=', '1' )
-        ->groupBy('groups.line_code')
-        ->get();
-        $arrayresult = json_decode($student_mean_sub1, true);
-        Session::put('sub1',$arrayresult);
+        // $student_mean_sub1 = DB::table('groups')
+        // ->leftjoin('chapters', 'chapter_id', '=', 'chapters.id')
+        // ->leftjoin('subjects', 'subject_id', '=', 'subjects.id')
+        // ->leftjoin('studentparents','groups.line_code','=','studentparents.line_code')
+        // ->rightjoin('students','groups.line_code','=','students.line_code')
+        // ->select(DB::raw('students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
+        // ->where('parent_id', '=', $id )
+        // ->where('subject_id', '=', '1' )
+        // ->groupBy('groups.line_code')
+        // ->get();
+        // $arrayresult = json_decode($student_mean_sub1, true);
+        // Session::put('sub1',$arrayresult);
 
         $student_mean_sub2 = DB::table('groups')
         ->select(DB::raw('students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
