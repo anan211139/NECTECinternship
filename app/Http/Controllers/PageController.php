@@ -69,7 +69,7 @@ class Pagecontroller extends Controller
         Session::put('sub1',$arrayresult);
 
         $student_mean_sub2 = DB::table('groups')
-        ->select(DB::raw('students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
+        ->select(DB::raw('students.name, sum(score) / count(score) as mean'))
         ->leftjoin('chapters', 'chapter_id', '=', 'chapters.id')
         ->leftjoin('subjects', 'subject_id', '=', 'subjects.id')
         ->leftjoin('studentparents','groups.line_code','=','studentparents.line_code')
