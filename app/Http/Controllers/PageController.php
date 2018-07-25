@@ -63,7 +63,7 @@ class Pagecontroller extends Controller
         ->select(DB::raw('students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
         ->where('parent_id', '=', $id )
         ->where('subject_id', '=', '1' )
-        ->groupBy('groups.line_code')
+        ->groupBy('students.name')
         ->get();
         $arrayresult = json_decode($student_mean_sub1, true);
         Session::put('sub1',$arrayresult);
