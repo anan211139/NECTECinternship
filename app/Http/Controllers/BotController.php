@@ -455,7 +455,7 @@ class BotController extends Controller
             }
 
             $group_r = DB::table('groupRandoms')
-            ->where('group_id', $group_id)
+                ->where('group_id', $group_id)
                 ->first();
             $group_rand = $group_r->listlevelid;
             $concat_level = $group_rand.$level_id.',';
@@ -481,7 +481,7 @@ class BotController extends Controller
 
             $group_r = DB::table('groupRandoms')
                 ->where('group_id', $group_id)
-                ->where('listexamid', 'like', '%' .$quizzesforsubj->id . ',%')
+                ->where('listexamid', 'like', '%,' .$quizzesforsubj->id . ',%')
                 ->count();
 
             if($group_r == 0){  //check ไม่ซ้ำ
@@ -542,7 +542,7 @@ class BotController extends Controller
                 ->first();
             $tests = DB::table('groupRandoms')->insert([
                 'group_id' => $group_id,
-                'listexamid' => $quizzesforsubj->id.',',
+                'listexamid' => ','.$quizzesforsubj->id.',',
                 'listlevelid' => "2,"
             ]);
             // dd($tests);
