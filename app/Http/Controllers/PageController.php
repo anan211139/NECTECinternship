@@ -87,7 +87,7 @@ class Pagecontroller extends Controller
                                           left join subjects on subject_id = subjects.id
                                           left join studentparents on groups.line_code = studentparents.line_code
                                           where subject_id = 1 and parent_id = $id
-                                          group by groups.line_code -- mean_subject
+                                          group by groups.line_code
                                           order by groups.id) total"))
         ->select(DB::raw('sum(score) / count(score) as mean'))
         ->get();
@@ -98,7 +98,7 @@ class Pagecontroller extends Controller
                                           left join subjects on subject_id = subjects.id
                                           left join studentparents on groups.line_code = studentparents.line_code
                                           where subject_id = 2 and parent_id = $id
-                                          group by groups.line_code -- mean_subject
+                                          group by groups.line_code
                                           order by groups.id) total"))
         ->select(DB::raw('sum(score) / count(score) as mean'))
         ->get();
