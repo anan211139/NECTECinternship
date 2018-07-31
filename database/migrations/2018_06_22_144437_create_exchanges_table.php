@@ -16,11 +16,11 @@ class CreateExchangesTable extends Migration
         Schema::create('exchanges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('line_code');
-            $table->foreign('line_code')->references('line_code')->on('students');
             $table->smallInteger('send')->default(1); //1 in progress of delivery, 2 delivered, 3 delivery is not success
             $table->Integer('code_id')->nullable();
-            $table->foreign('code_id')->references('id')->on('codes');
             $table->dateTimeTz('time');
+            // $table->foreign('line_code')->references('line_code')->on('students');
+            // $table->foreign('code_id')->references('id')->on('codes');
             $table->timestamps();
         });
     }

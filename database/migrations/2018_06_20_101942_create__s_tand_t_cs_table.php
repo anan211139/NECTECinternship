@@ -16,9 +16,9 @@ class CreateSTandTCsTable extends Migration
         Schema::create('STandTCs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('line_code');
-            $table->foreign('line_code')->references('line_code')->on('students');
             $table->Integer('teacher_id');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+            // $table->foreign('line_code')->references('line_code')->on('students');
+            // $table->foreign('teacher_id')->references('id')->on('teachers');
             $table->timestampsTz();
         });
     }

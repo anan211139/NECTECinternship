@@ -16,13 +16,13 @@ class CreateExamsTable extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('chapter_id');
-            $table->foreign('chapter_id')->references('id')->on('chapters');
             $table->Integer('level_id');
-            $table->foreign('level_id')->references('id')->on('levels');
             $table->string('local_pic');
             $table->smallInteger('answer'); //1,2,3,4
             $table->Integer('principle_id');
-            $table->foreign('principle_id')->references('id')->on('printciples'); 
+            // $table->foreign('level_id')->references('id')->on('levels');
+            // $table->foreign('principle_id')->references('id')->on('printciples');
+            // $table->foreign('chapter_id')->references('id')->on('chapters');
             $table->timestampsTz();
         });
     }
