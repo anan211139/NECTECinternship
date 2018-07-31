@@ -20,7 +20,7 @@
 @endif
 @if(session()->has('student_score_chapter'))
   <div class="content">
-      <h1 id="label">ทุกวิชา</h1>
+      <h1 id="label">{{$chapterCh['0']['name']}}</h1>
       <div class="barChart">
         <canvas id="barChart_chapter"></canvas>
       </div>

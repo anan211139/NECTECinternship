@@ -4,6 +4,7 @@
   $subject_list = session('subject_list', 'default');
   $chapther_list = session('chapter_list', 'default');
   $count = count($childdata);
+  $chapterCh =session('chapterCh','default');
  ?>
 <html>
     <head>
