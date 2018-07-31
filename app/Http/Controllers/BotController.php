@@ -736,6 +736,7 @@ class BotController extends Controller
          $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
     
         $user_select = DB::table('groups')
+            ->where('status', false)
             ->pluck('line_code')
             ->all();
 
@@ -746,7 +747,6 @@ class BotController extends Controller
                 ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
                 ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
                 ->where('groups.line_code', $line_u)
-                ->where('groups.status', false)
                 ->orderBy('groups.id','ASC')
                 ->orderBy('logChildrenQuizzes.time', 'DESC')
                 ->first();
@@ -754,7 +754,6 @@ class BotController extends Controller
             $lastdate = new Carbon($join_log_group->time);
             $now = Carbon::now();
             echo $lastdate->diffInDays($now);
-            //dd($join_log_group);
 
             if($lastdate->diffInDays($now)==6){
                 DB::table('groupRandoms')
