@@ -259,6 +259,7 @@ class BotController extends Controller
                             ->where('status', false)
                             ->pluck('line_code')
                             ->all();
+                        $user_select = array_unique($user_select);
 
                         foreach ($user_select as $line_u) {
 
@@ -267,7 +268,6 @@ class BotController extends Controller
                                 ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
                                 ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
                                 ->where('groups.line_code', $line_u)
-                                // ->where('groups.status', false)
                                 ->orderBy('groups.id','ASC')
                                 ->orderBy('logChildrenQuizzes.time', 'DESC')
                                 ->first();
@@ -739,6 +739,8 @@ class BotController extends Controller
             ->where('status', false)
             ->pluck('line_code')
             ->all();
+
+        $user_select = array_unique($user_select);
 
         foreach ($user_select as $line_u) {
 
