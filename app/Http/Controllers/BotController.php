@@ -259,13 +259,13 @@ class BotController extends Controller
                             ->pluck('line_code')
                             ->all();
 
-                        foreach ($user_select as $line_u) {
+                        // foreach ($user_select as $line_u) {
 
                             $join_log_group = DB::table('groups')
                                 ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                                 ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
                                 ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
-                                ->where('groups.line_code', $line_u)
+                                // ->where('groups.line_code', $line_u)
                                 ->where('groups.status', false)
                                 ->orderBy('groups.id','ASC')
                                 ->orderBy('logChildrenQuizzes.time', 'DESC')
@@ -300,7 +300,7 @@ class BotController extends Controller
                             //     $response = $bot->pushMessage($line_u ,$replyData);
 
                             // }
-                        }
+                        // }
                     }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
