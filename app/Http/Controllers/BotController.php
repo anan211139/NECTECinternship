@@ -255,9 +255,9 @@ class BotController extends Controller
                         $replyData = $multiMessage;
                     }
                     else if ($userMessage == "ลองNOTI"){
-                        $user_select = DB::table('groups')
-                            ->pluck('line_code')
-                            ->all();
+                        // $user_select = DB::table('groups')
+                        //     ->pluck('line_code')
+                        //     ->all();
 
                         // foreach ($user_select as $line_u) {
 
