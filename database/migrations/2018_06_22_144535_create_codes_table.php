@@ -16,6 +16,7 @@ class CreateCodesTable extends Migration
         Schema::create('codes', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('prize_id');
+            $table->foreign('prize_id')->references('id')->on('prizes');
             $table->string('code'); //code to exchange
             $table->smallInteger('status')->default(0); //0 still not send code to the student, 1 when the code id sent
             $table->timestamps();

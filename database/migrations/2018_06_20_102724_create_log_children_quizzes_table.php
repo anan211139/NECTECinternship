@@ -16,7 +16,9 @@ class CreateLogChildrenQuizzesTable extends Migration
         Schema::create('logChildrenQuizzes', function (Blueprint $table) { //create when random exam
             $table->increments('id');
             $table->Integer('group_id');
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->Integer('exam_id'); // present exam
+            $table->foreign('exam_id')->references('id')->on('exams');
             $table->smallInteger('answer')->nullable(); //real ans
             $table->boolean('is_correct')->nullable(); //true-false
             $table->boolean('second_chance')->default(false);

@@ -17,7 +17,9 @@ class CreateQuizzesTable extends Migration
             $table->increments('id');
             $table->text('question');
             $table->text('level');
+            $table->foreign('level')->references('id')->on('levels');
             $table->text('subject');
+            $table->foreign('subject')->references('id')->on('subjects'); 
             $table->text('topic');
             $table->text('answer');
         });

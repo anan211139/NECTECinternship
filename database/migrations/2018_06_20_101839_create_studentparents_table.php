@@ -16,7 +16,9 @@ class CreateStudentparentsTable extends Migration
         Schema::create('studentparents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('line_code');
+            $table->foreign('line_code')->references('line_code')->on('students');
             $table->Integer('parent_id');
+            $table->foreign('parent_id')->references('id')->on('managers');
             $table->timestampsTz();
         });
     }

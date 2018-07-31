@@ -16,10 +16,13 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('line_code');
+            $table->foreign('line_code')->references('line_code')->on('students');
             $table->Integer('chapter_id');
+            $table->foreign('chapter_id')->references('id')->on('chapters');
             $table->boolean('status')->default(false); //boolean true if the student finish all their exam
             $table->Integer('score')->nullable();
             $table->timestampsTz();
+
         });
     }
 
