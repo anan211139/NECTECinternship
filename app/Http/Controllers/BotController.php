@@ -255,27 +255,28 @@ class BotController extends Controller
                         $replyData = $multiMessage;
                     }
                     else if ($userMessage == "ลองNOTI"){
-                        // $user_select = DB::table('groups')
-                        //     ->pluck('line_code')
-                        //     ->all();
+                        $user_select = DB::table('groups')
+                            ->where('status', false)
+                            ->pluck('line_code')
+                            ->all();
 
-                        // foreach ($user_select as $line_u) {
+                        foreach ($user_select as $line_u) {
 
                             $join_log_group = DB::table('groups')
                                 ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                                 ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
                                 ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
-                                // ->where('groups.line_code', $line_u)
-                                ->where('groups.status', false)
+                                ->where('groups.line_code', $line_u)
+                                // ->where('groups.status', false)
                                 ->orderBy('groups.id','ASC')
                                 ->orderBy('logChildrenQuizzes.time', 'DESC')
-                                ->get();
+                                ->first();
 
-                            dd($join_log_group);
+                            // dd($join_log_group);
 
-                            // $lastdate = new Carbon($join_log_group->time);
-                            // $now = Carbon::now();
-                            // echo "LINEID>>".$line_u."DIFFDATE>>".$lastdate->diffInDays($now)."\n";
+                            $lastdate = new Carbon($join_log_group->time);
+                            $now = Carbon::now();
+                            echo "LINEID>>".$line_u."DIFFDATE>>".$lastdate->diffInDays($now)."\n";
 
                             //dd($join_log_group);
 
@@ -300,7 +301,7 @@ class BotController extends Controller
                             //     $response = $bot->pushMessage($line_u ,$replyData);
 
                             // }
-                        // }
+                        }
                     }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
