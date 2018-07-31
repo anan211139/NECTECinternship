@@ -271,9 +271,12 @@ class BotController extends Controller
                                 ->orderBy('logChildrenQuizzes.time', 'DESC')
                                 ->first();
 
-                            $lastdate = new Carbon($join_log_group->time);
-                            $now = Carbon::now();
-                            echo "LINEID>>".$line_u."DIFFDATE>>".$lastdate->diffInDays($now)."\n";
+                            dd($join_log_group);
+
+                            // $lastdate = new Carbon($join_log_group->time);
+                            // $now = Carbon::now();
+                            // echo "LINEID>>".$line_u."DIFFDATE>>".$lastdate->diffInDays($now)."\n";
+
                             //dd($join_log_group);
 
                             // if($lastdate->diffInDays($now)==6){
