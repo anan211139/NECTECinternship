@@ -22,7 +22,7 @@
     <body>
         <div class="main-container">
             <div class="topnav" id="myTopnav">
-                <div class="logotop">
+                <div class="logotop" onclick = "window.location.href = '/dashboard';">
                     <img class="logo" src="picture/bear_Nffff.png">
                     <p class="logoP">พี่หมีติวเตอร์</p>
                 </div>
@@ -70,6 +70,9 @@
                         <img class="dropdownicon" src="picture/down-arrowblack.png">
                     </button>
                     <div id="myDropdown" class="dropdown-content">
+                      <ul class="main-navigation">
+                          <li class="list"><a class="a" href = "/selectoverall/{{$choosechild}}">overall</a></li>
+                      </ul>
                       @for($i=0;$i<count($subject_list);$i++)
                           <ul class="main-navigation">
                               <li class="list"><a class="a">{{$subject_list["$i"]["name"]}}</a>
@@ -119,32 +122,23 @@
                         <li class="has-children">
                             <input type="checkbox" name="group-1" id="group-1">
                             <label class="sidenavLabel" for="group-1">เปลี่ยนวิชา <img class="dropdownicon" src="picture/down-arrowblack.png"></label>
-
                               <ul>
+                                @for($i=0;$i<count($subject_list);$i++)
                                   <li class="has-children">
-                                      <input type="checkbox" name="sub-group-1" id="sub-group-1">
-                                    <label class="backgroundsub sidenavLabel" for="sub-group-1">ภาษาอังกฤษ <img class="dropdownicon" src="picture/down-arrow.png"></label>
-
+                                    <input type="checkbox" name="sub-group-{{$i+1}}" id="sub-group-{{$i+1}}">
+                                    <label class="backgroundsub sidenavLabel" for="sub-group-{{$i+1}}">{{$subject_list["$i"]["name"]}} <img class="dropdownicon" src="picture/down-arrow.png"></label>
                                     <ul>
                                         <li class="backgroundsub2">
-                                            <a href="#0">Grammar</a>
-                                            <a href="#1">Listening</a>
+                                          @for($j=0;$j<count($chapther_list);$j++)
+                                            @if($subject_list["$i"]["id"] == $chapther_list["$j"]["subject_id"])
+                                              <a href="/selectchapter/{{$subject_list["$i"]["id"]}}/{{$chapther_list["$j"]["id"]}}0">{{$chapther_list["$j"]["name"]}}</a>
+                                            @endif
+                                          @endfor
                                         </li>
                                         <!-- <li class="backgroundsub2"><a href="#1">Listening</a></li> -->
                                     </ul>
                                   </li>
-                                  <li class="has-children">
-                                      <input type="checkbox" name="sub-group-2" id="sub-group-2">
-                                    <label class="backgroundsub sidenavLabel" for="sub-group-2">คณิตศาสตร์ <img class="dropdownicon" src="picture/down-arrow.png"></label>
-
-                                    <ul>
-                                        <li class="backgroundsub2">
-                                            <a href="#m1">สมการ</a>
-                                            <a href="#m2">หรม./ครน.</a>
-                                        </li>
-                                        <!-- <li class="backgroundsub2"><a href="">หรม./ครน.</a></li> -->
-                                    </ul>
-                                  </li>
+                                @endfor
                             </ul>
                         </li>
                     </ul>

@@ -20,12 +20,12 @@
     <body>
         <div class="main-container">
             <div id="navbar">
-                <div class="navLeft">
+                <div class="navLeft" onclick = "window.location.href = '/dashboard';">
                     <div><img class="logo" src="picture/bear_N.png"></div>
                     <div class="logoBtn">พี่หมีติวเตอร์</div>
                 </div>
                 <div class="navRight">
-                    <a>{{session('name','default')}}</a>
+                    <a href="/dashboard" class="F">{{session('name','default')}}</a>
                     <a class="navLogOut" href="/logout" >ออกจากระบบ</a>
                 </div>
             </div>

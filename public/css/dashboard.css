@@ -13,6 +13,9 @@ p{
 .overflow{
     overflow: auto;
 }
+.navRight .F{
+  color: #5bbcd2;
+}
 #navbar {
     background-color: #eeeeee;
     position: fixed;
