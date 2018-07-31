@@ -1,0 +1,200 @@
+body{
+    /* background-image: url("picture/boat.png");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom right; 
+    margin: 0;       
+    background-color: #f7f7f7;  
+    font-family: 'Prompt', sans-serif; */
+}
+.cancal{
+    padding: 20px; 
+    color: #5bbcd2; 
+    cursor: pointer;
+}
+.logo{
+    width: 70%;
+    height: auto;
+    padding: 20px;
+    border-radius: 50%;
+}
+.containerCode{
+    width: 20%; 
+    /* padding: 10px; */
+    margin: 50px auto; 
+}
+.content{
+    margin: auto; 
+    text-align: center;
+}
+input{
+    border-width: 0px 0px 1px 0px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 5px;
+    font-size: 18px;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+}
+.loginBtn{
+    /* display: block; */
+    background-color: #5bbcd2;
+    border-width: 0;
+    border-radius: 100px;
+    color: white;
+    font-size: 18px;
+    padding: 10px 25px 10px 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    outline: none;
+    cursor: pointer;
+}
+@media screen and (max-width: 800px) {
+    .containerCode{
+        width: 60%;
+    }
+  }
+  
+  .inputPop{
+    width: 100%;
+    /* padding: 12px 20px; */
+    margin: 10px 0;
+    display: inline-block;
+}
+.headRegis{
+    color: black;
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-family: 'Prompt', sans-serif;
+}
+
+/* Set a style for all buttons */
+.registerBtn {
+    background-color: #5bbcd2;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: white;
+    padding: 10px 25px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    outline: none;
+}
+.registerBtn:hover, .loginBtn:hover, #plus:hover {
+    opacity: 0.8;
+}
+.popBtnLayout{
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    color: #5bbcd2;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.container {
+    padding: 5px 30px 30px 30px;
+}
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 7; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+.modal2 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 7; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    padding-top: 60px;
+}
+.forgot{
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;    
+    color: #5bbcd2;  
+    font-size: 12px;
+    cursor: pointer;
+}
+/* Modal Content/Box */
+.modal-content {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(177, 176, 176);
+    font-size: 12px; 
+    background-color: #fefefe;
+    margin: auto auto auto auto;
+    border-width: 0;
+    border-radius: 10px;
+    width: 30%;
+    /* display: grid;
+    grid-template-columns: auto auto; */
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+@media screen and (max-width: 800px) {
+    .modal-content{
+        /* grid-template-columns: auto; */
+        width: 70%;
+    }
+}

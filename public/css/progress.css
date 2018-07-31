@@ -1,0 +1,545 @@
+body {
+    margin: 0;
+    font-family: 'Prompt', sans-serif;
+    height: 100%;
+    position: relative;
+}
+.topnav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+}
+.logotop{
+    display: flex;
+    align-items: center;
+}
+.logo{
+    width: 30px;
+    padding: 10px;
+    height: auto;
+}
+.layoutMenu{
+    padding-right: 20px;
+    color: white;
+    font-size: 17px;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+.logoP{
+    color: white;
+    padding-left: 5px;
+}
+.image{
+    width: 100%;
+}
+.content{
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.layoutContent{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 0px 50px;
+    justify-content: center;
+}
+.layoutContent2{
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    padding: 0px 50px;
+    justify-content: center;
+}
+.thChart{
+  width: 50%
+}
+.barChart{
+  width: 70%;
+  /* width: calc(500px + 1.5vw); */
+  margin: auto;
+}
+.labelPie{
+  margin-top: 50px;
+}
+.layoutContentTutor{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.layoutContentTutor > div {
+    padding: 50px;
+}
+.layoutContentLeft{
+    text-align: left;
+}
+.layoutContentRight{
+    text-align: right;
+}
+.layoutContentBackground{
+    background-color: rgb(245, 245, 245);
+}
+.imgContent{
+    width: 20%;
+    height: auto;
+}
+.imgContentTutor{
+    width: 70%;
+}
+.imgContentTutor2{
+    width: 50%;
+}
+.spanfont{
+    font-size: 30px;
+    font-weight: 900;
+}
+/* .button{
+    background-color: #bc2035;
+    color: white;
+    padding: 7px 20px 7px 20px;
+    border-radius: 100px;
+    align-items: center;
+} */
+.main-container {
+    min-height: 100vh;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 50px;
+}
+
+
+
+/* dropdown */
+
+.main-navigation {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    left: 100%;
+    top: 0 ;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+.main-navigation .list {
+    position: relative;
+    float: left;
+}
+.list .main-navigation {
+    display: none;
+}
+.main-navigation .list .a {
+    display: block;
+    width: 100px;
+    padding: 1em;
+    text-decoration: none;
+    white-space: nowrap;
+    color: black;
+}
+.list:hover > .main-navigation {
+    display: block;
+    position: absolute;
+}
+
+.list:hover .list {
+    float: none;
+}
+
+.list:hover .a {
+    background: #6ad7f0;
+    color: white;
+}
+
+.list:hover .list .a:hover {
+    background: #3da0b6;
+}
+.main-navigation ul ul {
+    left: 100%;
+    top: 0;
+}
+
+  /* Simple clearfix */
+
+.main-navigation:before,
+.main-navigation:after {
+    content: " "; /* 1 */
+}
+
+.main-navigation:after {
+    clear: both;
+}
+
+.dropbtn {
+    background-color: transparent;
+    font-family: 'Kanit', sans-serif;
+    /* color: white; */
+    margin-left: 20px;
+    padding: 10px;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.dropbtn2{
+    background-color: #bc2035;
+    border-radius: 100px;
+    color: white;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    /* z-index: 1; */
+    margin-left: 20px;
+}
+
+#child > a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+#selectDropdown > a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+    color: #5bbcd2;
+    font-size: 12px;
+}
+.show {display: block;}
+.dropdownicon{
+    width: 10px;
+    height: 10px;
+}
+#myDropdown a{
+    cursor: pointer;
+}
+.avata{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.layoutDropdown{
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+#nameBtn > p {
+    margin: 0px 10px;
+}
+#child > a{
+    display: flex;
+    align-items: center;
+}
+#child > a > p{
+    margin: 10px;
+}
+.dropbtn > p{
+    margin: 0px 10px;
+}
+#selectDropdown a:hover{
+    background-color: #dbdada;
+}
+.button{
+    background-color: #bc2035;
+    color: white;
+    padding: 7px 20px 7px 20px;
+    border-radius: 100px;
+    align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+    .layoutContent{
+        grid-template-columns: auto;
+    }
+    .layoutContentTutor{
+        grid-template-columns: auto;
+    }
+    .logoP{
+        display: none;
+    }
+}
+@media screen and (min-width: 601px) {
+    .sidenav{
+        display: none;
+    }
+}
+.topnav .icon {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .topnav #menu {display: none;}
+    .topnav a.icon {
+      float: right;
+      display: block;
+    }
+    #layoutDropdown{
+        display: none;
+    }
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    background-color: #f7f7f7;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    /* font-family: 'Mitr', sans-serif; */
+}
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: black;
+    display: block;
+    transition: 0.3s;
+}
+.sidenav a {
+    white-space: nowrap;
+}
+
+/* .sidenav a:hover {
+    color: #f1f1f1;
+} */
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+
+  .cd-accordion-menu {
+    white-space: nowrap;
+  }
+
+  .cd-accordion-menu ul {
+    /* by default hide all sub menus */
+
+    display: none;
+  }
+
+  .cd-accordion-menu li {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .cd-accordion-menu input[type=checkbox] {
+    /* hide native checkbox */
+
+    position: absolute;
+    opacity: 0;
+  }
+.cd-accordion-menu a {
+    position: relative;
+    display: block;
+    padding: 8px 8px 8px 32px;
+    /* box-shadow: inset 0 -1px #565a60; */
+    color: #ffffff;
+    font-size: 1.6rem;
+  }
+  .sidenavLabel {
+    position: relative;
+    display: block;
+    padding: 8px 8px 8px 32px;
+    /* box-shadow: inset 0 -1px #565a60; */
+    color: black;
+    font-size: 1.6rem;
+  }
+  .sidenavImgLogo{
+    padding: 8px 8px 8px 32px;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    color: black;
+  }
+  .sidenavImgLogo > p {
+      padding: 0 10px;
+  }
+
+  .cd-accordion-menu label {
+    cursor: pointer;
+  }
+
+  .cd-accordion-menu input[type=checkbox]:checked + label + ul,
+.cd-accordion-menu input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+  /* show children when item is checked */
+
+  display: block;
+}
+.backgroundsub{
+    background-color: #3da0b6;
+    color: white;
+}
+.backgroundsub2{
+    background-color: #2d8fa5;
+}
+
+
+/* pop-up */
+/* .inputPop{
+    width: 100%;
+    margin: 10px 0;
+    display: inline-block;
+} */
+.headRegis{
+    color: black;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* Set a style for all buttons */
+.registerBtn {
+    background-color: #5bbcd2;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: white;
+    padding: 10px 25px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    outline: none;
+}
+.registerBtn:hover {
+    opacity: 0.8;
+}
+.popBtnLayout{
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    color: #5bbcd2;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* .container {
+    padding: 30px;
+} */
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 101; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(177, 176, 176);
+    font-size: 12px;
+    background-color: #fefefe;
+    margin: auto auto auto auto;
+    border-width: 0;
+    border-radius: 10px;
+    width: 300px;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)}
+    to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+@media screen and (max-width: 900px) {
+  .layoutContent, .layoutContent2{
+    grid-template-columns: 90%;
+  }
+  .thChart{
+    width: 90%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .barChart{
+    width: 100%;
+  }
+}

@@ -1,3 +1,5 @@
-@if(session('regis_success'))
-    <h1>regis OK</h1>
+@if(session('regis'))
+    <div class="alert-message " style = "color : red; padding-bottom:10px;">
+        {{session('regis')}}
+    </div>
 @endif
