@@ -12,9 +12,9 @@ class StudentParentsTableSeeder extends Seeder
      */
      public function run()
      {
-       DB::table('students')->delete();
+       DB::table('studentparents')->delete();
        //insert some dummy records
-       DB::table('students')->insert(array(
+       DB::table('studentparents')->insert(array(
       array('line_code'=>'st01', 'parent_id'=>	1	),
       array('line_code'=>'st02', 'parent_id'=>	1	),
       array('line_code'=>'st03', 'parent_id'=>	1	),
