@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             SponsorTableSeeder::class,
             GroupsTableSeeder::class,
             ResultTableSeeder::class,
-            StudentTableSeeder::class
+            StudentsTableSeeder::class
         ]);
         //this message shown in your terminal after running db:seed command
         $this->command->info("Exam & Principle table seeded :)");
