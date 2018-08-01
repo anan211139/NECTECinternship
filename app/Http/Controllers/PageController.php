@@ -48,37 +48,38 @@ class Pagecontroller extends Controller
         $jsonresult = DB::table('students')
         ->leftjoin('studentparents','students.line_code','=','studentparents.line_code')
         ->leftjoin('managers','studentparents.parent_id','=','managers.id')
-        ->select(DB::raw('students.line_code,students.local_pic,students.name'))
+        ->select(DB::raw('students.line_code,students.line_code,students.local_pic,students.name'))
         ->where('studentparents.parent_id',$id)
         ->orderBy('students.name','asc')
         ->get();
         $arrayresult = json_decode($jsonresult, true);
         Session::put('childdata',$arrayresult);
-
+        // return $jsonresult;
         $student_mean_sub1 = DB::table('groups')
         ->leftjoin('chapters', 'chapter_id', '=', 'chapters.id')
         ->leftjoin('subjects', 'subject_id', '=', 'subjects.id')
         ->leftjoin('studentparents','groups.line_code','=','studentparents.line_code')
         ->rightjoin('students','groups.line_code','=','students.line_code')
-        ->select(DB::raw('students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
+        ->select(DB::raw('groups.line_code,students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
         ->where('parent_id', '=', $id )
         ->where('subject_id', '=', '1' )
-        ->groupBy('groups.line_code')
+        ->groupBy('groups.line_code','students.name')
         ->get();
+        // return $student_mean_sub1;
         $arrayresult = json_decode($student_mean_sub1, true);
         Session::put('sub1',$arrayresult);
 
         $student_mean_sub2 = DB::table('groups')
-        ->select(DB::raw('students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
+        ->select(DB::raw('groups.line_code,students.name,subjects.name as subject_name, sum(score) / count(score) as mean'))
         ->leftjoin('chapters', 'chapter_id', '=', 'chapters.id')
         ->leftjoin('subjects', 'subject_id', '=', 'subjects.id')
         ->leftjoin('studentparents','groups.line_code','=','studentparents.line_code')
         ->rightjoin('students','groups.line_code','=','students.line_code')
         ->where('parent_id', '=', $id )
         ->where('subject_id', '=', '2' )
-        ->groupBy('groups.line_code')
-        ->orderBy('students.name','asc')
+        ->groupBy('groups.line_code','students.name')
         ->get();
+        // return $student_mean_sub2;
         $arrayresult = json_decode($student_mean_sub2, true);
         Session::put('sub2',$arrayresult);
 
