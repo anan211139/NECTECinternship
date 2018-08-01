@@ -22,6 +22,8 @@ class CreateLogChildrenQuizzesTable extends Migration
             $table->boolean('second_chance')->default(false);
             $table->boolean('is_correct_second')->nullable();
             $table->dateTimeTz('time')->nullable(); //update
+            // $table->foreign('group_id')->references('id')->on('groups');
+            // $table->foreign('exam_id')->references('id')->on('exams');
             $table->timestampsTz();
         });
     }

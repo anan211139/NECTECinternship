@@ -120,11 +120,12 @@
                           <td><img src="@if($stu[$i]['local_pic']){{$stu[$i]['local_pic']}}@else picture/bear_N.png @endif"></td>
                           <td>{{$stu[$i]['name']}}</td>
                           <td>
-                            @php $index = 0;
+                            @php
+                            $index = 0;
                             $haveData = False;
                             @endphp
                             @for($j =0;$j < count($pointsub1);$j++)
-                              @if($pointsub1[$j]['name'] == $stu[$i]['name'])
+                              @if($pointsub1[$j]['line_code'] == $stu[$i]['line_code'])
                                 @php
                                   $haveData = True;
                                   $index = $j;
@@ -132,25 +133,26 @@
                               @endif
                             @endfor
                             @if($haveData)
-                              {{number_format($pointsub1[$index]['mean'], 0, '.', '')}}
+                              {{number_format($pointsub1[$index]['mean'])}}
                             @else
                               -
                             @endif
                           </td>
                           <td>
-                            @php $index = 0;
-                            $haveData = False;
+                            @php
+                            $index2 = 0;
+                            $haveData2 = False;
                             @endphp
                             @for($j =0;$j < count($pointsub2);$j++)
-                              @if($pointsub2[$j]['name'] == $stu[$i]['name'])
+                              @if($pointsub2[$j]['line_code'] == $stu[$i]['line_code'])
                                 @php
-                                $haveData = True;
-                                $index = $j;
+                                $haveData2 = True;
+                                $index2 = $j;
                                 @endphp
                               @endif
                             @endfor
-                            @if($haveData)
-                              {{number_format($pointsub1[$index]['mean'], 0, '.', '')}}
+                            @if($haveData2)
+                              {{number_format($pointsub2[$index2]['mean'])}}
                             @else
                               -
                             @endif

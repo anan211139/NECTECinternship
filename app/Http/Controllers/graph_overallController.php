@@ -57,21 +57,18 @@ class graph_overallController extends Controller
       ->orderBy('group_id', 'asc')
       ->get(); //คะเเนนนักเรียน ส่วน
       // return $student_score_count;
-      $overall_score = DB::table('results')
+      $overall_score = DB::table('results')                                       //edit me
       ->select(DB::raw('sum(total_level_true*level_id) as overall'))
       ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
       ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
       ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
-      ->where('groups.line_code', '!=', $choosechild)
       ->groupBy('chapters.subject_id')
-      ->orderBy('group_id', 'asc')
+      ->orderBy('chapters.subject_id', 'asc')
       ->get(); //รวมวิชา คะเเนนรวม เศษ (เอาไปบวกกับคะแนนนักเรียนที่ได้)
       // return $overall_score;
-      $student_count = DB::table('results')
-      ->select(DB::raw('count(distinct groups.line_code) as student_count'))
-      ->leftjoin('groups', 'groups.id','=','results.group_id')
+      $student_count = DB::table('groups')
+      ->select(DB::raw('count(groups.id) as student_count'))
       ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
-      ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
       ->groupBy('chapters.subject_id')
       ->get(); //จำนวนนักเรียนที่ทำในแต่ละวิชา
       // return $student_count;

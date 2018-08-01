@@ -17,6 +17,8 @@ class CreateSTandTCsTable extends Migration
             $table->increments('id');
             $table->string('line_code');
             $table->Integer('teacher_id');
+            // $table->foreign('line_code')->references('line_code')->on('students');
+            // $table->foreign('teacher_id')->references('id')->on('teachers');
             $table->timestampsTz();
         });
     }

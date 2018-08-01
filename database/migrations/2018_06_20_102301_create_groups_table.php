@@ -19,7 +19,10 @@ class CreateGroupsTable extends Migration
             $table->Integer('chapter_id');
             $table->boolean('status')->default(false); //boolean true if the student finish all their exam
             $table->Integer('score')->nullable();
+            // $table->foreign('line_code')->references('line_code')->on('students');
+            // $table->foreign('chapter_id')->references('id')->on('chapters');
             $table->timestampsTz();
+
         });
     }
 

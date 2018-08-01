@@ -22,6 +22,8 @@ class CreatePrizesTable extends Migration
             $table->Integer('point'); //least point to exchange
             $table->dateTimeTz('limit')->nullable();
             $table->Integer('type_id');
+            // $table->foreign('sponsor_id')->references('id')->on('sponsors');
+            // $table->foreign('type_id')->references('id')->on('types');
             $table->timestamps();
         });
     }

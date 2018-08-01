@@ -20,6 +20,9 @@ class CreateExamsTable extends Migration
             $table->string('local_pic');
             $table->smallInteger('answer'); //1,2,3,4
             $table->Integer('principle_id');
+            // $table->foreign('level_id')->references('id')->on('levels');
+            // $table->foreign('principle_id')->references('id')->on('printciples');
+            // $table->foreign('chapter_id')->references('id')->on('chapters');
             $table->timestampsTz();
         });
     }
