@@ -37,5 +37,11 @@ class DatabaseSeeder extends Seeder
         DB::table('subjects')->insert([['name' => 'Mathematics'],['name' => 'English']]);
         DB::table('levels')->insert([['name' => 'easy'],['name' => 'medium'],['name' => 'hard']]);
         DB::table('types')->insert([['name' => 'code'],['name' => 'delivery']]);
+        DB::table('codes')->insert([['prize_id' => 1,'code' => 'hitherethisisacat'],['prize_id' => 1,'code' => 'a8e3f3f'],
+                                    ['prize_id' => 1,'code' => 'asdfghj'],['prize_id' => 2,'code' => 'khunWARI'],
+                                    ['prize_id' => 2,'code' => 'khunCHAMILK'],['prize_id' => 3,'code' => 'khunJIAE'],
+                                    ['prize_id' => 3,'code' => 'khunICE'],['prize_id' => 4,'code' => 'khunANAN'],
+                                    ['prize_id' => 4,'code' => 'khunPEI'],['prize_id' => 5,'code' => 'khunOAT'],
+                                    ['prize_id' => 5,'code' => 'khunTON']]);
     }
 }
