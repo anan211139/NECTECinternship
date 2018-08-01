@@ -228,57 +228,6 @@ class BotController extends Controller
                             $multiMessage->add($arr_Reply);
                         }
                         $replyData = $multiMessage;
-                    } else if ($userMessage == "ข้าลอง") {
-                        $user_select = DB::table('groups')
-                            ->where('status', false)
-                            ->pluck('line_code')
-                            ->all();
-
-                        $user_select = array_unique($user_select);
-
-                        foreach ($user_select as $line_u) {
-
-                            $join_log_group = DB::table('groups')
-                                ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                                ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
-                                ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
-                                ->where('groups.line_code', $line_u)
-                                ->orderBy('groups.id','ASC')
-                                ->orderBy('logChildrenQuizzes.time', 'DESC')
-                                ->get();
-                            
-                            $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
-                            $join_log_group = $join_log_group->first();
-                            print_r($unfin_log);
-
-                            $lastdate = new Carbon($join_log_group->time);
-                            $now = Carbon::now();
-                            echo $lastdate->diffInDays($now);
-
-                            if($lastdate->diffInDays($now)==6){
-                                DB::table('groupRandoms')
-                                    ->where('group_id', '=',$join_log_group->group_id)
-                                    ->delete();
-                                DB::table('logChildrenQuizzes')
-                                    ->where('group_id', '=',$join_log_group->group_id)
-                                    ->delete();
-                                DB::table('groups')
-                                    ->where('id', '=',$join_log_group->group_id)
-                                    ->delete();
-                                $textReplyMessage = "ข้อสอบเรื่อง".$join_log_group->chap_name."ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
-                                $replyData = new TextMessageBuilder($textReplyMessage);
-                                $response = $bot->pushMessage($line_u ,$replyData);
-
-                            }
-                            else if($lastdate->diffInDays($now)>=2){
-                                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
-                                $replyData = new TextMessageBuilder($textReplyMessage);
-                                $response = $bot->pushMessage($line_u ,$replyData);
-
-                            }
-                    
-                            
-                        }
                     } else if ($userMessage == "เกี่ยวกับพี่หมี") {
                         $arr_replyData = array();
                         $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
@@ -760,9 +709,8 @@ class BotController extends Controller
 
             $lastdate = new Carbon($join_log_group->time);
             $now = Carbon::now();
-            echo $lastdate->diffInDays($now);
 
-            if($lastdate->diffInDays($now)==6){
+            if($lastdate->diffInDays($now)>=6){
                 DB::table('groupRandoms')
                     ->where('group_id', '=',$join_log_group->group_id)
                     ->delete();
@@ -778,7 +726,12 @@ class BotController extends Controller
 
             }
             else if($lastdate->diffInDays($now)>=2){
-                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$join_log_group->chap_name."กับพี่หมีกันเถอะ !!!!!!";
+                $chap_text = "";
+                foreach ($unfin_log as $chap) {
+                    $chap_text = $chap_text." ".$chap.",";
+                }
+                $chap_text = rtrim($chap_text, ',');
+                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text." กับพี่หมีกันเถอะ !!!!!!";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
 
