@@ -176,15 +176,14 @@
           var data = (value/max)*100;
           console.log(data);
           function frame() {
-              if(data != 0){
+              if(data == 0 || max == 0){
+                  elem.style.width = 0 + '%';
+              } else {
                   if (width >= data) {
                   clearInterval(id);
                   } else {
                   width++;
                   elem.style.width = width + '%';
-                  }
-              } else {
-                  elem.style.width = 0+ '%';
               }
           }
       }
