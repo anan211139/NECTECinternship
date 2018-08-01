@@ -17,6 +17,8 @@ class CreateStudentparentsTable extends Migration
             $table->increments('id');
             $table->string('line_code');
             $table->Integer('parent_id');
+            // $table->foreign('line_code')->references('line_code')->on('students');
+            // $table->foreign('parent_id')->references('id')->on('managers');
             $table->timestampsTz();
         });
     }

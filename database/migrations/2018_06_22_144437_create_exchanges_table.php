@@ -19,6 +19,8 @@ class CreateExchangesTable extends Migration
             $table->smallInteger('send')->default(1); //1 in progress of delivery, 2 delivered, 3 delivery is not success
             $table->Integer('code_id')->nullable();
             $table->dateTimeTz('time');
+            // $table->foreign('line_code')->references('line_code')->on('students');
+            // $table->foreign('code_id')->references('id')->on('codes');
             $table->timestamps();
         });
     }

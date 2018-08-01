@@ -20,6 +20,8 @@ class CreateResultsTable extends Migration
             $table->smallInteger('level_id'); //1 easy, 2 med, 3 hard
             $table->Integer('total_level');
             $table->Integer('total_level_true');
+            // $table->foreign('group_id')->references('id')->on('groups');
+            // $table->foreign('level_id')->references('id')->on('levels');
             $table->timestampsTz();
         });
     }

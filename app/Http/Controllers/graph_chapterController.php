@@ -14,10 +14,13 @@ class graph_chapterController extends Controller
         $subject_id = $subject;
         $jsonsubject = DB::table('subjects')->get();
         $jsonchapters = DB::table('chapters')->get();
+        $chapterCh = DB::table('chapters')->where('id',$chapter_id)->select('name')->get();
         $arraysubject = json_decode($jsonsubject, true);
         $arraychapters = json_decode($jsonchapters, true);
+        $chapterCh = json_decode($chapterCh, true);
         Session::put('subject_list',$arraysubject);
         Session::put('chapter_list',$arraychapters);
+        Session::put('chapterCh',$chapterCh);
         if(session()->has('student_score_allsubject')){
           session()->forget('student_score_allsubject');
           session()->forget('student_score_count');
@@ -149,7 +152,7 @@ class graph_chapterController extends Controller
         Session::put('pie_outside',$pie_outside);
         Session::put('pie_inside',$pie_inside);
 
-        
+
         return redirect('/userpage');
           // ->with('student_score_chapter',$student_score_chapter)
           // ->with('overall_score', $overall_score)
