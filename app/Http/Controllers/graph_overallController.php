@@ -66,11 +66,9 @@ class graph_overallController extends Controller
       ->orderBy('chapters.subject_id', 'asc')
       ->get(); //รวมวิชา คะเเนนรวม เศษ (เอาไปบวกกับคะแนนนักเรียนที่ได้)
       // return $overall_score;
-      $student_count = DB::table('results')
-      ->select(DB::raw('count(distinct groups.id) as student_count'))
-      ->leftjoin('groups', 'groups.id','=','results.group_id')
+      $student_count = DB::table('groups')
+      ->select(DB::raw('count(groups.id) as student_count'))
       ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
-      ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
       ->groupBy('chapters.subject_id')
       ->get(); //จำนวนนักเรียนที่ทำในแต่ละวิชา
       // return $student_count;
