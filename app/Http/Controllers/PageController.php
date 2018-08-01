@@ -122,9 +122,13 @@ class Pagecontroller extends Controller
         ->where('line_code' , $id)
         ->get();
         $arrayresult = json_decode($queryresult, true);
-        $result = $arrayresult[0]["local_pic"];
-        Session::put('local_pic',$result);
-        return redirect('/addchild')->with('code',$id);
+        if (count($arrayresult)) {
+          $result = $arrayresult[0]["local_pic"];
+          Session::put('local_pic',$result);
+          return redirect('/addchild')->with('code',$id);
+        }else{
+          return 'Linecode not found';
+        }
     }
 
 }
