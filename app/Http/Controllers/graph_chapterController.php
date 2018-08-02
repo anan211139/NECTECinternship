@@ -95,16 +95,21 @@ class graph_chapterController extends Controller
         Session::put('level_total',$level_total);
         Session::put('level_true',$level_true);
 
-
         // ของวิชา
-        $student_score = DB::table('results')
-        ->select(DB::raw('chapters.name,sum(total_level_true*level_id) as score'))
-        ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
+        $student_score = DB::table(DB::raw("(select chapter_id as id,count(level_id) as num from results
+                                  	left join groups on results.group_id = groups.id
+                                  	left join chapters on groups.chapter_id = chapters.id
+                                  	where chapters.subject_id = '$subject_id' and level_id = 2 and groups.line_code = '$line_code'
+                                  	group by chapter_id
+                                  	order by chapter_id asc) coun"))
+        ->select(DB::raw('chapters.name,sum(score)/num as score'))
+        ->rightjoin('groups', 'coun.id', '=', 'groups.chapter_id')
         ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id' )
         ->where('chapters.subject_id', '=', $subject_id)
         ->where('groups.line_code', '=', $line_code)
         ->groupBy('chapter_id')
-        ->get(); //bar chart คะแนนนักรียน กราฟรายวิชา
+        ->get();
+        //bar chart คะแนนนักรียน กราฟรายวิชา
         // return $student_score;
         $score_above = DB::table('results')
         ->select(DB::raw('sum(total_level_true*level_id) as above'))

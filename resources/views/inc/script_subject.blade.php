@@ -23,7 +23,7 @@
   for (var i = 0; i < student_data.length; i++) {
     student_score.push(student_data[i].score);
     score_above.push(Number(above[i].above));
-    score_below.push(below[i].below);
+    score_below.push(Number(below[i].below));
     chapter_name.push(student_data[i].name);
     score_above[i] /= score_below[i];
 
