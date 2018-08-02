@@ -712,13 +712,13 @@ class BotController extends Controller
                 $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
                 if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
                     DB::table('groupRandoms')
-                        ->where('group_id', '=',$del_subj->group_id)
+                        ->where('group_id', $del_subj->group_id)
                         ->delete();
                     DB::table('logChildrenQuizzes')
-                        ->where('group_id', '=',$del_subj->group_id)
+                        ->where('group_id', $del_subj->group_id)
                         ->delete();
                     DB::table('groups')
-                        ->where('id', '=',$del_subj->group_id)
+                        ->where('id', $del_subj->group_id)
                         ->delete();
                     $del_group = true;
                     $chap_text = $chap_text." ".$rest_chap.",";
