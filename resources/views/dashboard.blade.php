@@ -188,6 +188,7 @@
                   elem.style.width = width + '%';
               }
           }
+        }
       }
     </script>
 

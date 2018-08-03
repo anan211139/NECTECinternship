@@ -44,7 +44,7 @@
                     <button onclick="selectFunction()" id="nameBtn" class="dropbtn dropbtn2">
                       @for($i=0;$i<$count;$i++)
                         @if($choosechild == $childdata[$i]["line_code"])
-                          <img class="avata" src="{{$childdata["$i"]["local_pic"]}}">
+                          <img class="avata" src="@if($childdata["$i"]["local_pic"]){{$childdata["$i"]["local_pic"]}}@else /picture/bear_N.png @endif">
                           <p>{{$childdata["$i"]["name"]}}</p>
                           <img class="dropdownicon" src="picture/down-arrow.png">
                         @endif
