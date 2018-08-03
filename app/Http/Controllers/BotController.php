@@ -260,9 +260,11 @@ class BotController extends Controller
                             ->pluck('line_code')
                             ->all();
                         
-                        dd($user_select);
+                        
 
                         $user_select = array_unique($user_select);
+
+                        dd($user_select);
 
                         foreach ($user_select as $line_u) {
 
