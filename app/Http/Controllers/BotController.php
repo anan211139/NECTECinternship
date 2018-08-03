@@ -254,6 +254,65 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     }
+                    else if ($userMessage == "ลองNOTI"){
+                        $user_select = DB::table('groups')
+                            ->where('status', false)
+                            ->pluck('line_code')
+                            ->all();
+                        
+                        dd($user_select);
+
+                        $user_select = array_unique($user_select);
+
+                        foreach ($user_select as $line_u) {
+
+                            $join_log_group = DB::table('groups')
+                                ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+                                ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
+                                ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
+                                ->where('groups.line_code', $line_u)
+                                ->orderBy('groups.id','ASC')
+                                ->orderBy('logChildrenQuizzes.time', 'DESC')
+                                ->get();
+                            
+                            $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
+                            $chap_text = "";
+                            $del_group = false;
+
+                            foreach ($unfin_log as $rest_chap) {
+                                $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
+                                if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
+                                    DB::table('groupRandoms')
+                                        ->where('group_id', $del_subj->group_id)
+                                        ->delete();
+                                    DB::table('logChildrenQuizzes')
+                                        ->where('group_id', $del_subj->group_id)
+                                        ->delete();
+                                    DB::table('groups')
+                                        ->where('id', $del_subj->group_id)
+                                        ->delete();
+                                    $del_group = true;
+                                    $chap_text = $chap_text." ".$rest_chap.",";
+                                }
+                                else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
+                                    $chap_text = $chap_text." ".$rest_chap.",";
+                                }
+                            }
+                            if ($del_group == true) {
+                                $chap_text = rtrim($chap_text, ',');
+                                $textReplyMessage = "ข้อสอบเรื่อง".$chap_text." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
+                                $replyData = new TextMessageBuilder($textReplyMessage);
+                                $response = $bot->pushMessage($line_u ,$replyData);
+                            }
+                            else if (strlen($chap_text) > 0) {
+                                $chap_text = rtrim($chap_text, ',');
+                                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text." กับพี่หมีกันเถอะ !!!!!!";
+                                $replyData = new TextMessageBuilder($textReplyMessage);
+                                $response = $bot->pushMessage($line_u ,$replyData);
+                            }
+                        }
+                        $replyData = "ลองNOTI";
+                    }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
                         DB::table('students')
