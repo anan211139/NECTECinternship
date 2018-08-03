@@ -264,19 +264,21 @@ class BotController extends Controller
 
                         $user_select = array_unique($user_select);
 
-                        dd($user_select);
+                        // dd($user_select);
 
-                        foreach ($user_select as $line_u) {
+                        // foreach ($user_select as $line_u) {
 
                             $join_log_group = DB::table('groups')
                                 ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                                 ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
                                 ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
-                                ->where('groups.line_code', $line_u)
+                                // ->where('groups.line_code', $line_u)
                                 ->orderBy('groups.id','ASC')
                                 ->orderBy('logChildrenQuizzes.time', 'DESC')
                                 ->get();
-                            
+
+                            dd($join_log_group);
+
                             $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
                             $chap_text = "";
                             $del_group = false;
@@ -312,7 +314,7 @@ class BotController extends Controller
                                 $replyData = new TextMessageBuilder($textReplyMessage);
                                 $response = $bot->pushMessage($line_u ,$replyData);
                             }
-                        }
+                        // }
                         $replyData = "ลองNOTI";
                     }
                     //------ สมการ -------
