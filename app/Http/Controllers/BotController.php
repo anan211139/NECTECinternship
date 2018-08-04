@@ -282,7 +282,7 @@ class BotController extends Controller
 
                             $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
 
-                            dd($unfin_log);
+                            // dd($unfin_log);
                             $chap_text = "";
                             $del_group = false;
 
