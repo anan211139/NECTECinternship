@@ -282,7 +282,7 @@ class BotController extends Controller
 
                             $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
 
-                            dd($unfin_log);
+                            // dd($unfin_log);
                             $chap_text = "";
                             $del_group = false;
 
@@ -312,14 +312,16 @@ class BotController extends Controller
                                 $textReplyMessage = "ข้อสอบเรื่อง".$chap_text." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
                                 echo $textReplyMessage;
                                 $replyData = new TextMessageBuilder($textReplyMessage);
-                                $response = $bot->pushMessage($line_u ,$replyData);
+                                // $response = $bot->pushMessage($line_u ,$replyData);
+                                $response = $bot->pushMessage($userId ,$replyData);
                             }
                             else if (strlen($chap_text) > 0) {
                                 $chap_text = rtrim($chap_text, ',');
                                 $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text." กับพี่หมีกันเถอะ !!!!!!";
                                 echo $textReplyMessage;
                                 $replyData = new TextMessageBuilder($textReplyMessage);
-                                $response = $bot->pushMessage($line_u ,$replyData);
+                                // $response = $bot->pushMessage($line_u ,$replyData);
+                                $response = $bot->pushMessage($userId ,$replyData);
                             }
                         
                     }
