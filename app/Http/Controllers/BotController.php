@@ -278,9 +278,11 @@ class BotController extends Controller
                                 ->orderBy('logChildrenQuizzes.time', 'DESC')
                                 ->get();
 
-                            dd($join_log_group);
+                            
 
                             $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
+
+                            dd($unfin_log);
                             $chap_text = "";
                             $del_group = false;
 
