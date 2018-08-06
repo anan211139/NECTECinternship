@@ -325,12 +325,6 @@ class BotController extends Controller
                                 // $response = $bot->pushMessage($line_u ,$replyData);
                                 $response = $bot->pushMessage($userId ,$replyData);
                             }
-                            else{
-                                $textReplyMessage = "ไม่มีวิชาที่ค้าง";
-                                echo $textReplyMessage;
-                                $replyData = new TextMessageBuilder($textReplyMessage);
-                                $response = $bot->pushMessage($userId ,$replyData);
-                            }
                         //}
                     }
                     //------ สมการ -------
@@ -784,7 +778,8 @@ class BotController extends Controller
                 ->get();
             
             $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
-            $chap_text = "";
+            $chap_text7 = "";
+            $chap_text3 = "";
             $del_group = false;
 
             foreach ($unfin_log as $rest_chap) {
@@ -801,20 +796,22 @@ class BotController extends Controller
                         ->delete();
                     $del_group = true;
                     $chap_text = $chap_text." ".$rest_chap.",";
+                    echo "MORE6".$rest_chap;
                 }
                 else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
                     $chap_text = $chap_text." ".$rest_chap.",";
+                    echo "MORE2".$rest_chap;
                 }
             }
             if ($del_group == true) {
-                $chap_text = rtrim($chap_text, ',');
-                $textReplyMessage = "ข้อสอบเรื่อง".$chap_text." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
+                $chap_text = rtrim($chap_text7, ',');
+                $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
             }
-            else if (strlen($chap_text) > 0) {
-                $chap_text = rtrim($chap_text, ',');
-                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text." กับพี่หมีกันเถอะ !!!!!!";
+            else if (strlen($chap_text3) > 0) {
+                $chap_text = rtrim($chap_text3, ',');
+                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
             }
