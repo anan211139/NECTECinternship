@@ -299,6 +299,7 @@ class BotController extends Controller
                                     DB::table('groups')
                                         ->where('id', $del_subj->group_id)
                                         ->delete();
+                                    echo "DELETE".$del_subj->group_id;
                                     $del_group = true;
                                     $chap_text7 = $chap_text7." ".$rest_chap.",";
                                     echo "MORE6".$rest_chap;
