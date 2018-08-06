@@ -325,6 +325,12 @@ class BotController extends Controller
                                 // $response = $bot->pushMessage($line_u ,$replyData);
                                 $response = $bot->pushMessage($userId ,$replyData);
                             }
+                            else{
+                                $textReplyMessage = "ไม่มีวิชาที่ค้าง";
+                                echo $textReplyMessage;
+                                $replyData = new TextMessageBuilder($textReplyMessage);
+                                $response = $bot->pushMessage($userId ,$replyData);
+                            }
                         //}
                     }
                     //------ สมการ -------
