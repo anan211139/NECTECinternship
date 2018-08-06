@@ -106,6 +106,8 @@ class Pagecontroller extends Controller
         $arrayresult = json_decode($meanoverall2, true);
         Session::put('meansub2',$arrayresult);
         return view('dashboard');
+      }else{
+        return redirect('/');
       }
     }
     public function gethome(){
