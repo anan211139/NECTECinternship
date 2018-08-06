@@ -325,7 +325,7 @@ class BotController extends Controller
                                 // $response = $bot->pushMessage($line_u ,$replyData);
                                 $response = $bot->pushMessage($userId ,$replyData);
                             }
-                        
+                        //}
                     }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
