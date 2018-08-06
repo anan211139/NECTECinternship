@@ -1,9 +1,7 @@
 <?php
-  $childdata = session('childdata','default');
   $choosechild = session('choosechild','default');
   $subject_list = session('subject_list', 'default');
   $chapther_list = session('chapter_list', 'default');
-  $count = count($childdata);
   $chapterCh =session('chapterCh','default');
  ?>
 <html>
@@ -42,22 +40,18 @@
             <div id="layoutDropdown" class="layoutDropdown">
                 <div class="dropdown">
                     <button onclick="selectFunction()" id="nameBtn" class="dropbtn dropbtn2">
-                      @for($i=0;$i<$count;$i++)
-                        @if($choosechild == $childdata[$i]["line_code"])
-                          <img class="avata" src="@if($childdata["$i"]["local_pic"]){{$childdata["$i"]["local_pic"]}}@else /picture/bear_N.png @endif">
-                          <p>{{$childdata["$i"]["name"]}}</p>
+                          <img class="avata" src="/picture/bear_N.png">
+                          <p>childname</p>
                           <img class="dropdownicon" src="picture/down-arrow.png">
-                        @endif
-                      @endfor
                     </button>
                     <div id="selectDropdown" class="dropdown-content">
                         <div id="child">
-                          @for($i=0;$i<$count;$i++)
-                            <a href="/choosechild/{{$childdata["$i"]["line_code"]}}">
-                                <img class="avata" src="{{$childdata["$i"]["local_pic"]}}">
-                                <p>{{$childdata[0]["name"]}}</p>
+
+                            <a href="">
+                                <img class="avata" src="">
+                                <p></p>
                             </a>
-                          @endfor
+
                         </div>
                         <a onclick="document.getElementById('addPop').style.display='block'">
                             <img class="avata" src="picture/plus.png">
@@ -94,32 +88,7 @@
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <ul class="cd-accordion-menu">
-                        <li class="has-children">
-                            <input type="checkbox" name="group-2" id="group-2">
-                                <label class="sidenavImgLogo" for="group-2">
-                                  @for($i=0;$i<$count;$i++)
-                                  @if($choosechild == $childdata[$i]["line_code"])
-                                    <img class="avata" src="{{$childdata["$i"]["local_pic"]}}">
-                                    <p>{{$childdata["$i"]["name"]}}</p>
-                                    @endif
-                                  @endfor
-                                    <img class="dropdownicon" src="picture/down-arrowblack.png">
-                                </label>
-                              <ul>
-                                  <li class="has-children">
-                                    @for($i=0;$i<$count;$i++)
-                                      <a class="backgroundsub" href="/choosechild/{{$childdata["$i"]["line_code"]}}">{{$childdata["$i"]["name"]}}</a>
-                                    @endfor
-                                    <a class="backgroundsub" onclick="document.getElementById('addPop').style.display='block'">
-                                        <img class="avata" src="picture/plusffff.png">
-                                    </a>
-
-                                  </li>
-                                  <!-- <li class="has-children">
-                                    <a class="backgroundsub" href="#ggo">oat</a>
-                                  </li> -->
-                            </ul>
-                        </li>
+                        
                         <li class="has-children">
                             <input type="checkbox" name="group-1" id="group-1">
                             <label class="sidenavLabel" for="group-1">เปลี่ยนวิชา <img class="dropdownicon" src="picture/down-arrowblack.png"></label>
@@ -149,12 +118,6 @@
             @include('inc.pop-up-addchild')
             @include('inc.footer')
         </div>
-
         <script type="text/javascript" src="js/progress.js"></script>
-
-        @include('inc.script_overall')
-        @include('inc.script_subject')
-        @include('inc.script_chapter')
-
     </body>
 </html>
