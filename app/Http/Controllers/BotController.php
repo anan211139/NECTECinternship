@@ -254,6 +254,79 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     }
+                    else if ($userMessage == "ลองNOTI"){
+                        $user_select = DB::table('groups')
+                            ->where('status', false)
+                            ->pluck('line_code')
+                            ->all();
+                        
+                        
+
+                        $user_select = array_unique($user_select);
+
+                        // dd($user_select);
+
+                        // foreach ($user_select as $line_u) {
+
+                            $join_log_group = DB::table('groups')
+                                ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+                                ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
+                                ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
+                                // ->where('groups.line_code', $line_u)
+                                ->where('groups.line_code', $userId)
+                                ->orderBy('groups.id','ASC')
+                                ->orderBy('logChildrenQuizzes.time', 'DESC')
+                                ->get();
+
+                            
+
+                            $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
+
+                            // dd($unfin_log);
+                            $chap_text7 = "";
+                            $chap_text3 = "";
+                            $del_group = false;
+
+                            foreach ($unfin_log as $rest_chap) {
+                                $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
+                                if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
+                                    DB::table('groupRandoms')
+                                        ->where('group_id', $del_subj->group_id)
+                                        ->delete();
+                                    DB::table('logChildrenQuizzes')
+                                        ->where('group_id', $del_subj->group_id)
+                                        ->delete();
+                                    DB::table('groups')
+                                        ->where('id', $del_subj->group_id)
+                                        ->delete();
+                                    echo "DELETE".$del_subj->group_id;
+                                    $del_group = true;
+                                    $chap_text7 = $chap_text7." ".$rest_chap.",";
+                                    echo "MORE6".$rest_chap;
+                                }
+                                else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
+                                    $chap_text3 = $chap_text3." ".$rest_chap.",";
+                                    echo "MORE2".$rest_chap;
+                                }
+                            }
+                            if ($del_group == true) {
+                                $chap_text7 = rtrim($chap_text7, ',');
+                                $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
+                                echo $textReplyMessage;
+                                $replyData = new TextMessageBuilder($textReplyMessage);
+                                // $response = $bot->pushMessage($line_u ,$replyData);
+                                $response = $bot->pushMessage($userId ,$replyData);
+                            }
+                            if (strlen($chap_text3) > 0) {
+                                $chap_text3 = rtrim($chap_text3, ',');
+                                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
+                                echo $textReplyMessage;
+                                $replyData = new TextMessageBuilder($textReplyMessage);
+                                // $response = $bot->pushMessage($line_u ,$replyData);
+                                $response = $bot->pushMessage($userId ,$replyData);
+                            }
+                        //}
+                    }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
                         DB::table('students')
@@ -705,7 +778,8 @@ class BotController extends Controller
                 ->get();
             
             $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
-            $chap_text = "";
+            $chap_text7 = "";
+            $chap_text3 = "";
             $del_group = false;
 
             foreach ($unfin_log as $rest_chap) {
@@ -722,20 +796,22 @@ class BotController extends Controller
                         ->delete();
                     $del_group = true;
                     $chap_text = $chap_text." ".$rest_chap.",";
+                    echo "MORE6".$rest_chap;
                 }
                 else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
                     $chap_text = $chap_text." ".$rest_chap.",";
+                    echo "MORE2".$rest_chap;
                 }
             }
             if ($del_group == true) {
-                $chap_text = rtrim($chap_text, ',');
-                $textReplyMessage = "ข้อสอบเรื่อง".$chap_text." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
+                $chap_text = rtrim($chap_text7, ',');
+                $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
             }
-            else if (strlen($chap_text) > 0) {
-                $chap_text = rtrim($chap_text, ',');
-                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text." กับพี่หมีกันเถอะ !!!!!!";
+            else if (strlen($chap_text3) > 0) {
+                $chap_text = rtrim($chap_text3, ',');
+                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
             }
