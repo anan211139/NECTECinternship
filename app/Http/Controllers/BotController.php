@@ -165,7 +165,38 @@ class BotController extends Controller
                                 ),
                             ));
                     } else if($userMessage =="ดูคะแนน"){
-                        $replyData = $this->declare_point($userId);
+                        $arr_replyData = array();
+                        $arr_replyData[] = $this->declare_point($userId);
+                        
+                        $textReplyMessage = "หากต้องการดูคะแนนย้อนหลังทั้งหมดสามารถดูได้จากด้านล่างเลยจ้าาา";
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+
+
+                        $actionBuilder = array(
+                            // new MessageTemplateActionBuilder(
+                            //     'Message Template',// ข้อความแสดงในปุ่ม
+                            //     'This is Text' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            // ),
+                            new UriTemplateActionBuilder(
+                                'ดูคะแนนย้อนหลัง', // ข้อความแสดงในปุ่ม
+                                'https://www.ninenik.com'
+                            ),   
+                        );
+                        $imageUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/graphpng?raw=true/700';
+                        $replyData = new TemplateMessageBuilder('Button Template',
+                            new ButtonTemplateBuilder(
+                                    'button template builder', // กำหนดหัวเรื่อง
+                                    'Please select', // กำหนดรายละเอียด
+                                    $imageUrl, // กำหนด url รุปภาพ
+                                    $actionBuilder  // กำหนด action object
+                            )
+                        );              
+
+                        $multiMessage = new MultiMessageBuilder;
+                        foreach ($arr_replyData as $arr_Reply) {
+                            $multiMessage->add($arr_Reply);
+                        }
+                        $replyData = $multiMessage;
                     } else if ($userMessage == "สะสมแต้ม") {
                         $score = DB::table('students')
                             ->where('line_code', $userId)
