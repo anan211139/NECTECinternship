@@ -183,7 +183,7 @@ class BotController extends Controller
                             ),   
                         );
                         $imageUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/graphpng?raw=true/700';
-                        $replyData = new TemplateMessageBuilder('Button Template',
+                        $arr_replyData[] = new TemplateMessageBuilder('Button Template',
                             new ButtonTemplateBuilder(
                                     'button template builder', // กำหนดหัวเรื่อง
                                     'Please select', // กำหนดรายละเอียด
