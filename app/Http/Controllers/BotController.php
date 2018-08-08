@@ -171,13 +171,9 @@ class BotController extends Controller
 
 
                         $actionBuilder = array(
-                            // new MessageTemplateActionBuilder(
-                            //     'Message Template',// ข้อความแสดงในปุ่ม
-                            //     'This is Text' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                            // ),
                             new UriTemplateActionBuilder(
                                 'ดูคะแนนย้อนหลัง', // ข้อความแสดงในปุ่ม
-                                'https://www.ninenik.com'
+                                'https://pkwang.herokuapp.com/selectoverall/'.$userId
                             ),   
                         );
                         $imageUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/graph.png?raw=true/700';
