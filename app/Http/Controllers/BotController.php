@@ -234,6 +234,9 @@ class BotController extends Controller
                     } else if ($userMessage == "ดู Code") {
                         $arr_replyData = array();
 
+                        $textReplyMessage = "ข้อมูลด้านล่างใช้เพื่อเชื่อมต่อเว็บไซต์ โดยน้องสามารถกดลิงค์ด้านล่างได้เลยจ้า แต่หากไม่สะดวกกดลิงค์พี่หมีแนะนำว่าให้ใช QR Code เพื่อป้องกันความผิดพลาดจ้า";
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+
                         $connectChild = 'https://pkwang.herokuapp.com/connectchild/' . $userId;
                         $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $connectChild . '&choe=UTF-8';
 
