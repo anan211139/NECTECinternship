@@ -823,22 +823,22 @@ class BotController extends Controller
                         ->where('id', $del_subj->group_id)
                         ->delete();
                     $del_group = true;
-                    $chap_text = $chap_text." ".$rest_chap.",";
+                    $chap_text7 = $chap_text7." ".$rest_chap.",";
                     echo "MORE6".$rest_chap;
                 }
                 else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
-                    $chap_text = $chap_text." ".$rest_chap.",";
+                    $chap_text3 = $chap_text3." ".$rest_chap.",";
                     echo "MORE2".$rest_chap;
                 }
             }
             if ($del_group == true) {
-                $chap_text = rtrim($chap_text7, ',');
+                $chap_text7 = rtrim($chap_text7, ',');
                 $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
             }
             else if (strlen($chap_text3) > 0) {
-                $chap_text = rtrim($chap_text3, ',');
+                $chap_text3 = rtrim($chap_text3, ',');
                 $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
