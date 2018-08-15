@@ -187,10 +187,9 @@
                   width++;
                   elem.style.width = width + '%';
                   }
+                }
               }
           }
-        }
-      }
     </script>
 
 </html>
