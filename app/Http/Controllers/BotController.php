@@ -417,9 +417,10 @@ class BotController extends Controller
                                         $multiMessage->add($arr_Reply);
                                     }
                                     $arr_replyData = array();
-                                } else {
-                                    $arr_replyData[] = $this->close_group($urgroup->id);
-                                }
+                                } 
+                                // else {
+                                //     $arr_replyData[] = $this->close_group($urgroup->id);
+                                // }
 
                             } else {
                                 $arr_replyData[] = new TextMessageBuilder("ผิดแล้ว พี่หมีจะสอนให้");
@@ -460,9 +461,10 @@ class BotController extends Controller
                                     $multiMessage->add($arr_Reply);
                                 }
                                 $arr_replyData = array();
-                            } else {
-                                $arr_replyData[] = $this->close_group($urgroup->id);
-                            }
+                            } 
+                            // else {
+                            //     $arr_replyData[] = $this->close_group($urgroup->id);
+                            // }
 
                         }
                         // test close group where 20
@@ -478,10 +480,7 @@ class BotController extends Controller
                     } else if ($userMessage == "content") {
                         $replyData = new TextMessageBuilder($content);
                         echo "ANAN YOOOOO!!!!!";
-                    } else if($userMessage == "ปิดGROUP"){
-                        $arr_replyData = array();
-                        $arr_replyData[] = $this->close_group(67);
-                    }
+                    } 
                     else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
