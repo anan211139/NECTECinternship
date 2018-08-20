@@ -1,12 +1,11 @@
 @if(session()->has('student_score_chapter'))
-
+<?php $level =  json_decode(session('level_total','default'),true); ?>
 <script type="text/javascript">
   var student = @json(session('student_score_chapter','default'));
   var overall = @json(session('overall_score','default'));
   var st_count = @json(session('student_count','default'));
   var lv_total = @json(session('level_total','default'));
   var lv_true = @json(session('level_true','default'));
-
 
   var student_score_chapter = [];
   var chapter_group = [];
@@ -48,7 +47,7 @@
     overall_score.push(overall[0].score/student_count);
   }
 
-
+  console.log(level_total_hard);
 
   var bar = document.getElementById('barChart_chapter').getContext('2d');
 
@@ -59,7 +58,14 @@
 
   var line = document.getElementById('lineChart_chapter').getContext('2d');
   Chart.defaults.global.defaultFontSize = 20;
-    Chart.defaults.global.defaultFontFamily = "'Kanit', sans-serif";
+  Chart.defaults.global.defaultFontFamily = "'Kanit', sans-serif";
+  if (level_total_easy[0] == 1) {
+    level_true_easy[1] = 1;
+  }if (level_total_medium[0] == 1) {
+    level_true_medium[1] = 1;
+  }if (level_total_hard[0] == 1) {
+    level_true_hard[1] = 1;
+  }
   var barChart = new Chart (bar,{
     type:'bar',
     data:{
@@ -105,7 +111,6 @@
     }
   }
   );
-
   var pieChart_easy = new Chart (pie_easy,{
   type:'pie',
   data:{
@@ -139,7 +144,10 @@
              label: function(tooltipItem, data) {
                  var label = data.datasets[tooltipItem.datasetIndex].label || '';
                  var total = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
+                 console.log(label);
+                 console.log(total);
                  label += total;
+                 console.log(label);
 
                    if(tooltipItem.datasetIndex === 0){
                       return  "จำนวนข้อที่ทำได้"+ ":" + " " +  + label + " " + "ข้อ";
@@ -152,7 +160,6 @@
   }
   }
   );
-
   var pieChart_medium = new Chart (pie_medium,{
   type:'pie',
   data:{
