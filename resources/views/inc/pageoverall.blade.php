@@ -20,11 +20,11 @@
             <div class="layout-score2">
                 <div class="div-score div-score-color1">
                     <label>Math (ข้อ)</label>
-                    <p class="score">{{$sumsub1[0]['true']}}/{{$sumsub1[0]['max']}}</p>
+                    <p class="score">@if($sumsub1[0]['max']){{$sumsub1[0]['true']}}/{{$sumsub1[0]['max']}}@else 0/0 @endif</p>
                 </div>
                 <div class="div-score div-score-color2">
                     <label>English (ข้อ)</label>
-                    <p class="score">{{$sumsub2[0]['true']}}/{{$sumsub2[0]['max']}}</p>
+                    <p class="score">@if($sumsub2[0]['max']){{$sumsub2[0]['true']}}/{{$sumsub2[0]['max']}}@else 0/0 @endif</p>
                 </div>
             </div>
         </div>
@@ -45,6 +45,7 @@
   document.getElementById("mySidenav").style.width = "0";
   }
   Chart.defaults.global.defaultFontSize = 15;
+  Chart.defaults.global.defaultFontFamily = "'Kanit', sans-serif";
 
   var student = @json(session('student_score_allsubject','default'));
   var score_count = @json(session('student_score_count','default'));
@@ -64,7 +65,7 @@
     overall_score.push(Number(overall[i].overall));
     student_count.push(st_count[i].student_count);
     student_score_allsubject[i] /= student_score_count[i]; //คะแนนบาร์ชาตนักเรียน
-    overall_score[i] = (overall_score[i]+student_score_allsubject[i]) / student_count[i]; //คะแนนบาร์ชาตรวม
+    overall_score[i] = ((overall_score[i]+student_score_allsubject[i]) / student_count[i]).toFixed(2); //คะแนนบาร์ชาตรวม
   }
 
   var bar = document.getElementById('barchart').getContext('2d');

@@ -99,6 +99,7 @@ body{
     text-align: left;
 }
 .layoutMenu > a{
+    margin: calc(1px + 1vw) 0px;
     text-decoration: none;
     color: White;
     padding: 0px calc(1px + 0.5vw);

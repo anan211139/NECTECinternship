@@ -36,69 +36,69 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script>
-function openNav() {
-document.getElementById("mySidenav").style.width = "calc(200px + 2vw)";
-}
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "calc(200px + 2vw)";
+  }
 
-function closeNav() {
-document.getElementById("mySidenav").style.width = "0";
-}
-Chart.defaults.global.defaultFontSize = 15;
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+  Chart.defaults.global.defaultFontSize = 15;
+  Chart.defaults.global.defaultFontFamily = "'Kanit', sans-serif";
 
-
-var bar = document.getElementById('barchart').getContext('2d');
+  var bar = document.getElementById('barchart').getContext('2d');
   var line = document.getElementById('linechart').getContext('2d');
-var lineChart = new Chart (line,{
-  type:'line',
-  data:{
-    labels:[1,2,3,4,5,6,7,8,9,10],
-    datasets:[
-      {
-        label : "นักเรียน",
-        borderColor: ["#5cbcd2"],
-        fill :false,
-        data: [10,20,30,25,27,29,30,40,50,60,70]
-      }
-    ]
-  },
-  options:{
-    title:{
-      display: true,
-      text: 'คะแนนทีนักเรียนทำได้ในแต่ละครั้ง'
-    }
-  }
-}
-);
-
-var barChart = new Chart (bar,{
-  type:'bar',
-  data:{
-    datasets:[
-      {
-        label: "นักเรียน",
-        backgroundColor: "#5cbcd2",
-        data:  [36]
-      },
-      {
-        label: "นักเรียนทั้งหมดในระบบ",
-        backgroundColor: "#007d91",
-        data: [50]
-      }
-    ]
-  },
-  options:{
-    title:{
-      display: true,
-      text: 'คะแนนที่นักเรียนได้ในครั้งล่าสุดเปรียบเทียบกับคะแนนเฉลี่ยของนักเรียนทั้งหมดในระบบ'
-    },
-    scales: {
-      yAxes: [{
-      ticks: {
-      beginAtZero:true
+  var lineChart = new Chart (line,{
+    type:'line',
+    data:{
+      labels:[1,2,3,4,5,6,7,8,9,10],
+      datasets:[
+        {
+          label : "นักเรียน",
+          borderColor: ["#5cbcd2"],
+          fill :false,
+          data: [10,20,30,25,27,29,30,40,50,60,70]
         }
-      }]
+      ]
+    },
+    options:{
+      title:{
+        display: true,
+        text: 'คะแนนทีนักเรียนทำได้ในแต่ละครั้ง'
+      }
     }
   }
-}
-);
+  );
+
+  var barChart = new Chart (bar,{
+    type:'bar',
+    data:{
+      datasets:[
+        {
+          label: "นักเรียน",
+          backgroundColor: "#5cbcd2",
+          data:  [36]
+        },
+        {
+          label: "นักเรียนทั้งหมดในระบบ",
+          backgroundColor: "#007d91",
+          data: [50]
+        }
+      ]
+    },
+    options:{
+      title:{
+        display: true,
+        text: 'คะแนนที่นักเรียนได้ในครั้งล่าสุดเปรียบเทียบกับคะแนนเฉลี่ยของนักเรียนทั้งหมดในระบบ'
+      },
+      scales: {
+        yAxes: [{
+        ticks: {
+        beginAtZero:true
+          }
+        }]
+      }
+    }
+  }
+  );
 </script>

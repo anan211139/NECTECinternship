@@ -39,7 +39,7 @@ class Pagecontroller extends Controller
         Session::put('chapter_list',$arraychapters);
         // return $arraychapters;
         // $line_code = 'st11';
-        return view('userpage');
+        return view('overallAndsubject');
     }
     public function dashboard(){
       if(session()->has('username')){

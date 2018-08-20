@@ -5,6 +5,7 @@ body {
     position: relative;
 }
 .topnav {
+    background-color: #5bbcd2;
     position: fixed;
     top: 0;
     left: 0;
@@ -239,6 +240,7 @@ body {
     border-radius: 50%;
 }
 .layoutDropdown{
+    margin-top: 80px;
     display: flex;
     align-items: center;
     height: 50px;

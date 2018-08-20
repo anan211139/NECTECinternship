@@ -35,7 +35,7 @@
                       @endfor
                     </div>
                   @endfor
-                    <p>ดูคะแนนรวม</p>
+                    <a>ดูคะแนนรวม</a>
                     <div class="menuBtn">
                         <a href="/selectoverall/{{$choosechild}}">Overall</a>
                     </div>
