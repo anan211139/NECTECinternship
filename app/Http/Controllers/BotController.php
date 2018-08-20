@@ -691,6 +691,7 @@ class BotController extends Controller
     }
 
     public function close_group($group_id) {
+        echo "CLOSE_GROUP";
         $current_group = DB::table('groups')
             ->where('id', $group_id)
             ->first();
