@@ -465,6 +465,10 @@ class BotController extends Controller
                             }
 
                         }
+                        // test close group where 20
+                        if($count_quiz = 20){
+                            $arr_replyData[] = $this->close_group($urgroup->id);
+                        }
 
                         // $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
