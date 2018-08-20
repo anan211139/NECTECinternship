@@ -89,7 +89,8 @@ class graph_chapterController extends Controller
         ->select('results.level_id','results.total_level','results.total_level_true')
         ->get();
         // return $extenlevel;
-
+        $chapterstatus = DB::table('chapters')->where('id','=',$chapter_id)->get();
+        // return $chapterstatus;
         // $level_total = DB::table('results')
         // ->select(DB::raw('levels.name as level_name, results.total_level as level_total'))
         // ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
@@ -117,7 +118,7 @@ class graph_chapterController extends Controller
         Session::put('student_count',$student_count);
         // Session::put('level_total',$level_total);
         // Session::put('level_true',$level_true);
-
+        Session::put('chapterstatus',$chapterstatus);
         Session::put('extenlevel',$extenlevel);
 
         return redirect('/userpage');

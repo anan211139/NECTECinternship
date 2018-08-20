@@ -3,9 +3,10 @@
   $max = json_decode(session('maxchapter','default'), true);
   $score = json_decode(session('scorechapter','default'), true);
   $sumoverall = json_decode(session('sumoverall','default'), true);
+  $substatus = json_decode(session('substatus','default'), true);
 ?>
 <div class="center">
-    <h1>วิชาคณิตศาสตร์</h1>
+    <h1>{{$substatus[0]['name']}}</h1>
     <div class="section2">
         <div class="sub-section">
             <p>จำนวนแบบฝึกหัดที่ทำได้</p>
@@ -98,8 +99,8 @@
                     <label>{{$chapther_list[3]['name']}} (ข้อ)</label>
                     <p class="score">
                       @php
-                      $index = 0;
-                      $haveData = False;
+                      $index2 = 0;
+                      $haveData2 = False;
                       @endphp
                       @for($i=0;$i<2;$i++)
                         @if(isset($max[$i]['max']))

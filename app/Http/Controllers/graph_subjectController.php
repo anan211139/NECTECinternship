@@ -98,6 +98,8 @@ class graph_subjectController extends Controller
         ->where('chapters.subject_id','=',$subject_id)
         ->get();
         // return $sumoverall;
+        $substatus = DB::table('subjects')->where('id','=',$subject_id)->get();
+        // return $substatus;
         Session::put('student_score',$student_score);
         Session::put('above',$score_above);
         Session::put('below',$score_below);
@@ -108,6 +110,7 @@ class graph_subjectController extends Controller
         Session::put('subject_status',$subject_id);
         Session::put('countgroups',$countstudent_score);
         Session::put('sumoverall',$sumoverall);
+        Session::put('substatus',$substatus);
         return redirect('/userpage');
         // return view('userpage')
         // ->with('student_score',$student_score)

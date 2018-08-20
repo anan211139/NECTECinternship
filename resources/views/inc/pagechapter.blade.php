@@ -1,5 +1,6 @@
 <?php
     $extenlevel = json_decode(session('extenlevel','default'), true);
+    $chapterstatus = json_decode(session('chapterstatus','default'), true);
     $totalmax = 0;
     $totaltrue = 0;
 
@@ -12,7 +13,7 @@
  ?>
 
 <div class="center">
-    <h1>บทสมการ</h1>
+    <h1>{{$chapterstatus[0]['name']}}</h1>
     <div class="grid-container">
         <div class="section1">
             <p>จำนวนแบบฝึกหัดที่ทำได้ครั้งล่าสุด</p>
@@ -24,31 +25,67 @@
                 <div class="div-score div-score-color1">
                     <label>ระดับยาก (ข้อ)</label>
                     <p class="score">
-                      @for($i=0;$i<3;$i++)
+                      @php
+                        $index = 0;
+                        $haveData = False;
+                      @endphp
+                      @for($i=0;$i<count($extenlevel);$i++)
                         @if($extenlevel[$i]['level_id'] == 3)
-                          {{$extenlevel[$i]['total_level_true']}}/{{$extenlevel[$i]['total_level']}}
+                          @php
+                            $haveData = True;
+                            $index = $i;
+                          @endphp
                         @endif
                       @endfor
+                      @if($haveData)
+                        {{$extenlevel[$index]['total_level_true']}}/{{$extenlevel[$index]['total_level']}}
+                      @else
+                        0/0
+                      @endif
                     </p>
                 </div>
                 <div class="div-score div-score-color2">
                     <label>ระดับกลาง (ข้อ)</label>
                     <p class="score">
-                      @for($i=0;$i<3;$i++)
+                      @php
+                        $index2 = 0;
+                        $haveData2 = False;
+                      @endphp
+                      @for($i=0;$i<count($extenlevel);$i++)
                         @if($extenlevel[$i]['level_id'] == 2)
-                          {{$extenlevel[$i]['total_level_true']}}/{{$extenlevel[$i]['total_level']}}
+                          @php
+                            $haveData2 = True;
+                            $index2 = $i;
+                          @endphp
                         @endif
                       @endfor
+                      @if($haveData2)
+                        {{$extenlevel[$index2]['total_level_true']}}/{{$extenlevel[$index2]['total_level']}}
+                      @else
+                        0/0
+                      @endif
                     </p>
                 </div>
                 <div class="div-score div-score-color3">
                     <label>ระดับง่าย (ข้อ)</label>
                     <p class="score">
-                      @for($i=0;$i<3;$i++)
+                      @php
+                        $index3 = 0;
+                        $haveData3 = False;
+                      @endphp
+                      @for($i=0;$i<count($extenlevel);$i++)
                         @if($extenlevel[$i]['level_id'] == 1)
-                          {{$extenlevel[$i]['total_level_true']}}/{{$extenlevel[$i]['total_level']}}
+                          @php
+                            $haveData3 = True;
+                            $index3 = $i;
+                          @endphp
                         @endif
                       @endfor
+                      @if($haveData3)
+                        {{$extenlevel[$index3]['total_level_true']}}/{{$extenlevel[$index3]['total_level']}}
+                      @else
+                        0/0
+                      @endif
                     </p>
                 </div>
             </div>
@@ -89,13 +126,17 @@
   var chapter_group = [];
   var overall_score = [];
   var student_count = [];
-
+  var scorebar = [];
   student_count.push(st_count[0].count);
   overall_score.push((overall[0].score/student_count).toFixed(2));
   for (var i = 1; i <= student.length; i++) {
     student_score_chapter.push(Number(student[i-1].score));
     chapter_group.push('ชุดที่ '+ i);
   }
+  if (student.length) {
+    scorebar.push(Number(student[student.length-1].score));
+  }
+
   var lineChart = new Chart (line,{
     type:'line',
     data:{
@@ -125,7 +166,7 @@
         {
           label: "นักเรียน",
           backgroundColor: "#5cbcd2",
-          data:  student_score_chapter
+          data:  scorebar
         },
         {
           label: "นักเรียนทั้งหมดในระบบ",
