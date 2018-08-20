@@ -743,7 +743,7 @@ class BotController extends Controller
             if ($examforweight->level_id == $level_id) {
                 $total_exam += 1;
                 $total_true += ($stdans->is_correct ? 1 : 0);
-                echo $level_id;
+                echo $level_id.">>".$total_true."\n";
             }
         }
 
