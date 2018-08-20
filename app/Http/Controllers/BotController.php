@@ -743,11 +743,12 @@ class BotController extends Controller
             if ($examforweight->level_id == $level_id) {
                 $total_exam += 1;
                 $total_true += ($stdans->is_correct ? 1 : 0);
-                echo $level_id.">>".$total_true."\n";
+                //echo $level_id.">>".$total_true."\n";
             }
         }
 
         if ($total_exam != 0) {
+            echo "level_id >>".$level_id."\n total_level >>".$total_exam."\n total_true".$total_true;
             DB::table('results')->insert([
                 'line_code' => $current_group->line_code,
                 'group_id' => $group_id,
