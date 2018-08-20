@@ -474,7 +474,10 @@ class BotController extends Controller
                     } else if ($userMessage == "content") {
                         $replyData = new TextMessageBuilder($content);
                         echo "ANAN YOOOOO!!!!!";
-                    } else {
+                    } else if($userMessage == "ปิดGROUP"){
+                        close_group(66);
+                    }
+                    else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
@@ -738,6 +741,7 @@ class BotController extends Controller
             if ($examforweight->level_id == $level_id) {
                 $total_exam += 1;
                 $total_true += ($stdans->is_correct ? 1 : 0);
+                echo $level_id;
             }
         }
 
