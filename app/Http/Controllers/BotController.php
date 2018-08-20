@@ -476,7 +476,7 @@ class BotController extends Controller
                         echo "ANAN YOOOOO!!!!!";
                     } else if($userMessage == "ปิดGROUP"){
                         $arr_replyData = array();
-                        $arr_replyData[] = $this->close_group(68);
+                        $arr_replyData[] = $this->close_group(67);
                     }
                     else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
