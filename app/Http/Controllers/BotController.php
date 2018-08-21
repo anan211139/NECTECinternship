@@ -468,7 +468,7 @@ class BotController extends Controller
 
                         }
                         // test close group where 20
-                        if($count_quiz = 20){
+                        if($count_quiz == 20){
                             $arr_replyData[] = $this->close_group($urgroup->id);
                         }
 
@@ -478,6 +478,10 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     } else if ($userMessage == "content") {
+                        $replyData = new TextMessageBuilder($content);
+                        echo "ANAN YOOOOO!!!!!";
+                    
+                    } else if ($userMessage == "ลองflex") {
                         $replyData = new TextMessageBuilder($content);
                         echo "ANAN YOOOOO!!!!!";
                     } 
