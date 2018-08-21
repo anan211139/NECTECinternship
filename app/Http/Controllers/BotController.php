@@ -402,12 +402,13 @@ class BotController extends Controller
                         $arr_replyData = array();
 
                         echo "REPLY";
+                        $check_st_end = false;
 
                         if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
                                 $arr_replyData[] = new TextMessageBuilder("ถูกต้อง! เก่งจังเลย");
                                 $ansst = true;
-
+                                $check_st_end = true;
                                 if ($count_quiz < 20) {
                                     foreach ($arr_replyData as $arr_Reply) {
                                         $multiMessage->add($arr_Reply);
@@ -439,7 +440,7 @@ class BotController extends Controller
                         } else if ($ans_status === false && $sec_chance === false) {
 
                             echo "Check";
-
+                            $check_st_end = true;
                             if ((int)$userMessage == $ans->answer) {
                                 $textReplyMessage = "ถูกต้อง! เก่งจังเลย";
                                 $ansst = true;
@@ -468,7 +469,7 @@ class BotController extends Controller
 
                         }
                         // test close group where 20
-                        if($count_quiz == 20){
+                        if($count_quiz == 20 && ){
                             $arr_replyData[] = $this->close_group($urgroup->id);
                         }
 
