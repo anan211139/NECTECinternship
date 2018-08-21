@@ -17,6 +17,7 @@
         </div>
       </div>
   </div>
+  @include('inc.script_overall')
 @endif
 @if(session()->has('student_score_chapter'))
   <div class="content">
@@ -26,21 +27,12 @@
       </div>
       <h3 class="labelPie">จำนวนแบบฝึกหัดที่นักเรียนทำได้</h3>
       <div class="layoutContent">
-        <!-- <div>
-          <canvas id="barChart_chapter"></canvas>
-        </div> -->
-        <div>
-          <canvas id="pieChart_chapter_easy"></canvas>
-        </div>
-        <div>
-          <canvas id="pieChart_chapter_medium"></canvas>
-        </div>
-        <!-- <div>
-          <canvas id="pieChart_chapter_hard"></canvas>
-        </div> -->
-        <!-- <div>
-          <canvas id="lineChart_chapter"></canvas>
-        </div> -->
+          <div>
+            <canvas id="pieChart_chapter_easy"></canvas>
+          </div>
+          <div>
+            <canvas id="pieChart_chapter_medium"></canvas>
+          </div>
       </div>
       <div style="display:flex; flex-flow: row; justify-content: center; padding: 0px 50px;">
         <div class="thChart" >
@@ -66,4 +58,6 @@
         </div>
       </div>
   </div>
+  @include('inc.script_subject')
+  @include('inc.script_chapter')
 @endif

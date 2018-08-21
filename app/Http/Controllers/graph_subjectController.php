@@ -29,15 +29,26 @@ class graph_subjectController extends Controller
         }
 
         // ของวิชา
-        $student_score = DB::table('results')
+        $student_score = DB::table('results')                                           //พังจ้าาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาา
         ->select(DB::raw('chapters.name,sum(total_level_true*level_id) as score'))
         ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
-        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id' )
+        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
         ->where('chapters.subject_id', '=', $subject_id)
         ->where('groups.line_code', '=', $line_code)
         ->groupBy('chapter_id')
         ->get(); //bar chart คะแนนนักรียน กราฟรายวิชา
         // return $student_score;
+        $countstudent_score = DB::table('results')
+        ->select(DB::raw('count(group_id) as count'))
+        ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
+        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
+        ->where('chapters.subject_id', '=', $subject_id)
+        ->where('groups.line_code', '=', $line_code)
+        ->where('level_id','=','2')
+        ->groupBy('chapter_id')
+        ->get();
+        // นับจำนวนชุดในแต่ละบท
+        // return $countstudent_score;
         $score_above = DB::table('results')
         ->select(DB::raw('sum(total_level_true*level_id) as above'))
         ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
@@ -58,8 +69,8 @@ class graph_subjectController extends Controller
         ->orderBy('group_id', 'asc')
         ->get(); //bar chart คะแนนนoverall กราฟรายวิชา (ส่วน)
         // return $score_below;
-        $pie_outside = DB::table('results')
-        ->select(DB::raw('sum(total_level_true)as pie_outside'))
+        $scorechapter = DB::table('results')
+        ->select(DB::raw('sum(total_level_true)as score'))
         ->leftjoin('groups', 'groups.id', '=', 'results.group_id')
         ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
         ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
@@ -68,8 +79,8 @@ class graph_subjectController extends Controller
         ->groupBy('chapter_id')
         ->get(); //pie chart ข้อที่ทำได้ กราฟรายวิชา
         // return $pie_outside;
-        $pie_inside = DB::table('results')
-        ->select(DB::raw('sum(total_level)as pie_inside'))
+        $maxchapter = DB::table('results')
+        ->select(DB::raw('sum(total_level)as max,groups.chapter_id as id'))
         ->leftjoin('groups', 'groups.id', '=', 'results.group_id')
         ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
         ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
@@ -78,12 +89,28 @@ class graph_subjectController extends Controller
         ->groupBy('chapter_id')
         ->get();//pie chart ข้อที่ได้ทำ กราฟรายวิชา
         // return $pie_inside;
+
+        $sumoverall = DB::table('results')
+        ->select(DB::raw('sum(total_level) as max,sum(total_level_true) as `true`'))
+        ->leftjoin('groups','results.group_id','=','groups.id')
+        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
+        ->where('groups.line_code','=',$line_code)
+        ->where('chapters.subject_id','=',$subject_id)
+        ->get();
+        // return $sumoverall;
+        $substatus = DB::table('subjects')->where('id','=',$subject_id)->get();
+        // return $substatus;
         Session::put('student_score',$student_score);
         Session::put('above',$score_above);
         Session::put('below',$score_below);
-        Session::put('pie_outside',$pie_outside);
-        Session::put('pie_inside',$pie_inside);
+        Session::put('scorechapter',$scorechapter);
+        Session::put('maxchapter',$maxchapter);
 
+
+        Session::put('subject_status',$subject_id);
+        Session::put('countgroups',$countstudent_score);
+        Session::put('sumoverall',$sumoverall);
+        Session::put('substatus',$substatus);
         return redirect('/userpage');
         // return view('userpage')
         // ->with('student_score',$student_score)

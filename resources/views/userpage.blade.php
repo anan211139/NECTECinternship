@@ -34,9 +34,7 @@
                     <img class="logo" src="picture/hamberger.png">
                 </a>
             </div>
-            <div>
-                <img class="image" src="picture/bgwater.png">
-            </div>
+
             <div id="layoutDropdown" class="layoutDropdown">
                 <div class="dropdown">
                     <button onclick="selectFunction()" id="nameBtn" class="dropbtn dropbtn2">
@@ -88,7 +86,7 @@
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 <ul class="cd-accordion-menu">
-                        
+
                         <li class="has-children">
                             <input type="checkbox" name="group-1" id="group-1">
                             <label class="sidenavLabel" for="group-1">เปลี่ยนวิชา <img class="dropdownicon" src="picture/down-arrowblack.png"></label>
