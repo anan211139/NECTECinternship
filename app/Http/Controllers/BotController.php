@@ -466,7 +466,6 @@ class BotController extends Controller
                             // else {
                             //     $arr_replyData[] = $this->close_group($urgroup->id);
                             // }
-
                         }
                         // test close group where 20
                         if($count_quiz == 20 && $check_st_end == true){
