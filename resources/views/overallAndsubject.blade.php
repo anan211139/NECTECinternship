@@ -26,7 +26,9 @@
                 <p>{{$choosechilddata[0]['name']}}</p>
                 <div class="layoutMenu">
                   @for($i=0;$i<count($subject_list);$i++)
-                    <a href="/selectsubject/{{$subject_list["$i"]["id"]}}">{{$subject_list["$i"]["name"]}}</a>
+                  <div class="head-menu" onclick = "window.location.href = '/selectsubject/{{$subject_list["$i"]["id"]}}';">
+                    <a>{{$subject_list["$i"]["name"]}}</a>
+                  </div>
                     <div class="menuBtn">
                       @for($j=0;$j<count($chapther_list);$j++)
                         @if($subject_list["$i"]["id"] == $chapther_list["$j"]["subject_id"])

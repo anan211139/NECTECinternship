@@ -31,6 +31,7 @@ class Pagecontroller extends Controller
       }
     }
     public function getuserpage(){
+      if(session()->has('username')){
         $jsonsubject = DB::table('subjects')->get();
         $jsonchapters = DB::table('chapters')->get();
         $arraysubject = json_decode($jsonsubject, true);
@@ -40,6 +41,10 @@ class Pagecontroller extends Controller
         // return $arraychapters;
         // $line_code = 'st11';
         return view('overallAndsubject');
+      }else{
+        return redirect('/');
+      }
+
     }
     public function dashboard(){
       if(session()->has('username')){

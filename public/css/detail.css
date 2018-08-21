@@ -82,6 +82,7 @@ body{
     background-color: transparent;
     border-width: 0;
     margin: calc(1px + 0.5vw);
+    outline: none;
 }
 .imgHome{
     width: calc(8px + 1.5vw);
@@ -98,7 +99,13 @@ body{
     flex-flow: column;
     text-align: left;
 }
-.layoutMenu > a{
+.head-menu{
+  background-color: #46abc4;
+  margin: calc(1px + 0.5vw) calc(1px + 0.5vw);
+  border-radius: calc(1px + 0.2vw);
+  padding: calc(5px + 0.5vw) 0px;
+}
+.layoutMenu  a{
     margin: calc(1px + 1vw) 0px;
     text-decoration: none;
     color: White;
@@ -106,8 +113,9 @@ body{
 }
 .menuBtn > a{
     text-decoration: none;
-    padding: calc(5px + 1vw);
+    padding: calc(3px + 1vw);
     color: #5bbcd2;
+    margin: 0;
 }
 .menuBtn{
     display: flex;
@@ -203,6 +211,12 @@ body{
     margin: auto calc(30px + 2vw);
 }
 
+.menuBtn > a:hover{
+  opacity: 0.7;
+}
+.head-menu:hover{
+  opacity: 0.7;
+}
 @media screen and (max-width: 900px) {
     .grid-container{
         grid-template-columns: 100%;

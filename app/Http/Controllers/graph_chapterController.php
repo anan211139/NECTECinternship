@@ -91,6 +91,16 @@ class graph_chapterController extends Controller
         // return $extenlevel;
         $chapterstatus = DB::table('chapters')->where('id','=',$chapter_id)->get();
         // return $chapterstatus;
+        $scoreeverbody = DB::table('results')
+        ->select(DB::raw('sum(level_id * total_level_true) as score'))
+        ->leftjoin('groups','results.group_id', '=','groups.id')
+        ->leftjoin('chapters', 'groups.chapter_id', '=', 'chapters.id')
+        ->leftjoin('subjects', 'chapters.subject_id', '=', 'subjects.id')
+        ->where('chapters.subject_id','=',$subject_id)
+        ->where('chapters.id', '=', $chapter_id)
+        ->groupBy('results.group_id')
+        ->get();
+        // return $scoreeverbody;
         // $level_total = DB::table('results')
         // ->select(DB::raw('levels.name as level_name, results.total_level as level_total'))
         // ->leftjoin('groups', 'results.group_id', '=', 'groups.id')
@@ -120,6 +130,7 @@ class graph_chapterController extends Controller
         // Session::put('level_true',$level_true);
         Session::put('chapterstatus',$chapterstatus);
         Session::put('extenlevel',$extenlevel);
+        Session::put('scoreeverbody',$scoreeverbody);
 
         return redirect('/userpage');
           // ->with('student_score_chapter',$student_score_chapter)
