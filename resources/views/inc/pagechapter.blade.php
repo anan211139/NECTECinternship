@@ -146,54 +146,55 @@
   if (student.length) {
     scorebar.push(Number(student[student.length-1].score));
   }
-
+  lengthscore = [[0,5],[6,10],[11,15],[16,20],[21,25],[26,30],[31,35],[36,40],[41,45],[46,50],[51,55]]
+  console.log(lengthscore);
   for (var i = 0; i < st_score_everybody.length; i++) {
-    if (st_score_everybody[i].score >= 0 && st_score_everybody[i].score <= 5) {
+    if (st_score_everybody[i].score >= lengthscore[0][0] && st_score_everybody[i].score <= lengthscore[0][1]) {
       countscorelength[0]++;
-    }if (st_score_everybody[i].score >= 6 && st_score_everybody[i].score <= 10) {
+    }if (st_score_everybody[i].score >= lengthscore[1][0] && st_score_everybody[i].score <= lengthscore[1][1]) {
       countscorelength[1]++;
-    }if (st_score_everybody[i].score >= 11 && st_score_everybody[i].score <= 15) {
+    }if (st_score_everybody[i].score >= lengthscore[2][0] && st_score_everybody[i].score <= lengthscore[2][1]) {
       countscorelength[2]++;
-    }if (st_score_everybody[i].score >= 16 && st_score_everybody[i].score <= 20) {
+    }if (st_score_everybody[i].score >= lengthscore[3][0] && st_score_everybody[i].score <= lengthscore[3][1]) {
       countscorelength[3]++;
-    }if (st_score_everybody[i].score >= 21 && st_score_everybody[i].score <= 25) {
+    }if (st_score_everybody[i].score >= lengthscore[4][0] && st_score_everybody[i].score <= lengthscore[4][1]) {
       countscorelength[4]++;
-    }if (st_score_everybody[i].score >= 26 && st_score_everybody[i].score <= 30) {
+    }if (st_score_everybody[i].score >= lengthscore[5][0] && st_score_everybody[i].score <= lengthscore[5][1]) {
       countscorelength[5]++;
-    }if (st_score_everybody[i].score >= 31 && st_score_everybody[i].score <= 35) {
+    }if (st_score_everybody[i].score >= lengthscore[6][0] && st_score_everybody[i].score <= lengthscore[6][1]) {
       countscorelength[6]++;
-    }if (st_score_everybody[i].score >= 36 && st_score_everybody[i].score <= 40) {
+    }if (st_score_everybody[i].score >= lengthscore[7][0] && st_score_everybody[i].score <= lengthscore[7][1]) {
       countscorelength[7]++;
-    }if (st_score_everybody[i].score >= 41 && st_score_everybody[i].score <= 45) {
+    }if (st_score_everybody[i].score >= lengthscore[8][0] && st_score_everybody[i].score <= lengthscore[8][1]) {
       countscorelength[8]++;
-    }if (st_score_everybody[i].score >= 46 && st_score_everybody[i].score <= 50) {
+    }if (st_score_everybody[i].score >= lengthscore[9][0] && st_score_everybody[i].score <= lengthscore[9][1]) {
       countscorelength[9]++;
-    }if (st_score_everybody[i].score >= 51 && st_score_everybody[i].score <= 55) {
+    }if (st_score_everybody[i].score >= lengthscore[10][0] && st_score_everybody[i].score <= lengthscore[10][1]) {
       countscorelength[10]++;
     }
   }
   console.log(scorebar);
-  if (scorebar[0] >= 0 && scorebar[0] <= 5) {
+  if (scorebar[0] >= lengthscore[0][0] && scorebar[0] <= lengthscore[0][1]) {
     colorarray[0] = "#5cbcd2";
-  }if (scorebar[0] >= 6 && scorebar[0] <= 10) {
+  }if (scorebar[0] >= lengthscore[1][0] && scorebar[0] <= lengthscore[1][1]) {
     colorarray[1] = "#5cbcd2";
-  }if (scorebar[0] >= 11 && scorebar[0] <= 15) {
+  }if (scorebar[0] >= lengthscore[2][0] && scorebar[0] <= lengthscore[2][1]) {
     colorarray[2] = "#5cbcd2";
-  }if (scorebar[0] >= 16 && scorebar[0] <= 20) {
+  }if (scorebar[0] >= lengthscore[3][0] && scorebar[0] <= lengthscore[3][1]) {
     colorarray[3] = "#5cbcd2";
-  }if (scorebar[0] >= 21 && scorebar[0] <= 25) {
+  }if (scorebar[0] >= lengthscore[4][0] && scorebar[0] <= lengthscore[4][1]) {
     colorarray[4] = "#5cbcd2";
-  }if (scorebar[0] >= 26 && scorebar[0] <= 30) {
+  }if (scorebar[0] >= lengthscore[5][0] && scorebar[0] <= lengthscore[5][1]) {
     colorarray[5] = "#5cbcd2";
-  }if (scorebar[0] >= 31 && scorebar[0] <= 35) {
+  }if (scorebar[0] >= lengthscore[6][0] && scorebar[0] <= lengthscore[6][1]) {
     colorarray[6] = "#5cbcd2";
-  }if (scorebar[0] >= 36 && scorebar[0] <= 40) {
+  }if (scorebar[0] >= lengthscore[7][0] && scorebar[0] <= lengthscore[7][1]) {
     colorarray[7] = "#5cbcd2";
-  }if (scorebar[0] >= 41 && scorebar[0] <= 45) {
+  }if (scorebar[0] >= lengthscore[8][0] && scorebar[0] <= lengthscore[8][1]) {
     colorarray[8] = "#5cbcd2";
-  }if (scorebar[0] >= 46 && scorebar[0] <= 50) {
+  }if (scorebar[0] >= lengthscore[9][0] && scorebar[0] <= lengthscore[9][1]) {
     colorarray[9] = "#5cbcd2";
-  }if (scorebar[0] >= 51 && scorebar[0] <= 55) {
+  }if (scorebar[0] >= lengthscore[10][0] && scorebar[0] <= lengthscore[10][1]) {
     colorarray[10] = "#5cbcd2";
   }
   console.log(colorarray);

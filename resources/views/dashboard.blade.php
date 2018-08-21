@@ -190,11 +190,8 @@
                 }
               }
           }
-<<<<<<< HEAD
-=======
         }
 
->>>>>>> origin/oat
     </script>
 
 </html>
