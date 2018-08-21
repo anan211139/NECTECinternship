@@ -165,7 +165,32 @@ class BotController extends Controller
                                 ),
                             ));
                     } else if($userMessage =="ดูคะแนน"){
-                        $replyData = $this->declare_point($userId);
+                        $arr_replyData = array();
+                        $arr_replyData[] = $this->declare_point($userId);
+                        
+
+
+                        $actionBuilder = array(
+                            new UriTemplateActionBuilder(
+                                'ดูคะแนนย้อนหลัง', // ข้อความแสดงในปุ่ม
+                                'https://pkwang.herokuapp.com/selectoverall/'.$userId
+                            ),   
+                        );
+                        $imageUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/graph.png?raw=true/700';
+                        $arr_replyData[] = new TemplateMessageBuilder('Button Template',
+                            new ButtonTemplateBuilder(
+                                    'ดูคะแนนย้อนหลัง', // กำหนดหัวเรื่อง
+                                    'หากต้องการดูคะแนนย้อนหลังทั้งหมดสามารถดูได้จากด้านล่างเลยจ้าาา', // กำหนดรายละเอียด
+                                    $imageUrl, // กำหนด url รุปภาพ
+                                    $actionBuilder  // กำหนด action object
+                            )
+                        );              
+
+                        $multiMessage = new MultiMessageBuilder;
+                        foreach ($arr_replyData as $arr_Reply) {
+                            $multiMessage->add($arr_Reply);
+                        }
+                        $replyData = $multiMessage;
                     } else if ($userMessage == "สะสมแต้ม") {
                         $score = DB::table('students')
                             ->where('line_code', $userId)
@@ -208,6 +233,9 @@ class BotController extends Controller
 
                     } else if ($userMessage == "ดู Code") {
                         $arr_replyData = array();
+
+                        $textReplyMessage = "ข้อมูลด้านล่างใช้เพื่อเชื่อมต่อเว็บไซต์ โดยน้องสามารถกดลิงค์ด้านล่างได้เลยจ้า แต่หากไม่สะดวกกดลิงค์พี่หมีแนะนำว่าให้ใช QR Code เพื่อป้องกันความผิดพลาดจ้า";
+                        $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
 
                         $connectChild = 'https://pkwang.herokuapp.com/connectchild/' . $userId;
                         $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $connectChild . '&choe=UTF-8';
@@ -374,12 +402,13 @@ class BotController extends Controller
                         $arr_replyData = array();
 
                         echo "REPLY";
+                        $check_st_end = false;
 
                         if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
                                 $arr_replyData[] = new TextMessageBuilder("ถูกต้อง! เก่งจังเลย");
                                 $ansst = true;
-
+                                $check_st_end = true;
                                 if ($count_quiz < 20) {
                                     foreach ($arr_replyData as $arr_Reply) {
                                         $multiMessage->add($arr_Reply);
@@ -389,9 +418,10 @@ class BotController extends Controller
                                         $multiMessage->add($arr_Reply);
                                     }
                                     $arr_replyData = array();
-                                } else {
-                                    $arr_replyData[] = $this->close_group($urgroup->id);
-                                }
+                                } 
+                                // else {
+                                //     $arr_replyData[] = $this->close_group($urgroup->id);
+                                // }
 
                             } else {
                                 $arr_replyData[] = new TextMessageBuilder("ผิดแล้ว พี่หมีจะสอนให้");
@@ -410,7 +440,7 @@ class BotController extends Controller
                         } else if ($ans_status === false && $sec_chance === false) {
 
                             echo "Check";
-
+                            $check_st_end = true;
                             if ((int)$userMessage == $ans->answer) {
                                 $textReplyMessage = "ถูกต้อง! เก่งจังเลย";
                                 $ansst = true;
@@ -432,10 +462,14 @@ class BotController extends Controller
                                     $multiMessage->add($arr_Reply);
                                 }
                                 $arr_replyData = array();
-                            } else {
-                                $arr_replyData[] = $this->close_group($urgroup->id);
-                            }
-
+                            } 
+                            // else {
+                            //     $arr_replyData[] = $this->close_group($urgroup->id);
+                            // }
+                        }
+                        // test close group where 20
+                        if($count_quiz == 20 && $check_st_end == true){
+                            $arr_replyData[] = $this->close_group($urgroup->id);
                         }
 
                         // $multiMessage = new MultiMessageBuilder;
@@ -446,7 +480,12 @@ class BotController extends Controller
                     } else if ($userMessage == "content") {
                         $replyData = new TextMessageBuilder($content);
                         echo "ANAN YOOOOO!!!!!";
-                    } else {
+                    
+                    } else if ($userMessage == "ลองflex") {
+                        $replyData = new TextMessageBuilder($content);
+                        echo "ANAN YOOOOO!!!!!";
+                    } 
+                    else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
                 } else if ($replyInfo == "follow") {
@@ -660,6 +699,7 @@ class BotController extends Controller
     }
 
     public function close_group($group_id) {
+        echo "CLOSE_GROUP";
         $current_group = DB::table('groups')
             ->where('id', $group_id)
             ->first();
@@ -710,10 +750,12 @@ class BotController extends Controller
             if ($examforweight->level_id == $level_id) {
                 $total_exam += 1;
                 $total_true += ($stdans->is_correct ? 1 : 0);
+                //echo $level_id.">>".$total_true."\n";
             }
         }
 
         if ($total_exam != 0) {
+            echo "level_id >>".$level_id."\n total_level >>".$total_exam."\n total_true".$total_true;
             DB::table('results')->insert([
                 'line_code' => $current_group->line_code,
                 'group_id' => $group_id,
@@ -795,22 +837,22 @@ class BotController extends Controller
                         ->where('id', $del_subj->group_id)
                         ->delete();
                     $del_group = true;
-                    $chap_text = $chap_text." ".$rest_chap.",";
+                    $chap_text7 = $chap_text7." ".$rest_chap.",";
                     echo "MORE6".$rest_chap;
                 }
                 else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
-                    $chap_text = $chap_text." ".$rest_chap.",";
+                    $chap_text3 = $chap_text3." ".$rest_chap.",";
                     echo "MORE2".$rest_chap;
                 }
             }
             if ($del_group == true) {
-                $chap_text = rtrim($chap_text7, ',');
+                $chap_text7 = rtrim($chap_text7, ',');
                 $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
             }
             else if (strlen($chap_text3) > 0) {
-                $chap_text = rtrim($chap_text3, ',');
+                $chap_text3 = rtrim($chap_text3, ',');
                 $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
                 $replyData = new TextMessageBuilder($textReplyMessage);
                 $response = $bot->pushMessage($line_u ,$replyData);
