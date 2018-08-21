@@ -142,12 +142,12 @@
   for (var i = 1; i <= student.length; i++) {
     student_score_chapter.push(Number(student[i-1].score));
     chapter_group.push('ชุดที่ '+ i);
-  }
-  if (student.length) {
+  }if (student.length) {
     scorebar.push(Number(student[student.length-1].score));
   }
+
+
   lengthscore = [[0,5],[6,10],[11,15],[16,20],[21,25],[26,30],[31,35],[36,40],[41,45],[46,50],[51,55]]
-  console.log(lengthscore);
   for (var i = 0; i < lengthscore.length; i++) {
     for (var j = 0; j < st_score_everybody.length; j++) {
       if (st_score_everybody[j].score >= lengthscore[i][0] && st_score_everybody[j].score <= lengthscore[i][1]) {
@@ -155,14 +155,11 @@
       }
     }
   }
-
   for (var i = 0; i < lengthscore.length; i++) {
     if (scorebar[0] >= lengthscore[i][0] && scorebar[0] <= lengthscore[i][1]) {
       colorarray[i] = "#5cbcd2";
     }
   }
-  console.log(colorarray);
-  console.log(countscorelength);
 
   var lineChart = new Chart (line,{
     type:'line',
