@@ -50,6 +50,9 @@ define('LINE_MESSAGE_CHANNEL_ID', '1586241418');
 define('LINE_MESSAGE_CHANNEL_SECRET', '40f2053df45b479807d8f2bba1b0dbe2');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'VjNScyiNVZFTg96I4c62mnCZdY6bqyllIaUZ4L3NHg5uObrERh7O5m/tO3bbgEPeF2D//vC4kHTLQuQGbgpZSqU3C+WUJ86nQNptlraZZtek2tdLYoqREXuN8xy3swo9RVO3EL0VrmnhSQfuOl89AQdB04t89/1O/w1cDnyilFU=');
 
+define('SERV_NAME', 'https://pimee.softbot.ai/');
+
+
 class BotController extends Controller
 {
     public function index()
@@ -61,6 +64,7 @@ class BotController extends Controller
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
         $events = json_decode($content, true);
+
 
         if(!is_null($events)){
             // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
@@ -173,7 +177,8 @@ class BotController extends Controller
                         $actionBuilder = array(
                             new UriTemplateActionBuilder(
                                 'ดูคะแนนย้อนหลัง', // ข้อความแสดงในปุ่ม
-                                'https://pkwang.herokuapp.com/selectoverall/'.$userId
+                                //'https://pkwang.herokuapp.com/selectoverall/'.$userId
+                                SERV_NAME.'selectoverall/'.$userId
                             ),   
                         );
                         $imageUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/graph.png?raw=true/700';
@@ -220,7 +225,8 @@ class BotController extends Controller
                             $columnTemplateBuilder = new CarouselColumnTemplateBuilder(
                                 $prize['name'],
                                 'ใช้ ' . $prize['point'] . ' แต้มในการแลก',
-                                'https://pkwang.herokuapp.com/' . $prize['local_pic'],
+                                //'https://pkwang.herokuapp.com/' . $prize['local_pic'],
+                                SERV_NAME.$prize['local_pic'],
                                 [
                                     new PostbackTemplateActionBuilder('แลก', http_build_query(array('action' => 'exchange', 'id' => $prize['id'])))
                                     ,]
@@ -237,7 +243,8 @@ class BotController extends Controller
                         $textReplyMessage = "ข้อมูลด้านล่างใช้เพื่อเชื่อมต่อเว็บไซต์ โดยน้องสามารถกดลิงค์ด้านล่างได้เลยจ้า แต่หากไม่สะดวกกดลิงค์พี่หมีแนะนำว่าให้ใช QR Code เพื่อป้องกันความผิดพลาดจ้า";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
 
-                        $connectChild = 'https://pkwang.herokuapp.com/connectchild/' . $userId;
+                        //$connectChild = 'https://pkwang.herokuapp.com/connectchild/' . $userId;
+                        $connectChild = SERV_NAME.'connectchild/'. $userId;
                         $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $connectChild . '&choe=UTF-8';
 
                         $arr_replyData[] = new TextMessageBuilder($connectChild);
@@ -282,79 +289,79 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     }
-                    else if ($userMessage == "ลองNOTI"){
-                        $user_select = DB::table('groups')
-                            ->where('status', false)
-                            ->pluck('line_code')
-                            ->all();
+                    // else if ($userMessage == "ลองNOTI"){
+                    //     $user_select = DB::table('groups')
+                    //         ->where('status', false)
+                    //         ->pluck('line_code')
+                    //         ->all();
                         
                         
 
-                        $user_select = array_unique($user_select);
+                    //     $user_select = array_unique($user_select);
 
-                        // dd($user_select);
+                    //     // dd($user_select);
 
-                        // foreach ($user_select as $line_u) {
+                    //     // foreach ($user_select as $line_u) {
 
-                            $join_log_group = DB::table('groups')
-                                ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                                ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
-                                ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
-                                // ->where('groups.line_code', $line_u)
-                                ->where('groups.line_code', $userId)
-                                ->orderBy('groups.id','ASC')
-                                ->orderBy('logChildrenQuizzes.time', 'DESC')
-                                ->get();
+                    //         $join_log_group = DB::table('groups')
+                    //             ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
+                    //             ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
+                    //             ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
+                    //             // ->where('groups.line_code', $line_u)
+                    //             ->where('groups.line_code', $userId)
+                    //             ->orderBy('groups.id','ASC')
+                    //             ->orderBy('logChildrenQuizzes.time', 'DESC')
+                    //             ->get();
 
                             
 
-                            $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
+                    //         $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
 
-                            // dd($unfin_log);
-                            $chap_text7 = "";
-                            $chap_text3 = "";
-                            $del_group = false;
+                    //         // dd($unfin_log);
+                    //         $chap_text7 = "";
+                    //         $chap_text3 = "";
+                    //         $del_group = false;
 
-                            foreach ($unfin_log as $rest_chap) {
-                                $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
-                                if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
-                                    DB::table('groupRandoms')
-                                        ->where('group_id', $del_subj->group_id)
-                                        ->delete();
-                                    DB::table('logChildrenQuizzes')
-                                        ->where('group_id', $del_subj->group_id)
-                                        ->delete();
-                                    DB::table('groups')
-                                        ->where('id', $del_subj->group_id)
-                                        ->delete();
-                                    echo "DELETE".$del_subj->group_id;
-                                    $del_group = true;
-                                    $chap_text7 = $chap_text7." ".$rest_chap.",";
-                                    echo "MORE6".$rest_chap;
-                                }
-                                else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
-                                    $chap_text3 = $chap_text3." ".$rest_chap.",";
-                                    echo "MORE2".$rest_chap;
-                                }
-                            }
-                            if ($del_group == true) {
-                                $chap_text7 = rtrim($chap_text7, ',');
-                                $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
-                                echo $textReplyMessage;
-                                $replyData = new TextMessageBuilder($textReplyMessage);
-                                // $response = $bot->pushMessage($line_u ,$replyData);
-                                $response = $bot->pushMessage($userId ,$replyData);
-                            }
-                            if (strlen($chap_text3) > 0) {
-                                $chap_text3 = rtrim($chap_text3, ',');
-                                $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
-                                echo $textReplyMessage;
-                                $replyData = new TextMessageBuilder($textReplyMessage);
-                                // $response = $bot->pushMessage($line_u ,$replyData);
-                                $response = $bot->pushMessage($userId ,$replyData);
-                            }
-                        //}
-                    }
+                    //         foreach ($unfin_log as $rest_chap) {
+                    //             $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
+                    //             if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
+                    //                 DB::table('groupRandoms')
+                    //                     ->where('group_id', $del_subj->group_id)
+                    //                     ->delete();
+                    //                 DB::table('logChildrenQuizzes')
+                    //                     ->where('group_id', $del_subj->group_id)
+                    //                     ->delete();
+                    //                 DB::table('groups')
+                    //                     ->where('id', $del_subj->group_id)
+                    //                     ->delete();
+                    //                 echo "DELETE".$del_subj->group_id;
+                    //                 $del_group = true;
+                    //                 $chap_text7 = $chap_text7." ".$rest_chap.",";
+                    //                 echo "MORE6".$rest_chap;
+                    //             }
+                    //             else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
+                    //                 $chap_text3 = $chap_text3." ".$rest_chap.",";
+                    //                 echo "MORE2".$rest_chap;
+                    //             }
+                    //         }
+                    //         if ($del_group == true) {
+                    //             $chap_text7 = rtrim($chap_text7, ',');
+                    //             $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
+                    //             echo $textReplyMessage;
+                    //             $replyData = new TextMessageBuilder($textReplyMessage);
+                    //             // $response = $bot->pushMessage($line_u ,$replyData);
+                    //             $response = $bot->pushMessage($userId ,$replyData);
+                    //         }
+                    //         if (strlen($chap_text3) > 0) {
+                    //             $chap_text3 = rtrim($chap_text3, ',');
+                    //             $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
+                    //             echo $textReplyMessage;
+                    //             $replyData = new TextMessageBuilder($textReplyMessage);
+                    //             // $response = $bot->pushMessage($line_u ,$replyData);
+                    //             $response = $bot->pushMessage($userId ,$replyData);
+                    //         }
+                    //     //}
+                    // }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
                         DB::table('students')
@@ -365,36 +372,66 @@ class BotController extends Controller
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
                         }
+                        echo "สมการ";
+                    
                         $replyData = $multiMessage;
-                    } else if ($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
+                    } 
+                    else if ($userMessage == "ลงทะเบียน"){
+
+
+                        $actionBuilder = array(
+                            new UriTemplateActionBuilder(
+                                'ลงทะเบียน', // ข้อความแสดงในปุ่ม
+                                SERV_NAME.'studentinfo/'.$userId
+                            ),   
+                        );
+                        $imageUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/graph.png?raw=true/700';
+                        $replyData = new TemplateMessageBuilder('Button Template',
+                            new ButtonTemplateBuilder(
+                                'ละทะเบียนเข้าใช้งาน', // กำหนดหัวเรื่อง
+                                'ก่อนจะเข้าใช้งานพี่หมีติวเตอร์ พี่หมีขอรบกวนน้องๆ กรอกข้อมูลให้พี่หมีหน่อยนะครับ', 
+                                $imageUrl, // กำหนด url รุปภาพ
+                                $actionBuilder  // กำหนด action object
+                            )
+                        );              
+
+                    }
+                    else if ($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                         echo "1234";
 
                         $multiMessage = new MultiMessageBuilder;
                         $std = DB::table('students')
                             ->where('line_code', $userId)
                             ->first();
+                        
                         $urgroup = DB::table('groups')
                             ->where('line_code', $userId)
                             ->where('chapter_id', $std->chapter_id)
                             ->orderBy('id', 'DESC')
                             ->first();
+                        // dd($urgroup);
                         $currentlog = DB::table('logChildrenQuizzes')
                             ->where('group_id', $urgroup->id)
                             ->orderBy('id', 'DESC')
                             ->first();
+
+                        //  dd ($currentlog);
 
                         $ans = DB::table('exams')
                             ->where('id', $currentlog->exam_id)
                             ->orderBy('id', 'DESC')
                             ->first();
 
+                         //dd ($ans); 
+
                         $princ = DB::table('printciples')
                             ->where('id', $ans->principle_id)
                             ->first();
+                        // dd($princ);
                         $count_quiz = DB::table('logChildrenQuizzes')
                             ->where('group_id', $urgroup->id)
                             ->count();
-
+                        // dd($count_quiz);
                         $princ_pic = $princ->local_pic;
                         $ans_status = $currentlog->is_correct;
                         $sec_chance = $currentlog->second_chance;
@@ -406,9 +443,15 @@ class BotController extends Controller
 
                         if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
+                                echo "correct";
                                 $arr_replyData[] = new TextMessageBuilder("ถูกต้อง! เก่งจังเลย");
                                 $ansst = true;
                                 $check_st_end = true;
+
+                                DB::table('logChildrenQuizzes')
+                                ->where('id', $currentlog->id)
+                                ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
+
                                 if ($count_quiz < 20) {
                                     foreach ($arr_replyData as $arr_Reply) {
                                         $multiMessage->add($arr_Reply);
@@ -424,48 +467,64 @@ class BotController extends Controller
                                 // }
 
                             } else {
+                                echo "incorrect";
                                 $arr_replyData[] = new TextMessageBuilder("ผิดแล้ว พี่หมีจะสอนให้");
                                 $ansst = false;
 
-                                $pathtoprinc = 'https://pkwang.herokuapp.com/' . $princ_pic . '/';
-                                $arr_replyData[] = new ImageMessageBuilder($pathtoprinc, $pathtoprinc);
-                                $arr_replyData[] = new TextMessageBuilder("น้องลองตอบใหม่อีกครั้งสิจ๊ะ");
-
-                            }
-
-                            DB::table('logChildrenQuizzes')
+                                DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
                                 ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
 
-                        } else if ($ans_status === false && $sec_chance === false) {
+
+                                //$pathtoprinc = 'https://pkwang.herokuapp.com/' . $princ_pic . '/';
+                                $pathtoprinc = SERV_NAME.$princ_pic;
+                                echo $pathtoprinc;
+                                $arr_replyData[] = new ImageMessageBuilder($pathtoprinc, $pathtoprinc);
+                                $arr_replyData[] = new TextMessageBuilder("น้องลองตอบใหม่อีกครั้งสิจ๊ะ");
+                                echo "ลองตอบใหม่";
+
+                            }
+                            // DB::table('logChildrenQuizzes')
+                            //     ->where('id', $currentlog->id)
+                            //     ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
+                            echo "END_LOOP_firstcheck";
+                        } else if ($ans_status == 0 && $sec_chance == 0) {
 
                             echo "Check";
                             $check_st_end = true;
                             if ((int)$userMessage == $ans->answer) {
                                 $textReplyMessage = "ถูกต้อง! เก่งจังเลย";
                                 $ansst = true;
+                                echo "ST";
                             } else {
                                 $textReplyMessage = "ยังผิดอยู่เลย ไปแก้ตัวที่ข้อต่อไปกันดีกว่า";
                                 $ansst = false;
+                                echo "SF";
                             }
+                            echo "END_LOOP_sccheck";
                             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
+
                             DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
-                                ->update(['second_chance' => true, 'is_correct_second' => $ansst]);
-
+                                ->update(['second_chance' => 1, 'is_correct_second' => $ansst]);
+                            echo "afterDB";
                             if ($count_quiz < 20) {
+                                echo "lessthan20";
                                 foreach ($arr_replyData as $arr_Reply) {
                                     $multiMessage->add($arr_Reply);
                                 }
+                                echo "สุดยอดดดดดด";
                                 $arr_replyData = $this->randQuiz($ans->chapter_id, $ans->level_id, $urgroup->id);
+                                echo "afterRand";
                                 foreach ($arr_replyData as $arr_Reply) {
                                     $multiMessage->add($arr_Reply);
                                 }
                                 $arr_replyData = array();
                             } 
-                            // else {
-                            //     $arr_replyData[] = $this->close_group($urgroup->id);
-                            // }
+                      
+                            else {
+                                $arr_replyData[] = $this->close_group($urgroup->id);
+                            }
                         }
                         // test close group where 20
                         if($count_quiz == 20 && $check_st_end == true){
@@ -477,13 +536,15 @@ class BotController extends Controller
                             $multiMessage->add($arr_Reply);
                         }
                         $replyData = $multiMessage;
+                        // $replyData = new TextMessageBuilder("อิอิ");
+                        // echo "จบแล้วโว้ยยยยย";
                     } else if ($userMessage == "content") {
                         $replyData = new TextMessageBuilder($content);
                         echo "ANAN YOOOOO!!!!!";
                     
                     } else if ($userMessage == "ลองflex") {
-                        $replyData = new TextMessageBuilder($content);
-                        echo "ANAN YOOOOO!!!!!";
+                        $this->replymessage7($replyToken);
+                        $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
                     else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
@@ -500,6 +561,24 @@ class BotController extends Controller
                         $stdprofile = $response->getJSONDecodedBody();
                         $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
                         $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ\nhttps://www.youtube.com/watch?v=ub39BTOdjeo&feature=youtu.be");
+
+                        $actionBuilder = array(
+                            new UriTemplateActionBuilder(
+                                'ลงทะเบียน', // ข้อความแสดงในปุ่ม
+                                SERV_NAME.'studentinfo/'.$userId
+                            ),   
+                        );
+                        $imageUrl = SERV_NAME.'/img/img/card_regis.png';
+                        $arr_replyData[] = new TemplateMessageBuilder('Button Template',
+                            new ButtonTemplateBuilder(
+                                'ละทะเบียนเข้าใช้งาน', // กำหนดหัวเรื่อง
+                                'ก่อนจะเข้าใช้งานพี่หมีติวเตอร์ พี่หมีขอรบกวนน้องๆ กรอกข้อมูลให้พี่หมีหน่อยนะครับ', 
+                                $imageUrl, // กำหนด url รุปภาพ
+                                $actionBuilder  // กำหนด action object
+                            )
+                        );  
+
+
                         $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
                         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
                         $arr_replyData[] = new ImagemapMessageBuilder(
@@ -538,6 +617,7 @@ class BotController extends Controller
 
 
     public function randQuiz($chapter_id, $level_id, $group_id){
+        echo "RAND";
         //check changing level
         $num_group = DB::table('groups')
             ->where('id', $group_id)
@@ -547,15 +627,19 @@ class BotController extends Controller
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->count();
+        echo "จำนวนข้อ>>".$count_quiz;
+        //dd($count_quiz);
         if ($count_quiz % 5 == 0) {
+            echo "เปลี่ยนระดับ";
             $count_quiz_true = DB::table('logChildrenQuizzes')
                 ->where('group_id', $group_id)
                 ->offset($count_quiz-5)
                 ->limit(5)
                 ->get();
+            // dd($count_quiz_true);
             $count_num_true=0;
             foreach ($count_quiz_true as $count_true) {
-                if($count_true->is_correct === true){
+                if($count_true->is_correct == 1){
                     $count_num_true++;
                 }
             }
@@ -576,7 +660,7 @@ class BotController extends Controller
                 ->where('group_id', $num_group->id)
                 ->update(['listlevelid' => $concat_level]);
         }
-
+        echo "ออกจากเปลี่ยนระดับ";
         //declare the next quiz
         $arr_replyData = array();
         $textReplyMessage = "ข้อที่ ".($count_quiz+1);
@@ -584,6 +668,7 @@ class BotController extends Controller
 
         //random the new quiz and update log, group random
         $insert_status = false;
+        echo "ก่อนสุ่มข้อ";
         while( $insert_status == false ){ //วนไรเรื่อยจนกว่าจะใส่ข้อมูลได้
             $quizzesforsubj = DB::table('exams')
                 ->where('chapter_id', $chapter_id)
@@ -615,12 +700,13 @@ class BotController extends Controller
                 $insert_status = true;
             }
         }
-
+        echo "ออกจากสุ่มข้อ";
         //show the new quiz
         $current_quiz = DB::table('exams')
             ->where('id', $quizzesforsubj->id)
             ->first();
-        $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
+        //$pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
+        $pathtoexam = SERV_NAME.$current_quiz->local_pic;
         $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
 
         return $arr_replyData;
@@ -674,8 +760,16 @@ class BotController extends Controller
                 ->orderBy('id','DESC')
                 ->first();
             
+            // dd($old_group);
+
+
             $group_id = $old_group->id;
-            $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อเลยจ้า";
+
+            $count_quiz = DB::table('logChildrenQuizzes')
+            ->where('group_id', $group_id)
+            ->count();
+
+            $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อ ในข้อที่ ".$count_quiz." กันเลยจ้า";
             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
         }
         //for now, there's a non-ans log for every case
@@ -692,7 +786,8 @@ class BotController extends Controller
             ->first();
         
         //show current quiz
-        $pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
+        $pathtoexam = SERV_NAME.$current_quiz->local_pic;
+        echo $pathtoexam;
         $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
         
         return $arr_replyData;
@@ -720,7 +815,7 @@ class BotController extends Controller
             ->update(['point' => $current_std->point + $point_update]);
         DB::table('groups')
             ->where('id', $group_id)
-            ->update(['status' => true, 'score' => $point_update]);
+            ->update(['status' => 1, 'score' => $point_update]);
         // DB::table('groupRandoms')
         //         ->where('group_id', '=', $group_id)
         //         ->delete();
@@ -728,6 +823,7 @@ class BotController extends Controller
     }
 
     public function results($group_id, $level_id) {
+        echo "RESULT";
         $current_group = DB::table('groups')
             ->where('id', $group_id)
             ->first();
@@ -772,7 +868,7 @@ class BotController extends Controller
     public function declare_point($userId) {
         $group_true = DB::table('groups')
             ->where('line_code', $userId)
-            ->where('status',true)
+            ->where('status',1)
             ->orderBy('id','DESC')
             ->first();
 
@@ -796,6 +892,126 @@ class BotController extends Controller
         return $replyData;
     }
 
+    public function replymessage7($replyToken)
+    {
+        $url = 'https://api.line.me/v2/bot/message/reply';
+        $data = [
+            'replyToken' => $replyToken,
+            // 'messages' => [$textMessageBuilder],
+            'messages' => [$this->flex_message_menu()],
+        ];
+        $access_token = LINE_MESSAGE_ACCESS_TOKEN;
+        $post = json_encode($data);
+        $headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);
+    }
+    public function flex_message_menu(){
+        $query_sub = DB::table('subjects')
+            ->get();
+        //dd($query_sub);
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+                            array (
+                                'type' => 'bubble',
+                                'styles' => 
+                                array (
+                                  'header' => 
+                                  array (
+                                    'backgroundColor' => '#59BDD3',
+                                  ),
+                                ),
+                                'header' => 
+                                array (
+                                  'type' => 'box',
+                                  'layout' => 'baseline',
+                                  'spacing' => 'none',
+                                  'contents' => 
+                                  array (
+                                    0 => 
+                                    array (
+                                      'type' => 'icon',
+                                      'url' => 'https://pimee.softbot.ai/img/books.png',
+                                      'size' => 'xl',
+                                    ),
+                                    1 => 
+                                    array (
+                                      'type' => 'text',
+                                      'text' => 'เลือกวิชา',
+                                      'weight' => 'bold',
+                                      'size' => 'xl',
+                                      'margin' => 'md',
+                                      'color' => '#ffffff',
+                                    ),
+                                  ),
+                                ),
+                                'body' => 
+                                array (
+                                  'type' => 'box',
+                                  'layout' => 'vertical',
+                                  'contents' => 
+                                  array (
+                                    0 => 
+                                    array (
+                                      'type' => 'box',
+                                      'layout' => 'baseline',
+                                      'contents' => 
+                                      array (
+                                        0 => 
+                                        array (
+                                          'type' => 'text',
+                                          'text' => 'วิชาคณิตศาสตร์',
+                                          'action' => 
+                                          array (
+                                            'type' => 'message',
+                                            'text' => 'วิชาคณิตศาสตร์',
+                                          ),
+                                          'size' => 'lg',
+                                        ),
+                                      ),
+                                    ),
+                                    1 => 
+                                    array (
+                                      'type' => 'separator',
+                                      'color' => '#59BDD3',
+                                      'margin' => 'md',
+                                    ),
+                                    2 => 
+                                    array (
+                                      'type' => 'box',
+                                      'layout' => 'baseline',
+                                      'contents' => 
+                                      array (
+                                        0 => 
+                                        array (
+                                          'type' => 'text',
+                                          'text' => 'วิชาภาษาอังกฤษ',
+                                          'action' => 
+                                          array (
+                                            'type' => 'message',
+                                            'text' => 'วิชาภาษาอังกฤษ',
+                                          ),
+                                          'size' => 'lg',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+              
+          
+              ];
+        return $textMessageBuilder;
+          
+    }
 
     public function notification() {
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
