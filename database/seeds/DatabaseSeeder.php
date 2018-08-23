@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         //call uses table seeder class
         $this->call([
             ExamTableSeeder::class,
+            Exam_NewTableSeeder::class,
             PrincipleTableSeeder::class,
             PrizesTableSeeder::class,
             SponsorTableSeeder::class,
