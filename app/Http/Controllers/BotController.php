@@ -385,7 +385,7 @@ class BotController extends Controller
                                 SERV_NAME.'studentinfo/'.$userId
                             ),   
                         );
-                        $imageUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/graph.png?raw=true/700';
+                        $imageUrl = SERV_NAME.'img/img/card_regis.png';
                         $replyData = new TemplateMessageBuilder('Button Template',
                             new ButtonTemplateBuilder(
                                 'ละทะเบียนเข้าใช้งาน', // กำหนดหัวเรื่อง
@@ -522,9 +522,9 @@ class BotController extends Controller
                                 $arr_replyData = array();
                             } 
                       
-                            else {
-                                $arr_replyData[] = $this->close_group($urgroup->id);
-                            }
+                            // else {
+                            //     $arr_replyData[] = $this->close_group($urgroup->id);
+                            // }
                         }
                         // test close group where 20
                         if($count_quiz == 20 && $check_st_end == true){
@@ -915,7 +915,48 @@ class BotController extends Controller
     public function flex_message_menu(){
         $query_sub = DB::table('subjects')
             ->get();
-        //dd($query_sub);
+       
+        $key=-1;
+        
+        foreach($query_sub as $value){
+            $md_array[($value->id)-1] = 
+                array (
+                    ++$key => 
+                    array (
+                      'type' => 'box',
+                      'layout' => 'baseline',
+                      'contents' => 
+                      array (
+                        0 => 
+                        array (
+                          'type' => 'text',
+                          'text' => $value->name,
+                          'action' => 
+                          array (
+                            'type' => 'message',
+                            'text' => $value->name,
+                          ),
+                          'size' => 'lg',
+                        ),
+                      ),
+                    ),
+                    ++$key => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                      'margin' => 'md',
+                    ),
+                );
+            
+        }
+        $suject_s =array();
+        foreach($md_array as $md){
+            foreach($md as $key){
+                array_push($suject_s,$key);
+            }
+            
+        }
+   
         $textMessageBuilder = [ 
             "type" => "flex",
             "altText" => "this is a flex message",
@@ -955,60 +996,18 @@ class BotController extends Controller
                                 ),
                                 'body' => 
                                 array (
-                                  'type' => 'box',
-                                  'layout' => 'vertical',
-                                  'contents' => 
-                                  array (
-                                    0 => 
-                                    array (
-                                      'type' => 'box',
-                                      'layout' => 'baseline',
-                                      'contents' => 
-                                      array (
-                                        0 => 
-                                        array (
-                                          'type' => 'text',
-                                          'text' => 'วิชาคณิตศาสตร์',
-                                          'action' => 
-                                          array (
-                                            'type' => 'message',
-                                            'text' => 'วิชาคณิตศาสตร์',
-                                          ),
-                                          'size' => 'lg',
-                                        ),
-                                      ),
-                                    ),
-                                    1 => 
-                                    array (
-                                      'type' => 'separator',
-                                      'color' => '#59BDD3',
-                                      'margin' => 'md',
-                                    ),
-                                    2 => 
-                                    array (
-                                      'type' => 'box',
-                                      'layout' => 'baseline',
-                                      'contents' => 
-                                      array (
-                                        0 => 
-                                        array (
-                                          'type' => 'text',
-                                          'text' => 'วิชาภาษาอังกฤษ',
-                                          'action' => 
-                                          array (
-                                            'type' => 'message',
-                                            'text' => 'วิชาภาษาอังกฤษ',
-                                          ),
-                                          'size' => 'lg',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
+                                    'type' => 'box',
+                                    'layout' => 'vertical',
+                                    'contents' => 
+                                    $suject_s
+                
+                                )
+                                
+                            )
               
           
               ];
+             
         return $textMessageBuilder;
           
     }
