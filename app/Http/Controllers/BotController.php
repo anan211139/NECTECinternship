@@ -540,7 +540,7 @@ class BotController extends Controller
                         // echo "จบแล้วโว้ยยยยย";
                     } else if ($userMessage == "content") {
                         $replyData = new TextMessageBuilder($content);
-                        echo "ANAN YOOOOO!!!!!";
+                        echo "ANAN-- YOOOOO!!!!!";
                     
                     } else if ($userMessage == "ลองflex") {
                         $this->replymessage7($replyToken);
