@@ -570,12 +570,12 @@ class BotController extends Controller
                                         'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
                                     new MessageTemplateActionBuilder(
-                                        $exam_new->choice_a,// ข้อความแสดงในปุ่ม
+                                        $exam_new->choice_d,// ข้อความแสดงในปุ่ม
                                         'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
                                 );
                 
-                                $replyData = new TemplateMessageBuilder('Button Template',
+                                $replyData = new TemplateMessageBuilder('ข้อสอบ',
                                     new ButtonTemplateBuilder(
                                             'ข้อที่ 2', // กำหนดหัวเรื่อง
                                             $exam_new->question, // กำหนดรายละเอียด
