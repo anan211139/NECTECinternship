@@ -548,11 +548,12 @@ class BotController extends Controller
                     } 
                     else if ($userMessage == "ลองquery") {
                         $exam_new = DB::table('Exam_New')
-                            // ->where('id', 1)
+                            ->where('id', 1)
                             ->first();
+                            //->get();
                         //dd($exam_new);
                         $check_pic_exam = $exam_new->local_pic;
-                            if ($check_pic_exam === null){
+                            if ($check_pic_exam == null){
                                 echo "ไม่มีรูป";
                             }else{
                                 echo "มีรูป";
