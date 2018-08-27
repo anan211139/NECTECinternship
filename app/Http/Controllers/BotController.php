@@ -551,7 +551,7 @@ class BotController extends Controller
                             ->where('id', 2)
                             ->first();
                             //->get();
-                        dd($exam_new);
+                        //dd($exam_new);
                         $check_pic_exam = $exam_new->local_pic;
                             if ($check_pic_exam == null){
                                 echo "ไม่มีรูป";
