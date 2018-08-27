@@ -548,7 +548,7 @@ class BotController extends Controller
                     } 
                     else if ($userMessage == "ลองquery") {
                         $exam_new = DB::table('Exam_New')
-                            ->where('id', 1)
+                            ->where('id', 2)
                             ->first();
                             //->get();
                         //dd($exam_new);
@@ -585,11 +585,12 @@ class BotController extends Controller
                                         'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),      
                                 );
-                                
+                
                                 $replyData = new TemplateMessageBuilder('Button Template',
                                     new ButtonTemplateBuilder(
                                             'button template builder', // กำหนดหัวเรื่อง
                                             'Please select', // กำหนดรายละเอียด
+                                            null,
                                             $actionBuilder  // กำหนด action object
                                     )
                                 );
