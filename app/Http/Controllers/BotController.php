@@ -548,7 +548,7 @@ class BotController extends Controller
                     } 
                     else if ($userMessage == "ลองquery") {
                         $exam_new = DB::table('Exam_New')
-                            ->where('id', 2)
+                            ->where('id', 1)
                             ->first();
                             //->get();
                         //dd($exam_new);
