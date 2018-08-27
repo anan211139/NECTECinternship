@@ -558,38 +558,27 @@ class BotController extends Controller
                                 // กำหนด action 4 ปุ่ม 4 ประเภท
                                 $actionBuilder = array(
                                     new MessageTemplateActionBuilder(
-                                        'Message Template',// ข้อความแสดงในปุ่ม
-                                        'This is Text' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                        $exam_new->choice_a,// ข้อความแสดงในปุ่ม
+                                        'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
-                                    new UriTemplateActionBuilder(
-                                        'Uri Template', // ข้อความแสดงในปุ่ม
-                                        'https://www.ninenik.com'
+                                    new MessageTemplateActionBuilder(
+                                        $exam_new->choice_b,// ข้อความแสดงในปุ่ม
+                                        'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
-                                    new DatetimePickerTemplateActionBuilder(
-                                        'Datetime Picker', // ข้อความแสดงในปุ่ม
-                                        http_build_query(array(
-                                            'action'=>'reservation',
-                                            'person'=>5
-                                        )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
-                                        'datetime', // date | time | datetime รูปแบบข้อมูลที่จะส่ง ในที่นี้ใช้ datatime
-                                        substr_replace(date("Y-m-d H:i"),'T',10,1), // วันที่ เวลา ค่าเริ่มต้นที่ถูกเลือก
-                                        substr_replace(date("Y-m-d H:i",strtotime("+5 day")),'T',10,1), //วันที่ เวลา มากสุดที่เลือกได้
-                                        substr_replace(date("Y-m-d H:i"),'T',10,1) //วันที่ เวลา น้อยสุดที่เลือกได้
-                                    ),      
-                                    new PostbackTemplateActionBuilder(
-                                        'Postback', // ข้อความแสดงในปุ่ม
-                                        http_build_query(array(
-                                            'action'=>'buy',
-                                            'item'=>100
-                                        )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
-                                        'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),      
+                                    new MessageTemplateActionBuilder(
+                                        $exam_new->choice_c,// ข้อความแสดงในปุ่ม
+                                        'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    ),
+                                    new MessageTemplateActionBuilder(
+                                        $exam_new->choice_a,// ข้อความแสดงในปุ่ม
+                                        'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    ),
                                 );
                 
                                 $replyData = new TemplateMessageBuilder('Button Template',
                                     new ButtonTemplateBuilder(
-                                            'button template builder', // กำหนดหัวเรื่อง
-                                            'Please select', // กำหนดรายละเอียด
+                                            'ข้อที่ 2', // กำหนดหัวเรื่อง
+                                            $exam_new->question, // กำหนดรายละเอียด
                                             null,
                                             $actionBuilder  // กำหนด action object
                                     )
