@@ -13,7 +13,7 @@ class CreateExamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('Exams_New', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('chapter_id');
             $table->Integer('level_id');
