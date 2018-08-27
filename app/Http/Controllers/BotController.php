@@ -555,11 +555,87 @@ class BotController extends Controller
                         $check_pic_exam = $exam_new->local_pic;
                             if ($check_pic_exam == null){
                                 echo "ไม่มีรูป";
+                                // กำหนด action 4 ปุ่ม 4 ประเภท
+                                $actionBuilder = array(
+                                    new MessageTemplateActionBuilder(
+                                        'Message Template',// ข้อความแสดงในปุ่ม
+                                        'This is Text' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    ),
+                                    new UriTemplateActionBuilder(
+                                        'Uri Template', // ข้อความแสดงในปุ่ม
+                                        'https://www.ninenik.com'
+                                    ),
+                                    new DatetimePickerTemplateActionBuilder(
+                                        'Datetime Picker', // ข้อความแสดงในปุ่ม
+                                        http_build_query(array(
+                                            'action'=>'reservation',
+                                            'person'=>5
+                                        )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
+                                        'datetime', // date | time | datetime รูปแบบข้อมูลที่จะส่ง ในที่นี้ใช้ datatime
+                                        substr_replace(date("Y-m-d H:i"),'T',10,1), // วันที่ เวลา ค่าเริ่มต้นที่ถูกเลือก
+                                        substr_replace(date("Y-m-d H:i",strtotime("+5 day")),'T',10,1), //วันที่ เวลา มากสุดที่เลือกได้
+                                        substr_replace(date("Y-m-d H:i"),'T',10,1) //วันที่ เวลา น้อยสุดที่เลือกได้
+                                    ),      
+                                    new PostbackTemplateActionBuilder(
+                                        'Postback', // ข้อความแสดงในปุ่ม
+                                        http_build_query(array(
+                                            'action'=>'buy',
+                                            'item'=>100
+                                        )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
+                                        'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    ),      
+                                );
+                                
+                                $replyData = new TemplateMessageBuilder('Button Template',
+                                    new ButtonTemplateBuilder(
+                                            'button template builder', // กำหนดหัวเรื่อง
+                                            'Please select', // กำหนดรายละเอียด
+                                            $actionBuilder  // กำหนด action object
+                                    )
+                                );
                             }else{
                                 echo "มีรูป";
+                                $actionBuilder = array(
+                                    new MessageTemplateActionBuilder(
+                                        'Message Template',// ข้อความแสดงในปุ่ม
+                                        'This is Text' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    ),
+                                    new UriTemplateActionBuilder(
+                                        'Uri Template', // ข้อความแสดงในปุ่ม
+                                        'https://www.ninenik.com'
+                                    ),
+                                    new DatetimePickerTemplateActionBuilder(
+                                        'Datetime Picker', // ข้อความแสดงในปุ่ม
+                                        http_build_query(array(
+                                            'action'=>'reservation',
+                                            'person'=>5
+                                        )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
+                                        'datetime', // date | time | datetime รูปแบบข้อมูลที่จะส่ง ในที่นี้ใช้ datatime
+                                        substr_replace(date("Y-m-d H:i"),'T',10,1), // วันที่ เวลา ค่าเริ่มต้นที่ถูกเลือก
+                                        substr_replace(date("Y-m-d H:i",strtotime("+5 day")),'T',10,1), //วันที่ เวลา มากสุดที่เลือกได้
+                                        substr_replace(date("Y-m-d H:i"),'T',10,1) //วันที่ เวลา น้อยสุดที่เลือกได้
+                                    ),      
+                                    new PostbackTemplateActionBuilder(
+                                        'Postback', // ข้อความแสดงในปุ่ม
+                                        http_build_query(array(
+                                            'action'=>'buy',
+                                            'item'=>100
+                                        )) // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
+            //                          'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    ),      
+                                );
+                                $imageUrl = 'https://www.mywebsite.com/imgsrc/photos/w/simpleflower';
+                                $replyData = new TemplateMessageBuilder('Button Template',
+                                    new ButtonTemplateBuilder(
+                                            'button template builder', // กำหนดหัวเรื่อง
+                                            'Please select', // กำหนดรายละเอียด
+                                            $imageUrl, // กำหนด url รุปภาพ
+                                            $actionBuilder  // กำหนด action object
+                                    )
+                                );              
                             }
                         //dd($exam_new);
-                        $replyData = new TextMessageBuilder("query success");
+                        
                     } 
                     else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
