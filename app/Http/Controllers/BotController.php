@@ -546,6 +546,13 @@ class BotController extends Controller
                         $this->replymessage7($replyToken);
                         $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
+                    else if ($userMessage == "ลองquery") {
+                        $exam_new = DB::table('Exam_New')
+                            // ->where('id', $ans->principle_id)
+                            ->get();
+                        dd($exam_new);
+                        $replyData = new TextMessageBuilder("query success");
+                    } 
                     else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
