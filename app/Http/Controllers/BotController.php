@@ -548,11 +548,13 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
                     else if ($userMessage == "ลองquery") {
-                        $exam_new = Exam_New::all()->toArray();
+                        $exam_new = Exam_New::where('id', 5)
+                        //all()
+                        ->toArray();
                         echo $exam_new[1]['question'];
                         //dd($exam_new);
                         //$exam_new = $exam_new ->toArray();
-                        $check_pic_exam = $exam_new->local_pic;
+                        $check_pic_exam = $exam_new['local_pic'];
                             if ($check_pic_exam == null){
                                 echo "ไม่มีรูป";
                                 // กำหนด action 4 ปุ่ม 4 ประเภท
