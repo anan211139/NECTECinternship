@@ -557,20 +557,20 @@ class BotController extends Controller
                                 echo "ไม่มีรูป";
                                 // กำหนด action 4 ปุ่ม 4 ประเภท
                                 $actionBuilder = array(
+                                    // new MessageTemplateActionBuilder(
+                                    //     $exam_new->choice_a,// ข้อความแสดงในปุ่ม
+                                    //     'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    // ),
+                                    // new MessageTemplateActionBuilder(
+                                    //     $exam_new->choice_b,// ข้อความแสดงในปุ่ม
+                                    //     'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    // ),
+                                    // new MessageTemplateActionBuilder(
+                                    //     $exam_new->choice_c,// ข้อความแสดงในปุ่ม
+                                    //     'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    // ),
                                     new MessageTemplateActionBuilder(
-                                        $exam_new->choice_a,// ข้อความแสดงในปุ่ม
-                                        'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
-                                    new MessageTemplateActionBuilder(
-                                        $exam_new->choice_b,// ข้อความแสดงในปุ่ม
-                                        'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
-                                    new MessageTemplateActionBuilder(
-                                        $exam_new->choice_c,// ข้อความแสดงในปุ่ม
-                                        'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
-                                    new MessageTemplateActionBuilder(
-                                        $exam_new->choice_d,// ข้อความแสดงในปุ่ม
+                                        $exam_newp['choice_d'],// ข้อความแสดงในปุ่ม
                                         'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
                                 );
@@ -578,7 +578,8 @@ class BotController extends Controller
                                 $replyData = new TemplateMessageBuilder('ข้อสอบ',
                                     new ButtonTemplateBuilder(
                                             'ข้อที่ 2', // กำหนดหัวเรื่อง
-                                            $exam_new->question, // กำหนดรายละเอียด
+                                            'ข้อสอบ',
+                                            //$exam_new->question, // กำหนดรายละเอียด
                                             null,
                                             $actionBuilder  // กำหนด action object
                                     )
