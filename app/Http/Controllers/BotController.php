@@ -548,8 +548,8 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
                     else if ($userMessage == "ลองquery") {
-                        $exam_new = Exam_New::where('id', 5)
-                        //all()
+                        $exam_new = Exam_New:://where('id', 5)
+                        all()
                         ->toArray();
                         echo $exam_new[1]['question'];
                         //dd($exam_new);
