@@ -550,6 +550,7 @@ class BotController extends Controller
                         $exam_new = DB::table('Exam_New')
                             ->where('id', 2)
                             ->first();
+                        $exam_new = $exam_new ->toArray();
                             //->get();
                         //dd($exam_new);
                         $check_pic_exam = $exam_new->local_pic;
