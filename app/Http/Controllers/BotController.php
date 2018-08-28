@@ -562,8 +562,8 @@ class BotController extends Controller
                                 echo $exam_new['choice_d'];
                                 $actionBuilder = array(
                                     new MessageTemplateActionBuilder(
-                                        //$exam_new['choice_a'],// ข้อความแสดงในปุ่ม
-                                        'test',
+                                        $exam_new['choice_a'],// ข้อความแสดงในปุ่ม
+                                        //'test',
                                         'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
                                     // new MessageTemplateActionBuilder(
