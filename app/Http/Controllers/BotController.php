@@ -547,93 +547,157 @@ class BotController extends Controller
                         $this->replymessage7($replyToken);
                         $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
-                    else if ($userMessage == "ลองquery") {
-                        $exam_new = Exam_New::where('id', 5)
-                        ->first();
-                        //all()
-                        // ->toArray();
-                        echo $exam_new['question'];
-                        //dd($exam_new);
-                        //$exam_new = $exam_new ->toArray();
-                        $check_pic_exam = $exam_new['local_pic'];
-                            if ($check_pic_exam == null){
-                                echo "ไม่มีรูป";
-                                // กำหนด action 4 ปุ่ม 4 ประเภท
-                                $c_d = $exam_new->choice_d;
-                                echo $c_d;
-                                $actionBuilder = array(
-                                    // new MessageTemplateActionBuilder(
-                                    //     $exam_new['choice_a'],// ข้อความแสดงในปุ่ม
-                                    //     //'test',
-                                    //     'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    // ),
-                                    // new MessageTemplateActionBuilder(
-                                    //     $exam_new['choice_b'],// ข้อความแสดงในปุ่ม
-                                    //     'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    // ),
-                                    // new MessageTemplateActionBuilder(
-                                    //     $exam_new['choice_c'],// ข้อความแสดงในปุ่ม
-                                    //     'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    // ),
-                                    new MessageTemplateActionBuilder(
-                                        //$exam_new->choice_d,// ข้อความแสดงในปุ่ม
-                                        $c_d,
-                                        //'Would you help me',
-                                        'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
-                                );
+                    // else if ($userMessage == "ลองquery") {
+                    //     $exam_new = Exam_New::where('id', 5)
+                    //     ->first();
+                    //     //all()
+                    //     // ->toArray();
+                    //     echo $exam_new['question'];
+                    //     //dd($exam_new);
+                    //     //$exam_new = $exam_new ->toArray();
+                    //     $check_pic_exam = $exam_new['local_pic'];
+                    //         if ($check_pic_exam == null){
+                    //             echo "ไม่มีรูป";
+                    //             // กำหนด action 4 ปุ่ม 4 ประเภท
+                    //             $c_d = $exam_new->choice_d;
+                    //             echo $c_d;
+                    //             $actionBuilder = array(
+                    //                 new MessageTemplateActionBuilder(
+                    //                     $exam_new['choice_a'],// ข้อความแสดงในปุ่ม
+                    //                     //'test',
+                    //                     'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //                 new MessageTemplateActionBuilder(
+                    //                     $exam_new['choice_b'],// ข้อความแสดงในปุ่ม
+                    //                     'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //                 new MessageTemplateActionBuilder(
+                    //                     $exam_new['choice_c'],// ข้อความแสดงในปุ่ม
+                    //                     'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //                 new MessageTemplateActionBuilder(
+                    //                     $exam_new->choice_d,// ข้อความแสดงในปุ่ม
+                    //                     //'Would you help me',
+                    //                     'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //             );
                 
-                                $replyData = new TemplateMessageBuilder('ข้อสอบ',
-                                    new ButtonTemplateBuilder(
-                                            'ข้อที่ 2', // กำหนดหัวเรื่อง
-                                            'ข้อสอบ',
-                                            //$exam_new->question, // กำหนดรายละเอียด
-                                            null,
-                                            $actionBuilder  // กำหนด action object
-                                    )
-                                );
-                            }else{
-                                echo "มีรูป";
-                                $actionBuilder = array(
-                                    new MessageTemplateActionBuilder(
-                                        'Message Template',// ข้อความแสดงในปุ่ม
-                                        'This is Text' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
-                                    new UriTemplateActionBuilder(
-                                        'Uri Template', // ข้อความแสดงในปุ่ม
-                                        'https://www.ninenik.com'
-                                    ),
-                                    new DatetimePickerTemplateActionBuilder(
-                                        'Datetime Picker', // ข้อความแสดงในปุ่ม
-                                        http_build_query(array(
-                                            'action'=>'reservation',
-                                            'person'=>5
-                                        )), // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
-                                        'datetime', // date | time | datetime รูปแบบข้อมูลที่จะส่ง ในที่นี้ใช้ datatime
-                                        substr_replace(date("Y-m-d H:i"),'T',10,1), // วันที่ เวลา ค่าเริ่มต้นที่ถูกเลือก
-                                        substr_replace(date("Y-m-d H:i",strtotime("+5 day")),'T',10,1), //วันที่ เวลา มากสุดที่เลือกได้
-                                        substr_replace(date("Y-m-d H:i"),'T',10,1) //วันที่ เวลา น้อยสุดที่เลือกได้
-                                    ),      
-                                    new PostbackTemplateActionBuilder(
-                                        'Postback', // ข้อความแสดงในปุ่ม
-                                        http_build_query(array(
-                                            'action'=>'buy',
-                                            'item'=>100
-                                        )) // ข้อมูลที่จะส่งไปใน webhook ผ่าน postback event
-            //                          'Postback Text'  // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),      
-                                );
-                                $imageUrl = 'https://www.mywebsite.com/imgsrc/photos/w/simpleflower';
-                                $replyData = new TemplateMessageBuilder('Button Template',
-                                    new ButtonTemplateBuilder(
-                                            'button template builder', // กำหนดหัวเรื่อง
-                                            'Please select', // กำหนดรายละเอียด
-                                            $imageUrl, // กำหนด url รุปภาพ
-                                            $actionBuilder  // กำหนด action object
-                                    )
-                                );              
-                            }
-                        //dd($exam_new);
+                    //             $replyData = new TemplateMessageBuilder('ข้อสอบ',
+                    //                 new ButtonTemplateBuilder(
+                    //                         'ข้อที่ 2', // กำหนดหัวเรื่อง
+                    //                         'ข้อสอบ',
+                    //                         //$exam_new->question, // กำหนดรายละเอียด
+                    //                         null,
+                    //                         $actionBuilder  // กำหนด action object
+                    //                 )
+                    //             );
+                    //         }else{
+                    //             echo "มีรูป";
+                    //             $actionBuilder = array(
+                    //                 new MessageTemplateActionBuilder(
+                    //                     '1 มุมฉาก',// ข้อความแสดงในปุ่ม
+                    //                     //'test',
+                    //                     'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //                 new MessageTemplateActionBuilder(
+                    //                     '2 มุมฉาก',// ข้อความแสดงในปุ่ม
+                    //                     'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //                 new MessageTemplateActionBuilder(
+                    //                     '3 มุมฉาก',// ข้อความแสดงในปุ่ม
+                    //                     'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //                 new MessageTemplateActionBuilder(
+                    //                     '4 มุมฉาก',// ข้อความแสดงในปุ่ม
+                    //                     //'Would you help me',
+                    //                     'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                    //                 ),
+                    //             );
+                    //             $imageUrl = SERV_NAME.'/img/exam/Math/Parallel/example_1.jpg';
+                    //             $replyData = new TemplateMessageBuilder('Button Template',
+                    //                 new ButtonTemplateBuilder(
+                    //                         'ข้อ 2', // กำหนดหัวเรื่อง
+                    //                         'ABCD เป็นสี่เหลี่ยมด้านขนาน ผลรวมของมุม P และ Q มีค่าเท่ากับเท่าใด', // กำหนดรายละเอียด
+                    //                         $imageUrl, // กำหนด url รุปภาพ
+                    //                         $actionBuilder  // กำหนด action object
+                    //                 )
+                    //             );              
+                    //         }
+                    //     //dd($exam_new);
+                        
+                    // } 
+                    else if ($userMessage == "ลองquery_bt_nonpic") {
+                        
+                        echo "ไม่มีรูป";
+                        // กำหนด action 4 ปุ่ม 4 ประเภท
+                        $c_d = $exam_new->choice_d;
+                        echo $c_d;
+                        $actionBuilder = array(
+                            new MessageTemplateActionBuilder(
+                                'in, on',// ข้อความแสดงในปุ่ม
+                                //'test',
+                                'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                            new MessageTemplateActionBuilder(
+                                'at, on',// ข้อความแสดงในปุ่ม
+                                'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                            new MessageTemplateActionBuilder(
+                                'on, in',// ข้อความแสดงในปุ่ม
+                                'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                            new MessageTemplateActionBuilder(
+                                'to, at',// ข้อความแสดงในปุ่ม
+                                //'Would you help me',
+                                'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                        );
+                
+                        $replyData = new TemplateMessageBuilder('ข้อสอบ',
+                            new ButtonTemplateBuilder(
+                                    'ข้อที่ 2', // กำหนดหัวเรื่อง
+                                    'She usually gets up ___ 6 o\'clock ___ Monday.',
+                                    //$exam_new->question, // กำหนดรายละเอียด
+                                    null,
+                                    $actionBuilder  // กำหนด action object
+                            )
+                        );
+                            
+                    } 
+                    else if ($userMessage == "ลองquery_bt_pic") {
+                        
+                           
+                        echo "มีรูป";
+                        $actionBuilder = array(
+                            new MessageTemplateActionBuilder(
+                                '1 มุมฉาก',// ข้อความแสดงในปุ่ม
+                                //'test',
+                                'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                            new MessageTemplateActionBuilder(
+                                '2 มุมฉาก',// ข้อความแสดงในปุ่ม
+                                'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                            new MessageTemplateActionBuilder(
+                                '3 มุมฉาก',// ข้อความแสดงในปุ่ม
+                                'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                            new MessageTemplateActionBuilder(
+                                '4 มุมฉาก',// ข้อความแสดงในปุ่ม
+                                //'Would you help me',
+                                'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                            ),
+                        );
+                        $imageUrl = SERV_NAME.'/img/exam/Math/Parallel/example_1.jpg';
+                        $replyData = new TemplateMessageBuilder('Button Template',
+                            new ButtonTemplateBuilder(
+                                    'ข้อ 2', // กำหนดหัวเรื่อง
+                                    'ABCD เป็นสี่เหลี่ยมด้านขนาน ผลรวมของมุม P และ Q มีค่าเท่ากับเท่าใด', // กำหนดรายละเอียด
+                                    $imageUrl, // กำหนด url รุปภาพ
+                                    $actionBuilder  // กำหนด action object
+                            )
+                        );              
+            
                         
                     } 
                     else {
