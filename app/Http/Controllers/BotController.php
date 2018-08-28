@@ -630,7 +630,7 @@ class BotController extends Controller
                         
                         echo "ไม่มีรูป";
                         // กำหนด action 4 ปุ่ม 4 ประเภท
-                        $c_d = $exam_new->choice_d;
+                        //$c_d = $exam_new->choice_d;
                         echo $c_d;
                         $actionBuilder = array(
                             new MessageTemplateActionBuilder(
