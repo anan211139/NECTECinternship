@@ -562,21 +562,22 @@ class BotController extends Controller
                                 echo $exam_new['choice_d'];
                                 $actionBuilder = array(
                                     new MessageTemplateActionBuilder(
-                                        $exam_new['choice_a'],// ข้อความแสดงในปุ่ม
+                                        //$exam_new['choice_a'],// ข้อความแสดงในปุ่ม
+                                        'test',
                                         'A' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
-                                    new MessageTemplateActionBuilder(
-                                        $exam_new['choice_b'],// ข้อความแสดงในปุ่ม
-                                        'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
-                                    new MessageTemplateActionBuilder(
-                                        $exam_new['choice_c'],// ข้อความแสดงในปุ่ม
-                                        'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
-                                    new MessageTemplateActionBuilder(
-                                        $exam_new['choice_d'],// ข้อความแสดงในปุ่ม
-                                        'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
-                                    ),
+                                    // new MessageTemplateActionBuilder(
+                                    //     $exam_new['choice_b'],// ข้อความแสดงในปุ่ม
+                                    //     'B' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    // ),
+                                    // new MessageTemplateActionBuilder(
+                                    //     $exam_new['choice_c'],// ข้อความแสดงในปุ่ม
+                                    //     'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    // ),
+                                    // new MessageTemplateActionBuilder(
+                                    //     $exam_new['choice_d'],// ข้อความแสดงในปุ่ม
+                                    //     'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
+                                    // ),
                                 );
                 
                                 $replyData = new TemplateMessageBuilder('ข้อสอบ',
