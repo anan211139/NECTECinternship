@@ -1064,6 +1064,7 @@ class BotController extends Controller
 
     public function replymessage7($replyToken,$fn_json)
     {
+        echo $fn_json;
         $url = 'https://api.line.me/v2/bot/message/reply';
         $data = [
             'replyToken' => $replyToken,
