@@ -45,6 +45,7 @@ use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
 
 use App\Prize;
+use App\Exam_New;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1602719598');
 define('LINE_MESSAGE_CHANNEL_SECRET', 'adc5d09e0446060bdba4cbf68a877ee9');
@@ -547,8 +548,7 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
                     else if ($userMessage == "ลองquery") {
-                        $exam_new = DB::table('Exam_New')
-                            ->where('id', 2)
+                        $exam_new = Exam_New::where('id', 2)
                             ->first();
                         $exam_new = $exam_new ->toArray();
                             //->get();
