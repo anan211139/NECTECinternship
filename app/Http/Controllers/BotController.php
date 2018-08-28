@@ -544,7 +544,7 @@ class BotController extends Controller
                         echo "ANAN-- YOOOOO!!!!!";
                     
                     } else if ($userMessage == "ลองflex") {
-                        $this->replymessage7($replyToken);
+                        $this->replymessage7($replyToken,'flex_message_menu');
                         $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
                     // else if ($userMessage == "ลองquery") {
@@ -701,19 +701,19 @@ class BotController extends Controller
                         
                     } 
                     else if ($userMessage == "ลองquery_fl_pic") {
-                        $this->pic_question($replyToken);
+                        $this->pic_question($replyToken,'pic_question');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else if ($userMessage == "ลองquery_fl_nonpic") {
-                        $this->text_question($replyToken);
+                        $this->text_question($replyToken,'text_question');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else if ($userMessage == "ลองquery_fl_bt_nonpic") {
-                        $this->bt_question($replyToken);
+                        $this->bt_question($replyToken,'bt_question');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else if ($userMessage == "ลองquery_fl_nonpic_nohd") {
-                        $this->text_only($replyToken);
+                        $this->text_only($replyToken,'text_only');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else {
@@ -1062,13 +1062,14 @@ class BotController extends Controller
         return $replyData;
     }
 
-    public function replymessage7($replyToken)
+    public function replymessage7($replyToken,$fn_json)
     {
         $url = 'https://api.line.me/v2/bot/message/reply';
         $data = [
             'replyToken' => $replyToken,
-            // 'messages' => [$textMessageBuilder],
-            'messages' => [$this->flex_message_menu()],
+            // 'messages' => [$textMessageBuilder],on
+            //'messages' => [$this->flex_message_menu()],
+            'messages' => [$this->$fn_json()],
         ];
         $access_token = LINE_MESSAGE_ACCESS_TOKEN;
         $post = json_encode($data);
