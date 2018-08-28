@@ -550,6 +550,7 @@ class BotController extends Controller
                     else if ($userMessage == "ลองquery") {
                         $exam_new = Exam_New::where('id', 2)
                             ->first();
+                        dd($exam_new);
                         $exam_new = $exam_new ->toArray();
                             //->get();
                         //dd($exam_new);
