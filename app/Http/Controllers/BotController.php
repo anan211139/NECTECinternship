@@ -700,6 +700,22 @@ class BotController extends Controller
             
                         
                     } 
+                    else if ($userMessage == "ลองquery_fl_pic") {
+                        $this->pic_question($replyToken);
+                        $replyData = new TextMessageBuilder("test");
+                    }
+                    else if ($userMessage == "ลองquery_fl_nonpic") {
+                        $this->text_question($replyToken);
+                        $replyData = new TextMessageBuilder("test");
+                    }
+                    else if ($userMessage == "ลองquery_fl_bt_nonpic") {
+                        $this->bt_question($replyToken);
+                        $replyData = new TextMessageBuilder("test");
+                    }
+                    else if ($userMessage == "ลองquery_fl_nonpic_nohd") {
+                        $this->text_only($replyToken);
+                        $replyData = new TextMessageBuilder("test");
+                    }
                     else {
                         $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
                     }
@@ -1165,7 +1181,481 @@ class BotController extends Controller
         return $textMessageBuilder;
           
     }
-
+    public function pic_question(){
+        
+   
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+            array (
+                'type' => 'bubble',
+                'hero' => 
+                array (
+                  'type' => 'image',
+                  'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_3_movie.png',
+                  'size' => 'full',
+                  'aspectRatio' => '20:13',
+                  'aspectMode' => 'cover',
+                  'action' => 
+                  array (
+                    'type' => 'uri',
+                    'uri' => 'http://linecorp.com/',
+                  ),
+                ),
+                'body' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'vertical',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'box',
+                      'layout' => 'baseline',
+                      'contents' => 
+                      array (
+                        0 => 
+                        array (
+                          'type' => 'text',
+                          'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูก\'หญ้าทั้งหมดเท่าไร',
+                          'wrap' => true,
+                          'align' => 'center',
+                          'action' => 
+                          array (
+                            'type' => 'message',
+                            'text' => 'yess',
+                          ),
+                          'size' => 'md',
+                        ),
+                      ),
+                    ),
+                    1 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                      'margin' => 'xl',
+                    ),
+                    2 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '1) 150  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    3 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '2) 150  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                    4 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '3) 300  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    5 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '4) 300  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              
+              ];
+             
+        return $textMessageBuilder;
+          
+    }
+    public function bt_question(){
+        
+   
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+            array (
+                'type' => 'bubble',
+                'styles' => 
+                array (
+                  'header' => 
+                  array (
+                    'backgroundColor' => '#59BDD3',
+                  ),
+                ),
+                'header' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'baseline',
+                  'spacing' => 'none',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'text',
+                      'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูกหญ้าทั้งหมดเท่าไร',
+                      'wrap' => true,
+                      'size' => 'md',
+                      'margin' => 'md',
+                      'color' => '#ffffff',
+                    ),
+                  ),
+                ),
+                'body' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'vertical',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '1) 150  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    1 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                    ),
+                    2 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '2) 150  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                    3 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                    ),
+                    4 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '3) 300  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    5 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                    ),
+                    6 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '4) 300  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              
+              ];
+             
+        return $textMessageBuilder;
+          
+    }
+    public function text_question(){
+        
+   
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+            array (
+                'type' => 'bubble',
+                'styles' => 
+                array (
+                  'header' => 
+                  array (
+                    'backgroundColor' => '#59BDD3',
+                  ),
+                ),
+                'header' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'baseline',
+                  'spacing' => 'none',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'text',
+                      'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูกหญ้าทั้งหมดเท่าไร',
+                      'wrap' => true,
+                      'size' => 'md',
+                      'margin' => 'md',
+                      'color' => '#ffffff',
+                    ),
+                  ),
+                ),
+                'body' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'vertical',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'box',
+                      'layout' => 'baseline',
+                      'contents' => 
+                      array (
+                        0 => 
+                        array (
+                          'type' => 'text',
+                          'text' => '1) 150  เมตร  1,100  ตารางเมตร',
+                          'wrap' => true,
+                          'action' => 
+                          array (
+                            'type' => 'message',
+                            'text' => 'yess',
+                          ),
+                          'size' => 'md',
+                        ),
+                      ),
+                    ),
+                    1 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                      'margin' => 'lg',
+                    ),
+                    2 => 
+                    array (
+                      'type' => 'box',
+                      'layout' => 'baseline',
+                      'contents' => 
+                      array (
+                        0 => 
+                        array (
+                          'type' => 'text',
+                          'text' => '2) 150  เมตร  2,200  ตารางเมตร',
+                          'wrap' => true,
+                          'action' => 
+                          array (
+                            'type' => 'message',
+                            'text' => 'yess',
+                          ),
+                          'size' => 'md',
+                        ),
+                      ),
+                    ),
+                    3 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                      'margin' => 'lg',
+                    ),
+                    4 => 
+                    array (
+                      'type' => 'box',
+                      'layout' => 'baseline',
+                      'contents' => 
+                      array (
+                        0 => 
+                        array (
+                          'type' => 'text',
+                          'text' => '3) 300  เมตร  1,100  ตารางเมตร',
+                          'wrap' => true,
+                          'margin' => 'lg',
+                          'action' => 
+                          array (
+                            'type' => 'message',
+                            'text' => 'yess',
+                          ),
+                          'size' => 'md',
+                        ),
+                      ),
+                    ),
+                    5 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                      'margin' => 'lg',
+                    ),
+                    6 => 
+                    array (
+                      'type' => 'box',
+                      'layout' => 'baseline',
+                      'contents' => 
+                      array (
+                        0 => 
+                        array (
+                          'type' => 'text',
+                          'text' => '4) 300  เมตร  2,200  ตารางเมตร',
+                          'wrap' => true,
+                          'margin' => 'lg',
+                          'action' => 
+                          array (
+                            'type' => 'message',
+                            'text' => 'yess',
+                          ),
+                          'size' => 'md',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              
+              ];
+             
+        return $textMessageBuilder;
+          
+    }
+    public function text_only(){
+        
+   
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+            array (
+                'type' => 'bubble',
+                'body' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'vertical',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'text',
+                      'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูกหญ้าทั้งหมดเท่าไร',
+                      'wrap' => true,
+                      'size' => 'md',
+                      'margin' => 'md',
+                      'align' => 'center',
+                    ),
+                    1 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                      'margin' => 'xl',
+                    ),
+                    2 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '1) 150  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    3 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                    ),
+                    4 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '2) 150  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                    5 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                    ),
+                    6 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '3) 300  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    7 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                    ),
+                    8 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 'yess',
+                        'label' => '4) 300  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                  ),
+                ),
+              )
+              
+              ];
+             
+        return $textMessageBuilder;
+          
+    }
     public function notification() {
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
