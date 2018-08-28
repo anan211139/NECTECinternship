@@ -701,19 +701,19 @@ class BotController extends Controller
                         
                     } 
                     else if ($userMessage == "ลองquery_fl_pic") {
-                        $this->pic_question($replyToken,'pic_question');
+                        $this->replymessage7($replyToken,'pic_question');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else if ($userMessage == "ลองquery_fl_nonpic") {
-                        $this->text_question($replyToken,'text_question');
+                        $this->replymessage7($replyToken,'text_question');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else if ($userMessage == "ลองquery_fl_bt_nonpic") {
-                        $this->bt_question($replyToken,'bt_question');
+                        $this->replymessage7($replyToken,'bt_question');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else if ($userMessage == "ลองquery_fl_nonpic_nohd") {
-                        $this->text_only($replyToken,'text_only');
+                        $this->replymessage7($replyToken,'text_only');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else {
