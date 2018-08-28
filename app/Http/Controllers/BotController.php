@@ -559,7 +559,7 @@ class BotController extends Controller
                             if ($check_pic_exam == null){
                                 echo "ไม่มีรูป";
                                 // กำหนด action 4 ปุ่ม 4 ประเภท
-                                echo $exam_new->choice_d;
+                                $c_d = $exam_new->choice_d;
                                 $actionBuilder = array(
                                     // new MessageTemplateActionBuilder(
                                     //     $exam_new['choice_a'],// ข้อความแสดงในปุ่ม
@@ -575,7 +575,8 @@ class BotController extends Controller
                                     //     'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     // ),
                                     new MessageTemplateActionBuilder(
-                                        $exam_new->choice_d,// ข้อความแสดงในปุ่ม
+                                        //$exam_new->choice_d,// ข้อความแสดงในปุ่ม
+                                        $c_d,
                                         //'Would you help me',
                                         'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
