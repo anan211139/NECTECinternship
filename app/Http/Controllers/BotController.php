@@ -575,8 +575,8 @@ class BotController extends Controller
                                     //     'C' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     // ),
                                     new MessageTemplateActionBuilder(
-                                        $exam_new['choice_d'],// ข้อความแสดงในปุ่ม
-                                        //'Would you help me',
+                                        //$exam_new['choice_d'],// ข้อความแสดงในปุ่ม
+                                        'Would you help me',
                                         'D' // ข้อความที่จะแสดงฝั่งผู้ใช้ เมื่อคลิกเลือก
                                     ),
                                 );
