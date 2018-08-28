@@ -549,8 +549,9 @@ class BotController extends Controller
                     } 
                     else if ($userMessage == "ลองquery") {
                         $exam_new = Exam_New::all()->toArray();
-                        dd($exam_new);
-                        $exam_new = $exam_new ->toArray();
+                        echo $exam_new[1]['question'];
+                        //dd($exam_new);
+                        //$exam_new = $exam_new ->toArray();
                         $check_pic_exam = $exam_new->local_pic;
                             if ($check_pic_exam == null){
                                 echo "ไม่มีรูป";
