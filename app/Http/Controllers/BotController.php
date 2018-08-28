@@ -45,7 +45,7 @@ use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
 
 use App\Prize;
-use App\Exam_New;
+use App\Exam_New as Exam_New;
 
 define('LINE_MESSAGE_CHANNEL_ID', '1602719598');
 define('LINE_MESSAGE_CHANNEL_SECRET', 'adc5d09e0446060bdba4cbf68a877ee9');
