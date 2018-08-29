@@ -1034,7 +1034,7 @@ class BotController extends Controller
     //     return $textMessageBuilder; 
     // }
     public function flex_choice_pic(){
-        $exam =  DB::table('Exam_News')
+        $exam =  DB::table('exams')
             ->where('id',1)
             ->first();
         echo SERV_NAME.$exam->local_pic;
@@ -1075,7 +1075,8 @@ class BotController extends Controller
                         1 => 
                         array (
                         'type' => 'text',
-                        'text' => $exam->question,
+                        'text' => $exam->local_pic,
+                        //'text' => $exam->question,
                         'wrap' => true,
                         'size' => 'md',
                         'margin' => 'md',
@@ -1096,7 +1097,8 @@ class BotController extends Controller
                         array (
                             'type' => 'message',
                             'text' => 1,
-                            'label' => '1) '.$exam->choice_a,
+                            'label' => $exam->local_pic,
+                            //'label' => '1) '.$exam->choice_a,
                         ),
                         ),
                         4 => 
@@ -1108,7 +1110,8 @@ class BotController extends Controller
                         array (
                             'type' => 'message',
                             'text' => 2,
-                            'label' => '2) '.$exam->choice_b,
+                            'label' => $exam->local_pic,
+                            //'label' => '2) '.$exam->choice_b,
                         ),
                         ),
                         5 => 
@@ -1120,7 +1123,8 @@ class BotController extends Controller
                         array (
                             'type' => 'message',
                             'text' => 3,
-                            'label' => '3) '.$exam->choice_c,
+                            'label' => $exam->local_pic,
+                            //'label' => '3) '.$exam->choice_c,
                         ),
                         ),
                         6 => 
@@ -1132,7 +1136,8 @@ class BotController extends Controller
                         array (
                             'type' => 'message',
                             'text' => 4,
-                            'label' => '4) '.$exam->choice_d,
+                            'label' => $exam->local_pic,
+                            //'label' => '4) '.$exam->choice_d,
                         ),
                         ),
                     ),
