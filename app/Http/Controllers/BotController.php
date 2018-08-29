@@ -1034,6 +1034,10 @@ class BotController extends Controller
     //     return $textMessageBuilder; 
     // }
     public function flex_choice_pic(){
+        $exam_pic =  DB::table('Exam_New')
+            ->where('id',1)
+            ->first();
+        dd($exam_pic);
         $textMessageBuilder = [ 
             "type" => "flex",
             "altText" => "this is a flex message",
