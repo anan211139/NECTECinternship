@@ -1037,7 +1037,7 @@ class BotController extends Controller
         $exam_pic =  DB::table('Exam_New')
             ->where('id',1)
             ->first();
-        dd($exam_pic);
+        //dd($exam_pic);
         $textMessageBuilder = [ 
             "type" => "flex",
             "altText" => "this is a flex message",
@@ -1047,14 +1047,14 @@ class BotController extends Controller
                 'hero' => 
                 array (
                   'type' => 'image',
-                  'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_3_movie.png',
+                  'url' => SERV_NAME.$exam_pic->local_pic,
                   'size' => 'full',
                   'aspectRatio' => '20:13',
                   'aspectMode' => 'cover',
                   'action' => 
                   array (
                     'type' => 'uri',
-                    'uri' => 'http://linecorp.com/',
+                    'uri' => SERV_NAME.$exam_pic->local_pic,
                   ),
                 ),
                 'body' => 
@@ -1074,7 +1074,7 @@ class BotController extends Controller
                     1 => 
                     array (
                       'type' => 'text',
-                      'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูกหญ้าทั้งหมดเท่าไร',
+                      'text' => $exam_pic->question,
                       'wrap' => true,
                       'size' => 'md',
                       'margin' => 'md',
@@ -1095,7 +1095,7 @@ class BotController extends Controller
                       array (
                         'type' => 'message',
                         'text' => 1,
-                        'label' => '1) 150  เมตร  1,100  ตารางเมตร',
+                        'label' => '1) '.$exam_pic->choice_a,
                       ),
                     ),
                     4 => 
@@ -1107,7 +1107,7 @@ class BotController extends Controller
                       array (
                         'type' => 'message',
                         'text' => 2,
-                        'label' => '2) 150  เมตร  2,200  ตารางเมตร',
+                        'label' => '2) '.$exam_pic->choice_b,
                       ),
                     ),
                     5 => 
@@ -1119,7 +1119,7 @@ class BotController extends Controller
                       array (
                         'type' => 'message',
                         'text' => 3,
-                        'label' => '3) 300  เมตร  1,100  ตารางเมตร',
+                        'label' => '3) '.$exam_pic->choice_c,
                       ),
                     ),
                     6 => 
@@ -1131,7 +1131,7 @@ class BotController extends Controller
                       array (
                         'type' => 'message',
                         'text' => 4,
-                        'label' => '4) 300  เมตร  2,200  ตารางเมตร',
+                        'label' => '4) '.$exam_pic->choice_d,
                       ),
                     ),
                   ),
