@@ -13,7 +13,7 @@ class CreatePrintciplesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Printciples_New', function (Blueprint $table) {
+        Schema::create('Printciples_News', function (Blueprint $table) {
             $table->increments('id');
             $table->string('detail');
             $table->string('local_pic');
@@ -28,6 +28,6 @@ class CreatePrintciplesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('printciples');
+        Schema::dropIfExists('Printciples_News');
     }
 }
