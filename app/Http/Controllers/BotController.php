@@ -1038,106 +1038,108 @@ class BotController extends Controller
             ->where('id',1)
             ->first();
         //dd($exam_pic);
-        $textMessageBuilder = [ 
-            "type" => "flex",
-            "altText" => "this is a flex message",
-            "contents" => 
-            array (
-                'type' => 'bubble',
-                'hero' => 
+        foreach($exam_pic as $exam){
+            $textMessageBuilder = [ 
+                "type" => "flex",
+                "altText" => "this is a flex message",
+                "contents" => 
                 array (
-                  'type' => 'image',
-                  'url' => SERV_NAME.$exam_pic->local_pic,
-                  'size' => 'full',
-                  'aspectRatio' => '20:13',
-                  'aspectMode' => 'cover',
-                  'action' => 
-                  array (
-                    'type' => 'uri',
-                    'uri' => SERV_NAME.$exam_pic->local_pic,
-                  ),
-                ),
-                'body' => 
-                array (
-                  'type' => 'box',
-                  'layout' => 'vertical',
-                  'contents' => 
-                  array (
-                    0 => 
+                    'type' => 'bubble',
+                    'hero' => 
                     array (
-                      'type' => 'text',
-                      'text' => 'ข้อที่ 1',
-                      'weight' => 'bold',
-                      'size' => 'lg',
-                      'margin' => 'md',
-                    ),
-                    1 => 
+                    'type' => 'image',
+                    'url' => SERV_NAME.$exam->local_pic,
+                    'size' => 'full',
+                    'aspectRatio' => '20:13',
+                    'aspectMode' => 'cover',
+                    'action' => 
                     array (
-                      'type' => 'text',
-                      'text' => $exam_pic->question,
-                      'wrap' => true,
-                      'size' => 'md',
-                      'margin' => 'md',
-                      'color' => '#5C5C5C',
+                        'type' => 'uri',
+                        'uri' => SERV_NAME.$exam->local_pic,
                     ),
-                    2 => 
+                    ),
+                    'body' => 
                     array (
-                      'type' => 'separator',
-                      'color' => '#999999',
-                      'margin' => 'xl',
-                    ),
-                    3 => 
+                    'type' => 'box',
+                    'layout' => 'vertical',
+                    'contents' => 
                     array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 1,
-                        'label' => '1) '.$exam_pic->choice_a,
-                      ),
+                        0 => 
+                        array (
+                        'type' => 'text',
+                        'text' => 'ข้อที่ 1',
+                        'weight' => 'bold',
+                        'size' => 'lg',
+                        'margin' => 'md',
+                        ),
+                        1 => 
+                        array (
+                        'type' => 'text',
+                        'text' => $exam->question,
+                        'wrap' => true,
+                        'size' => 'md',
+                        'margin' => 'md',
+                        'color' => '#5C5C5C',
+                        ),
+                        2 => 
+                        array (
+                        'type' => 'separator',
+                        'color' => '#999999',
+                        'margin' => 'xl',
+                        ),
+                        3 => 
+                        array (
+                        'type' => 'button',
+                        'style' => 'link',
+                        'height' => 'sm',
+                        'action' => 
+                        array (
+                            'type' => 'message',
+                            'text' => 1,
+                            'label' => '1) '.$exam->choice_a,
+                        ),
+                        ),
+                        4 => 
+                        array (
+                        'type' => 'button',
+                        'style' => 'link',
+                        'height' => 'sm',
+                        'action' => 
+                        array (
+                            'type' => 'message',
+                            'text' => 2,
+                            'label' => '2) '.$exam->choice_b,
+                        ),
+                        ),
+                        5 => 
+                        array (
+                        'type' => 'button',
+                        'style' => 'link',
+                        'height' => 'sm',
+                        'action' => 
+                        array (
+                            'type' => 'message',
+                            'text' => 3,
+                            'label' => '3) '.$exam->choice_c,
+                        ),
+                        ),
+                        6 => 
+                        array (
+                        'type' => 'button',
+                        'style' => 'link',
+                        'height' => 'sm',
+                        'action' => 
+                        array (
+                            'type' => 'message',
+                            'text' => 4,
+                            'label' => '4) '.$exam->choice_d,
+                        ),
+                        ),
                     ),
-                    4 => 
-                    array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 2,
-                        'label' => '2) '.$exam_pic->choice_b,
-                      ),
                     ),
-                    5 => 
-                    array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 3,
-                        'label' => '3) '.$exam_pic->choice_c,
-                      ),
-                    ),
-                    6 => 
-                    array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 4,
-                        'label' => '4) '.$exam_pic->choice_d,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ];   
+                )
+            ];  
+        } 
         return $textMessageBuilder; 
     }
     public function flex_choice_nonpic(){
