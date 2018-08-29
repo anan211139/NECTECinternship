@@ -1132,7 +1132,7 @@ class BotController extends Controller
                         array (
                             'type' => 'message',
                             'text' => 4,
-                            'label' => '4) '.$exam->choice_d,
+                            'label' => '4) '.$exams->choice_d,
                         ),
                         ),
                     ),
