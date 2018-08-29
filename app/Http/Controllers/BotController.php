@@ -1034,7 +1034,7 @@ class BotController extends Controller
     //     return $textMessageBuilder; 
     // }
     public function flex_choice_pic(){
-        $exam =  DB::table('exams')
+        $exam =  DB::table('Exam_News')
             ->where('id',1)
             ->first();
         echo SERV_NAME.$exam->local_pic;

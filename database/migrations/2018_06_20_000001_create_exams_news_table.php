@@ -13,7 +13,7 @@ class CreateExamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Exam_New', function (Blueprint $table) {
+        Schema::create('Exam_News', function (Blueprint $table) {
             $table->increments('id');
             $table->Integer('chapter_id');
             $table->Integer('level_id');
@@ -39,6 +39,6 @@ class CreateExamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Exam_New');
+        Schema::dropIfExists('Exam_News');
     }
 }
