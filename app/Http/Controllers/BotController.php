@@ -1034,11 +1034,11 @@ class BotController extends Controller
     //     return $textMessageBuilder; 
     // }
     public function flex_choice_pic(){
-        $exam_pic =  DB::table('Exam_New')
+        $exam =  DB::table('Exam_New')
             ->where('id',1)
             ->first();
+        echo SERV_NAME.$exam->local_pic;
         //dd($exam_pic);
-        foreach($exam_pic as $exam){
             $textMessageBuilder = [ 
                 "type" => "flex",
                 "altText" => "this is a flex message",
@@ -1139,7 +1139,7 @@ class BotController extends Controller
                     ),
                 )
             ];  
-        } 
+        
         return $textMessageBuilder; 
     }
     public function flex_choice_nonpic(){
