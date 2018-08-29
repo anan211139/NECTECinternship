@@ -552,7 +552,7 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("test");
                     }
                     else if ($userMessage == "ลองquery_choice_nonpic") {
-                        $this->replymessage7($replyToken,'flex_nonchoice_pic');
+                        $this->replymessage7($replyToken,'flex_choice_nonpic');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else {
