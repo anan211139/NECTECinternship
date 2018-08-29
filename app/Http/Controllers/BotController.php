@@ -547,8 +547,12 @@ class BotController extends Controller
                         $this->replymessage7($replyToken,'flex_message_menu');
                         $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
-                    else if ($userMessage == "ลองquery_fl_nonpic_nohd") {
-                        $this->replymessage7($replyToken,'text_only');
+                    else if ($userMessage == "ลองquery_choice_pic") {
+                        $this->replymessage7($replyToken,'flex_choice_pic');
+                        $replyData = new TextMessageBuilder("test");
+                    }
+                    else if ($userMessage == "ลองquery_choice_nonpic") {
+                        $this->replymessage7($replyToken,'flex_nonchoice_pic');
                         $replyData = new TextMessageBuilder("test");
                     }
                     else {
@@ -1029,6 +1033,199 @@ class BotController extends Controller
     //         ];   
     //     return $textMessageBuilder; 
     // }
+    public function flex_choice_pic(){
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+            array (
+                'type' => 'bubble',
+                'hero' => 
+                array (
+                  'type' => 'image',
+                  'url' => 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_3_movie.png',
+                  'size' => 'full',
+                  'aspectRatio' => '20:13',
+                  'aspectMode' => 'cover',
+                  'action' => 
+                  array (
+                    'type' => 'uri',
+                    'uri' => 'http://linecorp.com/',
+                  ),
+                ),
+                'body' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'vertical',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'text',
+                      'text' => 'ข้อที่ 1',
+                      'weight' => 'bold',
+                      'size' => 'lg',
+                      'margin' => 'md',
+                    ),
+                    1 => 
+                    array (
+                      'type' => 'text',
+                      'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูกหญ้าทั้งหมดเท่าไร',
+                      'wrap' => true,
+                      'size' => 'md',
+                      'margin' => 'md',
+                      'color' => '#5C5C5C',
+                    ),
+                    2 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#999999',
+                      'margin' => 'xl',
+                    ),
+                    3 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 1,
+                        'label' => '1) 150  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    4 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 2,
+                        'label' => '2) 150  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                    5 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 3,
+                        'label' => '3) 300  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    6 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 4,
+                        'label' => '4) 300  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ];   
+        return $textMessageBuilder; 
+    }
+    public function flex_choice_nonpic(){
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+            array (
+                'type' => 'bubble',
+                'body' => 
+                array (
+                  'type' => 'box',
+                  'layout' => 'vertical',
+                  'contents' => 
+                  array (
+                    0 => 
+                    array (
+                      'type' => 'text',
+                      'text' => 'ข้อที่ 1',
+                      'weight' => 'bold',
+                      'size' => 'lg',
+                      'margin' => 'md',
+                    ),
+                    1 => 
+                    array (
+                      'type' => 'text',
+                      'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูกหญ้าทั้งหมดเท่าไร',
+                      'wrap' => true,
+                      'size' => 'md',
+                      'margin' => 'md',
+                      'color' => '#5C5C5C',
+                    ),
+                    2 => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#999999',
+                      'margin' => 'xl',
+                    ),
+                    3 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 1,
+                        'label' => '1) 150  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    4 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 2,
+                        'label' => '2) 150  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                    5 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 3,
+                        'label' => '3) 300  เมตร  1,100  ตารางเมตร',
+                      ),
+                    ),
+                    6 => 
+                    array (
+                      'type' => 'button',
+                      'style' => 'link',
+                      'height' => 'sm',
+                      'action' => 
+                      array (
+                        'type' => 'message',
+                        'text' => 4,
+                        'label' => '4) 300  เมตร  2,200  ตารางเมตร',
+                      ),
+                    ),
+                  ),
+                ),
+              )  
+            ];   
+        return $textMessageBuilder; 
+    }
     public function notification() {
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
