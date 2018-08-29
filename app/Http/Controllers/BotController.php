@@ -1037,7 +1037,7 @@ class BotController extends Controller
         $exam_pic =  DB::table('Exam_New')
             ->where('id',1)
             ->first();
-        dd($exam_pic);
+        //dd($exam_pic);
         foreach($exam_pic as $exam){
             $textMessageBuilder = [ 
                 "type" => "flex",
