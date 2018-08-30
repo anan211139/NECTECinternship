@@ -121,21 +121,8 @@ class BotController extends Controller
                     $pos2 = strrpos($userMessage, 'ครน');
                     //------ RICH MENU -------
                     if ($userMessage == "เปลี่ยนวิชา") {
-                        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
-                        $replyData = new ImagemapMessageBuilder(
-                            $imageMapUrl,
-                            "รายการวิชา",
-                            new BaseSizeBuilder(546, 1040),
-                            array(
-                                new ImagemapMessageActionBuilder(
-                                    "วิชาคณิตศาสตร์",
-                                    new AreaBuilder(91, 199, 873, 155)
-                                ),
-                                new ImagemapMessageActionBuilder(
-                                    "วิชาภาษาอังกฤษ",
-                                    new AreaBuilder(87, 350, 873, 155)
-                                ),
-                            ));
+                        $this->replymessage7($replyToken,'flex_message_menu');
+                        $replyData = new TextMessageBuilder("พี่พลอย");
                     } else if ($userMessage == "เปลี่ยนหัวข้อ" || $userMessage == "วิชาคณิตศาสตร์") {
                         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
                         $replyData = new ImagemapMessageBuilder(
@@ -254,71 +241,6 @@ class BotController extends Controller
                         }
                         $replyData = $multiMessage;
                     }
-                    // else if ($userMessage == "ลองNOTI"){
-                    //     $user_select = DB::table('groups')
-                    //         ->where('status', false)
-                    //         ->pluck('line_code')
-                    //         ->all();
-                        
-                        
-                    //     $user_select = array_unique($user_select);
-                    //     // dd($user_select);
-                    //     // foreach ($user_select as $line_u) {
-                    //         $join_log_group = DB::table('groups')
-                    //             ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
-                    //             ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
-                    //             ->select('logChildrenQuizzes.id as log_id','chapters.name as chap_name', 'groups.id as group_id', 'groups.line_code','logChildrenQuizzes.time')
-                    //             // ->where('groups.line_code', $line_u)
-                    //             ->where('groups.line_code', $userId)
-                    //             ->orderBy('groups.id','ASC')
-                    //             ->orderBy('logChildrenQuizzes.time', 'DESC')
-                    //             ->get();
-                            
-                    //         $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
-                    //         // dd($unfin_log);
-                    //         $chap_text7 = "";
-                    //         $chap_text3 = "";
-                    //         $del_group = false;
-                    //         foreach ($unfin_log as $rest_chap) {
-                    //             $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
-                    //             if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
-                    //                 DB::table('groupRandoms')
-                    //                     ->where('group_id', $del_subj->group_id)
-                    //                     ->delete();
-                    //                 DB::table('logChildrenQuizzes')
-                    //                     ->where('group_id', $del_subj->group_id)
-                    //                     ->delete();
-                    //                 DB::table('groups')
-                    //                     ->where('id', $del_subj->group_id)
-                    //                     ->delete();
-                    //                 echo "DELETE".$del_subj->group_id;
-                    //                 $del_group = true;
-                    //                 $chap_text7 = $chap_text7." ".$rest_chap.",";
-                    //                 echo "MORE6".$rest_chap;
-                    //             }
-                    //             else if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 2) {
-                    //                 $chap_text3 = $chap_text3." ".$rest_chap.",";
-                    //                 echo "MORE2".$rest_chap;
-                    //             }
-                    //         }
-                    //         if ($del_group == true) {
-                    //             $chap_text7 = rtrim($chap_text7, ',');
-                    //             $textReplyMessage = "ข้อสอบเรื่อง".$chap_text7." ที่ทำค้างไว้ถูกลบแล้วนะครับบบบ";
-                    //             echo $textReplyMessage;
-                    //             $replyData = new TextMessageBuilder($textReplyMessage);
-                    //             // $response = $bot->pushMessage($line_u ,$replyData);
-                    //             $response = $bot->pushMessage($userId ,$replyData);
-                    //         }
-                    //         if (strlen($chap_text3) > 0) {
-                    //             $chap_text3 = rtrim($chap_text3, ',');
-                    //             $textReplyMessage = "กลับมาทำโจทย์เรื่อง".$chap_text3." กับพี่หมีกันเถอะ !!!!!!";
-                    //             echo $textReplyMessage;
-                    //             $replyData = new TextMessageBuilder($textReplyMessage);
-                    //             // $response = $bot->pushMessage($line_u ,$replyData);
-                    //             $response = $bot->pushMessage($userId ,$replyData);
-                    //         }
-                    //     //}
-                    // }
                     //------ สมการ -------
                     else if ($userMessage == "สมการ") {
                         DB::table('students')
@@ -520,26 +442,11 @@ class BotController extends Controller
                             )
                         );  
                         $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
-                        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
-                        $arr_replyData[] = new ImagemapMessageBuilder(
-                            $imageMapUrl,
-                            "รายการวิชา",
-                            new BaseSizeBuilder(546, 1040),
-                            array(
-                                new ImagemapMessageActionBuilder(
-                                    "วิชาคณิตศาสตร์",
-                                    new AreaBuilder(91, 199, 873, 155)
-                                ),
-                                new ImagemapMessageActionBuilder(
-                                    "วิชาภาษาอังกฤษ",
-                                    new AreaBuilder(87, 350, 873, 155)
-                                ),
-                            ));
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
                         }
                         $replyData = $multiMessage;
-                        
+                        $this->replymessage7($replyToken,'flex_message_menu');
                         DB::table('students')->insert([
                             'line_code' => $userId,
                             'name' => $stdprofile['displayName'],
