@@ -1,8 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use LINE\LINEBot;
@@ -43,17 +40,12 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
-
 use App\Prize;
 use App\Exam_New as Exam_New;
-
 define('LINE_MESSAGE_CHANNEL_ID', '1602719598');
 define('LINE_MESSAGE_CHANNEL_SECRET', 'adc5d09e0446060bdba4cbf68a877ee9');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'iU3Z5u+f3Aj+nbHhqkb1NCuoXaI71Z1MUFyUfg2u8Nqb6hxMpsQw0eKEL0W2j6tFEX7XqG5tKq8RmNgkbBwcYlaBeq0l1V29lklaLNXOU6g+lDhRC2SNAhzc1b9C4SgRxUCLuIXFxH5iCyrFr5yTEQdB04t89/1O/w1cDnyilFU=');
-
 define('SERV_NAME', 'https://pkwang.herokuapp.com/');
-
-
 class BotController extends Controller
 {
     public function index()
@@ -61,12 +53,9 @@ class BotController extends Controller
         // เชื่อมต่อกับ LINE Messaging API
         $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
         $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
-
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
         $events = json_decode($content, true);
-
-
         if(!is_null($events)){
             // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
             // $replyToken = $event->getReplyToken();
@@ -74,13 +63,11 @@ class BotController extends Controller
             // $userId = $event->getUserId();
             // $typeMessage = $event->getMessageType();
             // $userMessage = $event->getText();
-
             foreach ($events['events'] as $event) {
                 // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
                 $replyToken = $event['replyToken'];
                 $replyInfo = $event['type'];
                 $userId = $event['source']['userId'];
-
                 if ($replyInfo == "postback") {
                     $postbackData = $event['postback']['data'];
                     list($postback_action_part, $postback_id_part) = explode("&", $postbackData, 2);
@@ -97,7 +84,6 @@ class BotController extends Controller
                             DB::table('students')
                                 ->where('line_code', $userId)
                                 ->update(['point' => $student->point - $selected->point]);
-
                             if ($selected->type_id === 1) {
                                 $avail_code = DB::table('codes')
                                     ->where('prize_id', $selected->id)
@@ -130,11 +116,9 @@ class BotController extends Controller
                 } else if ($replyInfo == "message") {
                     $typeMessage = $event['message']['type'];
                     $userMessage = $event['message']['text'];
-
                     //------ SET VAR ---------
                     $pos1 = strrpos($userMessage, 'หรม');
                     $pos2 = strrpos($userMessage, 'ครน');
-
                     //------ RICH MENU -------
                     if ($userMessage == "เปลี่ยนวิชา") {
                         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
@@ -153,7 +137,6 @@ class BotController extends Controller
                                 ),
                             ));
                     } else if ($userMessage == "เปลี่ยนหัวข้อ" || $userMessage == "วิชาคณิตศาสตร์") {
-
                         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
                         $replyData = new ImagemapMessageBuilder(
                             $imageMapUrl,
@@ -173,8 +156,6 @@ class BotController extends Controller
                         $arr_replyData = array();
                         $arr_replyData[] = $this->declare_point($userId);
                         
-
-
                         $actionBuilder = array(
                             new UriTemplateActionBuilder(
                                 'ดูคะแนนย้อนหลัง', // ข้อความแสดงในปุ่ม
@@ -191,7 +172,6 @@ class BotController extends Controller
                                     $actionBuilder  // กำหนด action object
                             )
                         );              
-
                         $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
@@ -208,7 +188,6 @@ class BotController extends Controller
                                 'แลกของรางวัล'
                             )
                         );
-
                         $replyData = new TemplateMessageBuilder('Button Template',
                             new ButtonTemplateBuilder(
                                 'ดูแต้มกันดีกว่า', // กำหนดหัวเรื่อง
@@ -216,10 +195,8 @@ class BotController extends Controller
                                 'https://github.com/anan211139/NECTECinternship/blob/master/img/score.png?raw=true/700', // กำหนด url รุปภาพ
                                 $actionBuilder  // กำหนด action object
                             )
-
                         );
                     } else if ($userMessage == "แลกของรางวัล") {
-
                         $re_prizes = Prize::all()->toArray();
                         $columnTemplateBuilders = array();
                         foreach ($re_prizes as $prize) {
@@ -234,30 +211,20 @@ class BotController extends Controller
                             );
                             array_push($columnTemplateBuilders, $columnTemplateBuilder);
                         }
-
                         $carouselTemplateBuilder = new CarouselTemplateBuilder($columnTemplateBuilders);
                         $replyData = new TemplateMessageBuilder('รายการ Sponser', $carouselTemplateBuilder);
-
                     } else if ($userMessage == "ดู Code") {
                         $arr_replyData = array();
-
                         $textReplyMessage = "ข้อมูลด้านล่างใช้เพื่อเชื่อมต่อเว็บไซต์ โดยน้องสามารถกดลิงค์ด้านล่างได้เลยจ้า แต่หากไม่สะดวกกดลิงค์พี่หมีแนะนำว่าให้ใช QR Code เพื่อป้องกันความผิดพลาดจ้า";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-
                         //$connectChild = 'https://pkwang.herokuapp.com/connectchild/' . $userId;
                         $connectChild = SERV_NAME.'connectchild/'. $userId;
                         $dataQR = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . $connectChild . '&choe=UTF-8';
-
                         $arr_replyData[] = new TextMessageBuilder($connectChild);
-
                         //------QR CODE-----------
-
                         $picFullSize = $dataQR;
                         $picThumbnail = $dataQR . '/240';
-
                         $arr_replyData[] = new ImageMessageBuilder($picFullSize, $picThumbnail);
-
-
                         //--------REPLY----------
                         $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
@@ -268,16 +235,13 @@ class BotController extends Controller
                         $arr_replyData = array();
                         $textReplyMessage = "\t  สวัสดีครับน้องๆ พี่มีชื่อว่า \" พี่หมีติวเตอร์ \" ซึ่งพี่หมีจะมาช่วยน้องๆทบทวนบทเรียน\n\t โดยจะมาเป็นติวเตอร์ส่วนตัวให้กับน้องๆ ซึ่งน้องๆสามารถเลือกบทเรียนได้เอง \n\t  จะทบทวนบทเรียนตอนไหนก็ได้ตามความสะดวก ในการทบทวนบทเรียนในเเต่ละครั้ง \n\t  พี่หมีจะมีการเก็บคะแนนน้องๆไว้ เพื่อมอบของรางวัลให้น้องๆอีกด้วย \n\t  เห็นข้อดีอย่างนี้เเล้ว น้องๆจะรออะไรอยู่เล่า มาเริ่มทบทวนบทเรียนกันเถอะ!!!";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-
                         $textReplyMessage = "https://www.youtube.com/embed/Yad6t_EgwVw";
                         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-
                         $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
                         }
                         $replyData = $multiMessage;
-
                     } //------ หรม./ครน. -------
                     else if ($pos1 !== false || $pos2 !== false) {
                         DB::table('students')
@@ -297,13 +261,9 @@ class BotController extends Controller
                     //         ->all();
                         
                         
-
                     //     $user_select = array_unique($user_select);
-
                     //     // dd($user_select);
-
                     //     // foreach ($user_select as $line_u) {
-
                     //         $join_log_group = DB::table('groups')
                     //             ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                     //             ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
@@ -313,16 +273,12 @@ class BotController extends Controller
                     //             ->orderBy('groups.id','ASC')
                     //             ->orderBy('logChildrenQuizzes.time', 'DESC')
                     //             ->get();
-
                             
-
                     //         $unfin_log = array_unique($join_log_group->pluck('chap_name')->all());
-
                     //         // dd($unfin_log);
                     //         $chap_text7 = "";
                     //         $chap_text3 = "";
                     //         $del_group = false;
-
                     //         foreach ($unfin_log as $rest_chap) {
                     //             $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
                     //             if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
@@ -378,8 +334,6 @@ class BotController extends Controller
                         $replyData = $multiMessage;
                     } 
                     else if ($userMessage == "ลงทะเบียน"){
-
-
                         $actionBuilder = array(
                             new UriTemplateActionBuilder(
                                 'ลงทะเบียน', // ข้อความแสดงในปุ่ม
@@ -395,11 +349,9 @@ class BotController extends Controller
                                 $actionBuilder  // กำหนด action object
                             )
                         );              
-
                     }
                     else if ($userMessage == '1' || $userMessage == '2' || $userMessage == '3' || $userMessage == '4') {
                         echo "1234";
-
                         $multiMessage = new MultiMessageBuilder;
                         $std = DB::table('students')
                             ->where('line_code', $userId)
@@ -415,16 +367,12 @@ class BotController extends Controller
                             ->where('group_id', $urgroup->id)
                             ->orderBy('id', 'DESC')
                             ->first();
-
                         //  dd ($currentlog);
-
                         $ans = DB::table('exams')
                             ->where('id', $currentlog->exam_id)
                             ->orderBy('id', 'DESC')
                             ->first();
-
                          //dd ($ans); 
-
                         $princ = DB::table('printciples')
                             ->where('id', $ans->principle_id)
                             ->first();
@@ -436,23 +384,18 @@ class BotController extends Controller
                         $princ_pic = $princ->local_pic;
                         $ans_status = $currentlog->is_correct;
                         $sec_chance = $currentlog->second_chance;
-
                         $arr_replyData = array();
-
                         echo "REPLY";
                         $check_st_end = false;
-
                         if ($ans_status === null) {
                             if ((int)$userMessage == $ans->answer) {
                                 echo "correct";
                                 $arr_replyData[] = new TextMessageBuilder("ถูกต้อง! เก่งจังเลย");
                                 $ansst = true;
                                 $check_st_end = true;
-
                                 DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
                                 ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
-
                                 if ($count_quiz < 20) {
                                     foreach ($arr_replyData as $arr_Reply) {
                                         $multiMessage->add($arr_Reply);
@@ -466,31 +409,25 @@ class BotController extends Controller
                                 // else {
                                 //     $arr_replyData[] = $this->close_group($urgroup->id);
                                 // }
-
                             } else {
                                 echo "incorrect";
                                 $arr_replyData[] = new TextMessageBuilder("ผิดแล้ว พี่หมีจะสอนให้");
                                 $ansst = false;
-
                                 DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
                                 ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
-
-
                                 //$pathtoprinc = 'https://pkwang.herokuapp.com/' . $princ_pic . '/';
                                 $pathtoprinc = SERV_NAME.$princ_pic;
                                 echo $pathtoprinc;
                                 $arr_replyData[] = new ImageMessageBuilder($pathtoprinc, $pathtoprinc);
                                 $arr_replyData[] = new TextMessageBuilder("น้องลองตอบใหม่อีกครั้งสิจ๊ะ");
                                 echo "ลองตอบใหม่";
-
                             }
                             // DB::table('logChildrenQuizzes')
                             //     ->where('id', $currentlog->id)
                             //     ->update(['answer' => $userMessage, 'is_correct' => $ansst, 'time' => Carbon::now()]);
                             echo "END_LOOP_firstcheck";
                         } else if ($ans_status == 0 && $sec_chance == 0) {
-
                             echo "Check";
                             $check_st_end = true;
                             if ((int)$userMessage == $ans->answer) {
@@ -504,7 +441,6 @@ class BotController extends Controller
                             }
                             echo "END_LOOP_sccheck";
                             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-
                             DB::table('logChildrenQuizzes')
                                 ->where('id', $currentlog->id)
                                 ->update(['second_chance' => 1, 'is_correct_second' => $ansst]);
@@ -531,7 +467,6 @@ class BotController extends Controller
                         if($count_quiz == 20 && $check_st_end == true){
                             $arr_replyData[] = $this->close_group($urgroup->id);
                         }
-
                         // $multiMessage = new MultiMessageBuilder;
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
@@ -565,12 +500,10 @@ class BotController extends Controller
                     ->where('line_code', $userId)
                     ->count();
                     if ($checkIMG == 0) {
-
                         $response = $bot->getProfile($userId);
                         $stdprofile = $response->getJSONDecodedBody();
                         $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
                         $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ\nhttps://www.youtube.com/watch?v=ub39BTOdjeo&feature=youtu.be");
-
                         $actionBuilder = array(
                             new UriTemplateActionBuilder(
                                 'ลงทะเบียน', // ข้อความแสดงในปุ่ม
@@ -586,8 +519,6 @@ class BotController extends Controller
                                 $actionBuilder  // กำหนด action object
                             )
                         );  
-
-
                         $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
                         $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_subject.png?raw=true';
                         $arr_replyData[] = new ImagemapMessageBuilder(
@@ -620,11 +551,8 @@ class BotController extends Controller
             }
             // ส่วนของคำสั่งตอบกลับข้อความ
             $response = $bot->replyMessage($replyToken,$replyData);
-
         }
     }
-
-
     public function randQuiz($chapter_id, $level_id, $group_id){
         echo "RAND";
         //check changing level
@@ -632,7 +560,6 @@ class BotController extends Controller
             ->where('id', $group_id)
             ->orderBy('id','DESC')
             ->first();
-
         $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->count();
@@ -658,13 +585,11 @@ class BotController extends Controller
             else if ($count_num_true < 3 && $level_id > 1) {
                 $level_id = $level_id - 1;
             }
-
             $group_r = DB::table('groupRandoms')
                 ->where('group_id', $group_id)
                 ->first();
             $group_rand = $group_r->listlevelid;
             $concat_level = $group_rand.$level_id.',';
-
             DB::table('groupRandoms')
                 ->where('group_id', $num_group->id)
                 ->update(['listlevelid' => $concat_level]);
@@ -674,7 +599,6 @@ class BotController extends Controller
         $arr_replyData = array();
         $textReplyMessage = "ข้อที่ ".($count_quiz+1);
         $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
-
         //random the new quiz and update log, group random
         $insert_status = false;
         echo "ก่อนสุ่มข้อ";
@@ -684,20 +608,16 @@ class BotController extends Controller
                 ->where('level_id', $level_id)
                 ->inRandomOrder()
                 ->first();
-
             $group_r = DB::table('groupRandoms')
                 ->where('group_id', $group_id)
                 ->where('listexamid', 'like', '%,' .$quizzesforsubj->id . ',%')
                 ->count();
-
             if($group_r == 0){  //check ไม่ซ้ำ
                 $group_r = DB::table('groupRandoms')
                     ->where('group_id', $group_id)
                     ->first();
-
                 $group_rand = $group_r->listexamid;
                 $concat_quiz = $group_rand.$quizzesforsubj->id.',';
-
                 DB::table('groupRandoms')
                     ->where('group_id', $group_id)
                     ->update(['listexamid' => $concat_quiz]);
@@ -717,10 +637,8 @@ class BotController extends Controller
         //$pathtoexam = 'https://pkwang.herokuapp.com/'.$current_quiz->local_pic;
         $pathtoexam = SERV_NAME.$current_quiz->local_pic;
         $arr_replyData[] = new ImageMessageBuilder($pathtoexam,$pathtoexam);
-
         return $arr_replyData;
     }
-
     //use this function after the student pick their own lesson
     public function start_exam($userId, $chapter_id) {
         $arr_replyData = array();
@@ -770,14 +688,10 @@ class BotController extends Controller
                 ->first();
             
             // dd($old_group);
-
-
             $group_id = $old_group->id;
-
             $count_quiz = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->count();
-
             $textReplyMessage = "เรามาเริ่มบทเรียน\nเรื่อง ".$current_chapter->name."\n กันต่อ ในข้อที่ ".$count_quiz." กันเลยจ้า";
             $arr_replyData[] = new TextMessageBuilder($textReplyMessage);
         }
@@ -801,20 +715,16 @@ class BotController extends Controller
         
         return $arr_replyData;
     }
-
     public function close_group($group_id) {
         echo "CLOSE_GROUP";
         $current_group = DB::table('groups')
             ->where('id', $group_id)
             ->first();
-
         $current_std = DB::table('students')
             ->where('line_code', $current_group->line_code)
             ->first();
-
         $all_lvl = DB::table('levels')
             ->get();
-
         $point_update = 0;
         foreach ($all_lvl as $lvl) {
             $point_update += ($this->results($group_id, $lvl->id)) * $lvl->id;
@@ -830,13 +740,11 @@ class BotController extends Controller
         //         ->delete();
         return $this->declare_point($current_group->line_code);
     }
-
     public function results($group_id, $level_id) {
         echo "RESULT";
         $current_group = DB::table('groups')
             ->where('id', $group_id)
             ->first();
-
         $stdanses = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->get();
@@ -844,10 +752,8 @@ class BotController extends Controller
         // DB::table('groupRandoms')
         //     ->where('group_id', '=',$group_id)
         //     ->delete();
-
         $total_exam = 0;
         $total_true = 0;
-
         foreach($stdanses as $stdans) {
             $examforweight = DB::table('exams')
                 ->where('id', $stdans->exam_id)
@@ -858,7 +764,6 @@ class BotController extends Controller
                 //echo $level_id.">>".$total_true."\n";
             }
         }
-
         if ($total_exam != 0) {
             echo "level_id >>".$level_id."\n total_level >>".$total_exam."\n total_true".$total_true;
             DB::table('results')->insert([
@@ -869,20 +774,15 @@ class BotController extends Controller
                 'total_level_true' => $total_true
             ]);
         }
-
         return $total_true;
-
     }
-
     public function declare_point($userId) {
         $group_true = DB::table('groups')
             ->where('line_code', $userId)
             ->where('status',1)
             ->orderBy('id','DESC')
             ->first();
-
         $concat_result = "มาดูผลคะแนนจากข้อสอบชุดล่าสุดกันเถอะ :)";
-
         $group_result = DB::table('results')
         ->where('group_id',$group_true->id)
         ->get();
@@ -892,15 +792,12 @@ class BotController extends Controller
                 $text_result = $text_result."✩";
             }
             $text_result = $text_result.": ถูกต้อง ".$g_result->total_level_true."/".$g_result->total_level." ข้อ";
-
             $concat_result = $concat_result.$text_result;
         }
-
         $textReplyMessage = $concat_result;
         $replyData = new TextMessageBuilder($textReplyMessage);
         return $replyData;
     }
-
     public function replymessage7($replyToken,$fn_json)
     {   
         echo "function_json";
@@ -927,9 +824,9 @@ class BotController extends Controller
     public function flex_message_menu(){
         $query_sub = DB::table('subjects')
             ->get();
-       
+        $md_array = array();
         $key=-1;
-        
+        //dd($query_sub);
         foreach($query_sub as $value){
             $md_array[($value->id)-1] = 
                 array (
@@ -1034,7 +931,7 @@ class BotController extends Controller
     //     return $textMessageBuilder; 
     // }
     public function flex_choice_pic(){
-        $exam =  DB::table('Exam_News')
+        $exam =  DB::table('exam_news')
             ->where('id',1)
             ->first();
         echo SERV_NAME.$exam->local_pic;
@@ -1075,8 +972,8 @@ class BotController extends Controller
                         1 => 
                         array (
                         'type' => 'text',
-                        'text' => $exam->local_pic,
-                        //'text' => $exam->question,
+                        //'text' => $exam->local_pic,
+                        'text' => $exam->question,
                         'wrap' => true,
                         'size' => 'md',
                         'margin' => 'md',
@@ -1090,55 +987,64 @@ class BotController extends Controller
                         ),
                         3 => 
                         array (
-                        'type' => 'button',
-                        'style' => 'link',
-                        'height' => 'sm',
-                        'action' => 
-                        array (
-                            'type' => 'message',
-                            'text' => 1,
-                            'label' => $exam->local_pic,
-                            //'label' => '1) '.$exam->choice_a,
-                        ),
+                            'type' => 'text',
+                            //'text' => $exam->choice_a,
+                            'text' => '$exam->choice_a dfidshfisdhfios dsifojsiojfiosjdf dfsjdofjios ifiosjfoi',
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 1,
+                            ),
                         ),
                         4 => 
                         array (
-                        'type' => 'button',
-                        'style' => 'link',
-                        'height' => 'sm',
-                        'action' => 
-                        array (
-                            'type' => 'message',
-                            'text' => 2,
-                            'label' => $exam->local_pic,
-                            //'label' => '2) '.$exam->choice_b,
-                        ),
+                            'type' => 'text',
+                            'text' => $exam->choice_b,
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 2,
+                            ),
                         ),
                         5 => 
                         array (
-                        'type' => 'button',
-                        'style' => 'link',
-                        'height' => 'sm',
-                        'action' => 
-                        array (
-                            'type' => 'message',
-                            'text' => 3,
-                            'label' => $exam->local_pic,
-                            //'label' => '3) '.$exam->choice_c,
-                        ),
+                            'type' => 'text',
+                            'text' => $exam->choice_c,
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 3,
+                            ),
                         ),
                         6 => 
                         array (
-                        'type' => 'button',
-                        'style' => 'link',
-                        'height' => 'sm',
-                        'action' => 
-                        array (
-                            'type' => 'message',
-                            'text' => 4,
-                            'label' => $exam->local_pic,
-                            //'label' => '4) '.$exam->choice_d,
-                        ),
+                            'type' => 'text',
+                            'text' => $exam->choice_d,
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 4,
+                            ),
                         ),
                     ),
                     ),
@@ -1148,93 +1054,113 @@ class BotController extends Controller
         return $textMessageBuilder; 
     }
     public function flex_choice_nonpic(){
-        $textMessageBuilder = [ 
-            "type" => "flex",
-            "altText" => "this is a flex message",
-            "contents" => 
-            array (
-                'type' => 'bubble',
-                'body' => 
+        $exam =  DB::table('exam_news')
+            ->where('id',1)
+            ->first();
+        echo SERV_NAME.$exam->local_pic;
+        //dd($exam_pic);
+            $textMessageBuilder = [ 
+                "type" => "flex",
+                "altText" => "this is a flex message",
+                "contents" => 
                 array (
-                  'type' => 'box',
-                  'layout' => 'vertical',
-                  'contents' => 
-                  array (
-                    0 => 
+                    'type' => 'bubble',
+                    'body' => 
                     array (
-                      'type' => 'text',
-                      'text' => 'ข้อที่ 1',
-                      'weight' => 'bold',
-                      'size' => 'lg',
-                      'margin' => 'md',
-                    ),
-                    1 => 
+                    'type' => 'box',
+                    'layout' => 'vertical',
+                    'contents' => 
                     array (
-                      'type' => 'text',
-                      'text' => 'ที่ดินรูปสี่เหลี่ยมผืนผ้ากว้าง  20  เมตร  ยาว  55  เมตร  ถ้าต้องการล้อมรั้วลวดหนามรอบที่ดิน 2  รอบ  จะต้องให้ลวดหนามยาวอย่างน้อยกี่เมตรและมีพื้นที่สำหรับปลูกหญ้าทั้งหมดเท่าไร',
-                      'wrap' => true,
-                      'size' => 'md',
-                      'margin' => 'md',
-                      'color' => '#5C5C5C',
+                        0 => 
+                        array (
+                        'type' => 'text',
+                        'text' => 'ข้อที่ 1',
+                        'weight' => 'bold',
+                        'size' => 'lg',
+                        'margin' => 'md',
+                        ),
+                        1 => 
+                        array (
+                        'type' => 'text',
+                        //'text' => $exam->local_pic,
+                        'text' => $exam->question,
+                        'wrap' => true,
+                        'size' => 'md',
+                        'margin' => 'md',
+                        'color' => '#5C5C5C',
+                        ),
+                        2 => 
+                        array (
+                        'type' => 'separator',
+                        'color' => '#999999',
+                        'margin' => 'xl',
+                        ),
+                        3 => 
+                        array (
+                            'type' => 'text',
+                            //'text' => $exam->choice_a,
+                            'text' => '$exam->choice_a dfidshfisdhfios dsifojsiojfiosjdf dfsjdofjios ifiosjfoi',
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 1,
+                            ),
+                        ),
+                        4 => 
+                        array (
+                            'type' => 'text',
+                            'text' => $exam->choice_b,
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 2,
+                            ),
+                        ),
+                        5 => 
+                        array (
+                            'type' => 'text',
+                            'text' => $exam->choice_c,
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 3,
+                            ),
+                        ),
+                        6 => 
+                        array (
+                            'type' => 'text',
+                            'text' => $exam->choice_d,
+                            'wrap' => true,
+                            'align' => 'center',
+                            'size' => 'md',
+                            'margin' => 'xl',
+                            'color' => '#4466A0',
+                            'action' =>
+                            array(
+                                'type' => 'message',
+                                'text' => 4,
+                            ),
+                        ),
                     ),
-                    2 => 
-                    array (
-                      'type' => 'separator',
-                      'color' => '#999999',
-                      'margin' => 'xl',
                     ),
-                    3 => 
-                    array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 1,
-                        'label' => '1) 150  เมตร  1,100  ตารางเมตร',
-                      ),
-                    ),
-                    4 => 
-                    array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 2,
-                        'label' => '2) 150  เมตร  2,200  ตารางเมตร',
-                      ),
-                    ),
-                    5 => 
-                    array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 3,
-                        'label' => '3) 300  เมตร  1,100  ตารางเมตร',
-                      ),
-                    ),
-                    6 => 
-                    array (
-                      'type' => 'button',
-                      'style' => 'link',
-                      'height' => 'sm',
-                      'action' => 
-                      array (
-                        'type' => 'message',
-                        'text' => 4,
-                        'label' => '4) 300  เมตร  2,200  ตารางเมตร',
-                      ),
-                    ),
-                  ),
-                ),
-              )  
-            ];   
+                )
+            ];  
+        
         return $textMessageBuilder; 
     }
     public function notification() {
@@ -1245,11 +1171,8 @@ class BotController extends Controller
             ->where('status', false)
             ->pluck('line_code')
             ->all();
-
         $user_select = array_unique($user_select);
-
         foreach ($user_select as $line_u) {
-
             $join_log_group = DB::table('groups')
                 ->join('logChildrenQuizzes', 'logChildrenQuizzes.group_id', '=', 'groups.id')
                 ->join('chapters', 'chapters.id', '=', 'groups.chapter_id')
@@ -1263,7 +1186,6 @@ class BotController extends Controller
             $chap_text7 = "";
             $chap_text3 = "";
             $del_group = false;
-
             foreach ($unfin_log as $rest_chap) {
                 $del_subj = $join_log_group->where('chap_name', $rest_chap)->first();
                 if ((new Carbon($del_subj->time))->diffInDays(Carbon::now()) >= 6) {
