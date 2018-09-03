@@ -45,7 +45,7 @@ use App\Exam_New as Exam_New;
 define('LINE_MESSAGE_CHANNEL_ID', '1602719598');
 define('LINE_MESSAGE_CHANNEL_SECRET', 'adc5d09e0446060bdba4cbf68a877ee9');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'iU3Z5u+f3Aj+nbHhqkb1NCuoXaI71Z1MUFyUfg2u8Nqb6hxMpsQw0eKEL0W2j6tFEX7XqG5tKq8RmNgkbBwcYlaBeq0l1V29lklaLNXOU6g+lDhRC2SNAhzc1b9C4SgRxUCLuIXFxH5iCyrFr5yTEQdB04t89/1O/w1cDnyilFU=');
-define('SERV_NAME', 'https://pkwang.herokuapp.com/');
+define('SERV_NAME', 'https://pimee.softbot.ai/');
 class BotController extends Controller
 {
     public function index()
@@ -121,24 +121,26 @@ class BotController extends Controller
                     $pos2 = strrpos($userMessage, 'ครน');
                     //------ RICH MENU -------
                     if ($userMessage == "เปลี่ยนวิชา") {
-                        $this->replymessage7($replyToken,'flex_message_menu');
-                        $replyData = new TextMessageBuilder("พี่พลอย");
+                        $this->replymessage7($replyToken,'flex_message_sub');
+                        $replyData = new TextMessageBuilder("วิชา");
                     } else if ($userMessage == "เปลี่ยนหัวข้อ" || $userMessage == "วิชาคณิตศาสตร์") {
-                        $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
-                        $replyData = new ImagemapMessageBuilder(
-                            $imageMapUrl,
-                            'หัวข้อที่ต้องการเรียน',
-                            new BaseSizeBuilder(546, 1040),
-                            array(
-                                new ImagemapMessageActionBuilder(
-                                    'สมการ',
-                                    new AreaBuilder(91, 199, 873, 155)
-                                ),
-                                new ImagemapMessageActionBuilder(
-                                    'หรม./ครน.',
-                                    new AreaBuilder(87, 350, 873, 155)
-                                ),
-                            ));
+                        // $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
+                        // $replyData = new ImagemapMessageBuilder(
+                        //     $imageMapUrl,
+                        //     'หัวข้อที่ต้องการเรียน',
+                        //     new BaseSizeBuilder(546, 1040),
+                        //     array(
+                        //         new ImagemapMessageActionBuilder(
+                        //             'สมการ',
+                        //             new AreaBuilder(91, 199, 873, 155)
+                        //         ),
+                        //         new ImagemapMessageActionBuilder(
+                        //             'หรม./ครน.',
+                        //             new AreaBuilder(87, 350, 873, 155)
+                        //         ),
+                        //     ));
+                        $this->replymessage7($replyToken,'flex_message_chap');
+                        $replyData = new TextMessageBuilder("หัวข้อ");
                     } else if($userMessage =="ดูคะแนน"){
                         $arr_replyData = array();
                         $arr_replyData[] = $this->declare_point($userId);
@@ -400,10 +402,12 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder($content);
                         echo "ANAN-- YOOOOO!!!!!";
                     
-                    } else if ($userMessage == "ลองflex") {
-                        $this->replymessage7($replyToken,'flex_message_menu');
-                        $replyData = new TextMessageBuilder("พี่พลอย");
                     } 
+                    else if($userMessage == "[ลงทะเบียนเรียบร้อยแล้ว]"){
+                        $a = $this->replymessage6($replyToken,'flex_message_sub');
+                        $replyData = new TextMessageBuilder("flex_sub");
+                        echo "end";
+                    }
                     else if ($userMessage == "ลองquery_choice_pic") {
                         $this->replymessage7($replyToken,'flex_choice_pic');
                         $replyData = new TextMessageBuilder("test");
@@ -429,7 +433,9 @@ class BotController extends Controller
                         $actionBuilder = array(
                             new UriTemplateActionBuilder(
                                 'ลงทะเบียน', // ข้อความแสดงในปุ่ม
-                                SERV_NAME.'studentinfo/'.$userId
+                                //'line://app/1602719598-A6k9BE7W' // tutorbot
+                                'line://app/1602719598-pK6r8oGm' // softbot
+                                //SERV_NAME.'studentinfo/'.$userId
                             ),   
                         );
                         $imageUrl = SERV_NAME.'/img/img/card_regis.png';
@@ -441,12 +447,13 @@ class BotController extends Controller
                                 $actionBuilder  // กำหนด action object
                             )
                         );  
-                        $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
+                        // $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
+                        // $arr_replyData[] = $this->replymessage7($replyToken,'flex_message_menu');
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
                         }
                         $replyData = $multiMessage;
-                        $this->replymessage7($replyToken,'flex_message_menu');
+                        
                         DB::table('students')->insert([
                             'line_code' => $userId,
                             'name' => $stdprofile['displayName'],
@@ -728,7 +735,34 @@ class BotController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
     }
-    public function flex_message_menu(){
+    public function replymessage6($replyToken,$fn_json)
+    {   
+        $messages1 = [
+            'type' => 'text',
+            'text' =>  'เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ'
+          ]; 
+        echo "function_json";
+        echo $fn_json;
+        $url = 'https://api.line.me/v2/bot/message/reply';
+        $data = [
+            'replyToken' => $replyToken,
+            // 'messages' => [$textMessageBuilder],on
+            //'messages' => [$this->flex_message_menu()],
+            'messages' => [$messages1,$this->$fn_json()],
+        ];
+        $access_token = LINE_MESSAGE_ACCESS_TOKEN;
+        $post = json_encode($data);
+        $headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);
+    }
+    public function flex_message_sub(){
         $query_sub = DB::table('subjects')
             ->get();
         $md_array = array();
@@ -796,13 +830,110 @@ class BotController extends Controller
                                     0 => 
                                     array (
                                       'type' => 'icon',
-                                      'url' => 'https://pimee.softbot.ai/img/books.png',
+                                      'url' => SERV_NAME.'/img/books.png',
                                       'size' => 'xl',
                                     ),
                                     1 => 
                                     array (
                                       'type' => 'text',
                                       'text' => 'เลือกวิชา',
+                                      'weight' => 'bold',
+                                      'size' => 'xl',
+                                      'margin' => 'md',
+                                      'color' => '#ffffff',
+                                    ),
+                                  ),
+                                ),
+                                'body' => 
+                                array (
+                                    'type' => 'box',
+                                    'layout' => 'vertical',
+                                    'contents' => 
+                                    $suject_s
+                                )   
+                            )
+              ];
+        //echo $textMessageBuilder;
+        return $textMessageBuilder;
+          
+    }
+    public function flex_message_chap(){
+        $query_sub = DB::table('chapters')
+            ->where('subject_id',1)
+            ->get();
+        $md_array = array();
+        $key=-1;
+        //dd($query_sub);
+        foreach($query_sub as $value){
+            $md_array[($value->id)-1] = 
+                array (
+                    ++$key => 
+                    array (
+                      'type' => 'box',
+                      'layout' => 'baseline',
+                      'contents' => 
+                      array (
+                        0 => 
+                        array (
+                          'type' => 'text',
+                          'text' => $value->name,
+                          'wrap' => true,
+                          'action' => 
+                          array (
+                            'type' => 'message',
+                            'text' => $value->name,
+                          ),
+                          'size' => 'lg',
+                        ),
+                      ),
+                    ),
+                    ++$key => 
+                    array (
+                      'type' => 'separator',
+                      'color' => '#59BDD3',
+                      'margin' => 'md',
+                    ),
+                );
+            
+        }
+        $suject_s =array();
+        foreach($md_array as $md){
+            foreach($md as $key){
+                array_push($suject_s,$key);
+            }
+            
+        }
+   
+        $textMessageBuilder = [ 
+            "type" => "flex",
+            "altText" => "this is a flex message",
+            "contents" => 
+                            array (
+                                'type' => 'bubble',
+                                'styles' => 
+                                array (
+                                  'header' => 
+                                  array (
+                                    'backgroundColor' => '#59BDD3',
+                                  ),
+                                ),
+                                'header' => 
+                                array (
+                                  'type' => 'box',
+                                  'layout' => 'baseline',
+                                  'spacing' => 'none',
+                                  'contents' => 
+                                  array (
+                                    0 => 
+                                    array (
+                                      'type' => 'icon',
+                                      'url' =>  SERV_NAME.'/img/books.png',
+                                      'size' => 'xl',
+                                    ),
+                                    1 => 
+                                    array (
+                                      'type' => 'text',
+                                      'text' => 'เลือกหัวข้อ',
                                       'weight' => 'bold',
                                       'size' => 'xl',
                                       'margin' => 'md',
