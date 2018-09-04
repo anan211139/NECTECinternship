@@ -41,7 +41,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 use Carbon\Carbon;
 use App\Prize;
-use App\Exam_New as Exam_New;
+use App\Exam_New;
 define('LINE_MESSAGE_CHANNEL_ID', '1602719598');
 define('LINE_MESSAGE_CHANNEL_SECRET', 'adc5d09e0446060bdba4cbf68a877ee9');
 define('LINE_MESSAGE_ACCESS_TOKEN', 'iU3Z5u+f3Aj+nbHhqkb1NCuoXaI71Z1MUFyUfg2u8Nqb6hxMpsQw0eKEL0W2j6tFEX7XqG5tKq8RmNgkbBwcYlaBeq0l1V29lklaLNXOU6g+lDhRC2SNAhzc1b9C4SgRxUCLuIXFxH5iCyrFr5yTEQdB04t89/1O/w1cDnyilFU=');
@@ -56,13 +56,10 @@ class BotController extends Controller
         // คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
         $content = file_get_contents('php://input');
         $events = json_decode($content, true);
+
+        
+
         if(!is_null($events)){
-            // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-            // $replyToken = $event->getReplyToken();
-            // //$replyInfo = $events['events']['type'];
-            // $userId = $event->getUserId();
-            // $typeMessage = $event->getMessageType();
-            // $userMessage = $event->getText();
             foreach ($events['events'] as $event) {
                 // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
                 $replyToken = $event['replyToken'];
@@ -113,32 +110,20 @@ class BotController extends Controller
                         $bot->replyMessage($replyToken, new TextMessageBuilder($replyData));
                     }
                     continue;
-                } else if ($replyInfo == "message") {
+                }
+                /*
+                
+                    $userMessage
+                
+                */
+                else if ($replyInfo == "message") {
                     $typeMessage = $event['message']['type'];
                     $userMessage = $event['message']['text'];
-                    //------ SET VAR ---------
-                    $pos1 = strrpos($userMessage, 'หรม');
-                    $pos2 = strrpos($userMessage, 'ครน');
                     //------ RICH MENU -------
                     if ($userMessage == "เปลี่ยนวิชา") {
                         $this->replymessage7($replyToken,'flex_message_sub');
                         $replyData = new TextMessageBuilder("วิชา");
                     } else if ($userMessage == "เปลี่ยนหัวข้อ" || $userMessage == "วิชาคณิตศาสตร์") {
-                        // $imageMapUrl = 'https://github.com/anan211139/NECTECinternship/blob/master/img/final_lesson.png?raw=true';
-                        // $replyData = new ImagemapMessageBuilder(
-                        //     $imageMapUrl,
-                        //     'หัวข้อที่ต้องการเรียน',
-                        //     new BaseSizeBuilder(546, 1040),
-                        //     array(
-                        //         new ImagemapMessageActionBuilder(
-                        //             'สมการ',
-                        //             new AreaBuilder(91, 199, 873, 155)
-                        //         ),
-                        //         new ImagemapMessageActionBuilder(
-                        //             'หรม./ครน.',
-                        //             new AreaBuilder(87, 350, 873, 155)
-                        //         ),
-                        //     ));
                         $this->replymessage7($replyToken,'flex_message_chap');
                         $replyData = new TextMessageBuilder("หัวข้อ");
                     } else if($userMessage =="ดูคะแนน"){
@@ -230,31 +215,6 @@ class BotController extends Controller
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
                         }
-                        $replyData = $multiMessage;
-                    } //------ หรม./ครน. -------
-                    else if ($pos1 !== false || $pos2 !== false) {
-                        DB::table('students')
-                            ->where('line_code', $userId)
-                            ->update(['chapter_id' => 2]);
-                        $arr_replyData = $this->start_exam($userId, 2);
-                        $multiMessage = new MultiMessageBuilder;
-                        foreach ($arr_replyData as $arr_Reply) {
-                            $multiMessage->add($arr_Reply);
-                        }
-                        $replyData = $multiMessage;
-                    }
-                    //------ สมการ -------
-                    else if ($userMessage == "สมการ") {
-                        DB::table('students')
-                            ->where('line_code', $userId)
-                            ->update(['chapter_id' => 1]);
-                        $arr_replyData = $this->start_exam($userId, 1);
-                        $multiMessage = new MultiMessageBuilder;
-                        foreach ($arr_replyData as $arr_Reply) {
-                            $multiMessage->add($arr_Reply);
-                        }
-                        echo "สมการ";
-                    
                         $replyData = $multiMessage;
                     } 
                     else if ($userMessage == "ลงทะเบียน"){
@@ -417,7 +377,30 @@ class BotController extends Controller
                         $replyData = new TextMessageBuilder("test");
                     }
                     else {
-                        $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
+                        $chap_name_count = DB::table('chapters')
+                            ->where('name',$userMessage)
+                            ->count();
+                        if($chap_name_count==1){
+                            $chap_name_id = DB::table('chapters')
+                                ->where('name',$userMessage)
+                                ->first();
+                            DB::table('students')
+                                ->where('line_code', $userId)
+                                ->update(['chapter_id' => $chap_name_id->id]);
+                            $arr_replyData = $this->start_exam($userId, $chap_name_id->id);
+                            $multiMessage = new MultiMessageBuilder;
+                            foreach ($arr_replyData as $arr_Reply) {
+                                $multiMessage->add($arr_Reply);
+                            }
+                            $replyData = $multiMessage;
+                        }
+                        // else if ($userMessage == "เปลี่ยนหัวข้อ" || $userMessage == "วิชาคณิตศาสตร์") {
+                        //     $this->replymessage7($replyToken,'flex_message_chap');
+                        //     $replyData = new TextMessageBuilder("หัวข้อ");
+                        // } 
+                        else{
+                            $replyData = new TextMessageBuilder("พี่หมีไม่ค่อยเข้าใจคำว่า \"" . $userMessage . "\" พี่หมีขอโทษนะ");
+                        }
                     }
                 } else if ($replyInfo == "follow") {
                     $multiMessage = new MultiMessageBuilder;
@@ -428,14 +411,12 @@ class BotController extends Controller
                     if ($checkIMG == 0) {
                         $response = $bot->getProfile($userId);
                         $stdprofile = $response->getJSONDecodedBody();
-                        $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']);
-                        $arr_replyData[] = new TextMessageBuilder("ก่อนเริ่มบทเรียน ควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ\nhttps://www.youtube.com/watch?v=ub39BTOdjeo&feature=youtu.be");
+                        $arr_replyData[] = new TextMessageBuilder("สวัสดีจ้านี่พี่หมีเอง\nยินดีที่เราได้เป็นเพื่อนกันนะน้อง ".$stdprofile['displayName']."\nก่อนเริ่มบทเรียน น้องๆควรดูคลิปวิธีการใช้งานด้านล่างนี้ก่อนนะ \nhttps://www.youtube.com/watch?v=ub39BTOdjeo&feature=youtu.be");
                         $actionBuilder = array(
                             new UriTemplateActionBuilder(
                                 'ลงทะเบียน', // ข้อความแสดงในปุ่ม
                                 //'line://app/1602719598-A6k9BE7W' // tutorbot
                                 'line://app/1602719598-pK6r8oGm' // softbot
-                                //SERV_NAME.'studentinfo/'.$userId
                             ),   
                         );
                         $imageUrl = SERV_NAME.'/img/img/card_regis.png';
@@ -447,8 +428,6 @@ class BotController extends Controller
                                 $actionBuilder  // กำหนด action object
                             )
                         );  
-                        // $arr_replyData[] = new TextMessageBuilder("เอาล่ะ! ถ้าพร้อมแล้ว เรามาเลือกวิชาแรกที่จะทำข้อสอบกันเถอะ");
-                        // $arr_replyData[] = $this->replymessage7($replyToken,'flex_message_menu');
                         foreach ($arr_replyData as $arr_Reply) {
                             $multiMessage->add($arr_Reply);
                         }
@@ -459,7 +438,6 @@ class BotController extends Controller
                             'name' => $stdprofile['displayName'],
                             'local_pic' => $stdprofile['pictureUrl']
                         ]);
-                        
                     }
                 }
             }
@@ -600,7 +578,6 @@ class BotController extends Controller
                 ->where('chapter_id', $chapter_id)
                 ->orderBy('id','DESC')
                 ->first();
-            
             // dd($old_group);
             $group_id = $old_group->id;
             $count_quiz = DB::table('logChildrenQuizzes')
@@ -662,7 +639,6 @@ class BotController extends Controller
         $stdanses = DB::table('logChildrenQuizzes')
             ->where('group_id', $group_id)
             ->get();
-        
         // DB::table('groupRandoms')
         //     ->where('group_id', '=',$group_id)
         //     ->delete();
@@ -797,16 +773,13 @@ class BotController extends Controller
                       'margin' => 'md',
                     ),
                 );
-            
         }
         $suject_s =array();
         foreach($md_array as $md){
             foreach($md as $key){
                 array_push($suject_s,$key);
             }
-            
         }
-   
         $textMessageBuilder = [ 
             "type" => "flex",
             "altText" => "this is a flex message",
@@ -854,8 +827,7 @@ class BotController extends Controller
                             )
               ];
         //echo $textMessageBuilder;
-        return $textMessageBuilder;
-          
+        return $textMessageBuilder;  
     }
     public function flex_message_chap(){
         $query_sub = DB::table('chapters')
@@ -894,69 +866,61 @@ class BotController extends Controller
                       'margin' => 'md',
                     ),
                 );
-            
         }
         $suject_s =array();
         foreach($md_array as $md){
             foreach($md as $key){
                 array_push($suject_s,$key);
-            }
-            
+            } 
         }
-   
         $textMessageBuilder = [ 
             "type" => "flex",
             "altText" => "this is a flex message",
             "contents" => 
+                array (
+                    'type' => 'bubble',
+                    'styles' => 
+                    array (
+                        'header' => 
+                        array (
+                        'backgroundColor' => '#59BDD3',
+                        ),
+                    ),
+                    'header' => 
+                    array (
+                        'type' => 'box',
+                        'layout' => 'baseline',
+                        'spacing' => 'none',
+                        'contents' => 
+                        array (
+                            0 => 
                             array (
-                                'type' => 'bubble',
-                                'styles' => 
-                                array (
-                                  'header' => 
-                                  array (
-                                    'backgroundColor' => '#59BDD3',
-                                  ),
-                                ),
-                                'header' => 
-                                array (
-                                  'type' => 'box',
-                                  'layout' => 'baseline',
-                                  'spacing' => 'none',
-                                  'contents' => 
-                                  array (
-                                    0 => 
-                                    array (
-                                      'type' => 'icon',
-                                      'url' =>  SERV_NAME.'/img/books.png',
-                                      'size' => 'xl',
-                                    ),
-                                    1 => 
-                                    array (
-                                      'type' => 'text',
-                                      'text' => 'เลือกหัวข้อ',
-                                      'weight' => 'bold',
-                                      'size' => 'xl',
-                                      'margin' => 'md',
-                                      'color' => '#ffffff',
-                                    ),
-                                  ),
-                                ),
-                                'body' => 
-                                array (
-                                    'type' => 'box',
-                                    'layout' => 'vertical',
-                                    'contents' => 
-                                    $suject_s
-                
-                                )
-                                
-                            )
-              
-          
-              ];
-             
-        return $textMessageBuilder;
-          
+                                'type' => 'icon',
+                                'url' =>  SERV_NAME.'/img/books.png',
+                                'size' => 'xl',
+                            ),
+                            1 => 
+                            array (
+                                'type' => 'text',
+                                'text' => 'เลือกหัวข้อ',
+                                'weight' => 'bold',
+                                'size' => 'xl',
+                                'margin' => 'md',
+                                'color' => '#ffffff',
+                            ),
+                        ),
+                    ),
+                    'body' => 
+                    array (
+                        'type' => 'box',
+                        'layout' => 'vertical',
+                        'contents' => 
+                        $suject_s
+    
+                    )   
+                )
+            ];        
+        return $textMessageBuilder;      
     }
     // public function text_only(){
     //     $textMessageBuilder = [ 
@@ -982,16 +946,16 @@ class BotController extends Controller
                     'type' => 'bubble',
                     'hero' => 
                     array (
-                    'type' => 'image',
-                    'url' => SERV_NAME.$exam->local_pic,
-                    'size' => 'full',
-                    'aspectRatio' => '20:13',
-                    'aspectMode' => 'cover',
-                    'action' => 
-                    array (
-                        'type' => 'uri',
-                        'uri' => SERV_NAME.$exam->local_pic,
-                    ),
+                        'type' => 'image',
+                        'url' => SERV_NAME.$exam->local_pic,
+                        'size' => 'full',
+                        'aspectRatio' => '20:13',
+                        'aspectMode' => 'cover',
+                        'action' => 
+                            array (
+                                'type' => 'uri',
+                                'uri' => SERV_NAME.$exam->local_pic,
+                            ),
                     ),
                     'body' => 
                     array (
@@ -1001,27 +965,26 @@ class BotController extends Controller
                     array (
                         0 => 
                         array (
-                        'type' => 'text',
-                        'text' => 'ข้อที่ 1',
-                        'weight' => 'bold',
-                        'size' => 'lg',
-                        'margin' => 'md',
+                            'type' => 'text',
+                            'text' => 'ข้อที่ 1',
+                            'weight' => 'bold',
+                            'size' => 'lg',
+                            'margin' => 'md',
                         ),
                         1 => 
                         array (
-                        'type' => 'text',
-                        //'text' => $exam->local_pic,
-                        'text' => $exam->question,
-                        'wrap' => true,
-                        'size' => 'md',
-                        'margin' => 'md',
-                        'color' => '#5C5C5C',
+                            'type' => 'text',
+                            'text' => $exam->question,
+                            'wrap' => true,
+                            'size' => 'md',
+                            'margin' => 'md',
+                            'color' => '#5C5C5C',
                         ),
                         2 => 
                         array (
-                        'type' => 'separator',
-                        'color' => '#999999',
-                        'margin' => 'xl',
+                            'type' => 'separator',
+                            'color' => '#999999',
+                            'margin' => 'xl',
                         ),
                         3 => 
                         array (
